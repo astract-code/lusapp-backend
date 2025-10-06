@@ -3,6 +3,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
 import { useColorScheme } from 'react-native';
 import { AuthProvider, useAuth } from './src/context/AuthContext';
+import { SettingsProvider } from './src/context/SettingsContext';
 import { OnboardingScreen } from './src/screens/OnboardingScreen';
 import { AppNavigator } from './src/navigation/AppNavigator';
 import { useAppStore } from './src/context/AppContext';
@@ -39,7 +40,9 @@ const AppContent = () => {
 export default function App() {
   return (
     <AuthProvider>
-      <AppContent />
+      <SettingsProvider>
+        <AppContent />
+      </SettingsProvider>
     </AuthProvider>
   );
 }

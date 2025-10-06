@@ -10,6 +10,7 @@ import { DiscoverScreen } from '../screens/DiscoverScreen';
 import { ProfileScreen } from '../screens/ProfileScreen';
 import { RaceDetailScreen } from '../screens/RaceDetailScreen';
 import { UserProfileScreen } from '../screens/UserProfileScreen';
+import { SettingsScreen } from '../screens/SettingsScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -118,6 +119,11 @@ const ProfileStack = () => {
         name="RaceDetail" 
         component={RaceDetailScreen}
         options={{ title: 'Race Details' }}
+      />
+      <Stack.Screen 
+        name="Settings" 
+        component={SettingsScreen}
+        options={{ headerShown: false }}
       />
     </Stack.Navigator>
   );

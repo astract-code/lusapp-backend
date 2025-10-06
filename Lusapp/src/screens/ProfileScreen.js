@@ -34,6 +34,15 @@ export const ProfileScreen = ({ navigation }) => {
 
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: theme.background }]} edges={['top']}>
+      <View style={styles.topBar}>
+        <Text style={[styles.topBarTitle, { color: theme.text }]}>Profile</Text>
+        <TouchableOpacity
+          style={styles.settingsButton}
+          onPress={() => navigation.navigate('Settings')}
+        >
+          <Text style={{ fontSize: 24 }}>⚙️</Text>
+        </TouchableOpacity>
+      </View>
       <ScrollView>
         <LinearGradient
         colors={[theme.gradient1, theme.gradient2]}
@@ -108,6 +117,20 @@ export const ProfileScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  topBar: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: SPACING.md,
+    paddingVertical: SPACING.sm,
+  },
+  topBarTitle: {
+    fontSize: FONT_SIZE.xl,
+    fontWeight: 'bold',
+  },
+  settingsButton: {
+    padding: SPACING.xs,
   },
   header: {
     alignItems: 'center',
