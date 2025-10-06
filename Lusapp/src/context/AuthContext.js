@@ -1,11 +1,12 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { mockUsers, getCurrentUser } from '../data/mockUsers';
+import { API_ENDPOINTS } from '../config/api';
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [token, setToken] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -14,8 +15,11 @@ export const AuthProvider = ({ children }) => {
 
   const checkAuth = async () => {
     try {
+      const storedToken = await AsyncStorage.getItem('token');
       const userData = await AsyncStorage.getItem('user');
-      if (userData) {
+      
+      if (storedToken && userData) {
+        setToken(storedToken);
         setUser(JSON.parse(userData));
       }
     } catch (error) {
@@ -26,42 +30,86 @@ export const AuthProvider = ({ children }) => {
   };
 
   const login = async (email, password) => {
-    const mockUser = getCurrentUser();
-    setUser(mockUser);
-    await AsyncStorage.setItem('user', JSON.stringify(mockUser));
-    return mockUser;
+    try {
+      const response = await fetch(API_ENDPOINTS.auth.login, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Login failed');
+      }
+
+      setToken(data.token);
+      setUser(data.user);
+      
+      await AsyncStorage.setItem('token', data.token);
+      await AsyncStorage.setItem('user', JSON.stringify(data.user));
+      
+      return data.user;
+    } catch (error) {
+      console.error('Login error:', error);
+      throw error;
+    }
   };
 
   const signupWithEmail = async (email, password, userInfo) => {
-    const newUser = {
-      ...getCurrentUser(),
-      email,
-      name: userInfo.name,
-      location: userInfo.location || 'Unknown',
-      bio: userInfo.bio || '',
-      favoriteSport: userInfo.favoriteSport || '',
-    };
-    setUser(newUser);
-    await AsyncStorage.setItem('user', JSON.stringify(newUser));
-    return newUser;
+    try {
+      const response = await fetch(API_ENDPOINTS.auth.signup, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email,
+          password,
+          name: userInfo.name,
+          location: userInfo.location,
+          bio: userInfo.bio,
+          favoriteSport: userInfo.favoriteSport,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Signup failed');
+      }
+
+      setToken(data.token);
+      setUser(data.user);
+      
+      await AsyncStorage.setItem('token', data.token);
+      await AsyncStorage.setItem('user', JSON.stringify(data.user));
+      
+      return data.user;
+    } catch (error) {
+      console.error('Signup error:', error);
+      throw error;
+    }
   };
 
   const signupWithApple = async () => {
-    const mockUser = getCurrentUser();
-    setUser(mockUser);
-    await AsyncStorage.setItem('user', JSON.stringify(mockUser));
-    return mockUser;
+    throw new Error('Apple sign-in not yet implemented. Please use email signup.');
   };
 
   const logout = async () => {
     setUser(null);
+    setToken(null);
     await AsyncStorage.removeItem('user');
+    await AsyncStorage.removeItem('token');
   };
 
   return (
     <AuthContext.Provider
       value={{
         user,
+        token,
         isLoading,
         login,
         signupWithEmail,

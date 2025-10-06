@@ -7,6 +7,8 @@ import {
   TouchableOpacity,
   KeyboardAvoidingView,
   Platform,
+  Alert,
+  ActivityIndicator,
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useAuth } from '../context/AuthContext';
@@ -24,17 +26,40 @@ export const OnboardingScreen = () => {
   const [location, setLocation] = useState('');
   const [bio, setBio] = useState('');
   const [favoriteSport, setFavoriteSport] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
 
   const handleEmailAuth = async () => {
-    if (isLogin) {
-      await login(email, password);
-    } else {
-      await signupWithEmail(email, password, { name, location, bio, favoriteSport });
+    setError('');
+    setIsLoading(true);
+    
+    try {
+      if (isLogin) {
+        await login(email, password);
+      } else {
+        if (!name.trim()) {
+          setError('Name is required');
+          return;
+        }
+        if (password.length < 8) {
+          setError('Password must be at least 8 characters');
+          return;
+        }
+        await signupWithEmail(email, password, { name, location, bio, favoriteSport });
+      }
+    } catch (err) {
+      setError(err.message || 'Something went wrong. Please try again.');
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const handleAppleSignIn = async () => {
-    await signupWithApple();
+    Alert.alert(
+      'Coming Soon',
+      'Apple sign-in will be available in the next update. Please use email signup for now.',
+      [{ text: 'OK' }]
+    );
   };
 
   return (
@@ -113,13 +138,24 @@ export const OnboardingScreen = () => {
             secureTextEntry
           />
 
+          {error ? (
+            <View style={styles.errorContainer}>
+              <Text style={styles.errorText}>{error}</Text>
+            </View>
+          ) : null}
+
           <TouchableOpacity
-            style={[styles.button, { backgroundColor: colors.primary }]}
+            style={[styles.button, { backgroundColor: colors.primary, opacity: isLoading ? 0.7 : 1 }]}
             onPress={handleEmailAuth}
+            disabled={isLoading}
           >
-            <Text style={styles.buttonText}>
-              {isLogin ? 'Log In' : 'Sign Up'}
-            </Text>
+            {isLoading ? (
+              <ActivityIndicator color="#FFFFFF" />
+            ) : (
+              <Text style={styles.buttonText}>
+                {isLogin ? 'Log In' : 'Sign Up'}
+              </Text>
+            )}
           </TouchableOpacity>
 
           <View style={styles.divider}>
@@ -260,5 +296,16 @@ const styles = StyleSheet.create({
   },
   switchLink: {
     fontWeight: '600',
+  },
+  errorContainer: {
+    backgroundColor: '#fee',
+    padding: SPACING.sm,
+    borderRadius: BORDER_RADIUS.sm,
+    marginBottom: SPACING.md,
+  },
+  errorText: {
+    color: '#c00',
+    fontSize: FONT_SIZE.sm,
+    textAlign: 'center',
   },
 });
