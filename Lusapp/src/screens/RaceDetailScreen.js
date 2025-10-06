@@ -34,13 +34,21 @@ export const RaceDetailScreen = ({ route, navigation }) => {
   const isRegistered = race.registeredUsers?.includes(user?.id);
   
   const registeredUsers = React.useMemo(() => {
-    const usersFromStore = users.filter((u) => race.registeredUsers?.includes(u.id));
+    if (!race.registeredUsers || race.registeredUsers.length === 0) {
+      return [];
+    }
     
-    if (user && race.registeredUsers?.includes(user.id)) {
-      const userAlreadyInList = usersFromStore.some(u => u.id === user.id);
-      if (!userAlreadyInList) {
-        return [...usersFromStore, user];
-      }
+    const userIds = race.registeredUsers.map(id => String(id));
+    
+    const usersFromStore = users.filter((u) => {
+      const uId = String(u.id);
+      const isRegistered = userIds.includes(uId);
+      const isAuthUser = user && String(user.id) === uId;
+      return isRegistered && !isAuthUser;
+    });
+    
+    if (user && userIds.includes(String(user.id))) {
+      return [...usersFromStore, user];
     }
     
     return usersFromStore;
