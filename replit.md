@@ -9,6 +9,16 @@ The application is designed to work seamlessly on iOS (primary target) with Andr
 ## Recent Changes
 
 **October 6, 2025 - Latest:**
+- **ENHANCED USER REGISTRATION:**
+  - Added comprehensive user profile fields to signup form: location, bio, and favorite sport
+  - Registration now captures full user information during account creation
+  - Updated AuthContext to store extended user data (location, bio, favoriteSport) in AsyncStorage
+  - Bio field uses multiline text input with 80px minimum height
+  - Location and favorite sport fields include helpful placeholder examples
+  - All fields properly integrate with existing dark mode theme system
+  - User data structure now consistent across app with sensible defaults for optional fields
+
+**October 6, 2025 - Earlier:**
 - **MODERN UI REDESIGN COMPLETE:**
   - Created comprehensive theme system with enhanced colors, shadows, spacing, and typography constants
   - Implemented dark mode with ThemeContext (Light/Dark/Auto options) using AsyncStorage persistence
