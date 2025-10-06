@@ -1,8 +1,10 @@
 import { create } from 'zustand';
 import { mockPosts } from '../data/mockPosts';
 import { mockUsers } from '../data/mockUsers';
+import { mockRaces } from '../data/mockRaces';
 
-const API_URL = `https://${process.env.REPLIT_DEV_DOMAIN || '9f3814b8-ecc1-421a-88c5-74001ee67b54-00-r9w1zdd6rpvt.worf.replit.dev'}`;
+const USE_API = false;
+const API_URL = `https://${process.env.REPLIT_DEV_DOMAIN || '9f3814b8-ecc1-421a-88c5-74001ee67b54-00-r9w1zdd6rpvt.worf.replit.dev'}:5000`;
 
 export const useAppStore = create((set, get) => ({
   races: [],
@@ -12,20 +14,31 @@ export const useAppStore = create((set, get) => ({
   
   fetchRaces: async () => {
     set({ isLoading: true });
+    
+    if (!USE_API) {
+      console.log('Using mock race data (development mode)');
+      set({ races: mockRaces, isLoading: false });
+      return;
+    }
+    
     try {
       console.log('Fetching races from:', `${API_URL}/api/races`);
-      const response = await fetch(`${API_URL}/api/races`);
+      const response = await fetch(`${API_URL}/api/races`, {
+        headers: {
+          'Accept': 'application/json',
+        },
+      });
       
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       
       const data = await response.json();
-      console.log('Fetched data:', data);
+      console.log('Fetched data type:', Array.isArray(data) ? 'array' : typeof data);
       
       if (!Array.isArray(data)) {
-        console.error('Data is not an array:', data);
-        set({ isLoading: false });
+        console.error('API returned non-array data, falling back to mock data');
+        set({ races: mockRaces, isLoading: false });
         return;
       }
       
@@ -43,11 +56,11 @@ export const useAppStore = create((set, get) => ({
         registeredUsers: [],
       }));
       
-      console.log(`Successfully loaded ${formattedRaces.length} races`);
+      console.log(`Successfully loaded ${formattedRaces.length} races from API`);
       set({ races: formattedRaces, isLoading: false });
     } catch (error) {
-      console.error('Error fetching races:', error.message);
-      set({ isLoading: false, races: [] });
+      console.error('Error fetching races, using mock data:', error.message);
+      set({ races: mockRaces, isLoading: false });
     }
   },
   

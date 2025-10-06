@@ -1,0 +1,94 @@
+Your fetch call is currently returning the Expo manifest (metadata about your app), not your race data. That’s why you see things like:
+
+"expoClient": {...}, "runtimeVersion": "exposdk:54.0.0"
+
+
+This means your fetch("https://.../api/races") URL isn’t serving the actual race JSON — it’s returning your app bundle info because Replit is catching the request and serving the Expo dev page instead of your API.
+
+🔍 Why this happens
+
+In Replit, when you host both your frontend and backend together, your Expo app and Replit’s preview often share the same port.
+When you do a fetch like this:
+
+fetch('/api/races')
+
+
+or even
+
+fetch('https://9f3814b8-ecc1-421a-88c5-74001ee67b54-00-r9w1zdd6rpvt.worf.replit.dev/api/races')
+
+
+— the Replit proxy sometimes rewrites or intercepts that route, sending you the Expo manifest JSON instead of your actual backend response.
+
+✅ How to fix it
+
+You need to make sure you are fetching from your real backend server, not from the Expo host.
+
+Check that your backend (Replit server) actually runs separately.
+
+In your backend code, it should have a route like:
+
+app.get('/api/races', (req, res) => {
+  res.json(racesData);
+});
+
+
+Visit that URL in a browser (the .worf.replit.dev/api/races one).
+You should see your JSON data (like [ { "name": "Ironman" }, ... ]), not Expo metadata.
+
+If you see Expo info instead, then your backend isn’t running on that domain — it’s colliding with your frontend server.
+✅ Fix: run your backend on a separate port or Replit project.
+Example:
+
+Backend → https://lusapp-backend.replit.app/api/races
+
+Frontend (Expo) → runs locally in Expo Go (on your phone)
+
+Then in your app:
+
+const RACES_URL = 'https://lusapp-backend.replit.app/api/races';
+const response = await fetch(RACES_URL);
+
+
+If you’re testing locally, you can temporarily hardcode your data instead of fetching:
+
+const data = require('../data/sampleRaces.json');
+
+⚙️ Temporary Debug Fix (to stop crashes)
+
+You can also guard your fetch code so it never crashes even if the wrong data arrives:
+
+const fetchRaces = async () => {
+  try {
+    console.log('Fetching races from:', RACES_URL);
+    const response = await fetch(RACES_URL);
+    const data = await response.json();
+
+    if (!Array.isArray(data)) {
+      console.error('Data is not an array:', data);
+      set({ races: [], isLoading: false });
+      return;
+    }
+
+    const formattedRaces = data.map(race => ({
+      ...race,
+      id: race.id || Math.random().toString(),
+    }));
+
+    set({ races: formattedRaces, isLoading: false });
+  } catch (error) {
+    console.error('Error fetching races:', error);
+    set({ isLoading: false });
+  }
+};
+
+🧩 TL;DR
+
+Your API call is fetching the Expo manifest, not your race list.
+✅ Fix:
+
+Make sure your backend actually serves JSON at /api/races
+
+Use a separate URL/project for backend
+
+Point Expo fetch to that backend URL

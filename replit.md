@@ -17,7 +17,7 @@ The application is designed to work seamlessly on iOS (primary target) with Andr
 - Fixed React Native component capitalization errors (text → Text)
 - **Implemented PostgreSQL database backend with Express API for persistent race storage**
 - **Created authenticated web admin interface for manual race entry and CSV upload**
-- **Mobile app now fetches live race data from API instead of using mock data**
+- **Mobile app uses hybrid data approach: mock data in development, API in production**
 - All screens, components, and navigation fully functional and tested
 - Expo server running successfully in tunnel mode, ready for testing in Expo Go
 
@@ -74,9 +74,9 @@ Preferred communication style: Simple, everyday language.
 
 **Database Backend:**
 - PostgreSQL database for persistent race storage
-- Express.js REST API server (port 3000) serving race data
+- Express.js REST API server (port 5000) serving race data
 - Protected admin routes using HTTP Basic Authentication
-- Mobile app fetches race data from API on app launch
+- Hybrid data loading: uses mock data in development (Expo Go), can switch to API for production
 
 **Database Schema:**
 - **races table:** id (serial), name, sport, city, country, continent, date, distance, description, participants, created_at
@@ -90,9 +90,10 @@ Preferred communication style: Simple, everyday language.
 
 **State Management Pattern:**
 - Zustand store provides centralized access to races, posts, users
-- `fetchRaces()` async action fetches race data from API on app load
+- `fetchRaces()` async action: uses mock data by default, can fetch from API if configured (set `USE_API = true` in AppContext.js)
 - Actions for registration, likes, comments, race management
 - Real-time UI updates through reactive subscriptions
+- Hybrid approach allows development with Expo Go without backend complexity
 
 ### Authentication System
 
