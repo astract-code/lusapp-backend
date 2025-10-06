@@ -105,7 +105,7 @@ export const OnboardingScreen = () => {
             style={[styles.appleButton, { borderColor: theme.border }]}
             onPress={handleAppleSignIn}
           >
-            <Text style={styles.appleIcon}></Text>
+            <Text style={styles.appleIcon}>&#xF8FF;</Text>
             <Text style={[styles.appleButtonText, { color: theme.text }]}>
               Continue with Apple
             </Text>
