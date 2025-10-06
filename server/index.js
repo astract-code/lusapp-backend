@@ -70,10 +70,10 @@ app.get('/api/races/:id', async (req, res) => {
 
 app.post('/api/races', adminAuth, async (req, res) => {
   try {
-    const { name, sport, city, country, continent, date, distance, description, participants } = req.body;
+    const { name, sport, city, country, continent, date, start_time, distance, description, participants } = req.body;
     const result = await pool.query(
-      'INSERT INTO races (name, sport, city, country, continent, date, distance, description, participants) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *',
-      [name, sport, city, country, continent, date, distance, description, participants || 0]
+      'INSERT INTO races (name, sport, city, country, continent, date, start_time, distance, description, participants) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING *',
+      [name, sport, city, country, continent, date, start_time || null, distance, description, participants || 0]
     );
     res.json(result.rows[0]);
   } catch (error) {
@@ -85,10 +85,10 @@ app.post('/api/races', adminAuth, async (req, res) => {
 app.put('/api/races/:id', adminAuth, async (req, res) => {
   try {
     const { id } = req.params;
-    const { name, sport, city, country, continent, date, distance, description, participants } = req.body;
+    const { name, sport, city, country, continent, date, start_time, distance, description, participants } = req.body;
     const result = await pool.query(
-      'UPDATE races SET name = $1, sport = $2, city = $3, country = $4, continent = $5, date = $6, distance = $7, description = $8, participants = $9 WHERE id = $10 RETURNING *',
-      [name, sport, city, country, continent, date, distance, description, participants, id]
+      'UPDATE races SET name = $1, sport = $2, city = $3, country = $4, continent = $5, date = $6, start_time = $7, distance = $8, description = $9, participants = $10 WHERE id = $11 RETURNING *',
+      [name, sport, city, country, continent, date, start_time || null, distance, description, participants, id]
     );
     if (result.rows.length === 0) {
       return res.status(404).json({ error: 'Race not found' });
@@ -129,14 +129,15 @@ app.post('/api/races/csv-upload', adminAuth, upload.single('csvFile'), async (re
             const country = row.country;
             const continent = row.continent;
             const date = row.date;
+            const start_time = row.start_time || row.startTime || row['Start Time'] || null;
             const distance = row.distance;
             const description = row.description || '';
             const participants = parseInt(row.participants) || 0;
 
             if (name && date) {
               await pool.query(
-                'INSERT INTO races (name, sport, city, country, continent, date, distance, description, participants) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)',
-                [name, sport, city, country, continent, date, distance, description, participants]
+                'INSERT INTO races (name, sport, city, country, continent, date, start_time, distance, description, participants) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)',
+                [name, sport, city, country, continent, date, start_time, distance, description, participants]
               );
               imported++;
             }
