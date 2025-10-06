@@ -13,8 +13,22 @@ export const useAppStore = create((set, get) => ({
   fetchRaces: async () => {
     set({ isLoading: true });
     try {
+      console.log('Fetching races from:', `${API_URL}/api/races`);
       const response = await fetch(`${API_URL}/api/races`);
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
       const data = await response.json();
+      console.log('Fetched data:', data);
+      
+      if (!Array.isArray(data)) {
+        console.error('Data is not an array:', data);
+        set({ isLoading: false });
+        return;
+      }
+      
       const formattedRaces = data.map(race => ({
         id: race.id.toString(),
         name: race.name,
@@ -28,10 +42,12 @@ export const useAppStore = create((set, get) => ({
         participants: race.participants,
         registeredUsers: [],
       }));
+      
+      console.log(`Successfully loaded ${formattedRaces.length} races`);
       set({ races: formattedRaces, isLoading: false });
     } catch (error) {
-      console.error('Error fetching races:', error);
-      set({ isLoading: false });
+      console.error('Error fetching races:', error.message);
+      set({ isLoading: false, races: [] });
     }
   },
   
