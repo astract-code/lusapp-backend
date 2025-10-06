@@ -7,6 +7,7 @@ const multer = require('multer');
 const csv = require('csv-parser');
 const fs = require('fs');
 const path = require('path');
+const authRoutes = require('./routes/auth');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -33,6 +34,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 const upload = multer({ dest: 'uploads/' });
 
 app.use('/admin', adminAuth, express.static('server/public'));
+app.use('/api/auth', authRoutes);
 
 app.get('/api/races', async (req, res) => {
   try {
