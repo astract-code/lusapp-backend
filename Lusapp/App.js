@@ -1,18 +1,16 @@
 import React, { useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
-import { useColorScheme } from 'react-native';
 import { AuthProvider, useAuth } from './src/context/AuthContext';
 import { SettingsProvider } from './src/context/SettingsContext';
+import { ThemeProvider, useTheme } from './src/context/ThemeContext';
 import { OnboardingScreen } from './src/screens/OnboardingScreen';
 import { AppNavigator } from './src/navigation/AppNavigator';
 import { useAppStore } from './src/context/AppContext';
-import { COLORS } from './src/constants/theme';
 
 const AppContent = () => {
   const { user, isLoading } = useAuth();
-  const colorScheme = useColorScheme();
-  const theme = COLORS[colorScheme] || COLORS.light;
+  const { isDarkMode } = useTheme();
   const fetchRaces = useAppStore((state) => state.fetchRaces);
 
   useEffect(() => {
@@ -25,7 +23,7 @@ const AppContent = () => {
 
   return (
     <>
-      <StatusBar style={colorScheme === 'dark' ? 'light' : 'dark'} />
+      <StatusBar style={isDarkMode ? 'light' : 'dark'} />
       {user ? (
         <NavigationContainer>
           <AppNavigator />
@@ -40,9 +38,11 @@ const AppContent = () => {
 export default function App() {
   return (
     <AuthProvider>
-      <SettingsProvider>
-        <AppContent />
-      </SettingsProvider>
+      <ThemeProvider>
+        <SettingsProvider>
+          <AppContent />
+        </SettingsProvider>
+      </ThemeProvider>
     </AuthProvider>
   );
 }
