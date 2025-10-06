@@ -23,7 +23,7 @@ outputType = "console"
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
-args = "cd Lusapp && npx expo start"
+args = "cd Lusapp && npx expo start --tunnel"
 
 [[ports]]
 localPort = 8081
