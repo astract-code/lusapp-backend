@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, useColorScheme, TextInput } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, TextInput } from 'react-native';
 import { UserAvatar } from './UserAvatar';
-import { COLORS, SPACING, BORDER_RADIUS, FONT_SIZE } from '../constants/theme';
+import { SPACING, BORDER_RADIUS, FONT_SIZE } from '../constants/theme';
+import { useTheme } from '../context/ThemeContext';
 import { useAppStore } from '../context/AppContext';
 import { useAuth } from '../context/AuthContext';
 
 export const PostCard = ({ post, onUserPress, onRacePress }) => {
-  const colorScheme = useColorScheme();
-  const theme = COLORS[colorScheme] || COLORS.light;
+  const { colors } = useTheme();
   const [showComments, setShowComments] = useState(false);
   const [commentText, setCommentText] = useState('');
   
@@ -45,14 +45,14 @@ export const PostCard = ({ post, onUserPress, onRacePress }) => {
   const isLikedByCurrentUser = post.likedBy?.includes(currentUser.id) || false;
 
   return (
-    <View style={[styles.container, { backgroundColor: theme.card }]}>
+    <View style={[styles.container, { backgroundColor: colors.card }]}>
       <View style={styles.header}>
         <UserAvatar uri={postAuthor.avatar} size={48} onPress={() => onUserPress(postAuthor.id)} />
         <View style={styles.headerText}>
           <TouchableOpacity onPress={() => onUserPress(postAuthor.id)}>
-            <Text style={[styles.userName, { color: theme.text }]}>{postAuthor.name}</Text>
+            <Text style={[styles.userName, { color: colors.text }]}>{postAuthor.name}</Text>
           </TouchableOpacity>
-          <Text style={[styles.timestamp, { color: theme.textSecondary }]}>
+          <Text style={[styles.timestamp, { color: colors.textSecondary }]}>
             {formatTime(post.timestamp)}
           </Text>
         </View>
@@ -60,22 +60,22 @@ export const PostCard = ({ post, onUserPress, onRacePress }) => {
 
       <View style={styles.content}>
         {post.type === 'signup' ? (
-          <Text style={[styles.activityText, { color: theme.text }]}>
+          <Text style={[styles.activityText, { color: colors.text }]}>
             🎯 Signed up for{' '}
-            <Text style={[styles.raceLink, { color: theme.primary }]} onPress={() => race && onRacePress(race.id)}>
+            <Text style={[styles.raceLink, { color: colors.primary }]} onPress={() => race && onRacePress(race.id)}>
               {race?.name || 'a race'}
             </Text>
           </Text>
         ) : (
           <View>
-            <Text style={[styles.activityText, { color: theme.text }]}>
+            <Text style={[styles.activityText, { color: colors.text }]}>
               🏆 Completed{' '}
-              <Text style={[styles.raceLink, { color: theme.primary }]}>
+              <Text style={[styles.raceLink, { color: colors.primary }]}>
                 {post.raceName || race?.name || 'a race'}
               </Text>
             </Text>
             {post.time && (
-              <Text style={[styles.timeText, { color: theme.textSecondary }]}>
+              <Text style={[styles.timeText, { color: colors.textSecondary }]}>
                 ⏱️ Time: {post.time}
               </Text>
             )}
@@ -83,10 +83,10 @@ export const PostCard = ({ post, onUserPress, onRacePress }) => {
         )}
       </View>
 
-      <View style={[styles.actions, { borderTopColor: theme.border }]}>
+      <View style={[styles.actions, { borderTopColor: colors.border }]}>
         <TouchableOpacity style={styles.actionButton} onPress={handleLike}>
           <Text style={styles.actionIcon}>{isLikedByCurrentUser ? '❤️' : '🤍'}</Text>
-          <Text style={[styles.actionText, { color: theme.textSecondary }]}>
+          <Text style={[styles.actionText, { color: colors.textSecondary }]}>
             {post.likedBy?.length || 0} {post.likedBy?.length === 1 ? 'like' : 'likes'}
           </Text>
         </TouchableOpacity>
@@ -95,24 +95,24 @@ export const PostCard = ({ post, onUserPress, onRacePress }) => {
           onPress={() => setShowComments(!showComments)}
         >
           <Text style={styles.actionIcon}>💬</Text>
-          <Text style={[styles.actionText, { color: theme.textSecondary }]}>
+          <Text style={[styles.actionText, { color: colors.textSecondary }]}>
             {post.comments?.length || 0} {post.comments?.length === 1 ? 'comment' : 'comments'}
           </Text>
         </TouchableOpacity>
       </View>
 
       {showComments && (
-        <View style={[styles.commentsSection, { borderTopColor: theme.border }]}>
+        <View style={[styles.commentsSection, { borderTopColor: colors.border }]}>
           {post.comments?.map((comment, index) => {
             const commentUser = getUserById(comment.userId);
             return (
               <View key={index} style={styles.comment}>
                 <UserAvatar uri={commentUser?.avatar} size={32} />
                 <View style={styles.commentContent}>
-                  <Text style={[styles.commentUser, { color: theme.text }]}>
+                  <Text style={[styles.commentUser, { color: colors.text }]}>
                     {commentUser?.name}
                   </Text>
-                  <Text style={[styles.commentText, { color: theme.text }]}>
+                  <Text style={[styles.commentText, { color: colors.text }]}>
                     {comment.text}
                   </Text>
                 </View>
@@ -123,17 +123,17 @@ export const PostCard = ({ post, onUserPress, onRacePress }) => {
           <View style={styles.commentInput}>
             <TextInput
               style={[styles.input, { 
-                backgroundColor: theme.background, 
-                color: theme.text,
-                borderColor: theme.border
+                backgroundColor: colors.background, 
+                color: colors.text,
+                borderColor: colors.border
               }]}
               placeholder="Add a comment..."
-              placeholderTextColor={theme.textSecondary}
+              placeholderTextColor={colors.textSecondary}
               value={commentText}
               onChangeText={setCommentText}
             />
             <TouchableOpacity 
-              style={[styles.sendButton, { backgroundColor: theme.primary }]}
+              style={[styles.sendButton, { backgroundColor: colors.primary }]}
               onPress={handleAddComment}
             >
               <Text style={styles.sendButtonText}>Send</Text>

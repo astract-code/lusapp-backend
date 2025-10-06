@@ -1,16 +1,16 @@
 import React from 'react';
-import { View, Text, StyleSheet, useColorScheme } from 'react-native';
-import { COLORS, SPACING, BORDER_RADIUS, FONT_SIZE } from '../constants/theme';
+import { View, Text, StyleSheet } from 'react-native';
+import { SPACING, BORDER_RADIUS, FONT_SIZE } from '../constants/theme';
+import { useTheme } from '../context/ThemeContext';
 
 export const StatCard = ({ icon, label, value }) => {
-  const colorScheme = useColorScheme();
-  const theme = COLORS[colorScheme] || COLORS.light;
+  const { colors } = useTheme();
 
   return (
-    <View style={[styles.container, { backgroundColor: theme.card }]}>
+    <View style={[styles.container, { backgroundColor: colors.card }]}>
       <Text style={styles.icon}>{icon}</Text>
-      <Text style={[styles.value, { color: theme.text }]}>{value}</Text>
-      <Text style={[styles.label, { color: theme.textSecondary }]}>{label}</Text>
+      <Text style={[styles.value, { color: colors.text }]}>{value}</Text>
+      <Text style={[styles.label, { color: colors.textSecondary }]}>{label}</Text>
     </View>
   );
 };

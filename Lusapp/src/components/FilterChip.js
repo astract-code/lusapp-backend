@@ -1,18 +1,18 @@
 import React from 'react';
-import { TouchableOpacity, Text, StyleSheet, useColorScheme } from 'react-native';
-import { COLORS, SPACING, BORDER_RADIUS, FONT_SIZE } from '../constants/theme';
+import { TouchableOpacity, Text, StyleSheet } from 'react-native';
+import { SPACING, BORDER_RADIUS, FONT_SIZE } from '../constants/theme';
+import { useTheme } from '../context/ThemeContext';
 
 export const FilterChip = ({ label, selected, onPress }) => {
-  const colorScheme = useColorScheme();
-  const theme = COLORS[colorScheme] || COLORS.light;
+  const { colors } = useTheme();
 
   return (
     <TouchableOpacity
       style={[
         styles.chip,
         {
-          backgroundColor: selected ? theme.primary : theme.card,
-          borderColor: selected ? theme.primary : theme.border,
+          backgroundColor: selected ? colors.primary : colors.card,
+          borderColor: selected ? colors.primary : colors.border,
         },
       ]}
       onPress={onPress}
@@ -20,7 +20,7 @@ export const FilterChip = ({ label, selected, onPress }) => {
       <Text
         style={[
           styles.label,
-          { color: selected ? '#FFFFFF' : theme.text },
+          { color: selected ? '#FFFFFF' : colors.text },
         ]}
       >
         {label}

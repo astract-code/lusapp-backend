@@ -5,7 +5,6 @@ import {
   StyleSheet,
   ScrollView,
   TouchableOpacity,
-  useColorScheme,
   Alert,
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -14,12 +13,12 @@ import { StatCard } from '../components/StatCard';
 import { RaceCard } from '../components/RaceCard';
 import { useAppStore } from '../context/AppContext';
 import { useAuth } from '../context/AuthContext';
-import { COLORS, SPACING, FONT_SIZE, BORDER_RADIUS } from '../constants/theme';
+import { useTheme } from '../context/ThemeContext';
+import { SPACING, FONT_SIZE, BORDER_RADIUS } from '../constants/theme';
 
 export const UserProfileScreen = ({ route, navigation }) => {
   const { userId } = route.params;
-  const colorScheme = useColorScheme();
-  const theme = COLORS[colorScheme] || COLORS.light;
+  const { colors } = useTheme();
   const { user: currentUser } = useAuth();
   const { getUserById, races, toggleFollow } = useAppStore();
 
@@ -30,8 +29,8 @@ export const UserProfileScreen = ({ route, navigation }) => {
 
   if (!user) {
     return (
-      <View style={[styles.container, { backgroundColor: theme.background }]}>
-        <Text style={[styles.errorText, { color: theme.text }]}>User not found</Text>
+      <View style={[styles.container, { backgroundColor: colors.background }]}>
+        <Text style={[styles.errorText, { color: colors.text }]}>User not found</Text>
       </View>
     );
   }
@@ -45,9 +44,9 @@ export const UserProfileScreen = ({ route, navigation }) => {
   );
 
   return (
-    <ScrollView style={[styles.container, { backgroundColor: theme.background }]}>
+    <ScrollView style={[styles.container, { backgroundColor: colors.background }]}>
       <LinearGradient
-        colors={[theme.gradient1, theme.gradient2]}
+        colors={[colors.gradient1, colors.gradient2]}
         style={styles.header}
       >
         <UserAvatar uri={user.avatar} size={100} />
@@ -71,13 +70,13 @@ export const UserProfileScreen = ({ route, navigation }) => {
             <TouchableOpacity
               style={[
                 styles.followButton,
-                { backgroundColor: isFollowing ? theme.background : theme.primary }
+                { backgroundColor: isFollowing ? colors.background : colors.primary }
               ]}
               onPress={() => toggleFollow(currentUser.id, userId)}
             >
               <Text style={[
                 styles.followButtonText,
-                { color: isFollowing ? theme.text : '#FFFFFF' }
+                { color: isFollowing ? colors.text : '#FFFFFF' }
               ]}>
                 {isFollowing ? 'Following' : 'Follow'}
               </Text>
@@ -110,7 +109,7 @@ export const UserProfileScreen = ({ route, navigation }) => {
       </View>
 
       <View style={styles.section}>
-        <Text style={[styles.sectionTitle, { color: theme.text }]}>
+        <Text style={[styles.sectionTitle, { color: colors.text }]}>
           Joined Races ({joinedRaces.length})
         </Text>
         {joinedRaces.map((race) => (
@@ -121,14 +120,14 @@ export const UserProfileScreen = ({ route, navigation }) => {
           />
         ))}
         {joinedRaces.length === 0 && (
-          <Text style={[styles.emptyText, { color: theme.textSecondary }]}>
+          <Text style={[styles.emptyText, { color: colors.textSecondary }]}>
             No joined races
           </Text>
         )}
       </View>
 
       <View style={styles.section}>
-        <Text style={[styles.sectionTitle, { color: theme.text }]}>
+        <Text style={[styles.sectionTitle, { color: colors.text }]}>
           Completed Races ({completedRaces.length})
         </Text>
         {completedRaces.map((race) => (
@@ -139,7 +138,7 @@ export const UserProfileScreen = ({ route, navigation }) => {
           />
         ))}
         {completedRaces.length === 0 && (
-          <Text style={[styles.emptyText, { color: theme.textSecondary }]}>
+          <Text style={[styles.emptyText, { color: colors.textSecondary }]}>
             No completed races
           </Text>
         )}

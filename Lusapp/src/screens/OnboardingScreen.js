@@ -7,15 +7,14 @@ import {
   TouchableOpacity,
   KeyboardAvoidingView,
   Platform,
-  useColorScheme,
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useAuth } from '../context/AuthContext';
-import { COLORS, SPACING, BORDER_RADIUS, FONT_SIZE } from '../constants/theme';
+import { useTheme } from '../context/ThemeContext';
+import { SPACING, BORDER_RADIUS, FONT_SIZE } from '../constants/theme';
 
 export const OnboardingScreen = () => {
-  const colorScheme = useColorScheme();
-  const theme = COLORS[colorScheme] || COLORS.light;
+  const { colors } = useTheme();
   const { login, signupWithEmail, signupWithApple } = useAuth();
   
   const [isLogin, setIsLogin] = useState(true);
@@ -37,7 +36,7 @@ export const OnboardingScreen = () => {
 
   return (
     <LinearGradient
-      colors={[theme.gradient1, theme.gradient2]}
+      colors={[colors.gradient1, colors.gradient2]}
       style={styles.container}
     >
       <KeyboardAvoidingView
@@ -53,24 +52,24 @@ export const OnboardingScreen = () => {
         </View>
 
         <View style={[styles.form, { backgroundColor: 'rgba(255, 255, 255, 0.95)' }]}>
-          <Text style={[styles.formTitle, { color: theme.text }]}>
+          <Text style={[styles.formTitle, { color: colors.text }]}>
             {isLogin ? 'Welcome Back' : 'Join Lusapp'}
           </Text>
 
           {!isLogin && (
             <TextInput
-              style={[styles.input, { borderColor: theme.border, color: theme.text }]}
+              style={[styles.input, { borderColor: colors.border, color: colors.text }]}
               placeholder="Full Name"
-              placeholderTextColor={theme.textSecondary}
+              placeholderTextColor={colors.textSecondary}
               value={name}
               onChangeText={setName}
             />
           )}
 
           <TextInput
-            style={[styles.input, { borderColor: theme.border, color: theme.text }]}
+            style={[styles.input, { borderColor: colors.border, color: colors.text }]}
             placeholder="Email"
-            placeholderTextColor={theme.textSecondary}
+            placeholderTextColor={colors.textSecondary}
             value={email}
             onChangeText={setEmail}
             keyboardType="email-address"
@@ -78,16 +77,16 @@ export const OnboardingScreen = () => {
           />
 
           <TextInput
-            style={[styles.input, { borderColor: theme.border, color: theme.text }]}
+            style={[styles.input, { borderColor: colors.border, color: colors.text }]}
             placeholder="Password"
-            placeholderTextColor={theme.textSecondary}
+            placeholderTextColor={colors.textSecondary}
             value={password}
             onChangeText={setPassword}
             secureTextEntry
           />
 
           <TouchableOpacity
-            style={[styles.button, { backgroundColor: theme.primary }]}
+            style={[styles.button, { backgroundColor: colors.primary }]}
             onPress={handleEmailAuth}
           >
             <Text style={styles.buttonText}>
@@ -96,25 +95,25 @@ export const OnboardingScreen = () => {
           </TouchableOpacity>
 
           <View style={styles.divider}>
-            <View style={[styles.dividerLine, { backgroundColor: theme.border }]} />
-            <Text style={[styles.dividerText, { color: theme.textSecondary }]}>OR</Text>
-            <View style={[styles.dividerLine, { backgroundColor: theme.border }]} />
+            <View style={[styles.dividerLine, { backgroundColor: colors.border }]} />
+            <Text style={[styles.dividerText, { color: colors.textSecondary }]}>OR</Text>
+            <View style={[styles.dividerLine, { backgroundColor: colors.border }]} />
           </View>
 
           <TouchableOpacity
-            style={[styles.appleButton, { borderColor: theme.border }]}
+            style={[styles.appleButton, { borderColor: colors.border }]}
             onPress={handleAppleSignIn}
           >
             <Text style={styles.appleIcon}>&#xF8FF;</Text>
-            <Text style={[styles.appleButtonText, { color: theme.text }]}>
+            <Text style={[styles.appleButtonText, { color: colors.text }]}>
               Continue with Apple
             </Text>
           </TouchableOpacity>
 
           <TouchableOpacity onPress={() => setIsLogin(!isLogin)}>
-            <Text style={[styles.switchText, { color: theme.textSecondary }]}>
+            <Text style={[styles.switchText, { color: colors.textSecondary }]}>
               {isLogin ? "Don't have an account? " : 'Already have an account? '}
-              <Text style={[styles.switchLink, { color: theme.primary }]}>
+              <Text style={[styles.switchLink, { color: colors.primary }]}>
                 {isLogin ? 'Sign Up' : 'Log In'}
               </Text>
             </Text>

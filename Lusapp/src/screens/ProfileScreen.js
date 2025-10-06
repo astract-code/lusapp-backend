@@ -5,7 +5,6 @@ import {
   StyleSheet,
   ScrollView,
   TouchableOpacity,
-  useColorScheme,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -14,11 +13,11 @@ import { StatCard } from '../components/StatCard';
 import { RaceCard } from '../components/RaceCard';
 import { useAuth } from '../context/AuthContext';
 import { useAppStore } from '../context/AppContext';
-import { COLORS, SPACING, FONT_SIZE, BORDER_RADIUS } from '../constants/theme';
+import { useTheme } from '../context/ThemeContext';
+import { SPACING, FONT_SIZE, BORDER_RADIUS } from '../constants/theme';
 
 export const ProfileScreen = ({ navigation }) => {
-  const colorScheme = useColorScheme();
-  const theme = COLORS[colorScheme] || COLORS.light;
+  const { colors } = useTheme();
   const { user: authUser, logout } = useAuth();
   const races = useAppStore((state) => state.races);
   const user = useAppStore((state) => 
@@ -36,9 +35,9 @@ export const ProfileScreen = ({ navigation }) => {
   );
 
   return (
-    <SafeAreaView style={[styles.container, { backgroundColor: theme.background }]} edges={['top']}>
+    <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]} edges={['top']}>
       <View style={styles.topBar}>
-        <Text style={[styles.topBarTitle, { color: theme.text }]}>Profile</Text>
+        <Text style={[styles.topBarTitle, { color: colors.text }]}>Profile</Text>
         <TouchableOpacity
           style={styles.settingsButton}
           onPress={() => navigation.navigate('Settings')}
@@ -48,7 +47,7 @@ export const ProfileScreen = ({ navigation }) => {
       </View>
       <ScrollView>
         <LinearGradient
-        colors={[theme.gradient1, theme.gradient2]}
+        colors={[colors.gradient1, colors.gradient2]}
         style={styles.header}
       >
         <UserAvatar uri={user.avatar} size={100} />
@@ -82,7 +81,7 @@ export const ProfileScreen = ({ navigation }) => {
       </View>
 
       <View style={styles.section}>
-        <Text style={[styles.sectionTitle, { color: theme.text }]}>
+        <Text style={[styles.sectionTitle, { color: colors.text }]}>
           Joined Races ({joinedRaces.length})
         </Text>
         {joinedRaces.map((race) => (
@@ -93,14 +92,14 @@ export const ProfileScreen = ({ navigation }) => {
           />
         ))}
         {joinedRaces.length === 0 && (
-          <Text style={[styles.emptyText, { color: theme.textSecondary }]}>
+          <Text style={[styles.emptyText, { color: colors.textSecondary }]}>
             No joined races yet
           </Text>
         )}
       </View>
 
       <View style={styles.section}>
-        <Text style={[styles.sectionTitle, { color: theme.text }]}>
+        <Text style={[styles.sectionTitle, { color: colors.text }]}>
           Completed Races ({completedRaces.length})
         </Text>
         {completedRaces.map((race) => (
@@ -111,14 +110,14 @@ export const ProfileScreen = ({ navigation }) => {
           />
         ))}
         {completedRaces.length === 0 && (
-          <Text style={[styles.emptyText, { color: theme.textSecondary }]}>
+          <Text style={[styles.emptyText, { color: colors.textSecondary }]}>
             No completed races yet
           </Text>
         )}
       </View>
 
       <TouchableOpacity
-        style={[styles.logoutButton, { backgroundColor: theme.error }]}
+        style={[styles.logoutButton, { backgroundColor: colors.error }]}
         onPress={logout}
       >
         <Text style={styles.logoutText}>Log Out</Text>

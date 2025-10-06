@@ -1,17 +1,17 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, useColorScheme } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { COLORS, SPACING, BORDER_RADIUS, FONT_SIZE, SPORTS } from '../constants/theme';
+import { SPACING, BORDER_RADIUS, FONT_SIZE, SPORTS } from '../constants/theme';
+import { useTheme } from '../context/ThemeContext';
 
 export const RaceCard = ({ race, onPress }) => {
-  const colorScheme = useColorScheme();
-  const theme = COLORS[colorScheme] || COLORS.light;
+  const { colors } = useTheme();
   const sport = SPORTS.find(s => s.id === race.sport) || SPORTS[0];
 
   return (
     <TouchableOpacity onPress={onPress} style={styles.container}>
       <LinearGradient
-        colors={[theme.gradient1, theme.gradient2]}
+        colors={[colors.gradient1, colors.gradient2]}
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 1 }}
         style={styles.gradient}

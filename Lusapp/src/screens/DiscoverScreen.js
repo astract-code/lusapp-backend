@@ -6,7 +6,6 @@ import {
   FlatList,
   ScrollView,
   TouchableOpacity,
-  useColorScheme,
   Alert,
   TextInput,
   Modal,
@@ -15,11 +14,11 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { RaceCard } from '../components/RaceCard';
 import { FilterChip } from '../components/FilterChip';
 import { useAppStore } from '../context/AppContext';
-import { COLORS, SPACING, FONT_SIZE, BORDER_RADIUS, SPORTS, CONTINENTS, COUNTRIES, COUNTRY_TO_CONTINENT } from '../constants/theme';
+import { useTheme } from '../context/ThemeContext';
+import { SPACING, FONT_SIZE, BORDER_RADIUS, SPORTS, CONTINENTS, COUNTRIES, COUNTRY_TO_CONTINENT } from '../constants/theme';
 
 export const DiscoverScreen = ({ navigation }) => {
-  const colorScheme = useColorScheme();
-  const theme = COLORS[colorScheme] || COLORS.light;
+  const { colors } = useTheme();
   const { races, addRace } = useAppStore();
   
   const [selectedSport, setSelectedSport] = useState(null);
@@ -111,19 +110,19 @@ export const DiscoverScreen = ({ navigation }) => {
   const hasFilters = selectedSport || selectedContinent || selectedCountry || searchQuery;
 
   return (
-    <SafeAreaView style={[styles.container, { backgroundColor: theme.background }]}>
+    <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
       <View style={styles.header}>
-        <Text style={[styles.title, { color: theme.text }]}>Discover Races</Text>
+        <Text style={[styles.title, { color: colors.text }]}>Discover Races</Text>
         <View style={styles.headerButtons}>
           {hasFilters && (
             <TouchableOpacity onPress={clearFilters} style={styles.headerButton}>
-              <Text style={[styles.clearButton, { color: theme.primary }]}>
+              <Text style={[styles.clearButton, { color: colors.primary }]}>
                 Clear Filters
               </Text>
             </TouchableOpacity>
           )}
           <TouchableOpacity 
-            style={[styles.addButton, { backgroundColor: theme.primary }]}
+            style={[styles.addButton, { backgroundColor: colors.primary }]}
             onPress={() => setShowAddForm(true)}
           >
             <Text style={styles.addButtonText}>+ Add Race</Text>
@@ -137,120 +136,120 @@ export const DiscoverScreen = ({ navigation }) => {
         presentationStyle="pageSheet"
         onRequestClose={() => setShowAddForm(false)}
       >
-        <SafeAreaView style={[styles.modalContainer, { backgroundColor: theme.background }]}>
+        <SafeAreaView style={[styles.modalContainer, { backgroundColor: colors.background }]}>
           <View style={styles.modalHeader}>
-            <Text style={[styles.modalTitle, { color: theme.text }]}>Add New Race</Text>
+            <Text style={[styles.modalTitle, { color: colors.text }]}>Add New Race</Text>
             <TouchableOpacity onPress={() => setShowAddForm(false)}>
-              <Text style={[styles.modalClose, { color: theme.primary }]}>Cancel</Text>
+              <Text style={[styles.modalClose, { color: colors.primary }]}>Cancel</Text>
             </TouchableOpacity>
           </View>
 
           <ScrollView style={styles.form}>
-            <Text style={[styles.label, { color: theme.text }]}>Race Name *</Text>
+            <Text style={[styles.label, { color: colors.text }]}>Race Name *</Text>
             <TextInput
-              style={[styles.input, { backgroundColor: theme.card, color: theme.text, borderColor: theme.border }]}
+              style={[styles.input, { backgroundColor: colors.card, color: colors.text, borderColor: colors.border }]}
               placeholder="e.g., Boston Marathon"
-              placeholderTextColor={theme.textSecondary}
+              placeholderTextColor={colors.textSecondary}
               value={newRace.name}
               onChangeText={(text) => setNewRace({ ...newRace, name: text })}
             />
 
-            <Text style={[styles.label, { color: theme.text }]}>Sport *</Text>
+            <Text style={[styles.label, { color: colors.text }]}>Sport *</Text>
             <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.sportPicker}>
               {SPORTS.map((sport) => (
                 <TouchableOpacity
                   key={sport.id}
                   style={[
                     styles.sportOption,
-                    { backgroundColor: newRace.sport === sport.id ? theme.primary : theme.card, borderColor: theme.border }
+                    { backgroundColor: newRace.sport === sport.id ? colors.primary : colors.card, borderColor: colors.border }
                   ]}
                   onPress={() => setNewRace({ ...newRace, sport: sport.id })}
                 >
-                  <Text style={[styles.sportText, { color: newRace.sport === sport.id ? '#FFF' : theme.text }]}>
+                  <Text style={[styles.sportText, { color: newRace.sport === sport.id ? '#FFF' : colors.text }]}>
                     {sport.icon} {sport.name}
                   </Text>
                 </TouchableOpacity>
               ))}
             </ScrollView>
 
-            <Text style={[styles.label, { color: theme.text }]}>Date * (YYYY-MM-DD)</Text>
+            <Text style={[styles.label, { color: colors.text }]}>Date * (YYYY-MM-DD)</Text>
             <TextInput
-              style={[styles.input, { backgroundColor: theme.card, color: theme.text, borderColor: theme.border }]}
+              style={[styles.input, { backgroundColor: colors.card, color: colors.text, borderColor: colors.border }]}
               placeholder="2025-12-31"
-              placeholderTextColor={theme.textSecondary}
+              placeholderTextColor={colors.textSecondary}
               value={newRace.date}
               onChangeText={(text) => setNewRace({ ...newRace, date: text })}
             />
 
-            <Text style={[styles.label, { color: theme.text }]}>City</Text>
+            <Text style={[styles.label, { color: colors.text }]}>City</Text>
             <TextInput
-              style={[styles.input, { backgroundColor: theme.card, color: theme.text, borderColor: theme.border }]}
+              style={[styles.input, { backgroundColor: colors.card, color: colors.text, borderColor: colors.border }]}
               placeholder="e.g., Boston"
-              placeholderTextColor={theme.textSecondary}
+              placeholderTextColor={colors.textSecondary}
               value={newRace.city}
               onChangeText={(text) => setNewRace({ ...newRace, city: text })}
             />
 
-            <Text style={[styles.label, { color: theme.text }]}>Country</Text>
+            <Text style={[styles.label, { color: colors.text }]}>Country</Text>
             <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.sportPicker}>
               {COUNTRIES.map((country) => (
                 <TouchableOpacity
                   key={country}
                   style={[
                     styles.sportOption,
-                    { backgroundColor: newRace.country === country ? theme.primary : theme.card, borderColor: theme.border }
+                    { backgroundColor: newRace.country === country ? colors.primary : colors.card, borderColor: colors.border }
                   ]}
                   onPress={() => setNewRace({ ...newRace, country })}
                 >
-                  <Text style={[styles.sportText, { color: newRace.country === country ? '#FFF' : theme.text }]}>
+                  <Text style={[styles.sportText, { color: newRace.country === country ? '#FFF' : colors.text }]}>
                     {country}
                   </Text>
                 </TouchableOpacity>
               ))}
             </ScrollView>
 
-            <Text style={[styles.label, { color: theme.text }]}>Continent</Text>
+            <Text style={[styles.label, { color: colors.text }]}>Continent</Text>
             <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.sportPicker}>
               {CONTINENTS.map((continent) => (
                 <TouchableOpacity
                   key={continent}
                   style={[
                     styles.sportOption,
-                    { backgroundColor: newRace.continent === continent ? theme.primary : theme.card, borderColor: theme.border }
+                    { backgroundColor: newRace.continent === continent ? colors.primary : colors.card, borderColor: colors.border }
                   ]}
                   onPress={() => setNewRace({ ...newRace, continent })}
                 >
-                  <Text style={[styles.sportText, { color: newRace.continent === continent ? '#FFF' : theme.text }]}>
+                  <Text style={[styles.sportText, { color: newRace.continent === continent ? '#FFF' : colors.text }]}>
                     {continent}
                   </Text>
                 </TouchableOpacity>
               ))}
             </ScrollView>
 
-            <Text style={[styles.label, { color: theme.text }]}>Distance</Text>
+            <Text style={[styles.label, { color: colors.text }]}>Distance</Text>
             <TextInput
-              style={[styles.input, { backgroundColor: theme.card, color: theme.text, borderColor: theme.border }]}
+              style={[styles.input, { backgroundColor: colors.card, color: colors.text, borderColor: colors.border }]}
               placeholder="e.g., 42.2 km"
-              placeholderTextColor={theme.textSecondary}
+              placeholderTextColor={colors.textSecondary}
               value={newRace.distance}
               onChangeText={(text) => setNewRace({ ...newRace, distance: text })}
             />
 
-            <Text style={[styles.label, { color: theme.text }]}>Participants</Text>
+            <Text style={[styles.label, { color: colors.text }]}>Participants</Text>
             <TextInput
-              style={[styles.input, { backgroundColor: theme.card, color: theme.text, borderColor: theme.border }]}
+              style={[styles.input, { backgroundColor: colors.card, color: colors.text, borderColor: colors.border }]}
               placeholder="e.g., 30000"
-              placeholderTextColor={theme.textSecondary}
+              placeholderTextColor={colors.textSecondary}
               keyboardType="number-pad"
               value={newRace.participants}
               onChangeText={(text) => setNewRace({ ...newRace, participants: text })}
             />
 
-            <Text style={[styles.label, { color: theme.text }]}>Description</Text>
+            <Text style={[styles.label, { color: colors.text }]}>Description</Text>
             <TextInput
-              style={[styles.textArea, { backgroundColor: theme.card, color: theme.text, borderColor: theme.border }]}
+              style={[styles.textArea, { backgroundColor: colors.card, color: colors.text, borderColor: colors.border }]}
               placeholder="Describe the race..."
-              placeholderTextColor={theme.textSecondary}
+              placeholderTextColor={colors.textSecondary}
               multiline
               numberOfLines={4}
               value={newRace.description}
@@ -258,7 +257,7 @@ export const DiscoverScreen = ({ navigation }) => {
             />
 
             <TouchableOpacity
-              style={[styles.submitButton, { backgroundColor: theme.primary }]}
+              style={[styles.submitButton, { backgroundColor: colors.primary }]}
               onPress={handleAddRace}
             >
               <Text style={styles.submitButtonText}>Add Race</Text>
@@ -271,16 +270,16 @@ export const DiscoverScreen = ({ navigation }) => {
         style={styles.filters}
         showsVerticalScrollIndicator={false}
       >
-        <Text style={[styles.filterLabel, { color: theme.text }]}>🔍 Search by City</Text>
+        <Text style={[styles.filterLabel, { color: colors.text }]}>🔍 Search by City</Text>
         <TextInput
-          style={[styles.searchInput, { backgroundColor: theme.card, color: theme.text, borderColor: theme.border }]}
+          style={[styles.searchInput, { backgroundColor: colors.card, color: colors.text, borderColor: colors.border }]}
           placeholder="e.g., Tokyo, Paris, New York..."
-          placeholderTextColor={theme.textSecondary}
+          placeholderTextColor={colors.textSecondary}
           value={searchQuery}
           onChangeText={setSearchQuery}
         />
 
-        <Text style={[styles.filterLabel, { color: theme.text }]}>Sport</Text>
+        <Text style={[styles.filterLabel, { color: colors.text }]}>Sport</Text>
         <ScrollView
           horizontal
           showsHorizontalScrollIndicator={false}
@@ -298,7 +297,7 @@ export const DiscoverScreen = ({ navigation }) => {
           ))}
         </ScrollView>
 
-        <Text style={[styles.filterLabel, { color: theme.text }]}>Continent</Text>
+        <Text style={[styles.filterLabel, { color: colors.text }]}>Continent</Text>
         <ScrollView
           horizontal
           showsHorizontalScrollIndicator={false}
@@ -314,7 +313,7 @@ export const DiscoverScreen = ({ navigation }) => {
           ))}
         </ScrollView>
 
-        <Text style={[styles.filterLabel, { color: theme.text }]}>Country</Text>
+        <Text style={[styles.filterLabel, { color: colors.text }]}>Country</Text>
         <ScrollView
           horizontal
           showsHorizontalScrollIndicator={false}
@@ -344,7 +343,7 @@ export const DiscoverScreen = ({ navigation }) => {
         )}
         contentContainerStyle={styles.list}
         ListHeaderComponent={
-          <Text style={[styles.resultCount, { color: theme.textSecondary }]}>
+          <Text style={[styles.resultCount, { color: colors.textSecondary }]}>
             {filteredRaces.length} {filteredRaces.length === 1 ? 'race' : 'races'} found
           </Text>
         }

@@ -5,19 +5,18 @@ import {
   StyleSheet,
   ScrollView,
   TouchableOpacity,
-  useColorScheme,
   Alert,
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { UserAvatar } from '../components/UserAvatar';
 import { useAuth } from '../context/AuthContext';
 import { useAppStore } from '../context/AppContext';
-import { COLORS, SPACING, FONT_SIZE, BORDER_RADIUS, SPORTS } from '../constants/theme';
+import { useTheme } from '../context/ThemeContext';
+import { SPACING, FONT_SIZE, BORDER_RADIUS, SPORTS } from '../constants/theme';
 
 export const RaceDetailScreen = ({ route, navigation }) => {
   const { raceId } = route.params;
-  const colorScheme = useColorScheme();
-  const theme = COLORS[colorScheme] || COLORS.light;
+  const { colors } = useTheme();
   const { user } = useAuth();
   const { getRaceById, registerForRace, unregisterFromRace, users } = useAppStore();
 
@@ -25,8 +24,8 @@ export const RaceDetailScreen = ({ route, navigation }) => {
 
   if (!race) {
     return (
-      <View style={[styles.container, { backgroundColor: theme.background }]}>
-        <Text style={[styles.errorText, { color: theme.text }]}>Race not found</Text>
+      <View style={[styles.container, { backgroundColor: colors.background }]}>
+        <Text style={[styles.errorText, { color: colors.text }]}>Race not found</Text>
       </View>
     );
   }
@@ -48,9 +47,9 @@ export const RaceDetailScreen = ({ route, navigation }) => {
   };
 
   return (
-    <ScrollView style={[styles.container, { backgroundColor: theme.background }]}>
+    <ScrollView style={[styles.container, { backgroundColor: colors.background }]}>
       <LinearGradient
-        colors={[theme.gradient1, theme.gradient2]}
+        colors={[colors.gradient1, colors.gradient2]}
         style={styles.header}
       >
         <Text style={styles.sportIcon}>{sport.icon}</Text>
@@ -58,15 +57,15 @@ export const RaceDetailScreen = ({ route, navigation }) => {
         <Text style={styles.sport}>{sport.name}</Text>
       </LinearGradient>
 
-      <View style={[styles.card, { backgroundColor: theme.card }]}>
+      <View style={[styles.card, { backgroundColor: colors.card }]}>
         <View style={styles.infoRow}>
           <Text style={styles.icon}>📍</Text>
           <View style={styles.infoText}>
-            <Text style={[styles.label, { color: theme.textSecondary }]}>Location</Text>
-            <Text style={[styles.value, { color: theme.text }]}>
+            <Text style={[styles.label, { color: colors.textSecondary }]}>Location</Text>
+            <Text style={[styles.value, { color: colors.text }]}>
               {race.city}, {race.country}
             </Text>
-            <Text style={[styles.subValue, { color: theme.textSecondary }]}>
+            <Text style={[styles.subValue, { color: colors.textSecondary }]}>
               {race.continent}
             </Text>
           </View>
@@ -75,8 +74,8 @@ export const RaceDetailScreen = ({ route, navigation }) => {
         <View style={styles.infoRow}>
           <Text style={styles.icon}>📅</Text>
           <View style={styles.infoText}>
-            <Text style={[styles.label, { color: theme.textSecondary }]}>Date</Text>
-            <Text style={[styles.value, { color: theme.text }]}>
+            <Text style={[styles.label, { color: colors.textSecondary }]}>Date</Text>
+            <Text style={[styles.value, { color: colors.text }]}>
               {new Date(race.date).toLocaleDateString('en-US', {
                 weekday: 'long',
                 year: 'numeric',
@@ -90,32 +89,32 @@ export const RaceDetailScreen = ({ route, navigation }) => {
         <View style={styles.infoRow}>
           <Text style={styles.icon}>📏</Text>
           <View style={styles.infoText}>
-            <Text style={[styles.label, { color: theme.textSecondary }]}>Distance</Text>
-            <Text style={[styles.value, { color: theme.text }]}>{race.distance}</Text>
+            <Text style={[styles.label, { color: colors.textSecondary }]}>Distance</Text>
+            <Text style={[styles.value, { color: colors.text }]}>{race.distance}</Text>
           </View>
         </View>
 
         <View style={styles.infoRow}>
           <Text style={styles.icon}>👥</Text>
           <View style={styles.infoText}>
-            <Text style={[styles.label, { color: theme.textSecondary }]}>Participants</Text>
-            <Text style={[styles.value, { color: theme.text }]}>{race.participants}</Text>
+            <Text style={[styles.label, { color: colors.textSecondary }]}>Participants</Text>
+            <Text style={[styles.value, { color: colors.text }]}>{race.participants}</Text>
           </View>
         </View>
       </View>
 
       {race.description && (
-        <View style={[styles.card, { backgroundColor: theme.card }]}>
-          <Text style={[styles.sectionTitle, { color: theme.text }]}>About</Text>
-          <Text style={[styles.description, { color: theme.textSecondary }]}>
+        <View style={[styles.card, { backgroundColor: colors.card }]}>
+          <Text style={[styles.sectionTitle, { color: colors.text }]}>About</Text>
+          <Text style={[styles.description, { color: colors.textSecondary }]}>
             {race.description}
           </Text>
         </View>
       )}
 
       {registeredUsers.length > 0 && (
-        <View style={[styles.card, { backgroundColor: theme.card }]}>
-          <Text style={[styles.sectionTitle, { color: theme.text }]}>
+        <View style={[styles.card, { backgroundColor: colors.card }]}>
+          <Text style={[styles.sectionTitle, { color: colors.text }]}>
             Registered Athletes ({registeredUsers.length})
           </Text>
           <ScrollView horizontal showsHorizontalScrollIndicator={false}>
@@ -126,7 +125,7 @@ export const RaceDetailScreen = ({ route, navigation }) => {
                 onPress={() => navigation.navigate('UserProfile', { userId: athlete.id })}
               >
                 <UserAvatar uri={athlete.avatar} size={60} />
-                <Text style={[styles.athleteName, { color: theme.text }]} numberOfLines={1}>
+                <Text style={[styles.athleteName, { color: colors.text }]} numberOfLines={1}>
                   {athlete.name}
                 </Text>
               </TouchableOpacity>
@@ -138,7 +137,7 @@ export const RaceDetailScreen = ({ route, navigation }) => {
       <TouchableOpacity
         style={[
           styles.registerButton,
-          { backgroundColor: isRegistered ? theme.textSecondary : theme.primary },
+          { backgroundColor: isRegistered ? colors.textSecondary : colors.primary },
         ]}
         onPress={handleRegister}
       >

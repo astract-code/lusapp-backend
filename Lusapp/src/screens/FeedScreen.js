@@ -1,13 +1,13 @@
 import React, { useMemo } from 'react';
-import { View, Text, StyleSheet, FlatList, useColorScheme } from 'react-native';
+import { View, Text, StyleSheet, FlatList } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { PostCard } from '../components/PostCard';
 import { useAppStore } from '../context/AppContext';
-import { COLORS, SPACING, FONT_SIZE } from '../constants/theme';
+import { useTheme } from '../context/ThemeContext';
+import { SPACING, FONT_SIZE } from '../constants/theme';
 
 export const FeedScreen = ({ navigation }) => {
-  const colorScheme = useColorScheme();
-  const theme = COLORS[colorScheme] || COLORS.light;
+  const { colors } = useTheme();
   const posts = useAppStore((state) => state.posts);
 
   const sortedPosts = useMemo(() => 
@@ -24,7 +24,7 @@ export const FeedScreen = ({ navigation }) => {
   };
 
   return (
-    <SafeAreaView style={[styles.container, { backgroundColor: theme.background }]}>
+    <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
       <FlatList
         data={sortedPosts}
         keyExtractor={(item) => item.id}
@@ -38,7 +38,7 @@ export const FeedScreen = ({ navigation }) => {
         )}
         contentContainerStyle={styles.list}
         ListHeaderComponent={
-          <Text style={[styles.header, { color: theme.text }]}>
+          <Text style={[styles.header, { color: colors.text }]}>
             Activity Feed
           </Text>
         }

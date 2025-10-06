@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, FlatList, TouchableOpacity, useColorScheme } from 'react-native';
+import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Calendar } from 'react-native-calendars';
 import { RaceCard } from '../components/RaceCard';
 import { useAppStore } from '../context/AppContext';
-import { COLORS, SPACING, FONT_SIZE, BORDER_RADIUS } from '../constants/theme';
+import { useTheme } from '../context/ThemeContext';
+import { SPACING, FONT_SIZE, BORDER_RADIUS } from '../constants/theme';
 
 export const CalendarScreen = ({ navigation }) => {
-  const colorScheme = useColorScheme();
-  const theme = COLORS[colorScheme] || COLORS.light;
+  const { colors } = useTheme();
   const races = useAppStore((state) => state.races);
   
   const [viewMode, setViewMode] = useState('calendar');
@@ -22,7 +22,7 @@ export const CalendarScreen = ({ navigation }) => {
   upcomingRaces.forEach((race) => {
     markedDates[race.date] = {
       marked: true,
-      dotColor: theme.primary,
+      dotColor: colors.primary,
     };
   });
 
@@ -30,7 +30,7 @@ export const CalendarScreen = ({ navigation }) => {
     markedDates[selectedDate] = {
       ...markedDates[selectedDate],
       selected: true,
-      selectedColor: theme.primary,
+      selectedColor: colors.primary,
     };
   }
 
@@ -39,22 +39,22 @@ export const CalendarScreen = ({ navigation }) => {
     : upcomingRaces;
 
   return (
-    <SafeAreaView style={[styles.container, { backgroundColor: theme.background }]}>
+    <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
       <View style={styles.header}>
-        <Text style={[styles.title, { color: theme.text }]}>Race Calendar</Text>
+        <Text style={[styles.title, { color: colors.text }]}>Race Calendar</Text>
         <View style={styles.viewToggle}>
           <TouchableOpacity
             style={[
               styles.toggleButton,
-              viewMode === 'calendar' && { backgroundColor: theme.primary },
-              { borderColor: theme.border },
+              viewMode === 'calendar' && { backgroundColor: colors.primary },
+              { borderColor: colors.border },
             ]}
             onPress={() => setViewMode('calendar')}
           >
             <Text
               style={[
                 styles.toggleText,
-                { color: viewMode === 'calendar' ? '#FFFFFF' : theme.text },
+                { color: viewMode === 'calendar' ? '#FFFFFF' : colors.text },
               ]}
             >
               Calendar
@@ -63,15 +63,15 @@ export const CalendarScreen = ({ navigation }) => {
           <TouchableOpacity
             style={[
               styles.toggleButton,
-              viewMode === 'list' && { backgroundColor: theme.primary },
-              { borderColor: theme.border },
+              viewMode === 'list' && { backgroundColor: colors.primary },
+              { borderColor: colors.border },
             ]}
             onPress={() => setViewMode('list')}
           >
             <Text
               style={[
                 styles.toggleText,
-                { color: viewMode === 'list' ? '#FFFFFF' : theme.text },
+                { color: viewMode === 'list' ? '#FFFFFF' : colors.text },
               ]}
             >
               List
@@ -85,20 +85,20 @@ export const CalendarScreen = ({ navigation }) => {
           markedDates={markedDates}
           onDayPress={(day) => setSelectedDate(day.dateString)}
           theme={{
-            backgroundColor: theme.card,
-            calendarBackground: theme.card,
-            textSectionTitleColor: theme.textSecondary,
-            selectedDayBackgroundColor: theme.primary,
+            backgroundColor: colors.card,
+            calendarBackground: colors.card,
+            textSectionTitleColor: colors.textSecondary,
+            selectedDayBackgroundColor: colors.primary,
             selectedDayTextColor: '#FFFFFF',
-            todayTextColor: theme.primary,
-            dayTextColor: theme.text,
-            textDisabledColor: theme.textSecondary,
-            dotColor: theme.primary,
+            todayTextColor: colors.primary,
+            dayTextColor: colors.text,
+            textDisabledColor: colors.textSecondary,
+            dotColor: colors.primary,
             selectedDotColor: '#FFFFFF',
-            arrowColor: theme.primary,
-            monthTextColor: theme.text,
+            arrowColor: colors.primary,
+            monthTextColor: colors.text,
           }}
-          style={[styles.calendar, { backgroundColor: theme.card }]}
+          style={[styles.calendar, { backgroundColor: colors.card }]}
         />
       )}
 
@@ -113,7 +113,7 @@ export const CalendarScreen = ({ navigation }) => {
         )}
         contentContainerStyle={styles.list}
         ListEmptyComponent={
-          <Text style={[styles.emptyText, { color: theme.textSecondary }]}>
+          <Text style={[styles.emptyText, { color: colors.textSecondary }]}>
             {selectedDate
               ? 'No races on this date'
               : 'No upcoming races'}
