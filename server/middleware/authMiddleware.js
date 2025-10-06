@@ -1,6 +1,11 @@
 const jwt = require('jsonwebtoken');
 
-const JWT_SECRET = process.env.SESSION_SECRET || 'your-secret-key-change-in-production';
+if (!process.env.SESSION_SECRET) {
+  console.error('FATAL: SESSION_SECRET environment variable is not set. Server cannot start.');
+  process.exit(1);
+}
+
+const JWT_SECRET = process.env.SESSION_SECRET;
 
 const authMiddleware = (req, res, next) => {
   try {

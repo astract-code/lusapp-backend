@@ -16,14 +16,27 @@ export const AuthProvider = ({ children }) => {
   const checkAuth = async () => {
     try {
       const storedToken = await AsyncStorage.getItem('token');
-      const userData = await AsyncStorage.getItem('user');
       
-      if (storedToken && userData) {
-        setToken(storedToken);
-        setUser(JSON.parse(userData));
+      if (storedToken) {
+        const response = await fetch(API_ENDPOINTS.auth.me, {
+          headers: {
+            'Authorization': `Bearer ${storedToken}`,
+          },
+        });
+
+        if (response.ok) {
+          const userData = await response.json();
+          setToken(storedToken);
+          setUser(userData);
+        } else {
+          await AsyncStorage.removeItem('token');
+          await AsyncStorage.removeItem('user');
+        }
       }
     } catch (error) {
       console.error('Error checking auth:', error);
+      await AsyncStorage.removeItem('token');
+      await AsyncStorage.removeItem('user');
     } finally {
       setIsLoading(false);
     }
