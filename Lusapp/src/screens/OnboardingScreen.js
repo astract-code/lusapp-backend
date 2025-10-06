@@ -21,12 +21,15 @@ export const OnboardingScreen = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
+  const [location, setLocation] = useState('');
+  const [bio, setBio] = useState('');
+  const [favoriteSport, setFavoriteSport] = useState('');
 
   const handleEmailAuth = async () => {
     if (isLogin) {
       await login(email, password);
     } else {
-      await signupWithEmail(email, password, name);
+      await signupWithEmail(email, password, { name, location, bio, favoriteSport });
     }
   };
 
@@ -57,13 +60,38 @@ export const OnboardingScreen = () => {
           </Text>
 
           {!isLogin && (
-            <TextInput
-              style={[styles.input, { borderColor: colors.border, color: colors.text }]}
-              placeholder="Full Name"
-              placeholderTextColor={colors.textSecondary}
-              value={name}
-              onChangeText={setName}
-            />
+            <>
+              <TextInput
+                style={[styles.input, { borderColor: colors.border, color: colors.text }]}
+                placeholder="Full Name"
+                placeholderTextColor={colors.textSecondary}
+                value={name}
+                onChangeText={setName}
+              />
+              <TextInput
+                style={[styles.input, { borderColor: colors.border, color: colors.text }]}
+                placeholder="Location (e.g., San Francisco, CA)"
+                placeholderTextColor={colors.textSecondary}
+                value={location}
+                onChangeText={setLocation}
+              />
+              <TextInput
+                style={[styles.input, { borderColor: colors.border, color: colors.text }]}
+                placeholder="Favorite Sport (e.g., Marathon, Triathlon)"
+                placeholderTextColor={colors.textSecondary}
+                value={favoriteSport}
+                onChangeText={setFavoriteSport}
+              />
+              <TextInput
+                style={[styles.textArea, { borderColor: colors.border, color: colors.text }]}
+                placeholder="Bio (optional)"
+                placeholderTextColor={colors.textSecondary}
+                value={bio}
+                onChangeText={setBio}
+                multiline
+                numberOfLines={3}
+              />
+            </>
           )}
 
           <TextInput
@@ -174,6 +202,15 @@ const styles = StyleSheet.create({
     padding: SPACING.md,
     marginBottom: SPACING.md,
     fontSize: FONT_SIZE.md,
+  },
+  textArea: {
+    borderWidth: 1,
+    borderRadius: BORDER_RADIUS.md,
+    padding: SPACING.md,
+    marginBottom: SPACING.md,
+    fontSize: FONT_SIZE.md,
+    minHeight: 80,
+    textAlignVertical: 'top',
   },
   button: {
     borderRadius: BORDER_RADIUS.md,

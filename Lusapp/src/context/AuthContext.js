@@ -32,11 +32,14 @@ export const AuthProvider = ({ children }) => {
     return mockUser;
   };
 
-  const signupWithEmail = async (email, password, name) => {
+  const signupWithEmail = async (email, password, userInfo) => {
     const newUser = {
       ...getCurrentUser(),
       email,
-      name,
+      name: userInfo.name,
+      location: userInfo.location || 'Unknown',
+      bio: userInfo.bio || '',
+      favoriteSport: userInfo.favoriteSport || '',
     };
     setUser(newUser);
     await AsyncStorage.setItem('user', JSON.stringify(newUser));
