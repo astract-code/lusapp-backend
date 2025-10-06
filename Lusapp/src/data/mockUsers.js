@@ -10,6 +10,8 @@ export const mockUsers = [
     joinedRaces: ['race-1', 'race-3', 'race-5'],
     completedRaces: ['race-10', 'race-11', 'race-12'],
     avatar: 'https://i.pravatar.cc/150?img=1',
+    following: ['2', '3', '5'],
+    followers: ['2', '4'],
   },
   {
     id: '2',
@@ -22,6 +24,8 @@ export const mockUsers = [
     joinedRaces: ['race-1', 'race-2'],
     completedRaces: ['race-8', 'race-9'],
     avatar: 'https://i.pravatar.cc/150?img=12',
+    following: ['1', '3'],
+    followers: ['1', '5'],
   },
   {
     id: '3',
@@ -34,6 +38,8 @@ export const mockUsers = [
     joinedRaces: ['race-2', 'race-4', 'race-6'],
     completedRaces: ['race-13', 'race-14'],
     avatar: 'https://i.pravatar.cc/150?img=5',
+    following: ['2', '5'],
+    followers: ['1', '2', '4'],
   },
   {
     id: '4',
@@ -46,6 +52,8 @@ export const mockUsers = [
     joinedRaces: ['race-3', 'race-7'],
     completedRaces: ['race-15'],
     avatar: 'https://i.pravatar.cc/150?img=8',
+    following: ['3', '5'],
+    followers: ['1'],
   },
   {
     id: '5',
@@ -58,6 +66,8 @@ export const mockUsers = [
     joinedRaces: ['race-1', 'race-5'],
     completedRaces: ['race-16', 'race-17'],
     avatar: 'https://i.pravatar.cc/150?img=9',
+    following: ['2'],
+    followers: ['1', '3', '4'],
   },
 ];
 

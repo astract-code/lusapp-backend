@@ -4,22 +4,29 @@ import {
   Text,
   StyleSheet,
   ScrollView,
+  TouchableOpacity,
   useColorScheme,
+  Alert,
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { UserAvatar } from '../components/UserAvatar';
 import { StatCard } from '../components/StatCard';
 import { RaceCard } from '../components/RaceCard';
 import { useAppStore } from '../context/AppContext';
-import { COLORS, SPACING, FONT_SIZE } from '../constants/theme';
+import { useAuth } from '../context/AuthContext';
+import { COLORS, SPACING, FONT_SIZE, BORDER_RADIUS } from '../constants/theme';
 
 export const UserProfileScreen = ({ route, navigation }) => {
   const { userId } = route.params;
   const colorScheme = useColorScheme();
   const theme = COLORS[colorScheme] || COLORS.light;
-  const { getUserById, races } = useAppStore();
+  const { user: currentUser } = useAuth();
+  const { getUserById, races, toggleFollow } = useAppStore();
 
   const user = getUserById(userId);
+  const currentUserData = getUserById(currentUser?.id);
+  
+  const isFollowing = currentUserData?.following?.includes(userId);
 
   if (!user) {
     return (
@@ -47,6 +54,44 @@ export const UserProfileScreen = ({ route, navigation }) => {
         <Text style={styles.name}>{user.name}</Text>
         <Text style={styles.location}>📍 {user.location}</Text>
         {user.bio && <Text style={styles.bio}>{user.bio}</Text>}
+        
+        <View style={styles.followInfo}>
+          <View style={styles.followStat}>
+            <Text style={styles.followNumber}>{user.followers?.length || 0}</Text>
+            <Text style={styles.followLabel}>Followers</Text>
+          </View>
+          <View style={styles.followStat}>
+            <Text style={styles.followNumber}>{user.following?.length || 0}</Text>
+            <Text style={styles.followLabel}>Following</Text>
+          </View>
+        </View>
+
+        <View style={styles.actionButtons}>
+          <TouchableOpacity
+            style={[
+              styles.followButton,
+              { backgroundColor: isFollowing ? theme.background : theme.primary }
+            ]}
+            onPress={() => toggleFollow(currentUser.id, userId)}
+          >
+            <Text style={[
+              styles.followButtonText,
+              { color: isFollowing ? theme.text : '#FFFFFF' }
+            ]}>
+              {isFollowing ? 'Following' : 'Follow'}
+            </Text>
+          </TouchableOpacity>
+          
+          <TouchableOpacity
+            style={[styles.messageButton, { borderColor: '#FFFFFF' }]}
+            onPress={() => Alert.alert('Direct Message', `Send a message to ${user.name}?`, [
+              { text: 'Cancel', style: 'cancel' },
+              { text: 'Send Message', onPress: () => Alert.alert('Coming Soon', 'Direct messaging feature coming soon!') }
+            ])}
+          >
+            <Text style={styles.messageButtonText}>Message</Text>
+          </TouchableOpacity>
+        </View>
       </LinearGradient>
 
       <View style={styles.stats}>
@@ -128,6 +173,54 @@ const styles = StyleSheet.create({
     marginTop: SPACING.sm,
     textAlign: 'center',
     opacity: 0.9,
+  },
+  followInfo: {
+    flexDirection: 'row',
+    marginTop: SPACING.md,
+    gap: SPACING.xl,
+  },
+  followStat: {
+    alignItems: 'center',
+  },
+  followNumber: {
+    fontSize: FONT_SIZE.xl,
+    fontWeight: 'bold',
+    color: '#FFFFFF',
+  },
+  followLabel: {
+    fontSize: FONT_SIZE.sm,
+    color: '#FFFFFF',
+    opacity: 0.9,
+    marginTop: SPACING.xs,
+  },
+  actionButtons: {
+    flexDirection: 'row',
+    marginTop: SPACING.lg,
+    gap: SPACING.sm,
+  },
+  followButton: {
+    flex: 1,
+    paddingVertical: SPACING.sm,
+    paddingHorizontal: SPACING.lg,
+    borderRadius: BORDER_RADIUS.md,
+    alignItems: 'center',
+  },
+  followButtonText: {
+    fontSize: FONT_SIZE.md,
+    fontWeight: '600',
+  },
+  messageButton: {
+    flex: 1,
+    paddingVertical: SPACING.sm,
+    paddingHorizontal: SPACING.lg,
+    borderRadius: BORDER_RADIUS.md,
+    borderWidth: 2,
+    alignItems: 'center',
+  },
+  messageButtonText: {
+    fontSize: FONT_SIZE.md,
+    fontWeight: '600',
+    color: '#FFFFFF',
   },
   stats: {
     flexDirection: 'row',
