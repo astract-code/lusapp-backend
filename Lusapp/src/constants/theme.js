@@ -56,12 +56,26 @@ export const FONT_SIZE = {
 };
 
 export const SPORTS = [
-  { id: 'triathlon', name: 'Triathlon', icon: '🏊' },
+  { id: '5k', name: '5K Run', icon: '🏃' },
+  { id: '10k', name: '10K Run', icon: '🏃' },
+  { id: 'half-marathon', name: 'Half Marathon', icon: '🏃' },
   { id: 'marathon', name: 'Marathon', icon: '🏃' },
-  { id: 'cycling', name: 'Cycling', icon: '🚴' },
-  { id: 'trail', name: 'Trail Running', icon: '⛰️' },
   { id: 'ultra', name: 'Ultra Marathon', icon: '🏃‍♂️' },
-  { id: 'swimming', name: 'Swimming', icon: '🏊‍♀️' },
+  { id: 'triathlon', name: 'Triathlon', icon: '🏊' },
+  { id: 'ironman', name: 'Ironman', icon: '💪' },
+  { id: 'trail', name: 'Trail Running', icon: '⛰️' },
+  { id: 'spartan', name: 'Spartan Race', icon: '⚔️' },
+  { id: 'hyrox', name: 'HYROX', icon: '🏋️' },
+  { id: 'obstacle', name: 'Obstacle Course', icon: '🧗' },
+  { id: 'cycling', name: 'Cycling', icon: '🚴' },
+  { id: 'bike-race', name: 'Bike Race', icon: '🚴' },
+  { id: 'criterium', name: 'Criterium', icon: '🚴' },
+  { id: 'gran-fondo', name: 'Gran Fondo', icon: '🚴' },
+  { id: 'mountain-bike', name: 'Mountain Biking', icon: '🚵' },
+  { id: 'duathlon', name: 'Duathlon', icon: '🏃' },
+  { id: 'aquathlon', name: 'Aquathlon', icon: '🏊' },
+  { id: 'swimming', name: 'Open Water Swim', icon: '🏊‍♀️' },
+  { id: 'cross-country', name: 'Cross Country', icon: '🏃' },
 ];
 
 export const CONTINENTS = [
