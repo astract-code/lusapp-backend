@@ -25,6 +25,9 @@ The application is designed to work seamlessly on iOS (primary target) with Andr
 - **ProfileScreen and UserProfileScreen now display follower/following counts**
 - **ProfileScreen subscribes to Zustand store for real-time follow count updates**
 - **Follow/unfollow properly prevents self-following and hides buttons on own profile**
+- **Replaced free-text country input with standardized country picker (45+ countries)**
+- **Country selection now uses buttons to prevent duplicates (US vs United States vs USA)**
+- **Both Add Race form and country filter use same standardized COUNTRIES constant**
 - All screens, components, and navigation fully functional and tested
 - Expo server running successfully in tunnel mode, ready for testing in Expo Go
 

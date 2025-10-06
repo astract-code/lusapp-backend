@@ -15,7 +15,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { RaceCard } from '../components/RaceCard';
 import { FilterChip } from '../components/FilterChip';
 import { useAppStore } from '../context/AppContext';
-import { COLORS, SPACING, FONT_SIZE, BORDER_RADIUS, SPORTS, CONTINENTS } from '../constants/theme';
+import { COLORS, SPACING, FONT_SIZE, BORDER_RADIUS, SPORTS, CONTINENTS, COUNTRIES } from '../constants/theme';
 
 export const DiscoverScreen = ({ navigation }) => {
   const colorScheme = useColorScheme();
@@ -48,10 +48,6 @@ export const DiscoverScreen = ({ navigation }) => {
     });
   }, [races, selectedSport, selectedContinent, selectedCountry]);
 
-  const countries = useMemo(() => {
-    const countrySet = new Set(races.map((race) => race.country));
-    return Array.from(countrySet).sort();
-  }, [races]);
 
   const handleAddRace = () => {
     if (!newRace.name.trim() || !newRace.sport || !newRace.date) {
@@ -179,13 +175,22 @@ export const DiscoverScreen = ({ navigation }) => {
             />
 
             <Text style={[styles.label, { color: theme.text }]}>Country</Text>
-            <TextInput
-              style={[styles.input, { backgroundColor: theme.card, color: theme.text, borderColor: theme.border }]}
-              placeholder="e.g., USA"
-              placeholderTextColor={theme.textSecondary}
-              value={newRace.country}
-              onChangeText={(text) => setNewRace({ ...newRace, country: text })}
-            />
+            <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.sportPicker}>
+              {COUNTRIES.map((country) => (
+                <TouchableOpacity
+                  key={country}
+                  style={[
+                    styles.sportOption,
+                    { backgroundColor: newRace.country === country ? theme.primary : theme.card, borderColor: theme.border }
+                  ]}
+                  onPress={() => setNewRace({ ...newRace, country })}
+                >
+                  <Text style={[styles.sportText, { color: newRace.country === country ? '#FFF' : theme.text }]}>
+                    {country}
+                  </Text>
+                </TouchableOpacity>
+              ))}
+            </ScrollView>
 
             <Text style={[styles.label, { color: theme.text }]}>Continent</Text>
             <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.sportPicker}>
@@ -291,7 +296,7 @@ export const DiscoverScreen = ({ navigation }) => {
           showsHorizontalScrollIndicator={false}
           style={styles.filterRow}
         >
-          {countries.map((country) => (
+          {COUNTRIES.map((country) => (
             <FilterChip
               key={country}
               label={country}
