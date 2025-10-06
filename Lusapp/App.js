@@ -1,16 +1,22 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
 import { useColorScheme } from 'react-native';
 import { AuthProvider, useAuth } from './src/context/AuthContext';
 import { OnboardingScreen } from './src/screens/OnboardingScreen';
 import { AppNavigator } from './src/navigation/AppNavigator';
+import { useAppStore } from './src/context/AppContext';
 import { COLORS } from './src/constants/theme';
 
 const AppContent = () => {
   const { user, isLoading } = useAuth();
   const colorScheme = useColorScheme();
   const theme = COLORS[colorScheme] || COLORS.light;
+  const fetchRaces = useAppStore((state) => state.fetchRaces);
+
+  useEffect(() => {
+    fetchRaces();
+  }, []);
 
   if (isLoading) {
     return null;

@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const basicAuth = require('express-basic-auth');
 const { Pool } = require('pg');
 const multer = require('multer');
 const csv = require('csv-parser');
@@ -14,12 +15,19 @@ const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
 });
 
+const adminAuth = basicAuth({
+  users: { 'admin': process.env.ADMIN_PASSWORD || 'lusapp2025' },
+  challenge: true,
+  realm: 'Lusapp Admin'
+});
+
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static('server/public'));
 
 const upload = multer({ dest: 'uploads/' });
+
+app.use('/admin', adminAuth, express.static('server/public'));
 
 app.get('/api/races', async (req, res) => {
   try {
@@ -45,7 +53,7 @@ app.get('/api/races/:id', async (req, res) => {
   }
 });
 
-app.post('/api/races', async (req, res) => {
+app.post('/api/races', adminAuth, async (req, res) => {
   try {
     const { name, sport, city, country, continent, date, distance, description, participants } = req.body;
     const result = await pool.query(
@@ -59,7 +67,7 @@ app.post('/api/races', async (req, res) => {
   }
 });
 
-app.put('/api/races/:id', async (req, res) => {
+app.put('/api/races/:id', adminAuth, async (req, res) => {
   try {
     const { id } = req.params;
     const { name, sport, city, country, continent, date, distance, description, participants } = req.body;
@@ -77,7 +85,7 @@ app.put('/api/races/:id', async (req, res) => {
   }
 });
 
-app.delete('/api/races/:id', async (req, res) => {
+app.delete('/api/races/:id', adminAuth, async (req, res) => {
   try {
     const { id } = req.params;
     await pool.query('DELETE FROM races WHERE id = $1', [id]);
@@ -88,7 +96,7 @@ app.delete('/api/races/:id', async (req, res) => {
   }
 });
 
-app.post('/api/races/csv-upload', upload.single('csvFile'), async (req, res) => {
+app.post('/api/races/csv-upload', adminAuth, upload.single('csvFile'), async (req, res) => {
   try {
     const results = [];
     const filePath = req.file.path;
