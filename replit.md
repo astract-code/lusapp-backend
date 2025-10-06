@@ -18,6 +18,13 @@ The application is designed to work seamlessly on iOS (primary target) with Andr
 - **Implemented PostgreSQL database backend with Express API for persistent race storage**
 - **Created authenticated web admin interface for manual race entry and CSV upload**
 - **Mobile app uses hybrid data approach: mock data in development, API in production**
+- **Added comprehensive Settings screen with 24h/12h time format and miles/km distance unit preferences**
+- **Implemented SettingsContext with AsyncStorage persistence and format helper functions**
+- **Added follow/unfollow functionality with real-time follower/following count sync across screens**
+- **Implemented direct messaging placeholder with message button and alerts (full DM feature coming soon)**
+- **ProfileScreen and UserProfileScreen now display follower/following counts**
+- **ProfileScreen subscribes to Zustand store for real-time follow count updates**
+- **Follow/unfollow properly prevents self-following and hides buttons on own profile**
 - All screens, components, and navigation fully functional and tested
 - Expo server running successfully in tunnel mode, ready for testing in Expo Go
 
