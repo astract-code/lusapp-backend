@@ -15,7 +15,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { RaceCard } from '../components/RaceCard';
 import { FilterChip } from '../components/FilterChip';
 import { useAppStore } from '../context/AppContext';
-import { COLORS, SPACING, FONT_SIZE, BORDER_RADIUS, SPORTS, CONTINENTS, COUNTRIES } from '../constants/theme';
+import { COLORS, SPACING, FONT_SIZE, BORDER_RADIUS, SPORTS, CONTINENTS, COUNTRIES, COUNTRY_TO_CONTINENT } from '../constants/theme';
 
 export const DiscoverScreen = ({ navigation }) => {
   const colorScheme = useColorScheme();
@@ -25,6 +25,7 @@ export const DiscoverScreen = ({ navigation }) => {
   const [selectedSport, setSelectedSport] = useState(null);
   const [selectedContinent, setSelectedContinent] = useState(null);
   const [selectedCountry, setSelectedCountry] = useState(null);
+  const [searchQuery, setSearchQuery] = useState('');
   const [showAddForm, setShowAddForm] = useState(false);
   
   const [newRace, setNewRace] = useState({
@@ -39,14 +40,20 @@ export const DiscoverScreen = ({ navigation }) => {
     participants: '',
   });
 
+  const filteredCountries = useMemo(() => {
+    if (!selectedContinent) return COUNTRIES;
+    return COUNTRIES.filter(country => COUNTRY_TO_CONTINENT[country] === selectedContinent);
+  }, [selectedContinent]);
+
   const filteredRaces = useMemo(() => {
     return races.filter((race) => {
       if (selectedSport && race.sport !== selectedSport) return false;
       if (selectedContinent && race.continent !== selectedContinent) return false;
       if (selectedCountry && race.country !== selectedCountry) return false;
+      if (searchQuery && !race.city?.toLowerCase().includes(searchQuery.toLowerCase())) return false;
       return true;
     });
-  }, [races, selectedSport, selectedContinent, selectedCountry]);
+  }, [races, selectedSport, selectedContinent, selectedCountry, searchQuery]);
 
 
   const handleAddRace = () => {
@@ -85,13 +92,23 @@ export const DiscoverScreen = ({ navigation }) => {
     setShowAddForm(false);
   };
 
+  const handleContinentSelect = (continent) => {
+    const newContinent = selectedContinent === continent ? null : continent;
+    setSelectedContinent(newContinent);
+    
+    if (selectedCountry && newContinent && COUNTRY_TO_CONTINENT[selectedCountry] !== newContinent) {
+      setSelectedCountry(null);
+    }
+  };
+
   const clearFilters = () => {
     setSelectedSport(null);
     setSelectedContinent(null);
     setSelectedCountry(null);
+    setSearchQuery('');
   };
 
-  const hasFilters = selectedSport || selectedContinent || selectedCountry;
+  const hasFilters = selectedSport || selectedContinent || selectedCountry || searchQuery;
 
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: theme.background }]}>
@@ -254,6 +271,15 @@ export const DiscoverScreen = ({ navigation }) => {
         style={styles.filters}
         showsVerticalScrollIndicator={false}
       >
+        <Text style={[styles.filterLabel, { color: theme.text }]}>🔍 Search by City</Text>
+        <TextInput
+          style={[styles.searchInput, { backgroundColor: theme.card, color: theme.text, borderColor: theme.border }]}
+          placeholder="e.g., Tokyo, Paris, New York..."
+          placeholderTextColor={theme.textSecondary}
+          value={searchQuery}
+          onChangeText={setSearchQuery}
+        />
+
         <Text style={[styles.filterLabel, { color: theme.text }]}>Sport</Text>
         <ScrollView
           horizontal
@@ -283,9 +309,7 @@ export const DiscoverScreen = ({ navigation }) => {
               key={continent}
               label={continent}
               selected={selectedContinent === continent}
-              onPress={() =>
-                setSelectedContinent(selectedContinent === continent ? null : continent)
-              }
+              onPress={() => handleContinentSelect(continent)}
             />
           ))}
         </ScrollView>
@@ -296,7 +320,7 @@ export const DiscoverScreen = ({ navigation }) => {
           showsHorizontalScrollIndicator={false}
           style={styles.filterRow}
         >
-          {COUNTRIES.map((country) => (
+          {filteredCountries.map((country) => (
             <FilterChip
               key={country}
               label={country}
@@ -437,8 +461,16 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   filters: {
-    maxHeight: 280,
+    maxHeight: 320,
     paddingHorizontal: SPACING.md,
+  },
+  searchInput: {
+    borderWidth: 1,
+    borderRadius: BORDER_RADIUS.md,
+    paddingHorizontal: SPACING.md,
+    paddingVertical: SPACING.sm,
+    fontSize: FONT_SIZE.md,
+    marginBottom: SPACING.md,
   },
   filterLabel: {
     fontSize: FONT_SIZE.md,
