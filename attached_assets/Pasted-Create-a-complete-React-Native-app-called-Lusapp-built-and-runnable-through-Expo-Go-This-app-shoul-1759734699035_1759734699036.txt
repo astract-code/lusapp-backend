@@ -1,0 +1,21 @@
+Create a complete React Native app called Lusapp, built and runnable through Expo Go. This app should work perfectly on iOS and later also be deployable on Android, but for now the main focus is iOS. Lusapp is an amateur race calendar and social network for endurance sports like triathlons, marathons, cycling, and trail running. The goal is for users to discover upcoming races, see who else has signed up, check participants’ past races, and connect with other athletes.
+
+When the user opens Lusapp, they should see a clean onboarding screen with the app name, logo, and an option to sign up or log in with email or Apple. Once logged in, the app should have a bottom tab navigation with four main screens: Feed, Calendar, Discover, and Profile.
+
+The Feed screen acts like a social feed, showing updates from other users — for example, when someone signs up for a race or completes one. Each post should appear in a card format with the user’s photo, name, race details, and interactions like likes and comments. The design should feel lively and athletic, similar to the Strava app.
+
+The Calendar screen displays all upcoming races visually, allowing users to see what’s coming next. It should include both a monthly calendar view and a list view. Each race entry should show the race name, sport, date, and location, and users can tap a race to open a detailed screen with full information and a button to sign up or mark attendance.
+
+The Discover screen is where users can explore all available races. This section needs a filtering system that allows filtering by sport type (triathlon, marathon, cycling, etc.), continent, country, and date range. The results should update dynamically based on the selected filters. Race cards should include all key details and use a modern design with rounded corners, icons, and gradients.
+
+The Profile screen shows the user’s personal information — name, photo, location, short bio, and stats like “total races completed” and “favorite sport.” It should also list the races the user has joined or completed. When viewing another participant’s name anywhere in the app, users can open that person’s profile to see their history and which races they’ve attended.
+
+Race data will come from CSV or Excel files that are created outside the app. Lusapp just needs to include functionality to import a CSV file (or load one from a provided URL) and display the race data within the app. Each race entry in the CSV includes columns such as event name, sport type, city, country, continent, date, distance, and description. You can use a JavaScript CSV parsing library like papaparse to handle this inside the app.
+
+Use React Native with Expo for everything, including navigation and styling. For navigation, use React Navigation with a bottom tab layout. For design, use modern, sporty UI elements — a mix of gradients, bold typography, card-based layouts, and smooth transitions. Rounded corners, subtle shadows, and consistent spacing are important. Support both light and dark mode.
+
+For the feed and user data, start with mock data stored locally in JSON format. Later this can be connected to a backend, but for now just simulate the user posts, profiles, and races. The structure should be modular and easy to extend. Use Context API or Zustand for simple state management between screens.
+
+Make sure the project is fully compatible with Expo Go, and all dependencies are included in the package.json. The code should be clean, structured, and production-ready, with components divided logically into folders like components, screens, data, and context.
+
+The final app should feel fast, smooth, and professional — a place where athletes can both find races and connect with others. Focus on giving Lusapp a modern, sporty identity, with a user interface that feels energetic yet easy to navigate.
