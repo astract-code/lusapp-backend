@@ -1,20 +1,39 @@
+import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { useColorScheme } from 'react-native';
+import { AuthProvider, useAuth } from './src/context/AuthContext';
+import { OnboardingScreen } from './src/screens/OnboardingScreen';
+import { AppNavigator } from './src/navigation/AppNavigator';
+import { COLORS } from './src/constants/theme';
+
+const AppContent = () => {
+  const { user, isLoading } = useAuth();
+  const colorScheme = useColorScheme();
+  const theme = COLORS[colorScheme] || COLORS.light;
+
+  if (isLoading) {
+    return null;
+  }
+
+  return (
+    <>
+      <StatusBar style={colorScheme === 'dark' ? 'light' : 'dark'} />
+      {user ? (
+        <NavigationContainer>
+          <AppNavigator />
+        </NavigationContainer>
+      ) : (
+        <OnboardingScreen />
+      )}
+    </>
+  );
+};
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <AuthProvider>
+      <AppContent />
+    </AuthProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});

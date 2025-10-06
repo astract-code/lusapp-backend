@@ -1,0 +1,248 @@
+import React from 'react';
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  TouchableOpacity,
+  useColorScheme,
+  Alert,
+} from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
+import { UserAvatar } from '../components/UserAvatar';
+import { useAuth } from '../context/AuthContext';
+import { useAppStore } from '../context/AppContext';
+import { COLORS, SPACING, FONT_SIZE, BORDER_RADIUS, SPORTS } from '../constants/theme';
+
+export const RaceDetailScreen = ({ route, navigation }) => {
+  const { raceId } = route.params;
+  const colorScheme = useColorScheme();
+  const theme = COLORS[colorScheme] || COLORS.light;
+  const { user } = useAuth();
+  const { getRaceById, registerForRace, unregisterFromRace, users } = useAppStore();
+
+  const race = getRaceById(raceId);
+
+  if (!race) {
+    return (
+      <View style={[styles.container, { backgroundColor: theme.background }]}>
+        <Text style={[styles.errorText, { color: theme.text }]}>Race not found</Text>
+      </View>
+    );
+  }
+
+  const sport = SPORTS.find((s) => s.id === race.sport) || SPORTS[0];
+  const isRegistered = race.registeredUsers?.includes(user?.id);
+  const registeredUsers = users.filter((u) => race.registeredUsers?.includes(u.id));
+
+  const handleRegister = () => {
+    if (!user) return;
+
+    if (isRegistered) {
+      unregisterFromRace(raceId, user.id);
+      Alert.alert('Success', 'You have unregistered from this race');
+    } else {
+      registerForRace(raceId, user.id);
+      Alert.alert('Success', 'You have registered for this race!');
+    }
+  };
+
+  return (
+    <ScrollView style={[styles.container, { backgroundColor: theme.background }]}>
+      <LinearGradient
+        colors={[theme.gradient1, theme.gradient2]}
+        style={styles.header}
+      >
+        <Text style={styles.sportIcon}>{sport.icon}</Text>
+        <Text style={styles.title}>{race.name}</Text>
+        <Text style={styles.sport}>{sport.name}</Text>
+      </LinearGradient>
+
+      <View style={[styles.card, { backgroundColor: theme.card }]}>
+        <View style={styles.infoRow}>
+          <Text style={styles.icon}>📍</Text>
+          <View style={styles.infoText}>
+            <Text style={[styles.label, { color: theme.textSecondary }]}>Location</Text>
+            <Text style={[styles.value, { color: theme.text }]}>
+              {race.city}, {race.country}
+            </Text>
+            <Text style={[styles.subValue, { color: theme.textSecondary }]}>
+              {race.continent}
+            </Text>
+          </View>
+        </View>
+
+        <View style={styles.infoRow}>
+          <Text style={styles.icon}>📅</Text>
+          <View style={styles.infoText}>
+            <Text style={[styles.label, { color: theme.textSecondary }]}>Date</Text>
+            <Text style={[styles.value, { color: theme.text }]}>
+              {new Date(race.date).toLocaleDateString('en-US', {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+              })}
+            </Text>
+          </View>
+        </View>
+
+        <View style={styles.infoRow}>
+          <Text style={styles.icon}>📏</Text>
+          <View style={styles.infoText}>
+            <Text style={[styles.label, { color: theme.textSecondary }]}>Distance</Text>
+            <Text style={[styles.value, { color: theme.text }]}>{race.distance}</Text>
+          </View>
+        </View>
+
+        <View style={styles.infoRow}>
+          <Text style={styles.icon}>👥</Text>
+          <View style={styles.infoText}>
+            <Text style={[styles.label, { color: theme.textSecondary }]}>Participants</Text>
+            <Text style={[styles.value, { color: theme.text }]}>{race.participants}</Text>
+          </View>
+        </View>
+      </View>
+
+      {race.description && (
+        <View style={[styles.card, { backgroundColor: theme.card }]}>
+          <Text style={[styles.sectionTitle, { color: theme.text }]}>About</Text>
+          <Text style={[styles.description, { color: theme.textSecondary }]}>
+            {race.description}
+          </Text>
+        </View>
+      )}
+
+      {registeredUsers.length > 0 && (
+        <View style={[styles.card, { backgroundColor: theme.card }]}>
+          <Text style={[styles.sectionTitle, { color: theme.text }]}>
+            Registered Athletes ({registeredUsers.length})
+          </Text>
+          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+            {registeredUsers.map((athlete) => (
+              <TouchableOpacity
+                key={athlete.id}
+                style={styles.athleteItem}
+                onPress={() => navigation.navigate('UserProfile', { userId: athlete.id })}
+              >
+                <UserAvatar uri={athlete.avatar} size={60} />
+                <Text style={[styles.athleteName, { color: theme.text }]} numberOfLines={1}>
+                  {athlete.name}
+                </Text>
+              </TouchableOpacity>
+            ))}
+          </ScrollView>
+        </View>
+      )}
+
+      <TouchableOpacity
+        style={[
+          styles.registerButton,
+          { backgroundColor: isRegistered ? theme.textSecondary : theme.primary },
+        ]}
+        onPress={handleRegister}
+      >
+        <Text style={styles.registerButtonText}>
+          {isRegistered ? 'Unregister' : 'Sign Up for Race'}
+        </Text>
+      </TouchableOpacity>
+    </ScrollView>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  header: {
+    alignItems: 'center',
+    padding: SPACING.lg,
+    paddingTop: SPACING.xxl,
+  },
+  sportIcon: {
+    fontSize: 64,
+    marginBottom: SPACING.sm,
+  },
+  title: {
+    fontSize: FONT_SIZE.xl,
+    fontWeight: 'bold',
+    color: '#FFFFFF',
+    textAlign: 'center',
+    marginBottom: SPACING.xs,
+  },
+  sport: {
+    fontSize: FONT_SIZE.md,
+    color: '#FFFFFF',
+    opacity: 0.9,
+  },
+  card: {
+    margin: SPACING.md,
+    padding: SPACING.md,
+    borderRadius: BORDER_RADIUS.lg,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 2,
+  },
+  infoRow: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    marginBottom: SPACING.md,
+  },
+  icon: {
+    fontSize: 24,
+    marginRight: SPACING.sm,
+  },
+  infoText: {
+    flex: 1,
+  },
+  label: {
+    fontSize: FONT_SIZE.xs,
+    marginBottom: SPACING.xs,
+    textTransform: 'uppercase',
+  },
+  value: {
+    fontSize: FONT_SIZE.md,
+    fontWeight: '600',
+  },
+  subValue: {
+    fontSize: FONT_SIZE.sm,
+    marginTop: SPACING.xs,
+  },
+  sectionTitle: {
+    fontSize: FONT_SIZE.lg,
+    fontWeight: 'bold',
+    marginBottom: SPACING.sm,
+  },
+  description: {
+    fontSize: FONT_SIZE.md,
+    lineHeight: 22,
+  },
+  athleteItem: {
+    alignItems: 'center',
+    marginRight: SPACING.md,
+    width: 70,
+  },
+  athleteName: {
+    fontSize: FONT_SIZE.xs,
+    marginTop: SPACING.xs,
+    textAlign: 'center',
+  },
+  registerButton: {
+    margin: SPACING.md,
+    padding: SPACING.md,
+    borderRadius: BORDER_RADIUS.md,
+    alignItems: 'center',
+  },
+  registerButtonText: {
+    color: '#FFFFFF',
+    fontSize: FONT_SIZE.md,
+    fontWeight: 'bold',
+  },
+  errorText: {
+    fontSize: FONT_SIZE.md,
+    textAlign: 'center',
+    marginTop: SPACING.xxl,
+  },
+});

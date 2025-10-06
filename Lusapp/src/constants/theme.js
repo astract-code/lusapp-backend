@@ -1,0 +1,74 @@
+export const COLORS = {
+  light: {
+    primary: '#FF6B35',
+    secondary: '#004E89',
+    accent: '#00A8E8',
+    background: '#F7F9FC',
+    card: '#FFFFFF',
+    text: '#1A1A1A',
+    textSecondary: '#6B7280',
+    border: '#E5E7EB',
+    success: '#10B981',
+    error: '#EF4444',
+    gradient1: '#FF6B35',
+    gradient2: '#FF8C42',
+  },
+  dark: {
+    primary: '#FF6B35',
+    secondary: '#00A8E8',
+    accent: '#FFB800',
+    background: '#0F172A',
+    card: '#1E293B',
+    text: '#F1F5F9',
+    textSecondary: '#94A3B8',
+    border: '#334155',
+    success: '#10B981',
+    error: '#EF4444',
+    gradient1: '#FF6B35',
+    gradient2: '#FF8C42',
+  },
+};
+
+export const SPACING = {
+  xs: 4,
+  sm: 8,
+  md: 16,
+  lg: 24,
+  xl: 32,
+  xxl: 48,
+};
+
+export const BORDER_RADIUS = {
+  sm: 8,
+  md: 12,
+  lg: 16,
+  xl: 24,
+  full: 9999,
+};
+
+export const FONT_SIZE = {
+  xs: 12,
+  sm: 14,
+  md: 16,
+  lg: 18,
+  xl: 24,
+  xxl: 32,
+};
+
+export const SPORTS = [
+  { id: 'triathlon', name: 'Triathlon', icon: '🏊' },
+  { id: 'marathon', name: 'Marathon', icon: '🏃' },
+  { id: 'cycling', name: 'Cycling', icon: '🚴' },
+  { id: 'trail', name: 'Trail Running', icon: '⛰️' },
+  { id: 'ultra', name: 'Ultra Marathon', icon: '🏃‍♂️' },
+  { id: 'swimming', name: 'Swimming', icon: '🏊‍♀️' },
+];
+
+export const CONTINENTS = [
+  'Africa',
+  'Asia',
+  'Europe',
+  'North America',
+  'South America',
+  'Oceania',
+];

@@ -1,0 +1,66 @@
+export const mockPosts = [
+  {
+    id: 'post-1',
+    userId: '2',
+    type: 'signup',
+    raceId: 'race-2',
+    timestamp: '2025-01-15T10:30:00Z',
+    likes: 24,
+    comments: [
+      { userId: '1', text: 'Good luck! 🎉', timestamp: '2025-01-15T11:00:00Z' },
+      { userId: '3', text: 'See you there!', timestamp: '2025-01-15T12:00:00Z' },
+    ],
+  },
+  {
+    id: 'post-2',
+    userId: '3',
+    type: 'completion',
+    raceId: 'race-13',
+    raceName: 'Paris-Roubaix',
+    timestamp: '2025-01-10T16:45:00Z',
+    time: '6h 23m',
+    likes: 42,
+    comments: [
+      { userId: '1', text: 'Amazing performance! 💪', timestamp: '2025-01-10T17:00:00Z' },
+      { userId: '4', text: 'Incredible!', timestamp: '2025-01-10T18:00:00Z' },
+    ],
+  },
+  {
+    id: 'post-3',
+    userId: '4',
+    type: 'signup',
+    raceId: 'race-7',
+    timestamp: '2025-01-08T09:15:00Z',
+    likes: 18,
+    comments: [
+      { userId: '1', text: 'That one is tough!', timestamp: '2025-01-08T10:00:00Z' },
+    ],
+  },
+  {
+    id: 'post-4',
+    userId: '5',
+    type: 'signup',
+    raceId: 'race-5',
+    timestamp: '2025-01-05T14:20:00Z',
+    likes: 35,
+    comments: [
+      { userId: '1', text: 'Kona! Dream race 🌴', timestamp: '2025-01-05T15:00:00Z' },
+      { userId: '2', text: 'You got this!', timestamp: '2025-01-05T16:00:00Z' },
+    ],
+  },
+  {
+    id: 'post-5',
+    userId: '1',
+    type: 'completion',
+    raceId: 'race-10',
+    raceName: 'Challenge Roth',
+    timestamp: '2024-07-07T20:00:00Z',
+    time: '10h 45m',
+    likes: 67,
+    comments: [
+      { userId: '2', text: 'Congratulations! 🏆', timestamp: '2024-07-07T21:00:00Z' },
+      { userId: '3', text: 'Well done!', timestamp: '2024-07-08T09:00:00Z' },
+      { userId: '5', text: 'Inspiring! 💪', timestamp: '2024-07-08T10:00:00Z' },
+    ],
+  },
+];
