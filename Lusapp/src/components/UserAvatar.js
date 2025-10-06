@@ -3,6 +3,10 @@ import { View, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { BORDER_RADIUS } from '../constants/theme';
 
 export const UserAvatar = ({ uri, size = 40, onPress }) => {
+  if (!uri) {
+    return null;
+  }
+
   const Container = onPress ? TouchableOpacity : View;
   
   return (
