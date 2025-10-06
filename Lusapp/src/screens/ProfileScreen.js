@@ -20,18 +20,15 @@ export const ProfileScreen = ({ navigation }) => {
   const { colors } = useTheme();
   const { user: authUser, logout } = useAuth();
   const races = useAppStore((state) => state.races);
-  const user = useAppStore((state) => 
-    state.users.find((u) => u.id === authUser?.id)
-  );
 
-  if (!user || !authUser) return null;
+  if (!authUser) return null;
 
   const joinedRaces = races.filter((race) =>
-    user.joinedRaces?.includes(race.id)
+    authUser.joinedRaces?.includes(race.id)
   );
 
   const completedRaces = races.filter((race) =>
-    user.completedRaces?.includes(race.id)
+    authUser.completedRaces?.includes(race.id)
   );
 
   return (
@@ -50,18 +47,18 @@ export const ProfileScreen = ({ navigation }) => {
         colors={[colors.gradient1, colors.gradient2]}
         style={styles.header}
       >
-        <UserAvatar uri={user.avatar} size={100} />
-        <Text style={styles.name}>{user.name}</Text>
-        <Text style={styles.location}>📍 {user.location}</Text>
-        <Text style={styles.bio}>{user.bio}</Text>
+        <UserAvatar uri={authUser.avatar} size={100} />
+        <Text style={styles.name}>{authUser.name}</Text>
+        <Text style={styles.location}>📍 {authUser.location}</Text>
+        <Text style={styles.bio}>{authUser.bio}</Text>
         
         <View style={styles.followInfo}>
           <View style={styles.followStat}>
-            <Text style={styles.followNumber}>{user.followers?.length || 0}</Text>
+            <Text style={styles.followNumber}>{authUser.followers?.length || 0}</Text>
             <Text style={styles.followLabel}>Followers</Text>
           </View>
           <View style={styles.followStat}>
-            <Text style={styles.followNumber}>{user.following?.length || 0}</Text>
+            <Text style={styles.followNumber}>{authUser.following?.length || 0}</Text>
             <Text style={styles.followLabel}>Following</Text>
           </View>
         </View>
@@ -71,12 +68,12 @@ export const ProfileScreen = ({ navigation }) => {
         <StatCard
           icon="🏆"
           label="Total Races"
-          value={user.totalRaces}
+          value={authUser.totalRaces || 0}
         />
         <StatCard
           icon="❤️"
           label="Favorite Sport"
-          value={user.favoriteSport}
+          value={authUser.favoriteSport || 'Not set'}
         />
       </View>
 
