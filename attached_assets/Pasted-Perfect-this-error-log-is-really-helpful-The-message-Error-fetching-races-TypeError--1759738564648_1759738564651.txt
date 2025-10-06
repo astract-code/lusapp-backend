@@ -1,0 +1,117 @@
+Perfect — this error log is really helpful.
+
+The message:
+
+```
+Error fetching races: TypeError: data.map is not a function (it is undefined)
+```
+
+means that the variable `data` inside your `fetchRaces` function is **not an array**, so JavaScript can’t run `.map()` on it.
+
+---
+
+### 🧭 What’s happening
+
+You probably have something like this inside `AppContext.js`:
+
+```js
+const fetchRaces = async () => {
+  try {
+    const response = await fetch(RACES_URL);
+    const data = await response.json();
+    const formattedRaces = data.map(race => ({
+      ...race,
+      // formatting logic
+    }));
+    set({ races: formattedRaces, isLoading: false });
+  } catch (error) {
+    console.error('Error fetching races:', error);
+    set({ isLoading: false });
+  }
+};
+```
+
+If `data.map` is failing, it means `data` is **not an array** — most likely it’s:
+
+* `undefined` (network issue or bad URL)
+* an **object**, like `{ races: [...] }`
+* or the **API returned an error message** instead of race data
+
+---
+
+### ✅ How to fix it safely
+
+Change your code to **validate** what `data` actually is before calling `.map()`:
+
+```js
+const fetchRaces = async () => {
+  try {
+    const response = await fetch(RACES_URL);
+    const data = await response.json();
+
+    // Log what came back (you’ll see this in Expo’s terminal)
+    console.log('Fetched data:', data);
+
+    // Handle if the data is wrapped (like { races: [...] })
+    const racesArray = Array.isArray(data)
+      ? data
+      : Array.isArray(data?.races)
+      ? data.races
+      : [];
+
+    if (racesArray.length === 0) {
+      console.warn('⚠️ No races found or data format unexpected.');
+    }
+
+    const formattedRaces = racesArray.map(race => ({
+      ...race,
+      // whatever formatting you do here
+    }));
+
+    set({ races: formattedRaces, isLoading: false });
+  } catch (error) {
+    console.error('Error fetching races:', error);
+    set({ isLoading: false });
+  }
+};
+```
+
+---
+
+### 🧩 Why this helps
+
+Now your app won’t crash even if:
+
+* the fetch fails,
+* the data format changes,
+* or the JSON file wraps your races in an object.
+
+Instead, it’ll log the unexpected format so you can adjust later.
+
+---
+
+### 🔍 Next step (debugging tip)
+
+Run your app again and look at the **console output** in Replit or Expo Go logs.
+
+You’ll see something like:
+
+```
+Fetched data: { races: [ {name: "Ironman 70.3"}, ... ] }
+```
+
+Then you’ll know if you need to change:
+
+```js
+const racesArray = data.races;
+```
+
+or
+
+```js
+const racesArray = data;
+```
+
+---
+
+If you want, upload (or paste) a short snippet of what your **JSON or CSV-converted race data looks like**, and I’ll tell you the exact `.map()` fix needed for your structure.

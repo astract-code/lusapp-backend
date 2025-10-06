@@ -2,7 +2,7 @@ import { create } from 'zustand';
 import { mockPosts } from '../data/mockPosts';
 import { mockUsers } from '../data/mockUsers';
 
-const API_URL = 'https://9f3814b8-ecc1-421a-88c5-74001ee67b54-00-r9w1zdd6rpvt.worf.replit.dev';
+const API_URL = `https://${process.env.REPLIT_DEV_DOMAIN || '9f3814b8-ecc1-421a-88c5-74001ee67b54-00-r9w1zdd6rpvt.worf.replit.dev'}`;
 
 export const useAppStore = create((set, get) => ({
   races: [],
