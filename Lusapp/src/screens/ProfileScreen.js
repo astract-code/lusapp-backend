@@ -38,7 +38,7 @@ export const ProfileScreen = ({ navigation }) => {
       }
 
       const result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        mediaTypes: ['images'],
         allowsEditing: true,
         aspect: [1, 1],
         quality: 0.8,
@@ -76,10 +76,15 @@ export const ProfileScreen = ({ navigation }) => {
         body: formData,
       });
 
-      const data = await response.json();
-
       if (!response.ok) {
+        const data = await response.json();
         throw new Error(data.error || 'Upload failed');
+      }
+
+      const data = await response.json();
+      
+      if (!data.avatar) {
+        throw new Error('No avatar URL returned from server');
       }
 
       const avatarUrl = data.avatar.startsWith('http') ? data.avatar : `${API_URL}${data.avatar}`;
