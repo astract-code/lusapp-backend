@@ -175,28 +175,22 @@ export const DiscoverScreen = ({ navigation }) => {
             />
 
             <Text style={[styles.label, { color: theme.text }]}>Country</Text>
-            <View style={styles.countryList}>
+            <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.sportPicker}>
               {COUNTRIES.map((country) => (
                 <TouchableOpacity
                   key={country}
                   style={[
-                    styles.countryListItem,
-                    { 
-                      backgroundColor: newRace.country === country ? theme.primary : theme.card, 
-                      borderColor: theme.border 
-                    }
+                    styles.sportOption,
+                    { backgroundColor: newRace.country === country ? theme.primary : theme.card, borderColor: theme.border }
                   ]}
                   onPress={() => setNewRace({ ...newRace, country })}
                 >
-                  <Text style={[styles.countryListText, { color: newRace.country === country ? '#FFF' : theme.text }]}>
+                  <Text style={[styles.sportText, { color: newRace.country === country ? '#FFF' : theme.text }]}>
                     {country}
                   </Text>
-                  {newRace.country === country && (
-                    <Text style={styles.checkmark}>✓</Text>
-                  )}
                 </TouchableOpacity>
               ))}
-            </View>
+            </ScrollView>
 
             <Text style={[styles.label, { color: theme.text }]}>Continent</Text>
             <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.sportPicker}>
@@ -297,31 +291,22 @@ export const DiscoverScreen = ({ navigation }) => {
         </ScrollView>
 
         <Text style={[styles.filterLabel, { color: theme.text }]}>Country</Text>
-        <View style={styles.countryFilterList}>
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          style={styles.filterRow}
+        >
           {COUNTRIES.map((country) => (
-            <TouchableOpacity
+            <FilterChip
               key={country}
-              style={[
-                styles.countryFilterItem,
-                { 
-                  backgroundColor: selectedCountry === country ? theme.primary : theme.card,
-                  borderColor: theme.border
-                }
-              ]}
-              onPress={() => setSelectedCountry(selectedCountry === country ? null : country)}
-            >
-              <Text style={[
-                styles.countryFilterText,
-                { color: selectedCountry === country ? '#FFF' : theme.text }
-              ]}>
-                {country}
-              </Text>
-              {selectedCountry === country && (
-                <Text style={styles.checkmark}>✓</Text>
-              )}
-            </TouchableOpacity>
+              label={country}
+              selected={selectedCountry === country}
+              onPress={() =>
+                setSelectedCountry(selectedCountry === country ? null : country)
+              }
+            />
           ))}
-        </View>
+        </ScrollView>
       </ScrollView>
 
       <FlatList
@@ -438,45 +423,6 @@ const styles = StyleSheet.create({
   sportText: {
     fontSize: FONT_SIZE.sm,
     fontWeight: '600',
-  },
-  countryList: {
-    marginBottom: SPACING.md,
-  },
-  countryListItem: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    borderWidth: 1,
-    borderRadius: BORDER_RADIUS.sm,
-    paddingHorizontal: SPACING.md,
-    paddingVertical: SPACING.sm,
-    marginBottom: SPACING.xs,
-  },
-  countryListText: {
-    fontSize: FONT_SIZE.sm,
-    fontWeight: '500',
-  },
-  checkmark: {
-    fontSize: FONT_SIZE.md,
-    color: '#FFFFFF',
-    fontWeight: 'bold',
-  },
-  countryFilterList: {
-    marginBottom: SPACING.md,
-  },
-  countryFilterItem: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    borderWidth: 1,
-    borderRadius: BORDER_RADIUS.sm,
-    paddingHorizontal: SPACING.md,
-    paddingVertical: SPACING.xs,
-    marginBottom: SPACING.xs,
-  },
-  countryFilterText: {
-    fontSize: FONT_SIZE.sm,
-    fontWeight: '500',
   },
   submitButton: {
     borderRadius: BORDER_RADIUS.md,

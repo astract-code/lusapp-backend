@@ -26,7 +26,7 @@ The application is designed to work seamlessly on iOS (primary target) with Andr
 - **ProfileScreen subscribes to Zustand store for real-time follow count updates**
 - **Follow/unfollow properly prevents self-following and hides buttons on own profile**
 - **Replaced free-text country input with standardized country picker (45+ countries)**
-- **Country selection now uses vertical list buttons to prevent duplicates (US vs United States vs USA)**
+- **Country selection uses horizontal scrollable chips matching Sport/Continent pattern**
 - **Both Add Race form and country filter use same standardized COUNTRIES constant**
 - **Expanded sports catalog to 20+ types: 5K, 10K, Half Marathon, Marathon, Ultra Marathon, Triathlon, Ironman, Trail Running, Spartan Race, HYROX, Obstacle Course, Cycling, Bike Race, Criterium, Gran Fondo, Mountain Biking, Duathlon, Aquathlon, Open Water Swim, Cross Country**
 - All screens, components, and navigation fully functional and tested
