@@ -111,6 +111,11 @@ export const AuthProvider = ({ children }) => {
     throw new Error('Apple sign-in not yet implemented. Please use email signup.');
   };
 
+  const updateUser = async (updatedUser) => {
+    setUser(updatedUser);
+    await AsyncStorage.setItem('user', JSON.stringify(updatedUser));
+  };
+
   const logout = async () => {
     setUser(null);
     setToken(null);
@@ -128,6 +133,7 @@ export const AuthProvider = ({ children }) => {
         signupWithEmail,
         signupWithApple,
         logout,
+        updateUser,
       }}
     >
       {children}
