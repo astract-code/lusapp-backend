@@ -11,6 +11,16 @@ const pool = new Pool({
   ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false,
 });
 
+const getFullAvatarUrl = (req, avatarPath) => {
+  if (!avatarPath) return '';
+  if (avatarPath.startsWith('http://') || avatarPath.startsWith('https://')) {
+    return avatarPath;
+  }
+  const protocol = req.protocol;
+  const host = req.get('host');
+  return `${protocol}://${host}${avatarPath}`;
+};
+
 router.post('/signup', async (req, res) => {
   try {
     const { email, password, name, location, bio, favoriteSport } = req.body;
@@ -59,7 +69,7 @@ router.post('/signup', async (req, res) => {
         location: user.location,
         bio: user.bio,
         favoriteSport: user.favorite_sport,
-        avatar: user.avatar || '',
+        avatar: getFullAvatarUrl(req, user.avatar),
         totalRaces: user.total_races,
         joinedRaces: [],
         completedRaces: [],
@@ -119,7 +129,7 @@ router.post('/login', async (req, res) => {
         location: user.location,
         bio: user.bio,
         favoriteSport: user.favorite_sport,
-        avatar: user.avatar || '',
+        avatar: getFullAvatarUrl(req, user.avatar),
         totalRaces: user.total_races,
         joinedRaces: user.joined_races || [],
         completedRaces: user.completed_races || [],
@@ -156,7 +166,7 @@ router.get('/me', authMiddleware, async (req, res) => {
       location: user.location,
       bio: user.bio,
       favoriteSport: user.favorite_sport,
-      avatar: user.avatar || '',
+      avatar: getFullAvatarUrl(req, user.avatar),
       totalRaces: user.total_races,
       joinedRaces: user.joined_races || [],
       completedRaces: user.completed_races || [],

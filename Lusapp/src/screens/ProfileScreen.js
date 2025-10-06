@@ -82,8 +82,8 @@ export const ProfileScreen = ({ navigation }) => {
         throw new Error(data.error || 'Upload failed');
       }
 
-      const fullAvatarUrl = `${API_URL}${data.avatar}`;
-      updateUser({ ...authUser, avatar: fullAvatarUrl });
+      const avatarUrl = data.avatar.startsWith('http') ? data.avatar : `${API_URL}${data.avatar}`;
+      updateUser({ ...authUser, avatar: avatarUrl });
       Alert.alert('Success', 'Profile photo updated!');
 
     } catch (error) {
