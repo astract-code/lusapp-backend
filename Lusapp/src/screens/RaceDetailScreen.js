@@ -29,6 +29,11 @@ export const RaceDetailScreen = ({ route, navigation }) => {
       </View>
     );
   }
+  
+  const formatTime = (time) => {
+    if (!time) return '';
+    return time.slice(0, 5);
+  };
 
   const sport = SPORTS.find((s) => s.id === race.sport) || SPORTS[0];
   const isRegistered = race.registeredUsers?.includes(user?.id);
@@ -105,6 +110,16 @@ export const RaceDetailScreen = ({ route, navigation }) => {
             </Text>
           </View>
         </View>
+
+        {race.start_time && (
+          <View style={styles.infoRow}>
+            <Text style={styles.icon}>⏰</Text>
+            <View style={styles.infoText}>
+              <Text style={[styles.label, { color: colors.textSecondary }]}>Start Time</Text>
+              <Text style={[styles.value, { color: colors.text }]}>{formatTime(race.start_time)}</Text>
+            </View>
+          </View>
+        )}
 
         <View style={styles.infoRow}>
           <Text style={styles.icon}>📏</Text>

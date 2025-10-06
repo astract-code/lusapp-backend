@@ -7,6 +7,11 @@ import { useTheme } from '../context/ThemeContext';
 export const RaceCard = ({ race, onPress }) => {
   const { colors } = useTheme();
   const sport = SPORTS.find(s => s.id === race.sport) || SPORTS[0];
+  
+  const formatTime = (time) => {
+    if (!time) return '';
+    return time.slice(0, 5);
+  };
 
   return (
     <TouchableOpacity onPress={onPress} style={styles.container}>
@@ -32,7 +37,10 @@ export const RaceCard = ({ race, onPress }) => {
             </View>
             <View style={styles.detailRow}>
               <Text style={styles.detailIcon}>📅</Text>
-              <Text style={styles.detailText}>{new Date(race.date).toLocaleDateString()}</Text>
+              <Text style={styles.detailText}>
+                {new Date(race.date).toLocaleDateString()}
+                {race.start_time && ` • ${formatTime(race.start_time)}`}
+              </Text>
             </View>
             <View style={styles.detailRow}>
               <Text style={styles.detailIcon}>📏</Text>

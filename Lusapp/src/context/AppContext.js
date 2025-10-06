@@ -50,6 +50,7 @@ export const useAppStore = create((set, get) => ({
         country: race.country,
         continent: race.continent,
         date: race.date.split('T')[0],
+        start_time: race.start_time,
         distance: race.distance,
         description: race.description,
         participants: race.participants,
