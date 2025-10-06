@@ -13,8 +13,13 @@ The application is designed to work seamlessly on iOS (primary target) with Andr
 - Fixed critical feed interaction bugs: likes and comments now properly track per-user interactions using authenticated user context
 - Implemented per-user like tracking with `likedBy` arrays instead of simple like counts
 - Optimized FeedScreen with useMemo and FlatList extraData for proper UI re-rendering
+- Fixed safe area issues: All screens now properly respect iPhone notch/status bar using SafeAreaView
+- Fixed React Native component capitalization errors (text → Text)
+- **Implemented PostgreSQL database backend with Express API for persistent race storage**
+- **Created authenticated web admin interface for manual race entry and CSV upload**
+- **Mobile app now fetches live race data from API instead of using mock data**
 - All screens, components, and navigation fully functional and tested
-- Expo server running successfully, ready for testing in Expo Go
+- Expo server running successfully in tunnel mode, ready for testing in Expo Go
 
 ## User Preferences
 
@@ -67,19 +72,25 @@ Preferred communication style: Simple, everyday language.
 
 ### Data Architecture
 
-**Mock Data Structure:**
-Currently uses local JSON mock data simulating:
-- Users with profiles, stats, and race associations
-- Races with details, locations, dates, and participant counts
-- Posts representing social activities (signups, completions)
+**Database Backend:**
+- PostgreSQL database for persistent race storage
+- Express.js REST API server (port 3000) serving race data
+- Protected admin routes using HTTP Basic Authentication
+- Mobile app fetches race data from API on app launch
+
+**Database Schema:**
+- **races table:** id (serial), name, sport, city, country, continent, date, distance, description, participants, created_at
+- **users table:** id (serial), email, name, password_hash, location, bio, avatar, total_races, favorite_sport, joined_races, completed_races, created_at
+- **posts table:** id (serial), user_id, type, race_id, timestamp, liked_by, comments
 
 **Data Models:**
 - **User:** id, name, email, location, bio, stats, joined/completed races, avatar
-- **Race:** id, name, sport, location, date, distance, description, participants
-- **Post:** id, userId, type (signup/completion), raceId, timestamp, likedBy (array of user IDs), comments
+- **Race:** id, name, sport, city, country, continent, date, distance, description, participants (fetched from API)
+- **Post:** id, userId, type (signup/completion), raceId, timestamp, likedBy (array of user IDs), comments (currently mock data)
 
 **State Management Pattern:**
 - Zustand store provides centralized access to races, posts, users
+- `fetchRaces()` async action fetches race data from API on app load
 - Actions for registration, likes, comments, race management
 - Real-time UI updates through reactive subscriptions
 
@@ -96,13 +107,28 @@ Currently uses local JSON mock data simulating:
 - Conditional rendering based on auth state
 - Onboarding screen shown for unauthenticated users
 
-### Data Import System
+### Backend API System
+
+**Express.js REST API:**
+- Serves race data to mobile app and web admin
+- Endpoints: GET /api/races, GET /api/races/:id, POST /api/races, PUT /api/races/:id, DELETE /api/races/:id
+- POST /api/races/csv-upload for bulk race import
+- CORS enabled for mobile app access
+- HTTP Basic Authentication on admin routes using ADMIN_PASSWORD secret
+
+**Admin Web Interface:**
+- Accessible at /admin route (requires authentication)
+- Manual race entry form with full validation
+- CSV file upload with automatic field mapping
+- View all races with delete functionality
+- Real-time feedback on operations
 
 **CSV Import Functionality:**
-- PapaParse library for CSV parsing
-- URL-based CSV fetching and import
+- Server-side CSV parsing using csv-parser
+- File upload via multer middleware
 - Flexible column mapping supporting multiple naming conventions
-- Dynamic race data addition to global state
+- Direct insertion into PostgreSQL database
+- Returns import statistics (successful/total rows)
 
 **Supported CSV Fields:**
 - name/eventName/Event Name
@@ -132,7 +158,16 @@ Currently uses local JSON mock data simulating:
 - `@react-native-async-storage/async-storage` v2.2.0 - Local persistence
 
 **Data Processing:**
-- `papaparse` v5.5.3 - CSV parsing
+- `papaparse` v5.5.3 - CSV parsing (mobile only, not used after backend implementation)
+
+**Backend Dependencies:**
+- `express` - Web server framework
+- `pg` - PostgreSQL client
+- `cors` - Cross-origin resource sharing
+- `body-parser` - Request body parsing
+- `multer` - File upload handling
+- `csv-parser` - Server-side CSV processing
+- `express-basic-auth` - HTTP Basic Authentication
 
 ### Expo Services
 
@@ -144,18 +179,3 @@ Currently uses local JSON mock data simulating:
 **Asset Management:**
 - Local asset serving for icons and images
 - External avatar URLs via pravatar.cc (mock data)
-
-### Future Backend Integration Points
-
-**Designed for Extension:**
-- Mock data structure mirrors typical REST/GraphQL API responses
-- Store actions prepared for async API calls
-- Authentication context ready for real auth providers
-- CSV import demonstrates external data integration pattern
-
-**Potential Integrations:**
-- Real authentication (Firebase, Auth0, Supabase)
-- Database backend (Postgres, MongoDB)
-- Social features (notifications, messaging)
-- Payment processing for race registrations
-- Mapping services for race routes

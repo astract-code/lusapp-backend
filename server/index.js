@@ -15,8 +15,13 @@ const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
 });
 
+if (!process.env.ADMIN_PASSWORD) {
+  console.error('FATAL: ADMIN_PASSWORD environment variable is not set. Server cannot start.');
+  process.exit(1);
+}
+
 const adminAuth = basicAuth({
-  users: { 'admin': process.env.ADMIN_PASSWORD || 'lusapp2025' },
+  users: { 'admin': process.env.ADMIN_PASSWORD },
   challenge: true,
   realm: 'Lusapp Admin'
 });
