@@ -128,27 +128,33 @@ export const useAppStore = create((set, get) => ({
     return get().races.find(race => race.id === raceId);
   },
   
-  toggleFollow: (currentUserId, targetUserId) => set((state) => ({
-    users: state.users.map((user) => {
-      if (user.id === currentUserId) {
-        const isFollowing = user.following?.includes(targetUserId);
-        return {
-          ...user,
-          following: isFollowing
-            ? user.following.filter(id => id !== targetUserId)
-            : [...(user.following || []), targetUserId],
-        };
-      }
-      if (user.id === targetUserId) {
-        const hasFollower = user.followers?.includes(currentUserId);
-        return {
-          ...user,
-          followers: hasFollower
-            ? user.followers.filter(id => id !== currentUserId)
-            : [...(user.followers || []), currentUserId],
-        };
-      }
-      return user;
-    }),
-  })),
+  toggleFollow: (currentUserId, targetUserId) => {
+    if (currentUserId === targetUserId) {
+      return;
+    }
+    
+    set((state) => ({
+      users: state.users.map((user) => {
+        if (user.id === currentUserId) {
+          const isFollowing = user.following?.includes(targetUserId);
+          return {
+            ...user,
+            following: isFollowing
+              ? user.following.filter(id => id !== targetUserId)
+              : [...(user.following || []), targetUserId],
+          };
+        }
+        if (user.id === targetUserId) {
+          const hasFollower = user.followers?.includes(currentUserId);
+          return {
+            ...user,
+            followers: hasFollower
+              ? user.followers.filter(id => id !== currentUserId)
+              : [...(user.followers || []), currentUserId],
+          };
+        }
+        return user;
+      }),
+    }));
+  },
 }));

@@ -19,10 +19,13 @@ import { COLORS, SPACING, FONT_SIZE, BORDER_RADIUS } from '../constants/theme';
 export const ProfileScreen = ({ navigation }) => {
   const colorScheme = useColorScheme();
   const theme = COLORS[colorScheme] || COLORS.light;
-  const { user, logout } = useAuth();
+  const { user: authUser, logout } = useAuth();
   const races = useAppStore((state) => state.races);
+  const user = useAppStore((state) => 
+    state.users.find((u) => u.id === authUser?.id)
+  );
 
-  if (!user) return null;
+  if (!user || !authUser) return null;
 
   const joinedRaces = races.filter((race) =>
     user.joinedRaces?.includes(race.id)
@@ -52,6 +55,17 @@ export const ProfileScreen = ({ navigation }) => {
         <Text style={styles.name}>{user.name}</Text>
         <Text style={styles.location}>📍 {user.location}</Text>
         <Text style={styles.bio}>{user.bio}</Text>
+        
+        <View style={styles.followInfo}>
+          <View style={styles.followStat}>
+            <Text style={styles.followNumber}>{user.followers?.length || 0}</Text>
+            <Text style={styles.followLabel}>Followers</Text>
+          </View>
+          <View style={styles.followStat}>
+            <Text style={styles.followNumber}>{user.following?.length || 0}</Text>
+            <Text style={styles.followLabel}>Following</Text>
+          </View>
+        </View>
       </LinearGradient>
 
       <View style={styles.stats}>
@@ -155,6 +169,25 @@ const styles = StyleSheet.create({
     marginTop: SPACING.sm,
     textAlign: 'center',
     opacity: 0.9,
+  },
+  followInfo: {
+    flexDirection: 'row',
+    marginTop: SPACING.md,
+    gap: SPACING.xl,
+  },
+  followStat: {
+    alignItems: 'center',
+  },
+  followNumber: {
+    fontSize: FONT_SIZE.xl,
+    fontWeight: 'bold',
+    color: '#FFFFFF',
+  },
+  followLabel: {
+    fontSize: FONT_SIZE.sm,
+    color: '#FFFFFF',
+    opacity: 0.9,
+    marginTop: SPACING.xs,
   },
   stats: {
     flexDirection: 'row',

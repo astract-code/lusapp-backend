@@ -66,32 +66,34 @@ export const UserProfileScreen = ({ route, navigation }) => {
           </View>
         </View>
 
-        <View style={styles.actionButtons}>
-          <TouchableOpacity
-            style={[
-              styles.followButton,
-              { backgroundColor: isFollowing ? theme.background : theme.primary }
-            ]}
-            onPress={() => toggleFollow(currentUser.id, userId)}
-          >
-            <Text style={[
-              styles.followButtonText,
-              { color: isFollowing ? theme.text : '#FFFFFF' }
-            ]}>
-              {isFollowing ? 'Following' : 'Follow'}
-            </Text>
-          </TouchableOpacity>
-          
-          <TouchableOpacity
-            style={[styles.messageButton, { borderColor: '#FFFFFF' }]}
-            onPress={() => Alert.alert('Direct Message', `Send a message to ${user.name}?`, [
-              { text: 'Cancel', style: 'cancel' },
-              { text: 'Send Message', onPress: () => Alert.alert('Coming Soon', 'Direct messaging feature coming soon!') }
-            ])}
-          >
-            <Text style={styles.messageButtonText}>Message</Text>
-          </TouchableOpacity>
-        </View>
+        {currentUser.id !== userId && (
+          <View style={styles.actionButtons}>
+            <TouchableOpacity
+              style={[
+                styles.followButton,
+                { backgroundColor: isFollowing ? theme.background : theme.primary }
+              ]}
+              onPress={() => toggleFollow(currentUser.id, userId)}
+            >
+              <Text style={[
+                styles.followButtonText,
+                { color: isFollowing ? theme.text : '#FFFFFF' }
+              ]}>
+                {isFollowing ? 'Following' : 'Follow'}
+              </Text>
+            </TouchableOpacity>
+            
+            <TouchableOpacity
+              style={[styles.messageButton, { borderColor: '#FFFFFF' }]}
+              onPress={() => Alert.alert('Direct Message', `Send a message to ${user.name}?`, [
+                { text: 'Cancel', style: 'cancel' },
+                { text: 'Send Message', onPress: () => Alert.alert('Coming Soon', 'Direct messaging feature coming soon!') }
+              ])}
+            >
+              <Text style={styles.messageButtonText}>Message</Text>
+            </TouchableOpacity>
+          </View>
+        )}
       </LinearGradient>
 
       <View style={styles.stats}>
