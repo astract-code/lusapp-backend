@@ -10,6 +10,7 @@ import {
   Alert,
   TextInput,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { RaceCard } from '../components/RaceCard';
 import { FilterChip } from '../components/FilterChip';
 import { useAppStore } from '../context/AppContext';
@@ -65,7 +66,7 @@ export const DiscoverScreen = ({ navigation }) => {
   const hasFilters = selectedSport || selectedContinent || selectedCountry;
 
   return (
-    <View style={[styles.container, { backgroundColor: theme.background }]}>
+    <SafeAreaView style={[styles.container, { backgroundColor: theme.background }]}>
       <View style={styles.header}>
         <Text style={[styles.title, { color: theme.text }]}>Discover Races</Text>
         {hasFilters && (
@@ -172,7 +173,7 @@ export const DiscoverScreen = ({ navigation }) => {
           </Text>
         }
       />
-    </View>
+    </SafeAreaView>
   );
 };
 

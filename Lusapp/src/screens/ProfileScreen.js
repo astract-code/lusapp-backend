@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   useColorScheme,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
 import { UserAvatar } from '../components/UserAvatar';
 import { StatCard } from '../components/StatCard';
@@ -32,8 +33,9 @@ export const ProfileScreen = ({ navigation }) => {
   );
 
   return (
-    <ScrollView style={[styles.container, { backgroundColor: theme.background }]}>
-      <LinearGradient
+    <SafeAreaView style={[styles.container, { backgroundColor: theme.background }]} edges={['top']}>
+      <ScrollView>
+        <LinearGradient
         colors={[theme.gradient1, theme.gradient2]}
         style={styles.header}
       >
@@ -98,7 +100,8 @@ export const ProfileScreen = ({ navigation }) => {
       >
         <Text style={styles.logoutText}>Log Out</Text>
       </TouchableOpacity>
-    </ScrollView>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 

@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
 import { View, Text, StyleSheet, FlatList, useColorScheme } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { PostCard } from '../components/PostCard';
 import { useAppStore } from '../context/AppContext';
 import { COLORS, SPACING, FONT_SIZE } from '../constants/theme';
@@ -23,7 +24,7 @@ export const FeedScreen = ({ navigation }) => {
   };
 
   return (
-    <View style={[styles.container, { backgroundColor: theme.background }]}>
+    <SafeAreaView style={[styles.container, { backgroundColor: theme.background }]}>
       <FlatList
         data={sortedPosts}
         keyExtractor={(item) => item.id}
@@ -42,7 +43,7 @@ export const FeedScreen = ({ navigation }) => {
           </Text>
         }
       />
-    </View>
+    </SafeAreaView>
   );
 };
 

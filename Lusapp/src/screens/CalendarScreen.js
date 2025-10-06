@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, FlatList, TouchableOpacity, useColorScheme } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { Calendar } from 'react-native-calendars';
 import { RaceCard } from '../components/RaceCard';
 import { useAppStore } from '../context/AppContext';
@@ -38,7 +39,7 @@ export const CalendarScreen = ({ navigation }) => {
     : upcomingRaces;
 
   return (
-    <View style={[styles.container, { backgroundColor: theme.background }]}>
+    <SafeAreaView style={[styles.container, { backgroundColor: theme.background }]}>
       <View style={styles.header}>
         <Text style={[styles.title, { color: theme.text }]}>Race Calendar</Text>
         <View style={styles.viewToggle}>
@@ -119,7 +120,7 @@ export const CalendarScreen = ({ navigation }) => {
           </Text>
         }
       />
-    </View>
+    </SafeAreaView>
   );
 };
 
