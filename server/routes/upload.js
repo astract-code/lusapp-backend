@@ -45,33 +45,44 @@ const upload = multer({
 
 router.post('/avatar', authMiddleware, upload.single('avatar'), async (req, res) => {
   try {
+    console.log('Avatar upload request received');
+    console.log('User ID:', req.user?.userId);
+    console.log('File:', req.file ? req.file.filename : 'No file');
+    
     if (!req.file) {
+      console.error('No file in request');
       return res.status(400).json({ error: 'No file uploaded' });
     }
 
     const avatarUrl = `/uploads/avatars/${req.file.filename}`;
+    console.log('Avatar URL:', avatarUrl);
     
     const result = await pool.query(
       'UPDATE users SET avatar = $1 WHERE id = $2 RETURNING avatar',
       [avatarUrl, req.user.userId]
     );
 
+    console.log('Database update result:', result.rows);
+
     if (result.rows.length === 0) {
       fs.unlinkSync(req.file.path);
+      console.error('User not found:', req.user.userId);
       return res.status(404).json({ error: 'User not found' });
     }
 
-    res.json({ 
+    const responseData = { 
       avatar: avatarUrl,
       message: 'Avatar uploaded successfully' 
-    });
+    };
+    console.log('Sending response:', responseData);
+    res.json(responseData);
 
   } catch (error) {
     if (req.file) {
       fs.unlinkSync(req.file.path);
     }
     console.error('Avatar upload error:', error);
-    res.status(500).json({ error: 'Failed to upload avatar' });
+    res.status(500).json({ error: 'Failed to upload avatar', details: error.message });
   }
 });
 
