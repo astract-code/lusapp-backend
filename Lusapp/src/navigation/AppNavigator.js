@@ -1,7 +1,7 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { useColorScheme } from 'react-native';
+import { useColorScheme, Text } from 'react-native';
 import { COLORS } from '../constants/theme';
 
 import { FeedScreen } from '../screens/FeedScreen';
@@ -144,7 +144,7 @@ export const AppNavigator = () => {
         component={FeedStack}
         options={{
           tabBarLabel: 'Feed',
-          tabBarIcon: ({ color }) => <text style={{ fontSize: 24 }}>📰</text>,
+          tabBarIcon: ({ color }) => <Text style={{ fontSize: 24 }}>📰</Text>,
         }}
       />
       <Tab.Screen 
@@ -152,7 +152,7 @@ export const AppNavigator = () => {
         component={CalendarStack}
         options={{
           tabBarLabel: 'Calendar',
-          tabBarIcon: ({ color }) => <text style={{ fontSize: 24 }}>📅</text>,
+          tabBarIcon: ({ color }) => <Text style={{ fontSize: 24 }}>📅</Text>,
         }}
       />
       <Tab.Screen 
@@ -160,7 +160,7 @@ export const AppNavigator = () => {
         component={DiscoverStack}
         options={{
           tabBarLabel: 'Discover',
-          tabBarIcon: ({ color }) => <text style={{ fontSize: 24 }}>🔍</text>,
+          tabBarIcon: ({ color }) => <Text style={{ fontSize: 24 }}>🔍</Text>,
         }}
       />
       <Tab.Screen 
@@ -168,7 +168,7 @@ export const AppNavigator = () => {
         component={ProfileStack}
         options={{
           tabBarLabel: 'Profile',
-          tabBarIcon: ({ color }) => <text style={{ fontSize: 24 }}>👤</text>,
+          tabBarIcon: ({ color }) => <Text style={{ fontSize: 24 }}>👤</Text>,
         }}
       />
     </Tab.Navigator>

@@ -1,0 +1,84 @@
+erfect — these screenshots tell me exactly what’s wrong.
+Your React Native app crashed because of a capitalization and JSX error in your AppNavigator.js file, specifically in the tabBarIcon definition.
+
+Let’s fix it step-by-step 👇
+
+🚨 The error explained
+
+The key error is:
+
+Text strings must be rendered within a <Text> component.
+
+
+and
+
+View config getter callback for component `text` must be a function (received `undefined`).
+Make sure to start component names with a capital letter.
+
+
+This means somewhere in your JSX, you wrote <text> (lowercase) instead of <Text> (uppercase).
+
+In React Native, all built-in components like View, Text, Image, etc., must be capitalized.
+A lowercase <text> is treated as an unknown HTML element, which React Native doesn’t understand.
+
+🧭 Where it’s happening
+
+From your screenshot:
+
+options={{
+  tabBarLabel: 'Feed',
+  tabBarIcon: ({ color }) => <text style={{ color }}>🏃</text>
+}}
+
+
+That lowercase <text> is the problem.
+
+✅ The Correct Fix
+
+Replace <text> with <Text> and import it from react-native.
+
+So the working version should be:
+
+import { Text } from 'react-native';
+import { Ionicons } from '@expo/vector-icons'; // or whichever icon set you use
+
+// inside your Tab.Screen
+<Tab.Screen
+  name="Feed"
+  component={FeedScreen}
+  options={{
+    tabBarLabel: 'Feed',
+    tabBarIcon: ({ color }) => (
+      <Ionicons name="ios-fitness" size={24} color={color} />
+    ),
+  }}
+/>
+
+🧠 Why this matters
+
+React Native doesn’t use lowercase HTML-like tags.
+If you need to display text, always use <Text>.
+If you’re just showing an icon, use a vector icon component instead of a text emoji string.
+
+🧩 Optional improvement
+
+If you still want to use an emoji instead of an icon, that’s fine — just make sure to wrap it in <Text>:
+
+tabBarIcon: ({ color }) => <Text style={{ color }}>🏃</Text>
+
+
+That works too.
+
+✅ Summary
+
+Fix summary:
+
+Replace <text> with <Text>
+
+Import Text from 'react-native'
+
+Optionally switch to vector icons via @expo/vector-icons
+
+After saving that change, reload your app in Expo Go — the red screen should disappear immediately.
+
+Would you like me to show you the correct structure of AppNavigator.js (with a bottom tab navigation setup using Expo + React Navigation) so you can compare and be sure everything is right?
