@@ -35,11 +35,19 @@ export const useAppStore = create((set, get) => ({
   })),
   
   toggleLikePost: (postId, userId) => set((state) => ({
-    posts: state.posts.map((post) =>
-      post.id === postId
-        ? { ...post, likes: post.likes + (post.liked ? -1 : 1), liked: !post.liked }
-        : post
-    ),
+    posts: state.posts.map((post) => {
+      if (post.id !== postId) return post;
+      
+      const likedBy = post.likedBy || [];
+      const hasLiked = likedBy.includes(userId);
+      
+      return {
+        ...post,
+        likedBy: hasLiked
+          ? likedBy.filter(id => id !== userId)
+          : [...likedBy, userId],
+      };
+    }),
   })),
   
   addComment: (postId, userId, text) => set((state) => ({

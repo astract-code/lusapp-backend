@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { View, Text, StyleSheet, FlatList, useColorScheme } from 'react-native';
 import { PostCard } from '../components/PostCard';
 import { useAppStore } from '../context/AppContext';
@@ -9,8 +9,9 @@ export const FeedScreen = ({ navigation }) => {
   const theme = COLORS[colorScheme] || COLORS.light;
   const posts = useAppStore((state) => state.posts);
 
-  const sortedPosts = [...posts].sort(
-    (a, b) => new Date(b.timestamp) - new Date(a.timestamp)
+  const sortedPosts = useMemo(() => 
+    [...posts].sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp)),
+    [posts]
   );
 
   const handleUserPress = (userId) => {
@@ -26,6 +27,7 @@ export const FeedScreen = ({ navigation }) => {
       <FlatList
         data={sortedPosts}
         keyExtractor={(item) => item.id}
+        extraData={posts}
         renderItem={({ item }) => (
           <PostCard
             post={item}

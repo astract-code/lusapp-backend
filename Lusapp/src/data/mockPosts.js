@@ -5,7 +5,7 @@ export const mockPosts = [
     type: 'signup',
     raceId: 'race-2',
     timestamp: '2025-01-15T10:30:00Z',
-    likes: 24,
+    likedBy: ['1', '3', '4', '5'],
     comments: [
       { userId: '1', text: 'Good luck! 🎉', timestamp: '2025-01-15T11:00:00Z' },
       { userId: '3', text: 'See you there!', timestamp: '2025-01-15T12:00:00Z' },
@@ -19,7 +19,7 @@ export const mockPosts = [
     raceName: 'Paris-Roubaix',
     timestamp: '2025-01-10T16:45:00Z',
     time: '6h 23m',
-    likes: 42,
+    likedBy: ['1', '2', '4', '5'],
     comments: [
       { userId: '1', text: 'Amazing performance! 💪', timestamp: '2025-01-10T17:00:00Z' },
       { userId: '4', text: 'Incredible!', timestamp: '2025-01-10T18:00:00Z' },
@@ -31,7 +31,7 @@ export const mockPosts = [
     type: 'signup',
     raceId: 'race-7',
     timestamp: '2025-01-08T09:15:00Z',
-    likes: 18,
+    likedBy: ['1', '2'],
     comments: [
       { userId: '1', text: 'That one is tough!', timestamp: '2025-01-08T10:00:00Z' },
     ],
@@ -42,7 +42,7 @@ export const mockPosts = [
     type: 'signup',
     raceId: 'race-5',
     timestamp: '2025-01-05T14:20:00Z',
-    likes: 35,
+    likedBy: ['1', '2', '3'],
     comments: [
       { userId: '1', text: 'Kona! Dream race 🌴', timestamp: '2025-01-05T15:00:00Z' },
       { userId: '2', text: 'You got this!', timestamp: '2025-01-05T16:00:00Z' },
@@ -56,7 +56,7 @@ export const mockPosts = [
     raceName: 'Challenge Roth',
     timestamp: '2024-07-07T20:00:00Z',
     time: '10h 45m',
-    likes: 67,
+    likedBy: ['2', '3', '4', '5'],
     comments: [
       { userId: '2', text: 'Congratulations! 🏆', timestamp: '2024-07-07T21:00:00Z' },
       { userId: '3', text: 'Well done!', timestamp: '2024-07-08T09:00:00Z' },

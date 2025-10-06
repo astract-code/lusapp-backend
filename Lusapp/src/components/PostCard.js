@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity, useColorScheme, TextInput } f
 import { UserAvatar } from './UserAvatar';
 import { COLORS, SPACING, BORDER_RADIUS, FONT_SIZE } from '../constants/theme';
 import { useAppStore } from '../context/AppContext';
+import { useAuth } from '../context/AuthContext';
 
 export const PostCard = ({ post, onUserPress, onRacePress }) => {
   const colorScheme = useColorScheme();
@@ -10,20 +11,21 @@ export const PostCard = ({ post, onUserPress, onRacePress }) => {
   const [showComments, setShowComments] = useState(false);
   const [commentText, setCommentText] = useState('');
   
+  const { user: currentUser } = useAuth();
   const { getUserById, getRaceById, toggleLikePost, addComment } = useAppStore();
   
-  const user = getUserById(post.userId);
+  const postAuthor = getUserById(post.userId);
   const race = getRaceById(post.raceId);
   
-  if (!user) return null;
+  if (!postAuthor || !currentUser) return null;
 
   const handleLike = () => {
-    toggleLikePost(post.id, user.id);
+    toggleLikePost(post.id, currentUser.id);
   };
 
   const handleAddComment = () => {
     if (commentText.trim()) {
-      addComment(post.id, user.id, commentText);
+      addComment(post.id, currentUser.id, commentText);
       setCommentText('');
     }
   };
@@ -40,13 +42,15 @@ export const PostCard = ({ post, onUserPress, onRacePress }) => {
     return 'Just now';
   };
 
+  const isLikedByCurrentUser = post.likedBy?.includes(currentUser.id) || false;
+
   return (
     <View style={[styles.container, { backgroundColor: theme.card }]}>
       <View style={styles.header}>
-        <UserAvatar uri={user.avatar} size={48} onPress={() => onUserPress(user.id)} />
+        <UserAvatar uri={postAuthor.avatar} size={48} onPress={() => onUserPress(postAuthor.id)} />
         <View style={styles.headerText}>
-          <TouchableOpacity onPress={() => onUserPress(user.id)}>
-            <Text style={[styles.userName, { color: theme.text }]}>{user.name}</Text>
+          <TouchableOpacity onPress={() => onUserPress(postAuthor.id)}>
+            <Text style={[styles.userName, { color: theme.text }]}>{postAuthor.name}</Text>
           </TouchableOpacity>
           <Text style={[styles.timestamp, { color: theme.textSecondary }]}>
             {formatTime(post.timestamp)}
@@ -81,9 +85,9 @@ export const PostCard = ({ post, onUserPress, onRacePress }) => {
 
       <View style={[styles.actions, { borderTopColor: theme.border }]}>
         <TouchableOpacity style={styles.actionButton} onPress={handleLike}>
-          <Text style={styles.actionIcon}>{post.liked ? '❤️' : '🤍'}</Text>
+          <Text style={styles.actionIcon}>{isLikedByCurrentUser ? '❤️' : '🤍'}</Text>
           <Text style={[styles.actionText, { color: theme.textSecondary }]}>
-            {post.likes} {post.likes === 1 ? 'like' : 'likes'}
+            {post.likedBy?.length || 0} {post.likedBy?.length === 1 ? 'like' : 'likes'}
           </Text>
         </TouchableOpacity>
         <TouchableOpacity 
