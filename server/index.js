@@ -1,0 +1,136 @@
+const express = require('express');
+const cors = require('cors');
+const bodyParser = require('body-parser');
+const { Pool } = require('pg');
+const multer = require('multer');
+const csv = require('csv-parser');
+const fs = require('fs');
+const path = require('path');
+
+const app = express();
+const PORT = process.env.PORT || 3000;
+
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+});
+
+app.use(cors());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static('server/public'));
+
+const upload = multer({ dest: 'uploads/' });
+
+app.get('/api/races', async (req, res) => {
+  try {
+    const result = await pool.query('SELECT * FROM races ORDER BY date ASC');
+    res.json(result.rows);
+  } catch (error) {
+    console.error('Error fetching races:', error);
+    res.status(500).json({ error: 'Failed to fetch races' });
+  }
+});
+
+app.get('/api/races/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const result = await pool.query('SELECT * FROM races WHERE id = $1', [id]);
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: 'Race not found' });
+    }
+    res.json(result.rows[0]);
+  } catch (error) {
+    console.error('Error fetching race:', error);
+    res.status(500).json({ error: 'Failed to fetch race' });
+  }
+});
+
+app.post('/api/races', async (req, res) => {
+  try {
+    const { name, sport, city, country, continent, date, distance, description, participants } = req.body;
+    const result = await pool.query(
+      'INSERT INTO races (name, sport, city, country, continent, date, distance, description, participants) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *',
+      [name, sport, city, country, continent, date, distance, description, participants || 0]
+    );
+    res.json(result.rows[0]);
+  } catch (error) {
+    console.error('Error creating race:', error);
+    res.status(500).json({ error: 'Failed to create race' });
+  }
+});
+
+app.put('/api/races/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { name, sport, city, country, continent, date, distance, description, participants } = req.body;
+    const result = await pool.query(
+      'UPDATE races SET name = $1, sport = $2, city = $3, country = $4, continent = $5, date = $6, distance = $7, description = $8, participants = $9 WHERE id = $10 RETURNING *',
+      [name, sport, city, country, continent, date, distance, description, participants, id]
+    );
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: 'Race not found' });
+    }
+    res.json(result.rows[0]);
+  } catch (error) {
+    console.error('Error updating race:', error);
+    res.status(500).json({ error: 'Failed to update race' });
+  }
+});
+
+app.delete('/api/races/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    await pool.query('DELETE FROM races WHERE id = $1', [id]);
+    res.json({ success: true });
+  } catch (error) {
+    console.error('Error deleting race:', error);
+    res.status(500).json({ error: 'Failed to delete race' });
+  }
+});
+
+app.post('/api/races/csv-upload', upload.single('csvFile'), async (req, res) => {
+  try {
+    const results = [];
+    const filePath = req.file.path;
+
+    fs.createReadStream(filePath)
+      .pipe(csv())
+      .on('data', (data) => results.push(data))
+      .on('end', async () => {
+        let imported = 0;
+        for (const row of results) {
+          try {
+            const name = row.name || row.eventName || row['Event Name'];
+            const sport = row.sport || row.sportType || row['Sport Type'] || 'Other';
+            const city = row.city || row.location;
+            const country = row.country;
+            const continent = row.continent;
+            const date = row.date;
+            const distance = row.distance;
+            const description = row.description || '';
+            const participants = parseInt(row.participants) || 0;
+
+            if (name && date) {
+              await pool.query(
+                'INSERT INTO races (name, sport, city, country, continent, date, distance, description, participants) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)',
+                [name, sport, city, country, continent, date, distance, description, participants]
+              );
+              imported++;
+            }
+          } catch (error) {
+            console.error('Error importing row:', error);
+          }
+        }
+
+        fs.unlinkSync(filePath);
+        res.json({ success: true, imported, total: results.length });
+      });
+  } catch (error) {
+    console.error('Error uploading CSV:', error);
+    res.status(500).json({ error: 'Failed to upload CSV' });
+  }
+});
+
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`Server running on port ${PORT}`);
+});
