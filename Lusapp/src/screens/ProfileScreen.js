@@ -56,8 +56,6 @@ export const ProfileScreen = ({ navigation }) => {
   const uploadPhoto = async (uri) => {
     try {
       setUploading(true);
-      console.log('Starting upload...', API_URL);
-      console.log('Token exists:', !!token);
 
       const filename = uri.split('/').pop();
       const match = /\.(\w+)$/.exec(filename);
@@ -70,8 +68,6 @@ export const ProfileScreen = ({ navigation }) => {
         type,
       });
 
-      console.log('Uploading to:', `${API_URL}/api/upload/avatar`);
-
       const response = await fetch(`${API_URL}/api/upload/avatar`, {
         method: 'POST',
         headers: {
@@ -80,19 +76,12 @@ export const ProfileScreen = ({ navigation }) => {
         body: formData,
       });
 
-      console.log('Response status:', response.status);
-      console.log('Response ok:', response.ok);
-      
-      const responseText = await response.text();
-      console.log('Response body:', responseText);
-
       if (!response.ok) {
-        const data = responseText ? JSON.parse(responseText) : {};
-        throw new Error(data.error || `Upload failed with status ${response.status}`);
+        const data = await response.json();
+        throw new Error(data.error || 'Upload failed');
       }
 
-      const data = responseText ? JSON.parse(responseText) : {};
-      console.log('Parsed data:', data);
+      const data = await response.json();
       
       if (!data.avatar) {
         throw new Error('No avatar URL returned from server');

@@ -32,7 +32,19 @@ export const RaceDetailScreen = ({ route, navigation }) => {
 
   const sport = SPORTS.find((s) => s.id === race.sport) || SPORTS[0];
   const isRegistered = race.registeredUsers?.includes(user?.id);
-  const registeredUsers = users.filter((u) => race.registeredUsers?.includes(u.id));
+  
+  const registeredUsers = React.useMemo(() => {
+    const usersFromStore = users.filter((u) => race.registeredUsers?.includes(u.id));
+    
+    if (user && race.registeredUsers?.includes(user.id)) {
+      const userAlreadyInList = usersFromStore.some(u => u.id === user.id);
+      if (!userAlreadyInList) {
+        return [...usersFromStore, user];
+      }
+    }
+    
+    return usersFromStore;
+  }, [race.registeredUsers, users, user]);
 
   const handleRegister = () => {
     if (!user) return;
