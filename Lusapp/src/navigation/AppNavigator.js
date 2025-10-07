@@ -11,6 +11,8 @@ import { ProfileScreen } from '../screens/ProfileScreen';
 import { RaceDetailScreen } from '../screens/RaceDetailScreen';
 import { UserProfileScreen } from '../screens/UserProfileScreen';
 import { SettingsScreen } from '../screens/SettingsScreen';
+import { MessagesScreen } from '../screens/MessagesScreen';
+import { ChatScreen } from '../screens/ChatScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -41,6 +43,11 @@ const FeedStack = () => {
         name="UserProfile" 
         component={UserProfileScreen}
         options={{ title: 'Profile' }}
+      />
+      <Stack.Screen 
+        name="Chat" 
+        component={ChatScreen}
+        options={{ title: 'Chat' }}
       />
     </Stack.Navigator>
   );
@@ -73,6 +80,11 @@ const CalendarStack = () => {
         component={UserProfileScreen}
         options={{ title: 'Profile' }}
       />
+      <Stack.Screen 
+        name="Chat" 
+        component={ChatScreen}
+        options={{ title: 'Chat' }}
+      />
     </Stack.Navigator>
   );
 };
@@ -98,6 +110,42 @@ const DiscoverStack = () => {
         name="RaceDetail" 
         component={RaceDetailScreen}
         options={{ title: 'Race Details' }}
+      />
+      <Stack.Screen 
+        name="UserProfile" 
+        component={UserProfileScreen}
+        options={{ title: 'Profile' }}
+      />
+      <Stack.Screen 
+        name="Chat" 
+        component={ChatScreen}
+        options={{ title: 'Chat' }}
+      />
+    </Stack.Navigator>
+  );
+};
+
+const MessagesStack = () => {
+  const colorScheme = useColorScheme();
+  const theme = COLORS[colorScheme] || COLORS.light;
+
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerStyle: { backgroundColor: theme.card },
+        headerTintColor: theme.primary,
+        headerTitleStyle: { fontWeight: 'bold' },
+      }}
+    >
+      <Stack.Screen 
+        name="MessagesMain" 
+        component={MessagesScreen} 
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen 
+        name="Chat" 
+        component={ChatScreen}
+        options={{ title: 'Chat' }}
       />
       <Stack.Screen 
         name="UserProfile" 
@@ -134,6 +182,11 @@ const ProfileStack = () => {
         name="UserProfile" 
         component={UserProfileScreen}
         options={{ title: 'Profile' }}
+      />
+      <Stack.Screen 
+        name="Chat" 
+        component={ChatScreen}
+        options={{ title: 'Chat' }}
       />
       <Stack.Screen 
         name="Settings" 
@@ -182,6 +235,14 @@ export const AppNavigator = () => {
         options={{
           tabBarLabel: 'Discover',
           tabBarIcon: ({ color }) => <Text style={{ fontSize: 24 }}>🔍</Text>,
+        }}
+      />
+      <Tab.Screen 
+        name="Messages" 
+        component={MessagesStack}
+        options={{
+          tabBarLabel: 'Messages',
+          tabBarIcon: ({ color }) => <Text style={{ fontSize: 24 }}>💬</Text>,
         }}
       />
       <Tab.Screen 

@@ -84,10 +84,11 @@ export const UserProfileScreen = ({ route, navigation }) => {
             
             <TouchableOpacity
               style={[styles.messageButton, { borderColor: '#FFFFFF' }]}
-              onPress={() => Alert.alert('Direct Message', `Send a message to ${user.name}?`, [
-                { text: 'Cancel', style: 'cancel' },
-                { text: 'Send Message', onPress: () => Alert.alert('Coming Soon', 'Direct messaging feature coming soon!') }
-              ])}
+              onPress={() => navigation.navigate('Chat', { 
+                userId: user.id, 
+                userName: user.name,
+                userAvatar: user.avatar
+              })}
             >
               <Text style={styles.messageButtonText}>Message</Text>
             </TouchableOpacity>
