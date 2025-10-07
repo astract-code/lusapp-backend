@@ -3,8 +3,8 @@ import { mockPosts } from '../data/mockPosts';
 import { mockUsers } from '../data/mockUsers';
 import { mockRaces } from '../data/mockRaces';
 
-const USE_API = false;
-const API_URL = `https://${process.env.REPLIT_DEV_DOMAIN || '9f3814b8-ecc1-421a-88c5-74001ee67b54-00-r9w1zdd6rpvt.worf.replit.dev'}:5000`;
+const USE_API = true;
+const API_URL = process.env.EXPO_PUBLIC_API_URL || 'https://lusapp-backend-1.onrender.com';
 
 export const useAppStore = create((set, get) => ({
   races: [],
