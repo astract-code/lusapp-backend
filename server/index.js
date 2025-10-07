@@ -9,6 +9,7 @@ const fs = require('fs');
 const path = require('path');
 const authRoutes = require('./routes/auth');
 const uploadRoutes = require('./routes/upload');
+const messagesRoutes = require('./routes/messages');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -43,6 +44,7 @@ app.use('/admin', adminAuth, express.static('server/public'));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use('/api/auth', authRoutes);
 app.use('/api/upload', uploadRoutes);
+app.use('/api/messages', messagesRoutes(pool));
 
 app.get('/api/races', async (req, res) => {
   try {
