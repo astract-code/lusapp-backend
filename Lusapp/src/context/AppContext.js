@@ -8,8 +8,8 @@ const API_URL = process.env.EXPO_PUBLIC_API_URL || 'https://lusapp-backend-1.onr
 
 export const useAppStore = create((set, get) => ({
   races: [],
-  posts: mockPosts,
-  users: mockUsers,
+  posts: [],
+  users: [],
   isLoading: false,
   
   fetchRaces: async () => {
