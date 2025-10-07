@@ -1,4 +1,4 @@
-const API_URL = process.env.EXPO_PUBLIC_API_URL || 'http://localhost:5000';
+const API_URL = process.env.EXPO_PUBLIC_API_URL || 'https://lusapp-backend-1.onrender.com';
 
 export const API_ENDPOINTS = {
   auth: {
