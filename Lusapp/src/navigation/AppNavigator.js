@@ -68,6 +68,11 @@ const CalendarStack = () => {
         component={RaceDetailScreen}
         options={{ title: 'Race Details' }}
       />
+      <Stack.Screen 
+        name="UserProfile" 
+        component={UserProfileScreen}
+        options={{ title: 'Profile' }}
+      />
     </Stack.Navigator>
   );
 };
@@ -94,6 +99,11 @@ const DiscoverStack = () => {
         component={RaceDetailScreen}
         options={{ title: 'Race Details' }}
       />
+      <Stack.Screen 
+        name="UserProfile" 
+        component={UserProfileScreen}
+        options={{ title: 'Profile' }}
+      />
     </Stack.Navigator>
   );
 };
@@ -119,6 +129,11 @@ const ProfileStack = () => {
         name="RaceDetail" 
         component={RaceDetailScreen}
         options={{ title: 'Race Details' }}
+      />
+      <Stack.Screen 
+        name="UserProfile" 
+        component={UserProfileScreen}
+        options={{ title: 'Profile' }}
       />
       <Stack.Screen 
         name="Settings" 
