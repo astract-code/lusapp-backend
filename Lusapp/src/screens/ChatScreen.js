@@ -11,6 +11,7 @@ import {
   ActivityIndicator,
   SafeAreaView,
 } from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
 import { useTheme } from '../context/ThemeContext';
 import { useAuth } from '../context/AuthContext';
 import { SPACING, FONT_SIZE, BORDER_RADIUS } from '../constants/theme';
@@ -26,30 +27,75 @@ export const ChatScreen = ({ route, navigation }) => {
   const [loading, setLoading] = useState(true);
   const [sending, setSending] = useState(false);
   const flatListRef = useRef(null);
+  const isActiveRef = useRef(true);
+  const latestUserIdRef = useRef(userId);
+  const abortControllerRef = useRef(null);
 
   useEffect(() => {
     navigation.setOptions({ title: userName });
-    fetchMessages();
-  }, [userId]);
+    latestUserIdRef.current = userId;
+  }, [userName, userId]);
 
-  const fetchMessages = async () => {
-    try {
-      const response = await fetch(`${API_URL}/api/messages/conversations/${userId}/messages`, {
-        headers: {
-          'Authorization': `Bearer ${token}`,
-        },
-      });
+  // Focus-aware async polling loop
+  useFocusEffect(
+    React.useCallback(() => {
+      isActiveRef.current = true;
+      latestUserIdRef.current = userId;
+      
+      const poll = async () => {
+        if (!isActiveRef.current) return;
+        
+        // Capture current userId for this fetch
+        const fetchUserId = latestUserIdRef.current;
+        
+        // Cancel previous request if exists
+        if (abortControllerRef.current) {
+          abortControllerRef.current.abort();
+        }
+        
+        // Create new AbortController for this request
+        abortControllerRef.current = new AbortController();
+        
+        try {
+          const response = await fetch(`${API_URL}/api/messages/conversations/${fetchUserId}/messages`, {
+            headers: {
+              'Authorization': `Bearer ${token}`,
+            },
+            signal: abortControllerRef.current.signal,
+          });
 
-      if (response.ok) {
-        const data = await response.json();
-        setMessages(data.messages || []);
-      }
-    } catch (error) {
-      console.error('Error fetching messages:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
+          // Only update state if still active and conversation hasn't changed
+          if (response.ok && isActiveRef.current && latestUserIdRef.current === fetchUserId) {
+            const data = await response.json();
+            setMessages(data.messages || []);
+          }
+        } catch (error) {
+          // Ignore abort errors
+          if (error.name !== 'AbortError') {
+            console.error('Error fetching messages:', error);
+          }
+        } finally {
+          // Always clear loading and schedule next poll if still active
+          if (isActiveRef.current && latestUserIdRef.current === fetchUserId) {
+            setLoading(false);
+            setTimeout(poll, 3000);
+          }
+        }
+      };
+      
+      // Start polling
+      poll();
+      
+      // Cleanup when screen loses focus or unmounts
+      return () => {
+        isActiveRef.current = false;
+        if (abortControllerRef.current) {
+          abortControllerRef.current.abort();
+          abortControllerRef.current = null;
+        }
+      };
+    }, [userId, token])
+  );
 
   const sendMessage = async () => {
     if (!inputText.trim() || sending) return;

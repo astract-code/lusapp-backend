@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const { authenticateToken } = require('../middleware/auth');
+const { authMiddleware } = require('../middleware/authMiddleware');
 
 module.exports = (pool) => {
   // Get all conversations for a user
-  router.get('/conversations', authenticateToken, async (req, res) => {
+  router.get('/conversations', authMiddleware, async (req, res) => {
     try {
       const userId = req.user.userId;
       
@@ -55,7 +55,7 @@ module.exports = (pool) => {
   });
 
   // Get messages for a conversation
-  router.get('/conversations/:otherUserId/messages', authenticateToken, async (req, res) => {
+  router.get('/conversations/:otherUserId/messages', authMiddleware, async (req, res) => {
     try {
       const userId = req.user.userId;
       const otherUserId = parseInt(req.params.otherUserId);
@@ -108,7 +108,7 @@ module.exports = (pool) => {
   });
 
   // Send a message
-  router.post('/conversations/:otherUserId/messages', authenticateToken, async (req, res) => {
+  router.post('/conversations/:otherUserId/messages', authMiddleware, async (req, res) => {
     try {
       const userId = req.user.userId;
       const otherUserId = parseInt(req.params.otherUserId);
