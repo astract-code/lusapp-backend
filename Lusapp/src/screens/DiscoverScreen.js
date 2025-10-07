@@ -16,12 +16,14 @@ import { FilterChip } from '../components/FilterChip';
 import { useAppStore } from '../context/AppContext';
 import { useTheme } from '../context/ThemeContext';
 import { SPACING, FONT_SIZE, BORDER_RADIUS, SPORTS, CONTINENTS, COUNTRIES, COUNTRY_TO_CONTINENT } from '../constants/theme';
+import { SPORT_TAXONOMY, SPORT_CATEGORIES, normalizeLegacySport, formatSportDisplay } from '../constants/sportTaxonomy';
 
 export const DiscoverScreen = ({ navigation }) => {
   const { colors } = useTheme();
   const { races, addRace } = useAppStore();
   
-  const [selectedSport, setSelectedSport] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [selectedSubtype, setSelectedSubtype] = useState(null);
   const [selectedContinent, setSelectedContinent] = useState(null);
   const [selectedCountry, setSelectedCountry] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
@@ -30,6 +32,8 @@ export const DiscoverScreen = ({ navigation }) => {
   const [newRace, setNewRace] = useState({
     name: '',
     sport: '',
+    sport_category: '',
+    sport_subtype: '',
     city: '',
     country: '',
     continent: '',
@@ -46,25 +50,35 @@ export const DiscoverScreen = ({ navigation }) => {
 
   const filteredRaces = useMemo(() => {
     return races.filter((race) => {
-      if (selectedSport && race.sport !== selectedSport) return false;
+      if (selectedCategory || selectedSubtype) {
+        const raceCategory = race.sport_category || normalizeLegacySport(race.sport).category;
+        const raceSubtype = race.sport_subtype || normalizeLegacySport(race.sport).subtype;
+        
+        if (selectedCategory && raceCategory !== selectedCategory) return false;
+        if (selectedSubtype && raceSubtype !== selectedSubtype) return false;
+      }
       if (selectedContinent && race.continent !== selectedContinent) return false;
       if (selectedCountry && race.country !== selectedCountry) return false;
       if (searchQuery && !race.city?.toLowerCase().includes(searchQuery.toLowerCase())) return false;
       return true;
     });
-  }, [races, selectedSport, selectedContinent, selectedCountry, searchQuery]);
+  }, [races, selectedCategory, selectedSubtype, selectedContinent, selectedCountry, searchQuery]);
 
 
   const handleAddRace = () => {
-    if (!newRace.name.trim() || !newRace.sport || !newRace.date) {
-      Alert.alert('Error', 'Please fill in at least Name, Sport, and Date');
+    if (!newRace.name.trim() || !newRace.sport_category || !newRace.sport_subtype || !newRace.date) {
+      Alert.alert('Error', 'Please fill in at least Name, Sport Category, Distance/Type, and Date');
       return;
     }
+
+    const displaySport = formatSportDisplay(newRace.sport_category, newRace.sport_subtype);
 
     const race = {
       id: `race-${Date.now()}`,
       name: newRace.name,
-      sport: newRace.sport,
+      sport: displaySport,
+      sport_category: newRace.sport_category,
+      sport_subtype: newRace.sport_subtype,
       city: newRace.city || 'TBD',
       country: newRace.country || 'TBD',
       continent: newRace.continent || 'Other',
@@ -80,6 +94,8 @@ export const DiscoverScreen = ({ navigation }) => {
     setNewRace({
       name: '',
       sport: '',
+      sport_category: '',
+      sport_subtype: '',
       city: '',
       country: '',
       continent: '',
@@ -100,14 +116,25 @@ export const DiscoverScreen = ({ navigation }) => {
     }
   };
 
+  const handleCategorySelect = (category) => {
+    if (selectedCategory === category) {
+      setSelectedCategory(null);
+      setSelectedSubtype(null);
+    } else {
+      setSelectedCategory(category);
+      setSelectedSubtype(null);
+    }
+  };
+
   const clearFilters = () => {
-    setSelectedSport(null);
+    setSelectedCategory(null);
+    setSelectedSubtype(null);
     setSelectedContinent(null);
     setSelectedCountry(null);
     setSearchQuery('');
   };
 
-  const hasFilters = selectedSport || selectedContinent || selectedCountry || searchQuery;
+  const hasFilters = selectedCategory || selectedSubtype || selectedContinent || selectedCountry || searchQuery;
 
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
@@ -154,23 +181,45 @@ export const DiscoverScreen = ({ navigation }) => {
               onChangeText={(text) => setNewRace({ ...newRace, name: text })}
             />
 
-            <Text style={[styles.label, { color: colors.text }]}>Sport *</Text>
+            <Text style={[styles.label, { color: colors.text }]}>Sport Category *</Text>
             <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.sportPicker}>
-              {SPORTS.map((sport) => (
+              {SPORT_CATEGORIES.map((category) => (
                 <TouchableOpacity
-                  key={sport.id}
+                  key={category}
                   style={[
                     styles.sportOption,
-                    { backgroundColor: newRace.sport === sport.id ? colors.primary : colors.card, borderColor: colors.border }
+                    { backgroundColor: newRace.sport_category === category ? colors.primary : colors.card, borderColor: colors.border }
                   ]}
-                  onPress={() => setNewRace({ ...newRace, sport: sport.id })}
+                  onPress={() => setNewRace({ ...newRace, sport_category: category, sport_subtype: '' })}
                 >
-                  <Text style={[styles.sportText, { color: newRace.sport === sport.id ? '#FFF' : colors.text }]}>
-                    {sport.icon} {sport.name}
+                  <Text style={[styles.sportText, { color: newRace.sport_category === category ? '#FFF' : colors.text }]}>
+                    {SPORT_TAXONOMY[category].icon} {category}
                   </Text>
                 </TouchableOpacity>
               ))}
             </ScrollView>
+
+            {newRace.sport_category && (
+              <>
+                <Text style={[styles.label, { color: colors.text }]}>Distance / Type *</Text>
+                <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.sportPicker}>
+                  {SPORT_TAXONOMY[newRace.sport_category].subtypes.map((subtype) => (
+                    <TouchableOpacity
+                      key={subtype}
+                      style={[
+                        styles.sportOption,
+                        { backgroundColor: newRace.sport_subtype === subtype ? colors.primary : colors.card, borderColor: colors.border }
+                      ]}
+                      onPress={() => setNewRace({ ...newRace, sport_subtype: subtype })}
+                    >
+                      <Text style={[styles.sportText, { color: newRace.sport_subtype === subtype ? '#FFF' : colors.text }]}>
+                        {subtype}
+                      </Text>
+                    </TouchableOpacity>
+                  ))}
+                </ScrollView>
+              </>
+            )}
 
             <Text style={[styles.label, { color: colors.text }]}>Date * (YYYY-MM-DD)</Text>
             <TextInput
@@ -279,23 +328,43 @@ export const DiscoverScreen = ({ navigation }) => {
           onChangeText={setSearchQuery}
         />
 
-        <Text style={[styles.filterLabel, { color: colors.text }]}>Sport</Text>
+        <Text style={[styles.filterLabel, { color: colors.text }]}>Sport Category</Text>
         <ScrollView
           horizontal
           showsHorizontalScrollIndicator={false}
           style={styles.filterRow}
         >
-          {SPORTS.map((sport) => (
+          {SPORT_CATEGORIES.map((category) => (
             <FilterChip
-              key={sport.id}
-              label={`${sport.icon} ${sport.name}`}
-              selected={selectedSport === sport.id}
-              onPress={() =>
-                setSelectedSport(selectedSport === sport.id ? null : sport.id)
-              }
+              key={category}
+              label={`${SPORT_TAXONOMY[category].icon} ${category}`}
+              selected={selectedCategory === category}
+              onPress={() => handleCategorySelect(category)}
             />
           ))}
         </ScrollView>
+
+        {selectedCategory && (
+          <>
+            <Text style={[styles.filterLabel, { color: colors.text }]}>Distance / Type</Text>
+            <ScrollView
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              style={styles.filterRow}
+            >
+              {SPORT_TAXONOMY[selectedCategory].subtypes.map((subtype) => (
+                <FilterChip
+                  key={subtype}
+                  label={subtype}
+                  selected={selectedSubtype === subtype}
+                  onPress={() =>
+                    setSelectedSubtype(selectedSubtype === subtype ? null : subtype)
+                  }
+                />
+              ))}
+            </ScrollView>
+          </>
+        )}
 
         <Text style={[styles.filterLabel, { color: colors.text }]}>Continent</Text>
         <ScrollView
