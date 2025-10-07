@@ -6,7 +6,7 @@ import { useTheme } from '../context/ThemeContext';
 
 export const RaceCard = ({ race, onPress }) => {
   const { colors } = useTheme();
-  const sport = SPORTS.find(s => s.id === race.sport) || SPORTS[0];
+  const sport = SPORTS.find(s => s.id === race.sport || s.name === race.sport) || SPORTS[0];
   
   const formatTime = (time) => {
     if (!time) return '';
