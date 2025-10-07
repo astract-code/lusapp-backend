@@ -8,6 +8,20 @@ The application is designed to work seamlessly on iOS (primary target) with Andr
 
 ## Recent Changes
 
+**October 7, 2025 - Latest:**
+- **HIERARCHICAL SPORT FILTERING IMPLEMENTED:**
+  - Replaced flat sport filter with two-level tree-based approach: Category → Distance/Type
+  - Sport categories: Running, Triathlon, Cycling, Obstacle, Swimming
+  - Running subtypes: 5K, 10K, Half Marathon, Marathon, Ultra Marathon, Trail Running, Cross Country, Custom Distance
+  - Triathlon subtypes: Sprint, Olympic, Half Ironman, Ironman, Aquathlon, Duathlon, Custom Distance
+  - Cycling subtypes: Criterium, Gran Fondo, Mountain Biking, Road Race, Custom Distance
+  - Obstacle subtypes: Spartan Race, HYROX, Obstacle Course, Custom Distance
+  - Database: Added sport_category and sport_subtype columns (backward compatible with existing sport column)
+  - DiscoverScreen: Cascading filter UI - select category first, then distance/type options appear
+  - Add Race modal: Updated to use hierarchical selection
+  - Backward compatibility: normalizeLegacySport() maps old flat sport strings to category/subtype
+  - All mock races updated with category and subtype data
+
 **October 6, 2025 - Latest:**
 - **REAL AUTHENTICATION IMPLEMENTED:**
   - Replaced mock authentication with production-ready PostgreSQL + JWT system
