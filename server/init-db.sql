@@ -6,6 +6,8 @@ CREATE TABLE IF NOT EXISTS races (
   id SERIAL PRIMARY KEY,
   name VARCHAR(255) NOT NULL,
   sport VARCHAR(100) NOT NULL,
+  sport_category VARCHAR(100),
+  sport_subtype VARCHAR(100),
   city VARCHAR(100) NOT NULL,
   country VARCHAR(100) NOT NULL,
   continent VARCHAR(50) NOT NULL,
@@ -13,6 +15,7 @@ CREATE TABLE IF NOT EXISTS races (
   distance VARCHAR(50),
   description TEXT,
   participants INTEGER DEFAULT 0,
+  start_time TIME,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -38,10 +41,16 @@ CREATE TABLE IF NOT EXISTS users (
 ALTER TABLE users ADD COLUMN IF NOT EXISTS following TEXT[] DEFAULT '{}';
 ALTER TABLE users ADD COLUMN IF NOT EXISTS followers TEXT[] DEFAULT '{}';
 
+-- Add new columns to races table if upgrading from old schema
+ALTER TABLE races ADD COLUMN IF NOT EXISTS sport_category VARCHAR(100);
+ALTER TABLE races ADD COLUMN IF NOT EXISTS sport_subtype VARCHAR(100);
+ALTER TABLE races ADD COLUMN IF NOT EXISTS start_time TIME;
+
 -- Create indexes for performance
 CREATE INDEX IF NOT EXISTS idx_users_email ON users(email);
 CREATE INDEX IF NOT EXISTS idx_races_date ON races(date);
 CREATE INDEX IF NOT EXISTS idx_races_sport ON races(sport);
+CREATE INDEX IF NOT EXISTS idx_races_category ON races(sport_category);
 
 -- Create conversations table for messaging
 CREATE TABLE IF NOT EXISTS conversations (
