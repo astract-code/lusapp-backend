@@ -8,7 +8,18 @@ The application is designed to work seamlessly on iOS (primary target) with Andr
 
 ## Recent Changes
 
-**October 7, 2025 - Latest:**
+**October 8, 2025 - Latest:**
+- **SMART DUPLICATE RACE DETECTION IMPLEMENTED:**
+  - Backend API now prevents duplicate race entries based on name + date + sport/distance
+  - NULL-safe comparison using IS NOT DISTINCT FROM for legacy race compatibility
+  - Allows same event with different distances (e.g., "Narnia Marathon" full vs half on same date)
+  - Works for both manual race entry (POST /api/races) and CSV bulk upload
+  - Returns clear error messages when duplicates detected with existing race details
+  - Skipped duplicates tracked in CSV upload response with count and list
+  - Fixed false positive issues where different sports with same distance were flagged
+  - Architect-reviewed and tested with edge cases including NULL category/subtype values
+
+**October 7, 2025:**
 - **HIERARCHICAL SPORT FILTERING IMPLEMENTED:**
   - Replaced flat sport filter with two-level tree-based approach: Category → Distance/Type
   - Sport categories: Running, Triathlon, Cycling, Obstacle, Swimming
