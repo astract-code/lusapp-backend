@@ -42,6 +42,16 @@ const upload = multer({ dest: 'uploads/' });
 
 app.use('/admin', adminAuth, express.static('server/public'));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
+// Serve legal documents publicly (no auth required)
+app.get('/privacy-policy', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'privacy-policy.html'));
+});
+
+app.get('/terms-of-service', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'terms-of-service.html'));
+});
+
 app.use('/api/auth', authRoutes);
 app.use('/api/upload', uploadRoutes);
 app.use('/api/messages', messagesRoutes(pool));
