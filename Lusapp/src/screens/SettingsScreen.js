@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -6,22 +6,78 @@ import {
   Switch,
   TouchableOpacity,
   ScrollView,
+  Alert,
+  ActivityIndicator,
+  Linking,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useSettings } from '../context/SettingsContext';
 import { useTheme } from '../context/ThemeContext';
+import { useAuth } from '../context/AuthContext';
 import { SPACING, TYPOGRAPHY, BORDER_RADIUS, SHADOWS } from '../constants/theme';
 import { Card } from '../components/Card';
+import { API_ENDPOINTS } from '../config/api';
 
 export const SettingsScreen = ({ navigation }) => {
   const { colors, themeMode, setTheme } = useTheme();
   const { use24HourFormat, useMetric, toggle24HourFormat, toggleDistanceUnit } = useSettings();
+  const { token, logout } = useAuth();
+  const [isDeleting, setIsDeleting] = useState(false);
 
   const themeOptions = [
     { label: 'Light', value: 'light', icon: '☀️' },
     { label: 'Dark', value: 'dark', icon: '🌙' },
     { label: 'Auto', value: 'auto', icon: '⚙️' },
   ];
+
+  const handleDeleteAccount = () => {
+    Alert.alert(
+      'Delete Account',
+      'Are you sure you want to delete your account? This action cannot be undone and will permanently delete all your data including:\n\n• Profile information\n• Race history\n• Messages\n• Social connections',
+      [
+        {
+          text: 'Cancel',
+          style: 'cancel',
+        },
+        {
+          text: 'Delete',
+          style: 'destructive',
+          onPress: async () => {
+            setIsDeleting(true);
+            try {
+              const response = await fetch(API_ENDPOINTS.auth.deleteAccount, {
+                method: 'DELETE',
+                headers: {
+                  'Authorization': `Bearer ${token}`,
+                },
+              });
+
+              const data = await response.json();
+
+              if (!response.ok) {
+                throw new Error(data.error || 'Failed to delete account');
+              }
+
+              Alert.alert(
+                'Account Deleted',
+                'Your account has been permanently deleted.',
+                [
+                  {
+                    text: 'OK',
+                    onPress: () => logout(),
+                  },
+                ]
+              );
+            } catch (error) {
+              Alert.alert('Error', error.message || 'Failed to delete account. Please try again.');
+            } finally {
+              setIsDeleting(false);
+            }
+          },
+        },
+      ]
+    );
+  };
 
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
@@ -120,6 +176,66 @@ export const SettingsScreen = ({ navigation }) => {
             <Text style={[styles.infoLabel, { color: colors.textSecondary }]}>App Name</Text>
             <Text style={[styles.infoValue, { color: colors.text }]}>Lusapp</Text>
           </View>
+
+          <View style={[styles.divider, { backgroundColor: colors.border }]} />
+
+          <TouchableOpacity
+            style={styles.infoRow}
+            onPress={async () => {
+              const url = 'https://lusapp-backend-1.onrender.com/privacy-policy';
+              const canOpen = await Linking.canOpenURL(url);
+              if (canOpen) {
+                await Linking.openURL(url);
+              } else {
+                Alert.alert('Error', 'Unable to open Privacy Policy. Please visit: ' + url);
+              }
+            }}
+          >
+            <Text style={[styles.infoLabel, { color: colors.textSecondary }]}>Privacy Policy</Text>
+            <Text style={[styles.infoValue, { color: colors.primary }]}>View →</Text>
+          </TouchableOpacity>
+
+          <View style={[styles.divider, { backgroundColor: colors.border }]} />
+
+          <TouchableOpacity
+            style={styles.infoRow}
+            onPress={async () => {
+              const url = 'https://lusapp-backend-1.onrender.com/terms-of-service';
+              const canOpen = await Linking.canOpenURL(url);
+              if (canOpen) {
+                await Linking.openURL(url);
+              } else {
+                Alert.alert('Error', 'Unable to open Terms of Service. Please visit: ' + url);
+              }
+            }}
+          >
+            <Text style={[styles.infoLabel, { color: colors.textSecondary }]}>Terms of Service</Text>
+            <Text style={[styles.infoValue, { color: colors.primary }]}>View →</Text>
+          </TouchableOpacity>
+        </Card>
+
+        {/* Account Management */}
+        <Card elevation="md" padding="md" style={styles.section}>
+          <Text style={[styles.sectionTitle, { color: colors.text }]}>🔐 Account</Text>
+          
+          <TouchableOpacity
+            style={[
+              styles.deleteButton,
+              { backgroundColor: colors.error, opacity: isDeleting ? 0.6 : 1 },
+            ]}
+            onPress={handleDeleteAccount}
+            disabled={isDeleting}
+          >
+            {isDeleting ? (
+              <ActivityIndicator color="#fff" />
+            ) : (
+              <Text style={styles.deleteButtonText}>Delete Account</Text>
+            )}
+          </TouchableOpacity>
+          
+          <Text style={[styles.deleteWarning, { color: colors.textSecondary }]}>
+            Warning: This action is permanent and cannot be undone
+          </Text>
         </Card>
       </ScrollView>
     </SafeAreaView>
@@ -210,5 +326,21 @@ const styles = StyleSheet.create({
   infoValue: {
     fontSize: TYPOGRAPHY.fontSize.base,
     fontWeight: TYPOGRAPHY.fontWeight.semibold,
+  },
+  deleteButton: {
+    paddingVertical: SPACING.lg,
+    borderRadius: BORDER_RADIUS.md,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  deleteButtonText: {
+    color: '#FFFFFF',
+    fontSize: TYPOGRAPHY.fontSize.md,
+    fontWeight: TYPOGRAPHY.fontWeight.bold,
+  },
+  deleteWarning: {
+    fontSize: TYPOGRAPHY.fontSize.sm,
+    textAlign: 'center',
+    marginTop: SPACING.md,
   },
 });

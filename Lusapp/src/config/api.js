@@ -5,6 +5,7 @@ export const API_ENDPOINTS = {
     signup: `${API_URL}/api/auth/signup`,
     login: `${API_URL}/api/auth/login`,
     me: `${API_URL}/api/auth/me`,
+    deleteAccount: `${API_URL}/api/auth/account`,
   },
   races: {
     list: `${API_URL}/api/races`,
