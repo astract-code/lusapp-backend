@@ -28,6 +28,7 @@ export const OnboardingScreen = () => {
   const [favoriteSport, setFavoriteSport] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
+  const [ageConfirmed, setAgeConfirmed] = useState(false);
 
   const handleEmailAuth = async () => {
     setError('');
@@ -43,6 +44,10 @@ export const OnboardingScreen = () => {
         }
         if (password.length < 8) {
           setError('Password must be at least 8 characters');
+          return;
+        }
+        if (!ageConfirmed) {
+          setError('You must confirm that you are at least 13 years old');
           return;
         }
         await signupWithEmail(email, password, { name, location, bio, favoriteSport });
@@ -137,6 +142,23 @@ export const OnboardingScreen = () => {
             onChangeText={setPassword}
             secureTextEntry
           />
+
+          {!isLogin && (
+            <TouchableOpacity
+              style={styles.checkboxContainer}
+              onPress={() => setAgeConfirmed(!ageConfirmed)}
+              activeOpacity={0.7}
+            >
+              <View style={[styles.checkbox, { borderColor: colors.border }]}>
+                {ageConfirmed && (
+                  <Text style={[styles.checkmark, { color: colors.primary }]}>✓</Text>
+                )}
+              </View>
+              <Text style={[styles.checkboxLabel, { color: colors.text }]}>
+                I confirm that I am at least 13 years old
+              </Text>
+            </TouchableOpacity>
+          )}
 
           {error ? (
             <View style={styles.errorContainer}>
@@ -307,5 +329,28 @@ const styles = StyleSheet.create({
     color: '#c00',
     fontSize: FONT_SIZE.sm,
     textAlign: 'center',
+  },
+  checkboxContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: SPACING.md,
+    paddingVertical: SPACING.sm,
+  },
+  checkbox: {
+    width: 24,
+    height: 24,
+    borderWidth: 2,
+    borderRadius: 4,
+    marginRight: SPACING.md,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  checkmark: {
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  checkboxLabel: {
+    fontSize: FONT_SIZE.sm,
+    flex: 1,
   },
 });
