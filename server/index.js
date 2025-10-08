@@ -75,16 +75,16 @@ app.post('/api/races', adminAuth, async (req, res) => {
     const { name, sport, sport_category, sport_subtype, city, country, continent, date, start_time, distance, description, participants } = req.body;
     
     // Check for duplicates: same name + date + sport/distance
+    // Use IS NOT DISTINCT FROM for NULL-safe comparison
     const duplicateCheck = await pool.query(
       `SELECT * FROM races 
        WHERE LOWER(name) = LOWER($1) 
        AND date = $2 
        AND (
-         (sport_category = $3 AND sport_subtype = $4) 
-         OR (sport_category IS NULL AND sport = $5)
-         OR (LOWER(distance) = LOWER($6))
+         (sport_category IS NOT DISTINCT FROM $3 AND sport_subtype IS NOT DISTINCT FROM $4)
+         OR (sport_category IS NULL AND sport_subtype IS NULL AND sport IS NOT DISTINCT FROM $5)
        )`,
-      [name, date, sport_category || null, sport_subtype || null, sport || null, distance || null]
+      [name, date, sport_category || null, sport_subtype || null, sport || null]
     );
     
     if (duplicateCheck.rows.length > 0) {
@@ -165,16 +165,16 @@ app.post('/api/races/csv-upload', adminAuth, upload.single('csvFile'), async (re
 
             if (name && date) {
               // Check for duplicates before inserting
+              // Use IS NOT DISTINCT FROM for NULL-safe comparison
               const duplicateCheck = await pool.query(
                 `SELECT * FROM races 
                  WHERE LOWER(name) = LOWER($1) 
                  AND date = $2 
                  AND (
-                   (sport_category = $3 AND sport_subtype = $4) 
-                   OR (sport_category IS NULL AND sport = $5)
-                   OR (LOWER(distance) = LOWER($6))
+                   (sport_category IS NOT DISTINCT FROM $3 AND sport_subtype IS NOT DISTINCT FROM $4)
+                   OR (sport_category IS NULL AND sport_subtype IS NULL AND sport IS NOT DISTINCT FROM $5)
                  )`,
-                [name, date, sport_category, sport_subtype, sport, distance]
+                [name, date, sport_category || null, sport_subtype || null, sport || null]
               );
               
               if (duplicateCheck.rows.length > 0) {
