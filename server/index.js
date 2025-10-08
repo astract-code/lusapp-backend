@@ -72,10 +72,32 @@ app.get('/api/races/:id', async (req, res) => {
 
 app.post('/api/races', adminAuth, async (req, res) => {
   try {
-    const { name, sport, city, country, continent, date, start_time, distance, description, participants } = req.body;
+    const { name, sport, sport_category, sport_subtype, city, country, continent, date, start_time, distance, description, participants } = req.body;
+    
+    // Check for duplicates: same name + date + sport/distance
+    const duplicateCheck = await pool.query(
+      `SELECT * FROM races 
+       WHERE LOWER(name) = LOWER($1) 
+       AND date = $2 
+       AND (
+         (sport_category = $3 AND sport_subtype = $4) 
+         OR (sport_category IS NULL AND sport = $5)
+         OR (LOWER(distance) = LOWER($6))
+       )`,
+      [name, date, sport_category || null, sport_subtype || null, sport || null, distance || null]
+    );
+    
+    if (duplicateCheck.rows.length > 0) {
+      return res.status(400).json({ 
+        error: 'Duplicate race detected',
+        message: `A race with the same name, date, and sport/distance already exists: "${name}" on ${date}`,
+        existingRace: duplicateCheck.rows[0]
+      });
+    }
+    
     const result = await pool.query(
-      'INSERT INTO races (name, sport, city, country, continent, date, start_time, distance, description, participants) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING *',
-      [name, sport, city, country, continent, date, start_time || null, distance, description, participants || 0]
+      'INSERT INTO races (name, sport, sport_category, sport_subtype, city, country, continent, date, start_time, distance, description, participants) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) RETURNING *',
+      [name, sport, sport_category || null, sport_subtype || null, city, country, continent, date, start_time || null, distance, description, participants || 0]
     );
     res.json(result.rows[0]);
   } catch (error) {
@@ -123,10 +145,15 @@ app.post('/api/races/csv-upload', adminAuth, upload.single('csvFile'), async (re
       .on('data', (data) => results.push(data))
       .on('end', async () => {
         let imported = 0;
+        let skipped = 0;
+        const duplicates = [];
+        
         for (const row of results) {
           try {
             const name = row.name || row.eventName || row['Event Name'];
             const sport = row.sport || row.sportType || row['Sport Type'] || 'Other';
+            const sport_category = row.sport_category || row.sportCategory || null;
+            const sport_subtype = row.sport_subtype || row.sportSubtype || null;
             const city = row.city || row.location;
             const country = row.country;
             const continent = row.continent;
@@ -137,19 +164,45 @@ app.post('/api/races/csv-upload', adminAuth, upload.single('csvFile'), async (re
             const participants = parseInt(row.participants) || 0;
 
             if (name && date) {
+              // Check for duplicates before inserting
+              const duplicateCheck = await pool.query(
+                `SELECT * FROM races 
+                 WHERE LOWER(name) = LOWER($1) 
+                 AND date = $2 
+                 AND (
+                   (sport_category = $3 AND sport_subtype = $4) 
+                   OR (sport_category IS NULL AND sport = $5)
+                   OR (LOWER(distance) = LOWER($6))
+                 )`,
+                [name, date, sport_category, sport_subtype, sport, distance]
+              );
+              
+              if (duplicateCheck.rows.length > 0) {
+                duplicates.push(`${name} on ${date}`);
+                skipped++;
+                continue;
+              }
+              
               await pool.query(
-                'INSERT INTO races (name, sport, city, country, continent, date, start_time, distance, description, participants) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)',
-                [name, sport, city, country, continent, date, start_time, distance, description, participants]
+                'INSERT INTO races (name, sport, sport_category, sport_subtype, city, country, continent, date, start_time, distance, description, participants) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)',
+                [name, sport, sport_category, sport_subtype, city, country, continent, date, start_time, distance, description, participants]
               );
               imported++;
             }
           } catch (error) {
             console.error('Error importing row:', error);
+            skipped++;
           }
         }
 
         fs.unlinkSync(filePath);
-        res.json({ success: true, imported, total: results.length });
+        res.json({ 
+          success: true, 
+          imported, 
+          skipped,
+          total: results.length,
+          duplicates: duplicates.length > 0 ? duplicates : undefined
+        });
       });
   } catch (error) {
     console.error('Error uploading CSV:', error);
