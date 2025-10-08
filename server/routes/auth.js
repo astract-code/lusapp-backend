@@ -180,4 +180,47 @@ router.get('/me', authMiddleware, async (req, res) => {
   }
 });
 
+router.delete('/account', authMiddleware, async (req, res) => {
+  const client = await pool.connect();
+  
+  try {
+    const userId = req.user.userId;
+    
+    await client.query('BEGIN');
+    
+    await client.query('DELETE FROM conversations WHERE user1_id = $1 OR user2_id = $1', [userId]);
+    
+    await client.query('DELETE FROM messages WHERE sender_id = $1', [userId]);
+    
+    await client.query(
+      `UPDATE users 
+       SET following = array_remove(following, $1),
+           followers = array_remove(followers, $1)
+       WHERE $1 = ANY(following) OR $1 = ANY(followers)`,
+      [userId.toString()]
+    );
+    
+    const result = await client.query('DELETE FROM users WHERE id = $1 RETURNING id', [userId]);
+    
+    if (result.rows.length === 0) {
+      await client.query('ROLLBACK');
+      return res.status(404).json({ error: 'User not found' });
+    }
+    
+    await client.query('COMMIT');
+    
+    res.json({ 
+      success: true, 
+      message: 'Account and all associated data successfully deleted' 
+    });
+    
+  } catch (error) {
+    await client.query('ROLLBACK');
+    console.error('Delete account error:', error);
+    res.status(500).json({ error: 'Failed to delete account' });
+  } finally {
+    client.release();
+  }
+});
+
 module.exports = router;
