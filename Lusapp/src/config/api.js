@@ -1,4 +1,7 @@
-const API_URL = process.env.EXPO_PUBLIC_API_URL || 'https://lusapp-backend-1.onrender.com';
+import Constants from 'expo-constants';
+
+// Get API URL from app.json config (for production builds) or .env (for development)
+const API_URL = Constants.expoConfig?.extra?.apiUrl || process.env.EXPO_PUBLIC_API_URL || 'https://lusapp-backend-1.onrender.com';
 
 export const API_ENDPOINTS = {
   auth: {

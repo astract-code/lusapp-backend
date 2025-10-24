@@ -39,7 +39,8 @@
     "extra": {
       "eas": {
         "projectId": "17011401-d4d9-4d78-a931-3e960fb21539"
-      }
+      },
+      "apiUrl": "https://lusapp-backend-1.onrender.com"
     }
   }
 }

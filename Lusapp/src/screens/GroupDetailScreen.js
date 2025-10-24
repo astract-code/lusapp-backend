@@ -16,7 +16,7 @@ import { GroupChatTab } from './GroupChatTab';
 import { GroupMembersTab } from './GroupMembersTab';
 import { GroupGearListsTab } from './GroupGearListsTab';
 
-const API_URL = process.env.EXPO_PUBLIC_API_URL || 'http://localhost:5000';
+import API_URL from '../config/api';
 
 export const GroupDetailScreen = ({ route, navigation }) => {
   const { groupId } = route.params;

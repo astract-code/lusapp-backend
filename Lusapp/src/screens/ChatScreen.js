@@ -15,8 +15,7 @@ import { useFocusEffect } from '@react-navigation/native';
 import { useTheme } from '../context/ThemeContext';
 import { useAuth } from '../context/AuthContext';
 import { SPACING, FONT_SIZE, BORDER_RADIUS } from '../constants/theme';
-
-const API_URL = process.env.EXPO_PUBLIC_API_URL || 'https://YOUR_REPLIT_URL.replit.dev';
+import API_URL from '../config/api';
 
 export const ChatScreen = ({ route, navigation }) => {
   const { userId, userName } = route.params;

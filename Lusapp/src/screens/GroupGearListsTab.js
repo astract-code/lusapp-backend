@@ -14,7 +14,7 @@ import { useTheme } from '../context/ThemeContext';
 import { useAuth } from '../context/AuthContext';
 import { SPACING, FONT_SIZE, BORDER_RADIUS } from '../constants/theme';
 
-const API_URL = process.env.EXPO_PUBLIC_API_URL || 'http://localhost:5000';
+import API_URL from '../config/api';
 
 export const GroupGearListsTab = ({ groupId, navigation, userRole }) => {
   const { colors } = useTheme();
