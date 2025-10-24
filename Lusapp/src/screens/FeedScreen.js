@@ -1,19 +1,49 @@
-import React, { useMemo } from 'react';
-import { View, Text, StyleSheet, FlatList } from 'react-native';
+import React, { useState, useEffect, useCallback } from 'react';
+import { View, Text, StyleSheet, FlatList, RefreshControl, ActivityIndicator } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { PostCard } from '../components/PostCard';
-import { useAppStore } from '../context/AppContext';
+import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
 import { SPACING, FONT_SIZE } from '../constants/theme';
+import API_URL from '../config/api';
 
 export const FeedScreen = ({ navigation }) => {
   const { colors } = useTheme();
-  const posts = useAppStore((state) => state.posts);
+  const { token } = useAuth();
+  const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
 
-  const sortedPosts = useMemo(() => 
-    [...posts].sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp)),
-    [posts]
-  );
+  const fetchFeed = async () => {
+    try {
+      const response = await fetch(`${API_URL}/api/posts/feed`, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        },
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setPosts(data.posts || []);
+      } else {
+        console.error('Failed to fetch feed');
+      }
+    } catch (error) {
+      console.error('Error fetching feed:', error);
+    } finally {
+      setLoading(false);
+      setRefreshing(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchFeed();
+  }, []);
+
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    fetchFeed();
+  }, []);
 
   const handleUserPress = (userId) => {
     navigation.navigate('UserProfile', { userId });
@@ -23,12 +53,21 @@ export const FeedScreen = ({ navigation }) => {
     navigation.navigate('RaceDetail', { raceId });
   };
 
+  if (loading) {
+    return (
+      <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
+        <View style={styles.centerContent}>
+          <ActivityIndicator size="large" color={colors.primary} />
+        </View>
+      </SafeAreaView>
+    );
+  }
+
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
       <FlatList
-        data={sortedPosts}
+        data={posts}
         keyExtractor={(item) => item.id}
-        extraData={posts}
         renderItem={({ item }) => (
           <PostCard
             post={item}
@@ -42,6 +81,18 @@ export const FeedScreen = ({ navigation }) => {
             Activity Feed
           </Text>
         }
+        ListEmptyComponent={
+          <Text style={[styles.emptyText, { color: colors.textSecondary }]}>
+            No posts to show. Follow other athletes to see their activity!
+          </Text>
+        }
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+            tintColor={colors.primary}
+          />
+        }
       />
     </SafeAreaView>
   );
@@ -51,6 +102,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
+  centerContent: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   list: {
     padding: SPACING.md,
   },
@@ -58,5 +114,10 @@ const styles = StyleSheet.create({
     fontSize: FONT_SIZE.xl,
     fontWeight: 'bold',
     marginBottom: SPACING.md,
+  },
+  emptyText: {
+    fontSize: FONT_SIZE.md,
+    textAlign: 'center',
+    marginVertical: SPACING.xxl,
   },
 });

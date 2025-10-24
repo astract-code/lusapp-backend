@@ -93,15 +93,38 @@ export const RaceDetailScreen = ({ route, navigation }) => {
     }
   };
 
-  const handleRegister = () => {
+  const handleRegister = async () => {
     if (!user) return;
 
-    if (isRegistered) {
-      unregisterFromRace(raceId, user.id);
-      Alert.alert('Success', 'You have unregistered from this race');
-    } else {
-      registerForRace(raceId, user.id);
-      Alert.alert('Success', 'You have registered for this race!');
+    try {
+      const endpoint = isRegistered 
+        ? `${API_URL}/api/races/${raceId}/leave`
+        : `${API_URL}/api/races/${raceId}/join`;
+      
+      const response = await fetch(endpoint, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        Alert.alert('Success', isRegistered ? 'You have unregistered from this race' : 'You have registered for this race!');
+        
+        if (isRegistered) {
+          unregisterFromRace(raceId, user.id);
+        } else {
+          registerForRace(raceId, user.id);
+        }
+      } else {
+        const error = await response.json();
+        Alert.alert('Error', error.error || 'Failed to update registration');
+      }
+    } catch (error) {
+      console.error('Error updating registration:', error);
+      Alert.alert('Error', 'Failed to update registration');
     }
   };
 

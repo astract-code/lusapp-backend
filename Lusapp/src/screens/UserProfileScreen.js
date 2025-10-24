@@ -45,7 +45,12 @@ export const UserProfileScreen = ({ route, navigation }) => {
         const data = await response.json();
         console.log('User profile data:', data);
         if (data.users && data.users.length > 0) {
-          setUser(data.users[0]);
+          const fetchedUser = data.users[0];
+          setUser(fetchedUser);
+          
+          const isUserFollowed = fetchedUser.followers?.includes(currentUser.id.toString()) || 
+                                 fetchedUser.followers?.includes(currentUser.id);
+          setIsFollowing(isUserFollowed);
         }
       } else {
         console.error('Failed to fetch user profile');
@@ -57,8 +62,39 @@ export const UserProfileScreen = ({ route, navigation }) => {
     }
   };
 
-  const handleToggleFollow = () => {
-    setIsFollowing(!isFollowing);
+  const handleToggleFollow = async () => {
+    try {
+      const endpoint = isFollowing 
+        ? `${API_URL}/api/auth/users/${userId}/unfollow`
+        : `${API_URL}/api/auth/users/${userId}/follow`;
+      
+      const method = isFollowing ? 'DELETE' : 'POST';
+      
+      const response = await fetch(endpoint, {
+        method,
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (response.ok) {
+        setIsFollowing(!isFollowing);
+        
+        setUser(prevUser => ({
+          ...prevUser,
+          followers: isFollowing
+            ? (prevUser.followers || []).filter(id => id !== currentUser.id.toString() && id !== currentUser.id)
+            : [...(prevUser.followers || []), currentUser.id.toString()]
+        }));
+      } else {
+        const error = await response.json();
+        Alert.alert('Error', error.error || 'Failed to update follow status');
+      }
+    } catch (error) {
+      console.error('Error toggling follow:', error);
+      Alert.alert('Error', 'Failed to update follow status');
+    }
   };
 
   if (loading) {

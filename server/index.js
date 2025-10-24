@@ -13,6 +13,7 @@ const messagesRoutes = require('./routes/messages');
 const groupsRoutes = require('./routes/groups');
 const groupMessagesRoutes = require('./routes/groupMessages');
 const gearListsRoutes = require('./routes/gearLists');
+const postsRoutes = require('./routes/posts');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -77,6 +78,7 @@ app.use('/api/messages', messagesRoutes(pool));
 app.use('/api/groups', groupsRoutes(pool));
 app.use('/api/groups', groupMessagesRoutes(pool));
 app.use('/api/groups', gearListsRoutes(pool));
+app.use('/api/posts', postsRoutes);
 
 app.get('/api/races', async (req, res) => {
   try {
@@ -239,6 +241,114 @@ app.post('/api/races/csv-upload', adminAuth, upload.single('csvFile'), async (re
   } catch (error) {
     console.error('Error uploading CSV:', error);
     res.status(500).json({ error: 'Failed to upload CSV' });
+  }
+});
+
+const { authMiddleware } = require('./middleware/authMiddleware');
+
+app.post('/api/races/:raceId/join', authMiddleware, async (req, res) => {
+  try {
+    const raceId = parseInt(req.params.raceId, 10);
+    const userId = req.user.userId;
+    
+    if (isNaN(raceId)) {
+      return res.status(400).json({ error: 'Invalid race ID' });
+    }
+    
+    const raceCheck = await pool.query('SELECT id FROM races WHERE id = $1', [raceId]);
+    if (raceCheck.rows.length === 0) {
+      return res.status(404).json({ error: 'Race not found' });
+    }
+    
+    await pool.query(
+      `UPDATE users 
+       SET joined_races = ARRAY(SELECT DISTINCT unnest(COALESCE(joined_races, ARRAY[]::text[]) || ARRAY[$1::text]))
+       WHERE id = $2`,
+      [raceId.toString(), userId]
+    );
+    
+    const result = await pool.query(
+      'SELECT joined_races FROM users WHERE id = $1',
+      [userId]
+    );
+    
+    res.json({
+      success: true,
+      joinedRaces: result.rows[0].joined_races || []
+    });
+    
+  } catch (error) {
+    console.error('Join race error:', error);
+    res.status(500).json({ error: 'Failed to join race' });
+  }
+});
+
+app.post('/api/races/:raceId/leave', authMiddleware, async (req, res) => {
+  try {
+    const raceId = parseInt(req.params.raceId, 10);
+    const userId = req.user.userId;
+    
+    if (isNaN(raceId)) {
+      return res.status(400).json({ error: 'Invalid race ID' });
+    }
+    
+    await pool.query(
+      `UPDATE users 
+       SET joined_races = array_remove(joined_races, $1)
+       WHERE id = $2`,
+      [raceId.toString(), userId]
+    );
+    
+    const result = await pool.query(
+      'SELECT joined_races FROM users WHERE id = $1',
+      [userId]
+    );
+    
+    res.json({
+      success: true,
+      joinedRaces: result.rows[0].joined_races || []
+    });
+    
+  } catch (error) {
+    console.error('Leave race error:', error);
+    res.status(500).json({ error: 'Failed to leave race' });
+  }
+});
+
+app.post('/api/races/:raceId/complete', authMiddleware, async (req, res) => {
+  try {
+    const raceId = parseInt(req.params.raceId, 10);
+    const userId = req.user.userId;
+    
+    if (isNaN(raceId)) {
+      return res.status(400).json({ error: 'Invalid race ID' });
+    }
+    
+    const raceCheck = await pool.query('SELECT id FROM races WHERE id = $1', [raceId]);
+    if (raceCheck.rows.length === 0) {
+      return res.status(404).json({ error: 'Race not found' });
+    }
+    
+    await pool.query(
+      `UPDATE users 
+       SET completed_races = ARRAY(SELECT DISTINCT unnest(COALESCE(completed_races, ARRAY[]::text[]) || ARRAY[$1::text]))
+       WHERE id = $2`,
+      [raceId.toString(), userId]
+    );
+    
+    const result = await pool.query(
+      'SELECT completed_races FROM users WHERE id = $1',
+      [userId]
+    );
+    
+    res.json({
+      success: true,
+      completedRaces: result.rows[0].completed_races || []
+    });
+    
+  } catch (error) {
+    console.error('Complete race error:', error);
+    res.status(500).json({ error: 'Failed to complete race' });
   }
 });
 

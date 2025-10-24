@@ -238,7 +238,8 @@ router.get('/users/batch', authMiddleware, async (req, res) => {
     }
     
     const result = await pool.query(
-      `SELECT id, email, name, location, bio, favorite_sport, avatar, total_races, created_at
+      `SELECT id, email, name, location, bio, favorite_sport, avatar, total_races, created_at,
+              joined_races, completed_races, following, followers
        FROM users
        WHERE id = ANY($1::int[])`,
       [userIds]
@@ -253,12 +254,124 @@ router.get('/users/batch', authMiddleware, async (req, res) => {
       favoriteSport: user.favorite_sport,
       avatar: getFullAvatarUrl(req, user.avatar),
       totalRaces: user.total_races,
+      joinedRaces: user.joined_races || [],
+      completedRaces: user.completed_races || [],
+      following: user.following || [],
+      followers: user.followers || []
     }));
     
     res.json({ users });
   } catch (error) {
     console.error('Batch users fetch error:', error);
     res.status(500).json({ error: 'Failed to fetch users' });
+  }
+});
+
+router.post('/users/:userId/follow', authMiddleware, async (req, res) => {
+  const client = await pool.connect();
+  
+  try {
+    const currentUserId = req.user.userId;
+    const targetUserId = parseInt(req.params.userId, 10);
+    
+    if (isNaN(targetUserId)) {
+      return res.status(400).json({ error: 'Invalid user ID' });
+    }
+    
+    if (currentUserId === targetUserId) {
+      return res.status(400).json({ error: 'Cannot follow yourself' });
+    }
+    
+    await client.query('BEGIN');
+    
+    const userCheck = await client.query('SELECT id FROM users WHERE id = $1', [targetUserId]);
+    if (userCheck.rows.length === 0) {
+      await client.query('ROLLBACK');
+      return res.status(404).json({ error: 'User not found' });
+    }
+    
+    await client.query(
+      `UPDATE users 
+       SET following = ARRAY(SELECT DISTINCT unnest(COALESCE(following, ARRAY[]::text[]) || ARRAY[$1::text]))
+       WHERE id = $2`,
+      [targetUserId.toString(), currentUserId]
+    );
+    
+    await client.query(
+      `UPDATE users 
+       SET followers = ARRAY(SELECT DISTINCT unnest(COALESCE(followers, ARRAY[]::text[]) || ARRAY[$1::text]))
+       WHERE id = $2`,
+      [currentUserId.toString(), targetUserId]
+    );
+    
+    const result = await client.query(
+      `SELECT following, followers FROM users WHERE id = $1`,
+      [currentUserId]
+    );
+    
+    await client.query('COMMIT');
+    
+    res.json({
+      success: true,
+      following: result.rows[0].following || [],
+      followers: result.rows[0].followers || []
+    });
+    
+  } catch (error) {
+    await client.query('ROLLBACK');
+    console.error('Follow user error:', error);
+    res.status(500).json({ error: 'Failed to follow user' });
+  } finally {
+    client.release();
+  }
+});
+
+router.delete('/users/:userId/unfollow', authMiddleware, async (req, res) => {
+  const client = await pool.connect();
+  
+  try {
+    const currentUserId = req.user.userId;
+    const targetUserId = parseInt(req.params.userId, 10);
+    
+    if (isNaN(targetUserId)) {
+      return res.status(400).json({ error: 'Invalid user ID' });
+    }
+    
+    await client.query('BEGIN');
+    
+    await client.query(
+      `UPDATE users 
+       SET following = array_remove(following, $1)
+       WHERE id = $2`,
+      [targetUserId.toString(), currentUserId]
+    );
+    
+    await client.query(
+      `UPDATE users 
+       SET followers = array_remove(followers, $1)
+       WHERE id = $2`,
+      [currentUserId.toString(), targetUserId]
+    );
+    
+    const result = await client.query(
+      `SELECT following, followers FROM users WHERE id = $1`,
+      [currentUserId]
+    );
+    
+    await client.query('COMMIT');
+    
+    res.json({
+      success: true,
+      following: result.rows[0].following || [],
+      followers: result.rows[0].followers || []
+    });
+    
+  } catch (error) {
+    await client.query('ROLLBACK');
+    console.error('Unfollow user error:', error);
+    res.status(500).json({ error: 'Failed to unfollow user' });
+  } finally {
+    client.release();
   }
 });
 
