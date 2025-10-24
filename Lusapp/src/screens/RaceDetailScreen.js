@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -6,6 +6,7 @@ import {
   ScrollView,
   TouchableOpacity,
   Alert,
+  ActivityIndicator,
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { UserAvatar } from '../components/UserAvatar';
@@ -13,12 +14,15 @@ import { useAuth } from '../context/AuthContext';
 import { useAppStore } from '../context/AppContext';
 import { useTheme } from '../context/ThemeContext';
 import { SPACING, FONT_SIZE, BORDER_RADIUS, SPORTS } from '../constants/theme';
+import API_URL from '../config/api';
 
 export const RaceDetailScreen = ({ route, navigation }) => {
   const { raceId } = route.params;
   const { colors } = useTheme();
-  const { user } = useAuth();
-  const { getRaceById, registerForRace, unregisterFromRace, users } = useAppStore();
+  const { user, token } = useAuth();
+  const { getRaceById, registerForRace, unregisterFromRace } = useAppStore();
+  const [registeredUsers, setRegisteredUsers] = useState([]);
+  const [loadingUsers, setLoadingUsers] = useState(true);
 
   const race = getRaceById(raceId);
 
@@ -56,26 +60,38 @@ export const RaceDetailScreen = ({ route, navigation }) => {
     return subtype || category || sport.name;
   };
   
-  const registeredUsers = React.useMemo(() => {
+  useEffect(() => {
+    fetchRegisteredUsers();
+  }, [race.registeredUsers]);
+
+  const fetchRegisteredUsers = async () => {
     if (!race.registeredUsers || race.registeredUsers.length === 0) {
-      return [];
+      setRegisteredUsers([]);
+      setLoadingUsers(false);
+      return;
     }
-    
-    const userIds = race.registeredUsers.map(id => String(id));
-    
-    const usersFromStore = users.filter((u) => {
-      const uId = String(u.id);
-      const isRegistered = userIds.includes(uId);
-      const isAuthUser = user && String(user.id) === uId;
-      return isRegistered && !isAuthUser;
-    });
-    
-    if (user && userIds.includes(String(user.id))) {
-      return [...usersFromStore, user];
+
+    try {
+      const userIds = race.registeredUsers.join(',');
+      const response = await fetch(`${API_URL}/api/users/batch?ids=${userIds}`, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        },
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setRegisteredUsers(data.users || []);
+      } else {
+        setRegisteredUsers([]);
+      }
+    } catch (error) {
+      console.error('Error fetching registered users:', error);
+      setRegisteredUsers([]);
+    } finally {
+      setLoadingUsers(false);
     }
-    
-    return usersFromStore;
-  }, [race.registeredUsers, users, user]);
+  };
 
   const handleRegister = () => {
     if (!user) return;
