@@ -231,17 +231,16 @@ router.get('/users/batch', authMiddleware, async (req, res) => {
       return res.status(400).json({ error: 'User IDs are required' });
     }
     
-    const userIds = ids.split(',').map(id => id.trim()).filter(Boolean);
+    const userIds = ids.split(',').map(id => parseInt(id.trim(), 10)).filter(id => !isNaN(id));
     
     if (userIds.length === 0) {
       return res.json({ users: [] });
     }
     
-    const placeholders = userIds.map((_, i) => `$${i + 1}`).join(',');
     const result = await pool.query(
       `SELECT id, email, name, location, bio, favorite_sport, avatar, total_races, created_at
        FROM users
-       WHERE id = ANY($1)`,
+       WHERE id = ANY($1::int[])`,
       [userIds]
     );
     
