@@ -19,7 +19,7 @@ Preferred communication style: Simple, everyday language.
 - Expo Linear Gradient for visual styling
 
 **Navigation Structure:**
-- Bottom tab navigation with Feed, Calendar, Discover, Profile sections.
+- Bottom tab navigation with Feed, Calendar, Discover, Messages, Groups, and Profile sections.
 - Stack navigators nested within tabs for detail screens.
 - Deep linking support.
 
@@ -41,7 +41,7 @@ Preferred communication style: Simple, everyday language.
 - `FilterChip`, `PostCard`, `RaceCard`, `StatCard`, `UserAvatar`.
 
 **Screen Components:**
-- `OnboardingScreen`, `FeedScreen`, `CalendarScreen`, `DiscoverScreen`, `ProfileScreen`, `RaceDetailScreen`, `UserProfileScreen`.
+- `OnboardingScreen`, `FeedScreen`, `CalendarScreen`, `DiscoverScreen`, `ProfileScreen`, `RaceDetailScreen`, `UserProfileScreen`, `MessagesScreen`, `ChatScreen`, `GroupsScreen`, `GroupDetailScreen`, `GroupChatTab`, `GroupMembersTab`, `GroupGearListsTab`, `GearListDetailScreen`.
 
 ### Data Architecture
 
@@ -54,6 +54,13 @@ Preferred communication style: Simple, everyday language.
 - **races table:** id, name, sport_category, sport_subtype, city, country, continent, date, distance, description, participants, created_at.
 - **users table:** id, email, password_hash, profile fields (location, bio, avatar, favoriteSport, joined_races, completed_races, follower/following arrays).
 - **posts table:** id, user_id, type, race_id, timestamp, liked_by (array of user IDs), comments.
+- **conversations table:** id, user1_id, user2_id, last_message_at, created_at (for direct messaging).
+- **messages table:** id, conversation_id, sender_id, content, read, created_at (for direct messages).
+- **groups table:** id, name, sport_type, city, country, description, password_hash, banner_url, created_by, member_count, created_at, updated_at.
+- **group_members table:** id, group_id, user_id, role (owner/moderator/member), joined_at, last_active_at.
+- **group_messages table:** id, group_id, sender_id, content, created_at (for group chat).
+- **group_gear_lists table:** id, group_id, race_id, title, created_by, created_at (collaborative race prep lists).
+- **group_gear_items table:** id, list_id, description, added_by, claimed_by, status (needed/claimed/completed), created_at, updated_at.
 
 **Data Models:**
 - **User:** id, name, email, location, bio, stats, joined/completed races, avatar.
@@ -115,3 +122,54 @@ Preferred communication style: Simple, everyday language.
 
 **Asset Management:**
 - Local asset serving for icons and images.
+- Cloudinary integration for permanent cloud storage of user avatars and group banners.
+
+## Groups & Community Features
+
+### Groups System (New Feature)
+
+**Overview:**
+- Athletes can create and join sport-specific groups (running, triathlon, cycling groups)
+- Password-protected private groups or open public groups
+- Group search and discovery by sport type, location, or name
+
+**Group Functionality:**
+- **Group Management:** Create groups with sport type, location, description, and optional password protection
+- **Membership System:** Three roles - Owner (full control), Moderator (manage members), Member (chat and contribute)
+- **Group Chat:** Real-time group messaging with read tracking and message history
+- **Member List:** View all group members with their roles, avatars, and profiles
+- **Collaborative Gear Lists:** Unique feature allowing groups to create shared race preparation checklists
+
+**Collaborative Gear Lists:**
+- Groups can create multiple gear lists (e.g., "Ironman Kona Prep")
+- Link lists to specific races for context
+- Members can add items (e.g., "Bike", "Helmet", "Wetsuit")
+- Items have three statuses:
+  - **Needed** - Item required but not yet claimed
+  - **Claimed** - Member commits to bringing the item
+  - **Completed** - Item is ready and confirmed
+- Members can see who added each item and who claimed it
+- Permission-based deletion (item creator or group moderators/owner)
+
+**Groups API Endpoints:**
+- POST /api/groups/create - Create new group
+- GET /api/groups/search - Search and discover groups
+- GET /api/groups/my-groups - List user's groups
+- GET /api/groups/:id - Get group details
+- POST /api/groups/:id/join - Join group (with password if required)
+- POST /api/groups/:id/leave - Leave group
+- DELETE /api/groups/:id - Delete group (owner only)
+- GET /api/groups/:id/members - Get group members
+- GET /api/groups/:id/messages - Get group chat messages
+- POST /api/groups/:id/messages - Send group message
+- GET /api/groups/:id/gear-lists - Get gear lists
+- POST /api/groups/:id/gear-lists - Create gear list
+- GET /api/groups/:id/gear-lists/:listId/items - Get gear items
+- POST /api/groups/:id/gear-lists/:listId/items - Add gear item
+- PATCH /api/groups/:id/gear-lists/:listId/items/:itemId - Update item status
+- DELETE /api/groups/:id/gear-lists/:listId/items/:itemId - Delete gear item
+
+**Data Persistence:**
+- All group data stored in PostgreSQL (permanent)
+- Group banners stored in Cloudinary (permanent cloud storage)
+- No ephemeral filesystem storage - fully resilient to server restarts
