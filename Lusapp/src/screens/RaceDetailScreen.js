@@ -38,6 +38,24 @@ export const RaceDetailScreen = ({ route, navigation }) => {
   const sport = SPORTS.find((s) => s.id === race.sport) || SPORTS[0];
   const isRegistered = race.registeredUsers?.includes(user?.id);
   
+  const shouldShowDistance = () => {
+    const category = race.sport_category?.toLowerCase() || '';
+    const subtype = race.sport_subtype?.toLowerCase() || '';
+    const nonDistanceSports = ['hyrox', 'crossfit', 'obstacle', 'spartan'];
+    return !nonDistanceSports.some(sport => 
+      category.includes(sport) || subtype.includes(sport)
+    );
+  };
+  
+  const getSubtitle = () => {
+    const category = race.sport_category || '';
+    const subtype = race.sport_subtype || '';
+    if (category.toLowerCase().includes('hyrox')) {
+      return category;
+    }
+    return subtype || category || sport.name;
+  };
+  
   const registeredUsers = React.useMemo(() => {
     if (!race.registeredUsers || race.registeredUsers.length === 0) {
       return [];
@@ -79,7 +97,7 @@ export const RaceDetailScreen = ({ route, navigation }) => {
       >
         <Text style={styles.sportIcon}>{sport.icon}</Text>
         <Text style={styles.title}>{race.name}</Text>
-        <Text style={styles.sport}>{sport.name}</Text>
+        <Text style={styles.sport}>{getSubtitle()}</Text>
       </LinearGradient>
 
       <View style={[styles.card, { backgroundColor: colors.card }]}>
@@ -121,13 +139,15 @@ export const RaceDetailScreen = ({ route, navigation }) => {
           </View>
         )}
 
-        <View style={styles.infoRow}>
-          <Text style={styles.icon}>📏</Text>
-          <View style={styles.infoText}>
-            <Text style={[styles.label, { color: colors.textSecondary }]}>Distance</Text>
-            <Text style={[styles.value, { color: colors.text }]}>{race.distance}</Text>
+        {shouldShowDistance() && race.distance && (
+          <View style={styles.infoRow}>
+            <Text style={styles.icon}>📏</Text>
+            <View style={styles.infoText}>
+              <Text style={[styles.label, { color: colors.textSecondary }]}>Distance</Text>
+              <Text style={[styles.value, { color: colors.text }]}>{race.distance}</Text>
+            </View>
           </View>
-        </View>
+        )}
 
         <View style={styles.infoRow}>
           <Text style={styles.icon}>👥</Text>
