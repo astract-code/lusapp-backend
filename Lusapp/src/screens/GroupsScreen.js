@@ -180,7 +180,7 @@ export const GroupsScreen = ({ navigation }) => {
   };
 
   const renderGroupCard = ({ item }) => {
-    const isMyGroup = item.user_role;
+    const isMyGroup = item.user_role || item.role;
     
     return (
       <TouchableOpacity

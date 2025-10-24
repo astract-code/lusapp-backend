@@ -262,7 +262,7 @@ export const AppNavigator = () => {
         component={FeedStack}
         options={{
           tabBarLabel: 'Feed',
-          tabBarIcon: ({ color }) => <Text style={{ fontSize: 24 }}>📰</Text>,
+          tabBarIcon: ({ color }) => <Text style={{ fontSize: 26, color }}>📋</Text>,
         }}
       />
       <Tab.Screen 
@@ -270,7 +270,7 @@ export const AppNavigator = () => {
         component={CalendarStack}
         options={{
           tabBarLabel: 'Calendar',
-          tabBarIcon: ({ color }) => <Text style={{ fontSize: 24 }}>📅</Text>,
+          tabBarIcon: ({ color }) => <Text style={{ fontSize: 26, color }}>🗓️</Text>,
         }}
       />
       <Tab.Screen 
@@ -278,7 +278,7 @@ export const AppNavigator = () => {
         component={DiscoverStack}
         options={{
           tabBarLabel: 'Discover',
-          tabBarIcon: ({ color }) => <Text style={{ fontSize: 24 }}>🔍</Text>,
+          tabBarIcon: ({ color }) => <Text style={{ fontSize: 26, color }}>🧭</Text>,
         }}
       />
       <Tab.Screen 
@@ -286,7 +286,7 @@ export const AppNavigator = () => {
         component={GroupsStack}
         options={{
           tabBarLabel: 'Groups',
-          tabBarIcon: ({ color }) => <Text style={{ fontSize: 24 }}>👥</Text>,
+          tabBarIcon: ({ color }) => <Text style={{ fontSize: 26, color }}>🏃</Text>,
         }}
       />
       <Tab.Screen 
@@ -294,7 +294,7 @@ export const AppNavigator = () => {
         component={MessagesStack}
         options={{
           tabBarLabel: 'Messages',
-          tabBarIcon: ({ color }) => <Text style={{ fontSize: 24 }}>💬</Text>,
+          tabBarIcon: ({ color }) => <Text style={{ fontSize: 26, color }}>💭</Text>,
         }}
       />
       <Tab.Screen 
@@ -302,7 +302,7 @@ export const AppNavigator = () => {
         component={ProfileStack}
         options={{
           tabBarLabel: 'Profile',
-          tabBarIcon: ({ color }) => <Text style={{ fontSize: 24 }}>👤</Text>,
+          tabBarIcon: ({ color }) => <Text style={{ fontSize: 26, color }}>⚙️</Text>,
         }}
       />
     </Tab.Navigator>
