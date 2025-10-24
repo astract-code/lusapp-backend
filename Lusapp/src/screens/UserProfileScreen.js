@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -6,6 +6,7 @@ import {
   ScrollView,
   TouchableOpacity,
   Alert,
+  ActivityIndicator,
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { UserAvatar } from '../components/UserAvatar';
@@ -15,21 +16,62 @@ import { useAppStore } from '../context/AppContext';
 import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
 import { SPACING, FONT_SIZE, BORDER_RADIUS } from '../constants/theme';
+import API_URL from '../config/api';
 
 export const UserProfileScreen = ({ route, navigation }) => {
   const { userId } = route.params;
   const { colors } = useTheme();
-  const { user: currentUser } = useAuth();
-  const { getUserById, races, toggleFollow } = useAppStore();
-
-  const user = getUserById(userId);
-  const currentUserData = getUserById(currentUser?.id);
+  const { user: currentUser, token } = useAuth();
+  const { races, toggleFollow } = useAppStore();
   
-  const isFollowing = currentUserData?.following?.includes(userId);
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [isFollowing, setIsFollowing] = useState(false);
+
+  useEffect(() => {
+    fetchUserProfile();
+  }, [userId]);
+
+  const fetchUserProfile = async () => {
+    try {
+      console.log('Fetching user profile:', userId);
+      const response = await fetch(`${API_URL}/api/auth/users/batch?ids=${userId}`, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        },
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log('User profile data:', data);
+        if (data.users && data.users.length > 0) {
+          setUser(data.users[0]);
+        }
+      } else {
+        console.error('Failed to fetch user profile');
+      }
+    } catch (error) {
+      console.error('Error fetching user profile:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleToggleFollow = () => {
+    setIsFollowing(!isFollowing);
+  };
+
+  if (loading) {
+    return (
+      <View style={[styles.container, styles.centerContent, { backgroundColor: colors.background }]}>
+        <ActivityIndicator size="large" color={colors.primary} />
+      </View>
+    );
+  }
 
   if (!user) {
     return (
-      <View style={[styles.container, { backgroundColor: colors.background }]}>
+      <View style={[styles.container, styles.centerContent, { backgroundColor: colors.background }]}>
         <Text style={[styles.errorText, { color: colors.text }]}>User not found</Text>
       </View>
     );
@@ -72,7 +114,7 @@ export const UserProfileScreen = ({ route, navigation }) => {
                 styles.followButton,
                 { backgroundColor: isFollowing ? colors.background : colors.primary }
               ]}
-              onPress={() => toggleFollow(currentUser.id, userId)}
+              onPress={handleToggleFollow}
             >
               <Text style={[
                 styles.followButtonText,
@@ -151,6 +193,10 @@ export const UserProfileScreen = ({ route, navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  centerContent: {
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   header: {
     alignItems: 'center',
