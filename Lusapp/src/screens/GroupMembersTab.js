@@ -6,7 +6,9 @@ import {
   FlatList,
   Image,
   ActivityIndicator,
+  TouchableOpacity,
 } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import { useTheme } from '../context/ThemeContext';
 import { useAuth } from '../context/AuthContext';
 import { SPACING, FONT_SIZE, BORDER_RADIUS } from '../constants/theme';
@@ -16,6 +18,7 @@ import API_URL from '../config/api';
 export const GroupMembersTab = ({ groupId }) => {
   const { colors } = useTheme();
   const { token } = useAuth();
+  const navigation = useNavigation();
   const [members, setMembers] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -66,8 +69,16 @@ export const GroupMembersTab = ({ groupId }) => {
     }
   };
 
+  const handleMemberPress = (userId) => {
+    navigation.navigate('UserProfile', { userId: userId.toString() });
+  };
+
   const renderMember = ({ item }) => (
-    <View style={[styles.memberItem, { backgroundColor: colors.card, borderBottomColor: colors.border }]}>
+    <TouchableOpacity 
+      style={[styles.memberItem, { backgroundColor: colors.card, borderBottomColor: colors.border }]}
+      onPress={() => handleMemberPress(item.user_id)}
+      activeOpacity={0.7}
+    >
       <View style={styles.avatarContainer}>
         {item.avatar ? (
           <Image source={{ uri: item.avatar }} style={styles.avatar} />
@@ -90,7 +101,7 @@ export const GroupMembersTab = ({ groupId }) => {
       <View style={[styles.roleBadge, { backgroundColor: getRoleBadgeColor(item.role) }]}>
         <Text style={styles.roleText}>{item.role.toUpperCase()}</Text>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 
   if (loading) {
