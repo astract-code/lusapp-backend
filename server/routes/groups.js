@@ -7,11 +7,18 @@ const router = express.Router();
 module.exports = (pool) => {
   
   router.post('/create', authMiddleware, async (req, res) => {
+    console.log('=== GROUP CREATE REQUEST ===');
+    console.log('User ID:', req.user?.userId);
+    console.log('Request body:', JSON.stringify(req.body, null, 2));
+    
     try {
       const { name, sport_type, city, country, description, password } = req.body;
       const userId = req.user.userId;
 
+      console.log('Parsed data - name:', name, 'sport_type:', sport_type);
+
       if (!name || !name.trim()) {
+        console.log('ERROR: Group name is required');
         return res.status(400).json({ error: 'Group name is required' });
       }
 
@@ -28,24 +35,29 @@ module.exports = (pool) => {
       );
 
       const group = result.rows[0];
+      console.log('Group created in DB:', group.id);
 
       await pool.query(
         `INSERT INTO group_members (group_id, user_id, role)
          VALUES ($1, $2, 'owner')`,
         [group.id, userId]
       );
+      console.log('Member record created');
 
-      res.json({
+      const response = {
         success: true,
         group: {
           ...group,
           hasPassword: !!passwordHash,
           role: 'owner'
         }
-      });
+      };
+      console.log('Sending success response:', response);
+      res.json(response);
     } catch (error) {
-      console.error('Error creating group:', error);
-      res.status(500).json({ error: 'Failed to create group' });
+      console.error('ERROR creating group:', error.message);
+      console.error('Stack:', error.stack);
+      res.status(500).json({ error: 'Failed to create group', details: error.message });
     }
   });
 

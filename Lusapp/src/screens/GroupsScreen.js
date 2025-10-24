@@ -79,6 +79,11 @@ export const GroupsScreen = ({ navigation }) => {
     }
 
     try {
+      console.log('=== CREATING GROUP ===');
+      console.log('API URL:', API_URL);
+      console.log('Group data:', newGroup);
+      console.log('Token (first 20 chars):', token?.substring(0, 20));
+
       const response = await fetch(`${API_URL}/api/groups/create`, {
         method: 'POST',
         headers: {
@@ -88,19 +93,33 @@ export const GroupsScreen = ({ navigation }) => {
         body: JSON.stringify(newGroup)
       });
 
+      console.log('Response status:', response.status);
+      console.log('Response headers:', response.headers);
+
       if (response.ok) {
         const data = await response.json();
+        console.log('Success response:', data);
         setShowCreateModal(false);
         setNewGroup({ name: '', sport_type: '', city: '', country: '', description: '', password: '' });
         fetchMyGroups();
         setActiveTab('my');
         navigation.navigate('GroupDetail', { groupId: data.group.id });
       } else {
-        const error = await response.json();
-        Alert.alert('Error', error.error || 'Failed to create group');
+        const errorText = await response.text();
+        console.log('Error response:', errorText);
+        
+        let errorMessage;
+        try {
+          const error = JSON.parse(errorText);
+          errorMessage = error.error || error.details || 'Failed to create group';
+        } catch {
+          errorMessage = `Server error (${response.status}): ${errorText.substring(0, 100)}`;
+        }
+        Alert.alert('Error Creating Group', errorMessage);
       }
     } catch (error) {
-      Alert.alert('Error', 'Failed to create group');
+      console.error('Exception creating group:', error);
+      Alert.alert('Error', `Failed to create group: ${error.message}`);
     }
   };
 
