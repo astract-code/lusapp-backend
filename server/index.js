@@ -22,6 +22,22 @@ const pool = new Pool({
   ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false,
 });
 
+// Initialize database schema on startup
+async function initializeDatabase() {
+  try {
+    console.log('Initializing database schema...');
+    const initSQL = fs.readFileSync(path.join(__dirname, 'init-db.sql'), 'utf8');
+    await pool.query(initSQL);
+    console.log('✓ Database schema initialized successfully');
+  } catch (error) {
+    console.error('Error initializing database:', error);
+    // Don't exit - tables might already exist
+  }
+}
+
+// Run database initialization
+initializeDatabase();
+
 if (!process.env.ADMIN_PASSWORD) {
   console.error('FATAL: ADMIN_PASSWORD environment variable is not set. Server cannot start.');
   process.exit(1);
