@@ -13,6 +13,9 @@ import { UserProfileScreen } from '../screens/UserProfileScreen';
 import { SettingsScreen } from '../screens/SettingsScreen';
 import { MessagesScreen } from '../screens/MessagesScreen';
 import { ChatScreen } from '../screens/ChatScreen';
+import { GroupsScreen } from '../screens/GroupsScreen';
+import { GroupDetailScreen } from '../screens/GroupDetailScreen';
+import { GearListDetailScreen } from '../screens/GearListDetailScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -197,6 +200,47 @@ const ProfileStack = () => {
   );
 };
 
+const GroupsStack = () => {
+  const colorScheme = useColorScheme();
+  const theme = COLORS[colorScheme] || COLORS.light;
+
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerStyle: { backgroundColor: theme.card },
+        headerTintColor: theme.primary,
+        headerTitleStyle: { fontWeight: 'bold' },
+      }}
+    >
+      <Stack.Screen 
+        name="GroupsMain" 
+        component={GroupsScreen} 
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen 
+        name="GroupDetail" 
+        component={GroupDetailScreen}
+        options={{ title: 'Group Details' }}
+      />
+      <Stack.Screen 
+        name="GearListDetail" 
+        component={GearListDetailScreen}
+        options={{ title: 'Gear List' }}
+      />
+      <Stack.Screen 
+        name="UserProfile" 
+        component={UserProfileScreen}
+        options={{ title: 'Profile' }}
+      />
+      <Stack.Screen 
+        name="Chat" 
+        component={ChatScreen}
+        options={{ title: 'Chat' }}
+      />
+    </Stack.Navigator>
+  );
+};
+
 export const AppNavigator = () => {
   const colorScheme = useColorScheme();
   const theme = COLORS[colorScheme] || COLORS.light;
@@ -235,6 +279,14 @@ export const AppNavigator = () => {
         options={{
           tabBarLabel: 'Discover',
           tabBarIcon: ({ color }) => <Text style={{ fontSize: 24 }}>🔍</Text>,
+        }}
+      />
+      <Tab.Screen 
+        name="Groups" 
+        component={GroupsStack}
+        options={{
+          tabBarLabel: 'Groups',
+          tabBarIcon: ({ color }) => <Text style={{ fontSize: 24 }}>👥</Text>,
         }}
       />
       <Tab.Screen 
