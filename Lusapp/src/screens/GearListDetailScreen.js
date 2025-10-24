@@ -63,7 +63,7 @@ export const GearListDetailScreen = ({ route, navigation }) => {
 
       if (response.ok) {
         const data = await response.json();
-        setItems(data.items || []);
+        setItems(Array.isArray(data) ? data : []);
       }
     } catch (error) {
       console.error('Error fetching gear items:', error);
@@ -88,7 +88,7 @@ export const GearListDetailScreen = ({ route, navigation }) => {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({ name: newItemName.trim() }),
+          body: JSON.stringify({ description: newItemName.trim() }),
         }
       );
 
@@ -219,7 +219,7 @@ export const GearListDetailScreen = ({ route, navigation }) => {
           <Text style={styles.statusIcon}>{getStatusIcon(item.status)}</Text>
           <View style={styles.itemInfo}>
             <Text style={[styles.itemName, { color: colors.text }]}>
-              {item.name}
+              {item.description}
             </Text>
             <View style={styles.itemMeta}>
               <Text

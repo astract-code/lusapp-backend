@@ -39,7 +39,7 @@ export const GroupGearListsTab = ({ groupId, navigation, userRole }) => {
 
       if (response.ok) {
         const data = await response.json();
-        setGearLists(data.gear_lists || []);
+        setGearLists(Array.isArray(data) ? data : []);
       }
     } catch (error) {
       console.error('Error fetching gear lists:', error);
@@ -72,8 +72,8 @@ export const GroupGearListsTab = ({ groupId, navigation, userRole }) => {
         fetchGearLists();
         navigation.navigate('GearListDetail', {
           groupId,
-          listId: data.gear_list.id,
-          listTitle: data.gear_list.title,
+          listId: data.list.id,
+          listTitle: data.list.title,
         });
       } else {
         const error = await response.json();
