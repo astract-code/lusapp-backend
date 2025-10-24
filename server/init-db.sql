@@ -45,12 +45,29 @@ ALTER TABLE users ADD COLUMN IF NOT EXISTS followers TEXT[] DEFAULT '{}';
 ALTER TABLE races ADD COLUMN IF NOT EXISTS sport_category VARCHAR(100);
 ALTER TABLE races ADD COLUMN IF NOT EXISTS sport_subtype VARCHAR(100);
 ALTER TABLE races ADD COLUMN IF NOT EXISTS start_time TIME;
+ALTER TABLE races ADD COLUMN IF NOT EXISTS registered_users TEXT[] DEFAULT '{}';
 
 -- Create indexes for performance
 CREATE INDEX IF NOT EXISTS idx_users_email ON users(email);
 CREATE INDEX IF NOT EXISTS idx_races_date ON races(date);
 CREATE INDEX IF NOT EXISTS idx_races_sport ON races(sport);
 CREATE INDEX IF NOT EXISTS idx_races_category ON races(sport_category);
+
+-- Create posts table for social feed
+CREATE TABLE IF NOT EXISTS posts (
+  id SERIAL PRIMARY KEY,
+  user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  type VARCHAR(50) NOT NULL CHECK (type IN ('signup', 'completion', 'general')),
+  race_id INTEGER REFERENCES races(id),
+  timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  liked_by TEXT[] DEFAULT '{}',
+  comments TEXT DEFAULT '[]'
+);
+
+-- Create index for posts performance
+CREATE INDEX IF NOT EXISTS idx_posts_user ON posts(user_id);
+CREATE INDEX IF NOT EXISTS idx_posts_timestamp ON posts(timestamp DESC);
+CREATE INDEX IF NOT EXISTS idx_posts_race ON posts(race_id);
 
 -- Create conversations table for messaging
 CREATE TABLE IF NOT EXISTS conversations (

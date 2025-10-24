@@ -82,7 +82,7 @@ app.use('/api/posts', postsRoutes);
 
 app.get('/api/races', async (req, res) => {
   try {
-    const result = await pool.query('SELECT * FROM races ORDER BY date ASC');
+    const result = await pool.query('SELECT *, COALESCE(registered_users, ARRAY[]::text[]) as registered_users FROM races ORDER BY date ASC');
     res.json(result.rows);
   } catch (error) {
     console.error('Error fetching races:', error);
@@ -93,7 +93,7 @@ app.get('/api/races', async (req, res) => {
 app.get('/api/races/:id', async (req, res) => {
   try {
     const { id } = req.params;
-    const result = await pool.query('SELECT * FROM races WHERE id = $1', [id]);
+    const result = await pool.query('SELECT *, COALESCE(registered_users, ARRAY[]::text[]) as registered_users FROM races WHERE id = $1', [id]);
     if (result.rows.length === 0) {
       return res.status(404).json({ error: 'Race not found' });
     }
@@ -247,6 +247,8 @@ app.post('/api/races/csv-upload', adminAuth, upload.single('csvFile'), async (re
 const { authMiddleware } = require('./middleware/authMiddleware');
 
 app.post('/api/races/:raceId/join', authMiddleware, async (req, res) => {
+  const client = await pool.connect();
+  
   try {
     const raceId = parseInt(req.params.raceId, 10);
     const userId = req.user.userId;
@@ -255,22 +257,34 @@ app.post('/api/races/:raceId/join', authMiddleware, async (req, res) => {
       return res.status(400).json({ error: 'Invalid race ID' });
     }
     
-    const raceCheck = await pool.query('SELECT id FROM races WHERE id = $1', [raceId]);
+    await client.query('BEGIN');
+    
+    const raceCheck = await client.query('SELECT id FROM races WHERE id = $1', [raceId]);
     if (raceCheck.rows.length === 0) {
+      await client.query('ROLLBACK');
       return res.status(404).json({ error: 'Race not found' });
     }
     
-    await pool.query(
+    await client.query(
       `UPDATE users 
        SET joined_races = ARRAY(SELECT DISTINCT unnest(COALESCE(joined_races, ARRAY[]::text[]) || ARRAY[$1::text]))
        WHERE id = $2`,
       [raceId.toString(), userId]
     );
     
-    const result = await pool.query(
+    await client.query(
+      `UPDATE races 
+       SET registered_users = ARRAY(SELECT DISTINCT unnest(COALESCE(registered_users, ARRAY[]::text[]) || ARRAY[$1::text]))
+       WHERE id = $2`,
+      [userId.toString(), raceId]
+    );
+    
+    const result = await client.query(
       'SELECT joined_races FROM users WHERE id = $1',
       [userId]
     );
+    
+    await client.query('COMMIT');
     
     res.json({
       success: true,
@@ -278,12 +292,17 @@ app.post('/api/races/:raceId/join', authMiddleware, async (req, res) => {
     });
     
   } catch (error) {
+    await client.query('ROLLBACK');
     console.error('Join race error:', error);
     res.status(500).json({ error: 'Failed to join race' });
+  } finally {
+    client.release();
   }
 });
 
 app.post('/api/races/:raceId/leave', authMiddleware, async (req, res) => {
+  const client = await pool.connect();
+  
   try {
     const raceId = parseInt(req.params.raceId, 10);
     const userId = req.user.userId;
@@ -292,17 +311,28 @@ app.post('/api/races/:raceId/leave', authMiddleware, async (req, res) => {
       return res.status(400).json({ error: 'Invalid race ID' });
     }
     
-    await pool.query(
+    await client.query('BEGIN');
+    
+    await client.query(
       `UPDATE users 
        SET joined_races = array_remove(joined_races, $1)
        WHERE id = $2`,
       [raceId.toString(), userId]
     );
     
-    const result = await pool.query(
+    await client.query(
+      `UPDATE races 
+       SET registered_users = array_remove(registered_users, $1)
+       WHERE id = $2`,
+      [userId.toString(), raceId]
+    );
+    
+    const result = await client.query(
       'SELECT joined_races FROM users WHERE id = $1',
       [userId]
     );
+    
+    await client.query('COMMIT');
     
     res.json({
       success: true,
@@ -310,8 +340,11 @@ app.post('/api/races/:raceId/leave', authMiddleware, async (req, res) => {
     });
     
   } catch (error) {
+    await client.query('ROLLBACK');
     console.error('Leave race error:', error);
     res.status(500).json({ error: 'Failed to leave race' });
+  } finally {
+    client.release();
   }
 });
 
