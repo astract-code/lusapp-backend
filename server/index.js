@@ -10,6 +10,9 @@ const path = require('path');
 const authRoutes = require('./routes/auth');
 const uploadRoutes = require('./routes/upload');
 const messagesRoutes = require('./routes/messages');
+const groupsRoutes = require('./routes/groups');
+const groupMessagesRoutes = require('./routes/groupMessages');
+const gearListsRoutes = require('./routes/gearLists');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -55,6 +58,9 @@ app.get('/terms-of-service', (req, res) => {
 app.use('/api/auth', authRoutes);
 app.use('/api/upload', uploadRoutes);
 app.use('/api/messages', messagesRoutes(pool));
+app.use('/api/groups', groupsRoutes(pool));
+app.use('/api/groups', groupMessagesRoutes(pool));
+app.use('/api/groups', gearListsRoutes(pool));
 
 app.get('/api/races', async (req, res) => {
   try {

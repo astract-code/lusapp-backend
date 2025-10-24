@@ -76,3 +76,93 @@ CREATE TABLE IF NOT EXISTS messages (
 CREATE INDEX IF NOT EXISTS idx_conversations_users ON conversations(user1_id, user2_id);
 CREATE INDEX IF NOT EXISTS idx_messages_conversation ON messages(conversation_id);
 CREATE INDEX IF NOT EXISTS idx_messages_sender ON messages(sender_id);
+
+-- Create groups table
+CREATE TABLE IF NOT EXISTS groups (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(255) NOT NULL,
+  sport_type VARCHAR(100),
+  city VARCHAR(100),
+  country VARCHAR(100),
+  description TEXT,
+  password_hash VARCHAR(255),
+  banner_url VARCHAR(500),
+  created_by INTEGER NOT NULL REFERENCES users(id),
+  member_count INTEGER DEFAULT 1,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Create group_members table
+CREATE TABLE IF NOT EXISTS group_members (
+  id SERIAL PRIMARY KEY,
+  group_id INTEGER NOT NULL REFERENCES groups(id) ON DELETE CASCADE,
+  user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  role VARCHAR(20) DEFAULT 'member' CHECK (role IN ('owner', 'moderator', 'member')),
+  joined_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  last_active_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  UNIQUE(group_id, user_id)
+);
+
+-- Create group_messages table
+CREATE TABLE IF NOT EXISTS group_messages (
+  id SERIAL PRIMARY KEY,
+  group_id INTEGER NOT NULL REFERENCES groups(id) ON DELETE CASCADE,
+  sender_id INTEGER NOT NULL REFERENCES users(id),
+  content TEXT NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Create group_message_reads table for read receipts
+CREATE TABLE IF NOT EXISTS group_message_reads (
+  id SERIAL PRIMARY KEY,
+  message_id INTEGER NOT NULL REFERENCES group_messages(id) ON DELETE CASCADE,
+  user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  read_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  UNIQUE(message_id, user_id)
+);
+
+-- Create group_gear_lists table for race preparation lists
+CREATE TABLE IF NOT EXISTS group_gear_lists (
+  id SERIAL PRIMARY KEY,
+  group_id INTEGER NOT NULL REFERENCES groups(id) ON DELETE CASCADE,
+  race_id INTEGER REFERENCES races(id),
+  title VARCHAR(255) NOT NULL,
+  created_by INTEGER NOT NULL REFERENCES users(id),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Create group_gear_items table for items in gear lists
+CREATE TABLE IF NOT EXISTS group_gear_items (
+  id SERIAL PRIMARY KEY,
+  list_id INTEGER NOT NULL REFERENCES group_gear_lists(id) ON DELETE CASCADE,
+  description VARCHAR(255) NOT NULL,
+  added_by INTEGER NOT NULL REFERENCES users(id),
+  claimed_by INTEGER REFERENCES users(id),
+  status VARCHAR(20) DEFAULT 'needed' CHECK (status IN ('needed', 'claimed', 'completed')),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Create indexes for groups performance
+CREATE INDEX IF NOT EXISTS idx_groups_sport ON groups(sport_type);
+CREATE INDEX IF NOT EXISTS idx_groups_city ON groups(city);
+CREATE INDEX IF NOT EXISTS idx_groups_created_by ON groups(created_by);
+CREATE INDEX IF NOT EXISTS idx_groups_search ON groups(LOWER(name));
+
+-- Create indexes for group_members performance
+CREATE INDEX IF NOT EXISTS idx_group_members_group ON group_members(group_id);
+CREATE INDEX IF NOT EXISTS idx_group_members_user ON group_members(user_id);
+CREATE INDEX IF NOT EXISTS idx_group_members_role ON group_members(group_id, role);
+
+-- Create indexes for group_messages performance
+CREATE INDEX IF NOT EXISTS idx_group_messages_group ON group_messages(group_id, created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_group_messages_sender ON group_messages(sender_id);
+
+-- Create indexes for group_gear_lists performance
+CREATE INDEX IF NOT EXISTS idx_group_gear_lists_group ON group_gear_lists(group_id);
+CREATE INDEX IF NOT EXISTS idx_group_gear_lists_race ON group_gear_lists(race_id);
+
+-- Create indexes for group_gear_items performance
+CREATE INDEX IF NOT EXISTS idx_group_gear_items_list ON group_gear_items(list_id);
+CREATE INDEX IF NOT EXISTS idx_group_gear_items_status ON group_gear_items(status);
