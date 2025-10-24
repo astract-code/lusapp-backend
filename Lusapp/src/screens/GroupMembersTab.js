@@ -25,15 +25,28 @@ export const GroupMembersTab = ({ groupId }) => {
 
   const fetchMembers = async () => {
     try {
+      console.log('=== FETCHING MEMBERS ===');
+      console.log('API URL:', API_URL);
+      console.log('Group ID:', groupId);
+      console.log('Full URL:', `${API_URL}/api/groups/${groupId}/members`);
+      
       const response = await fetch(`${API_URL}/api/groups/${groupId}/members`, {
         headers: {
           'Authorization': `Bearer ${token}`,
         },
       });
 
+      console.log('Response status:', response.status);
+      
       if (response.ok) {
         const data = await response.json();
+        console.log('Members data:', JSON.stringify(data, null, 2));
+        console.log('Members array:', data.members);
+        console.log('Members count:', data.members?.length || 0);
         setMembers(data.members || []);
+      } else {
+        const errorText = await response.text();
+        console.error('Error response:', errorText);
       }
     } catch (error) {
       console.error('Error fetching members:', error);

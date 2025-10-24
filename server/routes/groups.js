@@ -284,7 +284,7 @@ module.exports = (pool) => {
 
       const result = await pool.query(`
         SELECT 
-          u.id, u.name, u.avatar, u.location, u.favorite_sport,
+          u.id as user_id, u.name, u.avatar, u.location, u.favorite_sport,
           gm.role, gm.joined_at
         FROM group_members gm
         INNER JOIN users u ON gm.user_id = u.id
@@ -298,7 +298,7 @@ module.exports = (pool) => {
           gm.joined_at ASC
       `, [groupId]);
 
-      res.json(result.rows);
+      res.json({ members: result.rows });
     } catch (error) {
       console.error('Error fetching group members:', error);
       res.status(500).json({ error: 'Failed to fetch group members' });
