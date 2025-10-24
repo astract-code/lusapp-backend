@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, FlatList, TouchableOpacity, TextInput, Modal, Alert } from 'react-native';
+import { View, Text, StyleSheet, FlatList, TouchableOpacity, TextInput, Modal, Alert, ScrollView, KeyboardAvoidingView, Platform } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
@@ -280,10 +280,18 @@ export const GroupsScreen = ({ navigation }) => {
       />
 
       <Modal visible={showCreateModal} animationType="slide" transparent={true}>
-        <View style={styles.modalOverlay}>
+        <KeyboardAvoidingView 
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+          style={styles.modalOverlay}
+        >
           <View style={[styles.modalContent, { backgroundColor: colors.card }]}>
             <Text style={[styles.modalTitle, { color: colors.text }]}>Create Group</Text>
             
+            <ScrollView 
+              style={styles.modalScrollView}
+              keyboardShouldPersistTaps="handled"
+              showsVerticalScrollIndicator={false}
+            >
             <TextInput
               style={[styles.input, { backgroundColor: colors.background, color: colors.text, borderColor: colors.border }]}
               placeholder="Group Name *"
@@ -334,6 +342,7 @@ export const GroupsScreen = ({ navigation }) => {
               onChangeText={(text) => setNewGroup({ ...newGroup, password: text })}
               secureTextEntry
             />
+            </ScrollView>
 
             <View style={styles.modalButtons}>
               <TouchableOpacity
@@ -353,7 +362,7 @@ export const GroupsScreen = ({ navigation }) => {
               </TouchableOpacity>
             </View>
           </View>
-        </View>
+        </KeyboardAvoidingView>
       </Modal>
 
       <Modal visible={showJoinModal} animationType="fade" transparent={true}>
@@ -542,8 +551,12 @@ const styles = StyleSheet.create({
   modalContent: {
     width: '100%',
     maxWidth: 500,
+    maxHeight: '80%',
     borderRadius: BORDER_RADIUS.lg,
     padding: SPACING.lg,
+  },
+  modalScrollView: {
+    maxHeight: 400,
   },
   modalTitle: {
     fontSize: FONT_SIZE.xl,

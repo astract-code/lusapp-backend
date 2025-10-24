@@ -6,6 +6,7 @@ import {
   TextInput,
   TouchableOpacity,
   KeyboardAvoidingView,
+  ScrollView,
   Platform,
   Alert,
   ActivityIndicator,
@@ -76,15 +77,20 @@ export const OnboardingScreen = () => {
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         style={styles.content}
       >
-        <View style={styles.header}>
-          <Text style={styles.logo}>🏃</Text>
-          <Text style={styles.appName}>Lusapp</Text>
-          <Text style={styles.tagline}>
-            Your race calendar & athletic community
-          </Text>
-        </View>
+        <ScrollView
+          contentContainerStyle={styles.scrollContent}
+          keyboardShouldPersistTaps="handled"
+          showsVerticalScrollIndicator={false}
+        >
+          <View style={styles.header}>
+            <Text style={styles.logo}>🏃</Text>
+            <Text style={styles.appName}>Lusapp</Text>
+            <Text style={styles.tagline}>
+              Your race calendar & athletic community
+            </Text>
+          </View>
 
-        <View style={[styles.form, { backgroundColor: 'rgba(255, 255, 255, 0.95)' }]}>
+          <View style={[styles.form, { backgroundColor: 'rgba(255, 255, 255, 0.95)' }]}>
           <Text style={[styles.formTitle, { color: colors.text }]}>
             {isLogin ? 'Welcome Back' : 'Join Lusapp'}
           </Text>
@@ -205,6 +211,7 @@ export const OnboardingScreen = () => {
             </Text>
           </TouchableOpacity>
         </View>
+        </ScrollView>
       </KeyboardAvoidingView>
     </LinearGradient>
   );
@@ -216,8 +223,12 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
+  },
+  scrollContent: {
+    flexGrow: 1,
     justifyContent: 'center',
     padding: SPACING.lg,
+    paddingBottom: SPACING.xxl,
   },
   header: {
     alignItems: 'center',
