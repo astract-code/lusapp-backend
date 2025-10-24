@@ -175,3 +175,121 @@ Preferred communication style: Simple, everyday language.
 - All group data stored in PostgreSQL (permanent)
 - Group banners stored in Cloudinary (permanent cloud storage)
 - No ephemeral filesystem storage - fully resilient to server restarts
+
+## Known Issues & Technical Debt
+
+### ⚠️ Critical: Hybrid Mock/API Architecture
+
+**Current State:**
+The app uses a **mixed architecture** where some features use mock data from Zustand AppStore while others use real PostgreSQL API calls. This creates significant data consistency and synchronization issues.
+
+**Problem Areas:**
+
+1. **User Profiles & Follow System:**
+   - UserProfileScreen now fetches from API (fixed)
+   - Follow/unfollow functionality still uses Zustand mock store (not persisted to database)
+   - Follower/following counts don't sync between mock store and database
+   - No backend API endpoints exist for follow/unfollow operations
+   - **Impact:** Follow button works as local toggle only - doesn't persist across sessions
+
+2. **Social Feed (Posts):**
+   - Posts are stored in mock Zustand store only
+   - No API endpoints exist for creating/fetching posts
+   - Post likes and comments are ephemeral (lost on app restart)
+   - **Impact:** Feed content doesn't persist to database
+
+3. **Race Joining/Completion:**
+   - Users can "join" or "complete" races in UI
+   - This data is stored in users.joined_races and users.completed_races arrays in database
+   - But the UI still reads from mock AppStore data
+   - **Impact:** Race participation doesn't sync properly between sessions
+
+4. **Data Source Inconsistencies:**
+   - Groups: ✅ Fully API-backed (PostgreSQL)
+   - Races: ✅ Fully API-backed (PostgreSQL)
+   - Users: ⚠️ Partially API-backed (profiles load from API, but follow/stats use mock)
+   - Posts: ❌ Mock data only (not in database)
+   - Messages: ✅ Fully API-backed (PostgreSQL)
+
+### Required Before iOS/Android Production Builds
+
+**Must Fix:**
+
+1. **Implement Backend Follow/Unfollow API:**
+   - Create POST /api/users/:userId/follow endpoint
+   - Create DELETE /api/users/:userId/unfollow endpoint
+   - Update follower/following arrays in database
+   - Return updated follower counts
+   - Update UserProfileScreen to use API instead of local toggle
+
+2. **Implement Posts/Feed API:**
+   - Create POST /api/posts endpoint (create post)
+   - Create GET /api/posts/feed endpoint (get user's feed)
+   - Create POST /api/posts/:postId/like endpoint
+   - Create POST /api/posts/:postId/comment endpoint
+   - Update FeedScreen to fetch from API instead of AppStore
+   - Migrate post creation logic to API calls
+
+3. **Race Participation API:**
+   - Create POST /api/races/:raceId/join endpoint
+   - Create POST /api/races/:raceId/complete endpoint
+   - Update UI to call these endpoints instead of mock store
+   - Ensure joined_races/completed_races arrays sync properly
+
+4. **Remove or Consolidate AppStore:**
+   - Decide whether to keep Zustand for client-side caching or remove entirely
+   - If keeping: Use it only for caching API responses, not as source of truth
+   - If removing: Replace all AppStore references with API calls
+   - **Recommendation:** Keep Zustand for caching, but make API the source of truth
+
+5. **Data Migration Strategy:**
+   - Current test users in database may have empty followers/posts/etc.
+   - Plan for seeding production database with realistic test data
+   - Ensure all database fields are nullable or have proper defaults
+
+### Database Schema Gaps
+
+**Missing Tables/Features:**
+- No table for race registrations (who joined which race)
+- No table for race completions (separate from joins)
+- No indexes on frequently queried fields (user searches, race filters)
+- No soft delete support (deleted data is permanently lost)
+
+### Testing Recommendations
+
+**Before App Store Submission:**
+1. Test all API endpoints with production-like data volume
+2. Verify all features work without AppStore mock data
+3. Test offline behavior and error handling
+4. Verify data persists across app restarts
+5. Test follow/unfollow flows end-to-end
+6. Test post creation, likes, and comments with real users
+7. Load test with 100+ races, 50+ users, 500+ posts
+
+### Development Environment Notes
+
+**Critical Configuration:**
+- Replit requires tunnel mode: `npx expo start --tunnel` (not LAN)
+- API URL configured in `app.json` under `extra.apiUrl` (takes precedence over .env)
+- Backend runs on port 5000 (only non-firewalled port in Replit)
+- PostgreSQL database is development-only (production requires separate setup)
+
+**API Response Format Consistency:**
+- Some endpoints return raw arrays: `[...]`
+- Some endpoints return wrapped objects: `{ items: [...] }`
+- Some endpoints use different field names: `role` vs `user_role`
+- **Recommendation:** Standardize all API responses to `{ data: [...], meta: {} }` format
+
+### Session & State Management Issues
+
+**Current Problems:**
+- User session stored in AsyncStorage (survives app restarts)
+- But user profile data may be stale (doesn't refetch on app launch)
+- No token refresh mechanism (JWT expires after 7 days)
+- No logout on token expiry (user sees errors instead)
+
+**Before Production:**
+- Implement token refresh endpoint
+- Add automatic logout on authentication errors
+- Add "pull to refresh" on all screens that load user data
+- Cache user data but revalidate on app foreground
