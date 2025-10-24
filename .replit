@@ -39,7 +39,7 @@ outputType = "console"
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
-args = "cd Lusapp && EXPO_NO_TELEMETRY=1 npx expo start --lan"
+args = "cd Lusapp && EXPO_NO_TELEMETRY=1 npx expo start --tunnel"
 
 [[ports]]
 localPort = 3000
