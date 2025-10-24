@@ -23,6 +23,7 @@ export const OnboardingScreen = () => {
   const [isLogin, setIsLogin] = useState(true);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [name, setName] = useState('');
   const [location, setLocation] = useState('');
   const [bio, setBio] = useState('');
@@ -30,6 +31,8 @@ export const OnboardingScreen = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const [ageConfirmed, setAgeConfirmed] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const handleEmailAuth = async () => {
     setError('');
@@ -45,6 +48,10 @@ export const OnboardingScreen = () => {
         }
         if (password.length < 8) {
           setError('Password must be at least 8 characters');
+          return;
+        }
+        if (password !== confirmPassword) {
+          setError('Passwords do not match');
           return;
         }
         if (!ageConfirmed) {
@@ -140,14 +147,41 @@ export const OnboardingScreen = () => {
             autoCapitalize="none"
           />
 
-          <TextInput
-            style={[styles.input, { borderColor: colors.border, color: colors.text }]}
-            placeholder="Password"
-            placeholderTextColor={colors.textSecondary}
-            value={password}
-            onChangeText={setPassword}
-            secureTextEntry
-          />
+          <View style={styles.passwordContainer}>
+            <TextInput
+              style={[styles.passwordInput, { borderColor: colors.border, color: colors.text }]}
+              placeholder="Password"
+              placeholderTextColor={colors.textSecondary}
+              value={password}
+              onChangeText={setPassword}
+              secureTextEntry={!showPassword}
+            />
+            <TouchableOpacity
+              style={styles.eyeIcon}
+              onPress={() => setShowPassword(!showPassword)}
+            >
+              <Text style={styles.eyeIconText}>{showPassword ? '👁️' : '👁️‍🗨️'}</Text>
+            </TouchableOpacity>
+          </View>
+
+          {!isLogin && (
+            <View style={styles.passwordContainer}>
+              <TextInput
+                style={[styles.passwordInput, { borderColor: colors.border, color: colors.text }]}
+                placeholder="Confirm Password"
+                placeholderTextColor={colors.textSecondary}
+                value={confirmPassword}
+                onChangeText={setConfirmPassword}
+                secureTextEntry={!showConfirmPassword}
+              />
+              <TouchableOpacity
+                style={styles.eyeIcon}
+                onPress={() => setShowConfirmPassword(!showConfirmPassword)}
+              >
+                <Text style={styles.eyeIconText}>{showConfirmPassword ? '👁️' : '👁️‍🗨️'}</Text>
+              </TouchableOpacity>
+            </View>
+          )}
 
           {!isLogin && (
             <TouchableOpacity
@@ -271,6 +305,26 @@ const styles = StyleSheet.create({
     padding: SPACING.md,
     marginBottom: SPACING.md,
     fontSize: FONT_SIZE.md,
+  },
+  passwordContainer: {
+    position: 'relative',
+    marginBottom: SPACING.md,
+  },
+  passwordInput: {
+    borderWidth: 1,
+    borderRadius: BORDER_RADIUS.md,
+    padding: SPACING.md,
+    paddingRight: 50,
+    fontSize: FONT_SIZE.md,
+  },
+  eyeIcon: {
+    position: 'absolute',
+    right: 12,
+    top: 12,
+    padding: 4,
+  },
+  eyeIconText: {
+    fontSize: 20,
   },
   textArea: {
     borderWidth: 1,

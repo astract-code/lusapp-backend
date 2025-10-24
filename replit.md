@@ -79,6 +79,8 @@ Preferred communication style: Simple, everyday language.
 - Email/password signup/login, and Apple sign-in UI flows.
 - User session management via AuthContext, with automatic session restoration.
 - Account deletion feature via DELETE /api/auth/account endpoint.
+- Password visibility toggle (eye icon) on login and signup screens.
+- Password confirmation field on signup with matching validation.
 
 ### Backend API System
 
