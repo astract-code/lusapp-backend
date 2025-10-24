@@ -84,6 +84,40 @@ export const GroupDetailScreen = ({ route, navigation }) => {
     );
   };
 
+  const handleDeleteGroup = () => {
+    Alert.alert(
+      'Delete Group',
+      'Are you sure you want to delete this group? This action cannot be undone and will remove all messages and data.',
+      [
+        { text: 'Cancel', style: 'cancel' },
+        {
+          text: 'Delete',
+          style: 'destructive',
+          onPress: async () => {
+            try {
+              const response = await fetch(`${API_URL}/api/groups/${groupId}`, {
+                method: 'DELETE',
+                headers: {
+                  'Authorization': `Bearer ${token}`,
+                },
+              });
+
+              if (response.ok) {
+                Alert.alert('Success', 'Group deleted successfully');
+                navigation.navigate('GroupsMain');
+              } else {
+                const error = await response.json();
+                Alert.alert('Error', error.error || 'Failed to delete group');
+              }
+            } catch (error) {
+              Alert.alert('Error', 'Failed to delete group');
+            }
+          },
+        },
+      ]
+    );
+  };
+
   if (loading) {
     return (
       <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
@@ -126,7 +160,14 @@ export const GroupDetailScreen = ({ route, navigation }) => {
           👥 {group.member_count} {group.member_count === 1 ? 'member' : 'members'}
         </Text>
         
-        {!isOwner && (
+        {isOwner ? (
+          <TouchableOpacity
+            style={[styles.deleteButton, { backgroundColor: '#d32f2f' }]}
+            onPress={handleDeleteGroup}
+          >
+            <Text style={styles.deleteButtonText}>Delete Group</Text>
+          </TouchableOpacity>
+        ) : (
           <TouchableOpacity
             style={[styles.leaveButton, { backgroundColor: colors.error }]}
             onPress={handleLeaveGroup}
@@ -249,6 +290,17 @@ const styles = StyleSheet.create({
     marginTop: SPACING.sm,
   },
   leaveButtonText: {
+    color: '#FFFFFF',
+    fontSize: FONT_SIZE.md,
+    fontWeight: '600',
+  },
+  deleteButton: {
+    padding: SPACING.md,
+    borderRadius: BORDER_RADIUS.md,
+    alignItems: 'center',
+    marginTop: SPACING.sm,
+  },
+  deleteButtonText: {
     color: '#FFFFFF',
     fontSize: FONT_SIZE.md,
     fontWeight: '600',

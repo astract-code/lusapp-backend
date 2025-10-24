@@ -73,7 +73,7 @@ export const RaceDetailScreen = ({ route, navigation }) => {
 
     try {
       const userIds = race.registeredUsers.join(',');
-      const response = await fetch(`${API_URL}/api/users/batch?ids=${userIds}`, {
+      const response = await fetch(`${API_URL}/api/auth/users/batch?ids=${userIds}`, {
         headers: {
           'Authorization': `Bearer ${token}`,
         },

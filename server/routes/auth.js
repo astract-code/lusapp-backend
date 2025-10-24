@@ -223,4 +223,44 @@ router.delete('/account', authMiddleware, async (req, res) => {
   }
 });
 
+router.get('/users/batch', authMiddleware, async (req, res) => {
+  try {
+    const { ids } = req.query;
+    
+    if (!ids) {
+      return res.status(400).json({ error: 'User IDs are required' });
+    }
+    
+    const userIds = ids.split(',').map(id => id.trim()).filter(Boolean);
+    
+    if (userIds.length === 0) {
+      return res.json({ users: [] });
+    }
+    
+    const placeholders = userIds.map((_, i) => `$${i + 1}`).join(',');
+    const result = await pool.query(
+      `SELECT id, email, name, location, bio, favorite_sport, avatar, total_races, created_at
+       FROM users
+       WHERE id = ANY($1)`,
+      [userIds]
+    );
+    
+    const users = result.rows.map(user => ({
+      id: user.id.toString(),
+      email: user.email,
+      name: user.name,
+      location: user.location,
+      bio: user.bio,
+      favoriteSport: user.favorite_sport,
+      avatar: getFullAvatarUrl(req, user.avatar),
+      totalRaces: user.total_races,
+    }));
+    
+    res.json({ users });
+  } catch (error) {
+    console.error('Batch users fetch error:', error);
+    res.status(500).json({ error: 'Failed to fetch users' });
+  }
+});
+
 module.exports = router;
