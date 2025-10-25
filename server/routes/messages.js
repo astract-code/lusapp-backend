@@ -107,6 +107,31 @@ module.exports = (pool) => {
     }
   });
 
+  // Get total unread message count
+  router.get('/unread-count', authMiddleware, async (req, res) => {
+    try {
+      const userId = req.user.userId;
+      
+      const result = await pool.query(`
+        SELECT COALESCE(SUM(unread), 0)::integer as total_unread
+        FROM (
+          SELECT COUNT(*) as unread
+          FROM messages m
+          JOIN conversations c ON m.conversation_id = c.id
+          WHERE (c.user1_id = $1 OR c.user2_id = $1)
+          AND m.sender_id != $1
+          AND m.read = false
+          GROUP BY c.id
+        ) as conversation_unreads
+      `, [userId]);
+
+      res.json({ count: result.rows[0].total_unread });
+    } catch (error) {
+      console.error('Error fetching unread count:', error);
+      res.status(500).json({ error: 'Failed to fetch unread count' });
+    }
+  });
+
   // Send a message
   router.post('/conversations/:otherUserId/messages', authMiddleware, async (req, res) => {
     try {

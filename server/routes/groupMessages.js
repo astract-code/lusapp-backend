@@ -5,6 +5,43 @@ const router = express.Router();
 
 module.exports = (pool) => {
   
+  // Get total unread group message count across all groups
+  // IMPORTANT: This must come BEFORE /:groupId/messages to avoid route conflicts
+  router.get('/unread-count', authMiddleware, async (req, res) => {
+    try {
+      const userId = req.user.userId;
+
+      // Get all groups the user is a member of
+      const memberGroups = await pool.query(
+        'SELECT group_id FROM group_members WHERE user_id = $1',
+        [userId]
+      );
+
+      if (memberGroups.rows.length === 0) {
+        return res.json({ count: 0 });
+      }
+
+      const groupIds = memberGroups.rows.map(row => row.group_id);
+
+      // Count unread messages across all groups
+      const result = await pool.query(`
+        SELECT COUNT(*)::integer as total_unread
+        FROM group_messages gm
+        WHERE gm.group_id = ANY($1)
+        AND gm.sender_id != $2
+        AND NOT EXISTS (
+          SELECT 1 FROM group_message_reads gmr
+          WHERE gmr.message_id = gm.id AND gmr.user_id = $2
+        )
+      `, [groupIds, userId]);
+
+      res.json({ count: result.rows[0].total_unread });
+    } catch (error) {
+      console.error('Error fetching unread group message count:', error);
+      res.status(500).json({ error: 'Failed to fetch unread count' });
+    }
+  });
+
   router.get('/:groupId/messages', authMiddleware, async (req, res) => {
     try {
       const { groupId } = req.params;
@@ -30,6 +67,15 @@ module.exports = (pool) => {
         WHERE gm.group_id = $1
         ORDER BY gm.created_at ASC
       `, [groupId]);
+
+      // Mark all messages in this group as read for this user
+      for (const message of messages.rows) {
+        await pool.query(`
+          INSERT INTO group_message_reads (message_id, user_id)
+          VALUES ($1, $2)
+          ON CONFLICT (message_id, user_id) DO NOTHING
+        `, [message.id, userId]);
+      }
 
       await pool.query(
         'UPDATE group_members SET last_active_at = NOW() WHERE group_id = $1 AND user_id = $2',
