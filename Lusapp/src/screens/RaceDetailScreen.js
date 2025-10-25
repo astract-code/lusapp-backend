@@ -19,7 +19,7 @@ import API_URL from '../config/api';
 export const RaceDetailScreen = ({ route, navigation }) => {
   const { raceId } = route.params;
   const { colors } = useTheme();
-  const { user, token } = useAuth();
+  const { user, token, updateUser } = useAuth();
   const { getRaceById, registerForRace, unregisterFromRace } = useAppStore();
   const [registeredUsers, setRegisteredUsers] = useState([]);
   const [loadingUsers, setLoadingUsers] = useState(true);
@@ -115,8 +115,16 @@ export const RaceDetailScreen = ({ route, navigation }) => {
         
         if (isRegistered) {
           unregisterFromRace(raceId, user.id);
+          updateUser({
+            ...user,
+            joinedRaces: (user.joinedRaces || []).filter(id => id !== raceId)
+          });
         } else {
           registerForRace(raceId, user.id);
+          updateUser({
+            ...user,
+            joinedRaces: [...(user.joinedRaces || []), raceId]
+          });
         }
       } else {
         const error = await response.json();

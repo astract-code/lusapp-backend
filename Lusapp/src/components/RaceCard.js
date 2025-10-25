@@ -13,6 +13,14 @@ export const RaceCard = ({ race, onPress }) => {
     return time.slice(0, 5);
   };
 
+  const getRaceSubtitle = () => {
+    const category = race.sport_category || '';
+    if (category.toLowerCase().includes('hyrox')) {
+      return category;
+    }
+    return race.sport_subtype || category || sport.name;
+  };
+
   return (
     <TouchableOpacity onPress={onPress} style={styles.container}>
       <LinearGradient
@@ -26,7 +34,7 @@ export const RaceCard = ({ race, onPress }) => {
             <Text style={styles.sportIcon}>{sport.icon}</Text>
             <View style={styles.headerText}>
               <Text style={styles.title} numberOfLines={2}>{race.name}</Text>
-              <Text style={styles.sport}>{sport.name}</Text>
+              <Text style={styles.sport}>{getRaceSubtitle()}</Text>
             </View>
           </View>
           

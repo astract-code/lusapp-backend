@@ -168,7 +168,7 @@ export const GroupChatTab = ({ groupId }) => {
     <KeyboardAvoidingView
       style={styles.container}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      keyboardVerticalOffset={Platform.OS === 'ios' ? 140 : 0}
+      keyboardVerticalOffset={Platform.OS === 'ios' ? 200 : 0}
     >
       {messages.length === 0 ? (
         <View style={styles.emptyContainer}>
