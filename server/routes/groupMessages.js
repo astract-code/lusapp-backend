@@ -68,13 +68,20 @@ module.exports = (pool) => {
         ORDER BY gm.created_at ASC
       `, [groupId]);
 
-      // Mark all messages in this group as read for this user
-      for (const message of messages.rows) {
+      // Mark all unread messages in this group as read for this user (bulk insert)
+      if (messages.rows.length > 0) {
         await pool.query(`
           INSERT INTO group_message_reads (message_id, user_id)
-          VALUES ($1, $2)
+          SELECT gm.id, $2
+          FROM group_messages gm
+          WHERE gm.group_id = $1
+          AND gm.sender_id != $2
+          AND NOT EXISTS (
+            SELECT 1 FROM group_message_reads gmr
+            WHERE gmr.message_id = gm.id AND gmr.user_id = $2
+          )
           ON CONFLICT (message_id, user_id) DO NOTHING
-        `, [message.id, userId]);
+        `, [groupId, userId]);
       }
 
       await pool.query(

@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useColorScheme, Text } from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
 import { COLORS } from '../constants/theme';
+import { useAuth } from '../context/AuthContext';
+import API_URL from '../config/api';
 
 import { FeedScreen } from '../screens/FeedScreen';
 import { CalendarScreen } from '../screens/CalendarScreen';
@@ -244,6 +247,46 @@ const GroupsStack = () => {
 export const AppNavigator = () => {
   const colorScheme = useColorScheme();
   const theme = COLORS[colorScheme] || COLORS.light;
+  const { token } = useAuth();
+  const [unreadMessages, setUnreadMessages] = useState(0);
+  const [unreadGroups, setUnreadGroups] = useState(0);
+
+  const fetchUnreadCounts = async () => {
+    if (!token) return;
+
+    try {
+      // Fetch both unread counts in parallel for better performance
+      const [messagesResponse, groupsResponse] = await Promise.all([
+        fetch(`${API_URL}/api/messages/unread-count`, {
+          headers: { 'Authorization': `Bearer ${token}` },
+        }),
+        fetch(`${API_URL}/api/groups/unread-count`, {
+          headers: { 'Authorization': `Bearer ${token}` },
+        })
+      ]);
+
+      if (messagesResponse.ok) {
+        const messagesData = await messagesResponse.json();
+        setUnreadMessages(messagesData.count || 0);
+      }
+
+      if (groupsResponse.ok) {
+        const groupsData = await groupsResponse.json();
+        setUnreadGroups(groupsData.count || 0);
+      }
+    } catch (error) {
+      console.error('Error fetching unread counts:', error);
+    }
+  };
+
+  // Poll for unread counts every 5 seconds
+  useEffect(() => {
+    if (!token) return;
+
+    fetchUnreadCounts();
+    const interval = setInterval(fetchUnreadCounts, 5000);
+    return () => clearInterval(interval);
+  }, [token]);
 
   return (
     <Tab.Navigator
@@ -287,6 +330,7 @@ export const AppNavigator = () => {
         options={{
           tabBarLabel: 'Groups',
           tabBarIcon: ({ color }) => <Text style={{ fontSize: 26, color }}>🏃</Text>,
+          tabBarBadge: unreadGroups > 0 ? unreadGroups : undefined,
         }}
       />
       <Tab.Screen 
@@ -295,6 +339,7 @@ export const AppNavigator = () => {
         options={{
           tabBarLabel: 'Messages',
           tabBarIcon: ({ color }) => <Text style={{ fontSize: 26, color }}>💭</Text>,
+          tabBarBadge: unreadMessages > 0 ? unreadMessages : undefined,
         }}
       />
       <Tab.Screen 
