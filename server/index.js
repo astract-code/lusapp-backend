@@ -169,6 +169,55 @@ app.delete('/api/races/:id', adminAuth, async (req, res) => {
   }
 });
 
+// Download all races as CSV
+app.get('/api/races/csv-download', adminAuth, async (req, res) => {
+  try {
+    const result = await pool.query('SELECT * FROM races ORDER BY date ASC');
+    const races = result.rows;
+
+    if (races.length === 0) {
+      return res.status(404).json({ error: 'No races to download' });
+    }
+
+    // Generate CSV header
+    const headers = ['id', 'name', 'sport', 'sport_category', 'sport_subtype', 'city', 'country', 'continent', 'date', 'start_time', 'distance', 'description', 'participants', 'created_at'];
+    const csvHeader = headers.join(',');
+
+    // Generate CSV rows
+    const csvRows = races.map(race => {
+      return headers.map(header => {
+        let value = race[header];
+        
+        // Handle nulls and special characters
+        if (value === null || value === undefined) {
+          return '';
+        }
+        
+        // Convert to string and escape quotes
+        value = String(value).replace(/"/g, '""');
+        
+        // Wrap in quotes if contains comma, newline, or quote
+        if (value.includes(',') || value.includes('\n') || value.includes('"')) {
+          return `"${value}"`;
+        }
+        
+        return value;
+      }).join(',');
+    });
+
+    // Combine header and rows
+    const csv = [csvHeader, ...csvRows].join('\n');
+
+    // Set headers for file download
+    res.setHeader('Content-Type', 'text/csv');
+    res.setHeader('Content-Disposition', `attachment; filename="lusapp-races-${new Date().toISOString().split('T')[0]}.csv"`);
+    res.send(csv);
+  } catch (error) {
+    console.error('Error generating CSV:', error);
+    res.status(500).json({ error: 'Failed to generate CSV' });
+  }
+});
+
 app.post('/api/races/csv-upload', adminAuth, upload.single('csvFile'), async (req, res) => {
   try {
     const results = [];
