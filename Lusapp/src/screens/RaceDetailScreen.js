@@ -40,7 +40,7 @@ export const RaceDetailScreen = ({ route, navigation }) => {
   };
 
   const sport = SPORTS.find((s) => s.id === race.sport) || SPORTS[0];
-  const isRegistered = race.registeredUsers?.includes(user?.id);
+  const isRegistered = race.registeredUsers?.includes(user?.id?.toString());
   
   const shouldShowDistance = () => {
     const category = race.sport_category?.toLowerCase() || '';
