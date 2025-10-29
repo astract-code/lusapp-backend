@@ -106,9 +106,16 @@ CREATE TABLE IF NOT EXISTS groups (
   banner_url VARCHAR(500),
   created_by INTEGER NOT NULL REFERENCES users(id),
   member_count INTEGER DEFAULT 1,
+  race_id INTEGER REFERENCES races(id) ON DELETE CASCADE,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+-- Add race_id column if it doesn't exist (for existing databases)
+ALTER TABLE groups ADD COLUMN IF NOT EXISTS race_id INTEGER REFERENCES races(id) ON DELETE CASCADE;
+
+-- Add unique constraint on race_id to prevent duplicate race groups
+CREATE UNIQUE INDEX IF NOT EXISTS idx_groups_race_id ON groups(race_id) WHERE race_id IS NOT NULL;
 
 -- Create group_members table
 CREATE TABLE IF NOT EXISTS group_members (

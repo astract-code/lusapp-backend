@@ -308,12 +308,18 @@ app.post('/api/races/:raceId/join', authMiddleware, async (req, res) => {
     
     await client.query('BEGIN');
     
-    const raceCheck = await client.query('SELECT id FROM races WHERE id = $1', [raceId]);
+    // Get race details
+    const raceCheck = await client.query(
+      'SELECT id, name, sport_category, sport, city, country FROM races WHERE id = $1',
+      [raceId]
+    );
     if (raceCheck.rows.length === 0) {
       await client.query('ROLLBACK');
       return res.status(404).json({ error: 'Race not found' });
     }
+    const race = raceCheck.rows[0];
     
+    // Add user to joined_races
     await client.query(
       `UPDATE users 
        SET joined_races = ARRAY(SELECT DISTINCT unnest(COALESCE(joined_races, ARRAY[]::text[]) || ARRAY[$1::text]))
@@ -321,11 +327,67 @@ app.post('/api/races/:raceId/join', authMiddleware, async (req, res) => {
       [raceId.toString(), userId]
     );
     
+    // Add user to race registered_users
     await client.query(
       `UPDATE races 
        SET registered_users = ARRAY(SELECT DISTINCT unnest(COALESCE(registered_users, ARRAY[]::text[]) || ARRAY[$1::text]))
        WHERE id = $2`,
       [userId.toString(), raceId]
+    );
+    
+    // Create or get race group (race-safe with unique constraint)
+    let groupId;
+    try {
+      // Try to create race group
+      const groupResult = await client.query(
+        `INSERT INTO groups (name, sport_type, city, country, description, race_id, created_by, member_count)
+         VALUES ($1, $2, $3, $4, $5, $6, $7, 0)
+         ON CONFLICT (race_id) WHERE race_id IS NOT NULL DO NOTHING
+         RETURNING id`,
+        [
+          `${race.name} - Participants`,
+          race.sport_category || race.sport,
+          race.city,
+          race.country,
+          `Official chat for all ${race.name} participants. Connect with fellow athletes!`,
+          raceId,
+          userId
+        ]
+      );
+      
+      if (groupResult.rows.length > 0) {
+        groupId = groupResult.rows[0].id;
+      } else {
+        // Group already exists, fetch it
+        const existingGroup = await client.query(
+          'SELECT id FROM groups WHERE race_id = $1',
+          [raceId]
+        );
+        groupId = existingGroup.rows[0].id;
+      }
+    } catch (error) {
+      // If unique constraint fails, fetch existing group
+      const existingGroup = await client.query(
+        'SELECT id FROM groups WHERE race_id = $1',
+        [raceId]
+      );
+      groupId = existingGroup.rows[0].id;
+    }
+    
+    // Add user to race group (if not already a member)
+    await client.query(
+      `INSERT INTO group_members (group_id, user_id, role)
+       VALUES ($1, $2, 'member')
+       ON CONFLICT (group_id, user_id) DO NOTHING`,
+      [groupId, userId]
+    );
+    
+    // Update group member count
+    await client.query(
+      `UPDATE groups 
+       SET member_count = (SELECT COUNT(*) FROM group_members WHERE group_id = $1)
+       WHERE id = $1`,
+      [groupId]
     );
     
     const result = await client.query(
@@ -337,7 +399,8 @@ app.post('/api/races/:raceId/join', authMiddleware, async (req, res) => {
     
     res.json({
       success: true,
-      joinedRaces: result.rows[0].joined_races || []
+      joinedRaces: result.rows[0].joined_races || [],
+      groupId: groupId
     });
     
   } catch (error) {

@@ -61,6 +61,37 @@ module.exports = (pool) => {
     }
   });
 
+  router.get('/race/:raceId', authMiddleware, async (req, res) => {
+    try {
+      const raceId = parseInt(req.params.raceId, 10);
+      
+      if (isNaN(raceId)) {
+        return res.status(400).json({ error: 'Invalid race ID' });
+      }
+      
+      const result = await pool.query(
+        `SELECT 
+          g.id, g.name, g.sport_type, g.city, g.country, g.description, 
+          g.member_count, g.created_at, g.banner_url, g.race_id,
+          (g.password_hash IS NOT NULL) as has_password,
+          gm.role as user_role
+        FROM groups g
+        LEFT JOIN group_members gm ON g.id = gm.group_id AND gm.user_id = $1
+        WHERE g.race_id = $2`,
+        [req.user.userId, raceId]
+      );
+      
+      if (result.rows.length === 0) {
+        return res.status(404).json({ error: 'Race group not found' });
+      }
+      
+      res.json({ group: result.rows[0] });
+    } catch (error) {
+      console.error('Error fetching race group:', error);
+      res.status(500).json({ error: 'Failed to fetch race group' });
+    }
+  });
+
   router.get('/search', authMiddleware, async (req, res) => {
     try {
       const { query, sport_type, city } = req.query;

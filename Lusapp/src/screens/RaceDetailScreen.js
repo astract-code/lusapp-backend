@@ -23,6 +23,7 @@ export const RaceDetailScreen = ({ route, navigation }) => {
   const { getRaceById, registerForRace, unregisterFromRace } = useAppStore();
   const [registeredUsers, setRegisteredUsers] = useState([]);
   const [loadingUsers, setLoadingUsers] = useState(true);
+  const [raceGroup, setRaceGroup] = useState(null);
 
   const race = getRaceById(raceId);
 
@@ -62,7 +63,10 @@ export const RaceDetailScreen = ({ route, navigation }) => {
   
   useEffect(() => {
     fetchRegisteredUsers();
-  }, [race.registeredUsers]);
+    if (isRegistered) {
+      fetchRaceGroup();
+    }
+  }, [race.registeredUsers, isRegistered]);
 
   const fetchRegisteredUsers = async () => {
     if (!race.registeredUsers || race.registeredUsers.length === 0) {
@@ -90,6 +94,23 @@ export const RaceDetailScreen = ({ route, navigation }) => {
       setRegisteredUsers([]);
     } finally {
       setLoadingUsers(false);
+    }
+  };
+
+  const fetchRaceGroup = async () => {
+    try {
+      const response = await fetch(`${API_URL}/api/groups/race/${raceId}`, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        },
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setRaceGroup(data.group);
+      }
+    } catch (error) {
+      console.error('Error fetching race group:', error);
     }
   };
 
@@ -247,6 +268,21 @@ export const RaceDetailScreen = ({ route, navigation }) => {
           {isRegistered ? 'Unregister' : 'Sign Up for Race'}
         </Text>
       </TouchableOpacity>
+
+      {isRegistered && raceGroup && (
+        <TouchableOpacity
+          style={[styles.chatButton, { backgroundColor: colors.primary }]}
+          onPress={() => navigation.navigate('GroupDetail', { groupId: raceGroup.id })}
+        >
+          <Text style={styles.chatButtonIcon}>💬</Text>
+          <View style={styles.chatButtonText}>
+            <Text style={styles.chatButtonTitle}>Race Chat</Text>
+            <Text style={styles.chatButtonSubtitle}>
+              Connect with {raceGroup.member_count} participants
+            </Text>
+          </View>
+        </TouchableOpacity>
+      )}
     </ScrollView>
   );
 };
@@ -340,6 +376,32 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontSize: FONT_SIZE.md,
     fontWeight: 'bold',
+  },
+  chatButton: {
+    margin: SPACING.md,
+    marginTop: 0,
+    padding: SPACING.md,
+    borderRadius: BORDER_RADIUS.md,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  chatButtonIcon: {
+    fontSize: 32,
+    marginRight: SPACING.sm,
+  },
+  chatButtonText: {
+    flex: 1,
+  },
+  chatButtonTitle: {
+    color: '#FFFFFF',
+    fontSize: FONT_SIZE.md,
+    fontWeight: 'bold',
+    marginBottom: SPACING.xs,
+  },
+  chatButtonSubtitle: {
+    color: '#FFFFFF',
+    fontSize: FONT_SIZE.sm,
+    opacity: 0.9,
   },
   errorText: {
     fontSize: FONT_SIZE.md,
