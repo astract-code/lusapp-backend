@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   Alert,
   ActivityIndicator,
+  Platform,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -218,7 +219,9 @@ export const ProfileScreen = ({ navigation }) => {
 
       <View style={styles.versionContainer}>
         <Text style={[styles.versionText, { color: colors.textSecondary }]}>
-          Version {Constants.expoConfig?.version || '1.0.0'}
+          Version {Constants.expoConfig?.version || '1.0.0'} ({Platform.OS === 'ios' 
+            ? Constants.expoConfig?.ios?.buildNumber || '1'
+            : Constants.expoConfig?.android?.versionCode || '1'})
         </Text>
       </View>
       </ScrollView>
