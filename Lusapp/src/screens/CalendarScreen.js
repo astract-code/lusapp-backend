@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Calendar } from 'react-native-calendars';
-import { RaceCard } from '../components/RaceCard';
+import { CompactRaceCard } from '../components/CompactRaceCard';
 import { useAppStore } from '../context/AppContext';
 import { useTheme } from '../context/ThemeContext';
 import { SPACING, FONT_SIZE, BORDER_RADIUS } from '../constants/theme';
@@ -106,7 +106,7 @@ export const CalendarScreen = ({ navigation }) => {
         data={filteredRaces}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
-          <RaceCard
+          <CompactRaceCard
             race={item}
             onPress={() => navigation.navigate('RaceDetail', { raceId: item.id })}
           />
