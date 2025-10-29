@@ -82,6 +82,7 @@ export const CalendarScreen = ({ navigation }) => {
 
       {viewMode === 'calendar' && (
         <Calendar
+          firstDay={1}
           markedDates={markedDates}
           onDayPress={(day) => setSelectedDate(day.dateString)}
           theme={{
