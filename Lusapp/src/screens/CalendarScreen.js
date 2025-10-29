@@ -4,18 +4,26 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Calendar } from 'react-native-calendars';
 import { CompactRaceCard } from '../components/CompactRaceCard';
 import { useAppStore } from '../context/AppContext';
+import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
 import { SPACING, FONT_SIZE, BORDER_RADIUS } from '../constants/theme';
 
 export const CalendarScreen = ({ navigation }) => {
   const { colors } = useTheme();
+  const { user } = useAuth();
   const races = useAppStore((state) => state.races);
   
   const [viewMode, setViewMode] = useState('calendar');
   const [selectedDate, setSelectedDate] = useState('');
 
+  // Filter to only show races the user has joined
+  const joinedRaceIds = user?.joined_races || [];
   const upcomingRaces = races
-    .filter((race) => new Date(race.date) >= new Date())
+    .filter((race) => {
+      const isUpcoming = new Date(race.date) >= new Date();
+      const isJoined = joinedRaceIds.includes(race.id.toString());
+      return isUpcoming && isJoined;
+    })
     .sort((a, b) => new Date(a.date) - new Date(b.date));
 
   const markedDates = {};
@@ -116,8 +124,8 @@ export const CalendarScreen = ({ navigation }) => {
         ListEmptyComponent={
           <Text style={[styles.emptyText, { color: colors.textSecondary }]}>
             {selectedDate
-              ? 'No races on this date'
-              : 'No upcoming races'}
+              ? 'No registered races on this date'
+              : 'No registered upcoming races. Go to Discover to find races!'}
           </Text>
         }
       />
