@@ -11,6 +11,7 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
 import * as ImagePicker from 'expo-image-picker';
+import Constants from 'expo-constants';
 import { UserAvatar } from '../components/UserAvatar';
 import { StatCard } from '../components/StatCard';
 import { CompactRaceCard } from '../components/CompactRaceCard';
@@ -214,6 +215,12 @@ export const ProfileScreen = ({ navigation }) => {
       >
         <Text style={styles.logoutText}>Log Out</Text>
       </TouchableOpacity>
+
+      <View style={styles.versionContainer}>
+        <Text style={[styles.versionText, { color: colors.textSecondary }]}>
+          Version {Constants.expoConfig?.version || '1.0.0'}
+        </Text>
+      </View>
       </ScrollView>
     </SafeAreaView>
   );
@@ -327,5 +334,14 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontSize: FONT_SIZE.md,
     fontWeight: 'bold',
+  },
+  versionContainer: {
+    alignItems: 'center',
+    paddingVertical: SPACING.md,
+    paddingBottom: SPACING.xl,
+  },
+  versionText: {
+    fontSize: FONT_SIZE.xs,
+    fontWeight: '500',
   },
 });
