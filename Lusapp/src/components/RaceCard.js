@@ -15,10 +15,18 @@ export const RaceCard = ({ race, onPress }) => {
 
   const getRaceSubtitle = () => {
     const category = race.sport_category || '';
+    
+    // For Hyrox, just show the category without subtype
     if (category.toLowerCase().includes('hyrox')) {
       return category;
     }
-    return race.sport_subtype || category || sport.name;
+    
+    // Only show sport_subtype if it's meaningful and different from category
+    if (race.sport_subtype && race.sport_subtype !== category) {
+      return race.sport_subtype;
+    }
+    
+    return category || sport.name;
   };
 
   return (

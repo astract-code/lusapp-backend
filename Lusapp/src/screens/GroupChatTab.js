@@ -80,7 +80,7 @@ export const GroupChatTab = ({ groupId }) => {
   );
 
   const sendMessage = async () => {
-    if (!inputText.trim() || sending) return;
+    if (!inputText.trim() || sending || !currentUser) return;
 
     const messageText = inputText.trim();
     setInputText('');
@@ -100,8 +100,8 @@ export const GroupChatTab = ({ groupId }) => {
         const newMessage = await response.json();
         setMessages(prev => [...prev, {
           ...newMessage,
-          sender_name: currentUser.name,
-          sender_avatar: currentUser.avatar
+          sender_name: currentUser?.name || 'Unknown',
+          sender_avatar: currentUser?.avatar || null
         }]);
 
         setTimeout(() => {

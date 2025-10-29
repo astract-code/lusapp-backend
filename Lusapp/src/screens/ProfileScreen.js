@@ -13,7 +13,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import * as ImagePicker from 'expo-image-picker';
 import { UserAvatar } from '../components/UserAvatar';
 import { StatCard } from '../components/StatCard';
-import { RaceCard } from '../components/RaceCard';
+import { CompactRaceCard } from '../components/CompactRaceCard';
 import { useAuth } from '../context/AuthContext';
 import { useAppStore } from '../context/AppContext';
 import { useTheme } from '../context/ThemeContext';
@@ -177,7 +177,7 @@ export const ProfileScreen = ({ navigation }) => {
           Joined Races ({joinedRaces.length})
         </Text>
         {joinedRaces.map((race) => (
-          <RaceCard
+          <CompactRaceCard
             key={race.id}
             race={race}
             onPress={() => navigation.navigate('RaceDetail', { raceId: race.id })}
@@ -195,7 +195,7 @@ export const ProfileScreen = ({ navigation }) => {
           Completed Races ({completedRaces.length})
         </Text>
         {completedRaces.map((race) => (
-          <RaceCard
+          <CompactRaceCard
             key={race.id}
             race={race}
             onPress={() => navigation.navigate('RaceDetail', { raceId: race.id })}
