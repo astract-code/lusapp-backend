@@ -138,14 +138,15 @@ export const RaceDetailScreen = ({ route, navigation }) => {
           unregisterFromRace(raceId, user.id);
           updateUser({
             ...user,
-            joinedRaces: (user.joinedRaces || []).filter(id => id !== raceId)
+            joined_races: (user.joined_races || []).filter(id => id.toString() !== raceId.toString())
           });
         } else {
           registerForRace(raceId, user.id);
           updateUser({
             ...user,
-            joinedRaces: [...(user.joinedRaces || []), raceId]
+            joined_races: [...(user.joined_races || []), raceId.toString()]
           });
+          fetchRaceGroup();
         }
       } else {
         const error = await response.json();

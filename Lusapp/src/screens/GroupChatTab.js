@@ -80,13 +80,28 @@ export const GroupChatTab = ({ groupId }) => {
   );
 
   const sendMessage = async () => {
-    if (!inputText.trim() || sending || !currentUser) return;
+    console.log('[GroupChatTab] sendMessage called', { 
+      groupId, 
+      hasInputText: !!inputText.trim(), 
+      sending, 
+      currentUser: currentUser ? { id: currentUser.id, name: currentUser.name } : null 
+    });
+
+    if (!inputText.trim() || sending || !currentUser) {
+      console.log('[GroupChatTab] sendMessage early return', { 
+        noInput: !inputText.trim(), 
+        sending, 
+        noUser: !currentUser 
+      });
+      return;
+    }
 
     const messageText = inputText.trim();
     setInputText('');
     setSending(true);
 
     try {
+      console.log('[GroupChatTab] Sending message to API', { groupId, messageText });
       const response = await fetch(`${API_URL}/api/groups/${groupId}/messages`, {
         method: 'POST',
         headers: {
@@ -96,8 +111,11 @@ export const GroupChatTab = ({ groupId }) => {
         body: JSON.stringify({ content: messageText }),
       });
 
+      console.log('[GroupChatTab] API response', { ok: response.ok, status: response.status });
+
       if (response.ok) {
         const newMessage = await response.json();
+        console.log('[GroupChatTab] Message sent successfully', newMessage);
         setMessages(prev => [...prev, {
           ...newMessage,
           sender_name: currentUser?.name || 'Unknown',
@@ -107,9 +125,13 @@ export const GroupChatTab = ({ groupId }) => {
         setTimeout(() => {
           flatListRef.current?.scrollToEnd({ animated: true });
         }, 100);
+      } else {
+        const errorData = await response.json();
+        console.error('[GroupChatTab] Failed to send message', errorData);
       }
     } catch (error) {
-      console.error('Error sending message:', error);
+      console.error('[GroupChatTab] Error sending message:', error);
+      console.error('[GroupChatTab] Error stack:', error.stack);
       setInputText(messageText);
     } finally {
       setSending(false);
@@ -122,6 +144,10 @@ export const GroupChatTab = ({ groupId }) => {
   };
 
   const renderMessage = ({ item }) => {
+    if (!currentUser) {
+      console.error('[GroupChatTab] renderMessage called without currentUser', { item });
+      return null;
+    }
     const isMe = item.sender_id === currentUser.id;
 
     return (

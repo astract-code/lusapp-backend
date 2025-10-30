@@ -336,6 +336,8 @@ app.post('/api/races/:raceId/join', authMiddleware, async (req, res) => {
     );
     
     // Create or get race group (race-safe with unique constraint)
+    // Race groups are always created by admin (user ID 1)
+    const ADMIN_USER_ID = 1;
     let groupId;
     try {
       // Try to create race group
@@ -351,7 +353,7 @@ app.post('/api/races/:raceId/join', authMiddleware, async (req, res) => {
           race.country,
           `Official chat for all ${race.name} participants. Connect with fellow athletes!`,
           raceId,
-          userId
+          ADMIN_USER_ID
         ]
       );
       

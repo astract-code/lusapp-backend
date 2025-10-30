@@ -316,71 +316,76 @@ export const DiscoverScreen = ({ navigation }) => {
         </SafeAreaView>
       </Modal>
 
-      <ScrollView
-        style={styles.filters}
-        showsVerticalScrollIndicator={false}
-      >
-        <Text style={[styles.filterLabel, { color: colors.text }]}>🔍 Search by City</Text>
-        <TextInput
-          style={[styles.searchInput, { backgroundColor: colors.card, color: colors.text, borderColor: colors.border }]}
-          placeholder="e.g., Tokyo, Paris, New York..."
-          placeholderTextColor={colors.textSecondary}
-          value={searchQuery}
-          onChangeText={setSearchQuery}
-        />
+      <View style={styles.filtersSection}>
+        <ScrollView
+          style={styles.filters}
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={styles.filtersContent}
+        >
+          <Text style={[styles.filterLabel, { color: colors.text }]}>🔍 Search by City</Text>
+          <TextInput
+            style={[styles.searchInput, { backgroundColor: colors.card, color: colors.text, borderColor: colors.border }]}
+            placeholder="e.g., Tokyo, Paris, New York..."
+            placeholderTextColor={colors.textSecondary}
+            value={searchQuery}
+            onChangeText={setSearchQuery}
+          />
 
-        <DropdownFilter
-          title="Sport Category"
-          options={SPORT_CATEGORIES}
-          selectedValue={selectedCategory}
-          onSelect={handleCategorySelect}
-          renderOption={(value) => 
-            value === 'All' ? value : `${SPORT_TAXONOMY[value]?.icon || ''} ${value}`
+          <DropdownFilter
+            title="Sport Category"
+            options={SPORT_CATEGORIES}
+            selectedValue={selectedCategory}
+            onSelect={handleCategorySelect}
+            renderOption={(value) => 
+              value === 'All' ? value : `${SPORT_TAXONOMY[value]?.icon || ''} ${value}`
+            }
+          />
+
+          {selectedCategory && (
+            <DropdownFilter
+              title="Distance / Type"
+              options={SPORT_TAXONOMY[selectedCategory].subtypes}
+              selectedValue={selectedSubtype}
+              onSelect={(value) => setSelectedSubtype(value)}
+            />
+          )}
+
+          <DropdownFilter
+            title="Continent"
+            options={CONTINENTS}
+            selectedValue={selectedContinent}
+            onSelect={handleContinentSelect}
+          />
+
+          {selectedContinent && (
+            <DropdownFilter
+              title="Country"
+              options={filteredCountries}
+              selectedValue={selectedCountry}
+              onSelect={(value) => setSelectedCountry(value)}
+            />
+          )}
+        </ScrollView>
+      </View>
+
+      <View style={styles.resultsSection}>
+        <FlatList
+          data={filteredRaces}
+          keyExtractor={(item) => item.id}
+          renderItem={({ item }) => (
+            <RaceCard
+              race={item}
+              onPress={() => navigation.navigate('RaceDetail', { raceId: item.id })}
+            />
+          )}
+          contentContainerStyle={styles.list}
+          ListHeaderComponent={
+            <Text style={[styles.resultCount, { color: colors.textSecondary }]}>
+              {filteredRaces.length} {filteredRaces.length === 1 ? 'race' : 'races'} found
+            </Text>
           }
         />
-
-        {selectedCategory && (
-          <DropdownFilter
-            title="Distance / Type"
-            options={SPORT_TAXONOMY[selectedCategory].subtypes}
-            selectedValue={selectedSubtype}
-            onSelect={(value) => setSelectedSubtype(value)}
-          />
-        )}
-
-        <DropdownFilter
-          title="Continent"
-          options={CONTINENTS}
-          selectedValue={selectedContinent}
-          onSelect={handleContinentSelect}
-        />
-
-        {selectedContinent && (
-          <DropdownFilter
-            title="Country"
-            options={filteredCountries}
-            selectedValue={selectedCountry}
-            onSelect={(value) => setSelectedCountry(value)}
-          />
-        )}
-      </ScrollView>
-
-      <FlatList
-        data={filteredRaces}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => (
-          <RaceCard
-            race={item}
-            onPress={() => navigation.navigate('RaceDetail', { raceId: item.id })}
-          />
-        )}
-        contentContainerStyle={styles.list}
-        ListHeaderComponent={
-          <Text style={[styles.resultCount, { color: colors.textSecondary }]}>
-            {filteredRaces.length} {filteredRaces.length === 1 ? 'race' : 'races'} found
-          </Text>
-        }
-      />
+      </View>
     </SafeAreaView>
   );
 };
@@ -492,9 +497,20 @@ const styles = StyleSheet.create({
     fontSize: FONT_SIZE.md,
     fontWeight: '600',
   },
+  filtersSection: {
+    flex: 1,
+    borderBottomWidth: 2,
+    borderBottomColor: '#E0E0E0',
+  },
   filters: {
-    maxHeight: 320,
+    flex: 1,
+  },
+  filtersContent: {
     paddingHorizontal: SPACING.md,
+    paddingBottom: SPACING.md,
+  },
+  resultsSection: {
+    flex: 1,
   },
   searchInput: {
     borderWidth: 1,

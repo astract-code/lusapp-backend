@@ -52,10 +52,10 @@ export const CompactRaceCard = ({ race, onPress }) => {
             <Text style={[styles.name, { color: colors.text }]} numberOfLines={1}>
               {race.name}
             </Text>
-            {race.sport_category && (
+            {race.sport_subtype && (
               <View style={[styles.badge, { backgroundColor: colors.primary + '20' }]}>
                 <Text style={[styles.badgeText, { color: colors.primary }]}>
-                  {race.sport_category}
+                  {race.sport_subtype}
                 </Text>
               </View>
             )}
