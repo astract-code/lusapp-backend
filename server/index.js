@@ -72,6 +72,10 @@ app.get('/terms-of-service', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'terms-of-service.html'));
 });
 
+app.get('/health', (req, res) => {
+  res.json({ status: 'ok', timestamp: new Date().toISOString() });
+});
+
 app.use('/api/auth', authRoutes);
 app.use('/api/upload', uploadRoutes);
 app.use('/api/messages', messagesRoutes(pool));
