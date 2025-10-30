@@ -13,6 +13,7 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { RaceCard } from '../components/RaceCard';
 import { FilterChip } from '../components/FilterChip';
+import { DropdownFilter } from '../components/DropdownFilter';
 import { useAppStore } from '../context/AppContext';
 import { useTheme } from '../context/ThemeContext';
 import { SPACING, FONT_SIZE, BORDER_RADIUS, SPORTS, CONTINENTS, COUNTRIES, COUNTRY_TO_CONTINENT } from '../constants/theme';
@@ -328,77 +329,40 @@ export const DiscoverScreen = ({ navigation }) => {
           onChangeText={setSearchQuery}
         />
 
-        <Text style={[styles.filterLabel, { color: colors.text }]}>Sport Category</Text>
-        <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          style={styles.filterRow}
-        >
-          {SPORT_CATEGORIES.map((category) => (
-            <FilterChip
-              key={category}
-              label={`${SPORT_TAXONOMY[category].icon} ${category}`}
-              selected={selectedCategory === category}
-              onPress={() => handleCategorySelect(category)}
-            />
-          ))}
-        </ScrollView>
+        <DropdownFilter
+          title="Sport Category"
+          options={SPORT_CATEGORIES}
+          selectedValue={selectedCategory}
+          onSelect={handleCategorySelect}
+          renderOption={(value) => 
+            value === 'All' ? value : `${SPORT_TAXONOMY[value]?.icon || ''} ${value}`
+          }
+        />
 
         {selectedCategory && (
-          <>
-            <Text style={[styles.filterLabel, { color: colors.text }]}>Distance / Type</Text>
-            <ScrollView
-              horizontal
-              showsHorizontalScrollIndicator={false}
-              style={styles.filterRow}
-            >
-              {SPORT_TAXONOMY[selectedCategory].subtypes.map((subtype) => (
-                <FilterChip
-                  key={subtype}
-                  label={subtype}
-                  selected={selectedSubtype === subtype}
-                  onPress={() =>
-                    setSelectedSubtype(selectedSubtype === subtype ? null : subtype)
-                  }
-                />
-              ))}
-            </ScrollView>
-          </>
+          <DropdownFilter
+            title="Distance / Type"
+            options={SPORT_TAXONOMY[selectedCategory].subtypes}
+            selectedValue={selectedSubtype}
+            onSelect={(value) => setSelectedSubtype(value)}
+          />
         )}
 
-        <Text style={[styles.filterLabel, { color: colors.text }]}>Continent</Text>
-        <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          style={styles.filterRow}
-        >
-          {CONTINENTS.map((continent) => (
-            <FilterChip
-              key={continent}
-              label={continent}
-              selected={selectedContinent === continent}
-              onPress={() => handleContinentSelect(continent)}
-            />
-          ))}
-        </ScrollView>
+        <DropdownFilter
+          title="Continent"
+          options={CONTINENTS}
+          selectedValue={selectedContinent}
+          onSelect={handleContinentSelect}
+        />
 
-        <Text style={[styles.filterLabel, { color: colors.text }]}>Country</Text>
-        <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          style={styles.filterRow}
-        >
-          {filteredCountries.map((country) => (
-            <FilterChip
-              key={country}
-              label={country}
-              selected={selectedCountry === country}
-              onPress={() =>
-                setSelectedCountry(selectedCountry === country ? null : country)
-              }
-            />
-          ))}
-        </ScrollView>
+        {selectedContinent && (
+          <DropdownFilter
+            title="Country"
+            options={filteredCountries}
+            selectedValue={selectedCountry}
+            onSelect={(value) => setSelectedCountry(value)}
+          />
+        )}
       </ScrollView>
 
       <FlatList
