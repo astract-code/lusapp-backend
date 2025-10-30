@@ -114,11 +114,11 @@ export const UserProfileScreen = ({ route, navigation }) => {
   }
 
   const joinedRaces = races.filter((race) =>
-    user.joinedRaces?.includes(race.id.toString())
+    user.joined_races?.includes(race.id.toString())
   );
 
   const completedRaces = races.filter((race) =>
-    user.completedRaces?.includes(race.id.toString())
+    user.completed_races?.includes(race.id.toString())
   );
 
   return (
