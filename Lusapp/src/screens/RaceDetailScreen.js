@@ -273,7 +273,10 @@ export const RaceDetailScreen = ({ route, navigation }) => {
       {isRegistered && raceGroup && (
         <TouchableOpacity
           style={[styles.chatButton, { backgroundColor: colors.primary }]}
-          onPress={() => navigation.navigate('GroupDetail', { groupId: raceGroup.id })}
+          onPress={() => navigation.navigate('Groups', {
+            screen: 'GroupDetail',
+            params: { groupId: raceGroup.id }
+          })}
         >
           <Text style={styles.chatButtonIcon}>💬</Text>
           <View style={styles.chatButtonText}>
