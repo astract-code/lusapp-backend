@@ -368,4 +368,68 @@ A: Database is already in the cloud. Changes are instant and permanent for both 
 
 ---
 
+## 🔍 Troubleshooting Expo Go Connection
+
+If you scan the QR code and get "Request timed out":
+
+### ✅ Pre-Flight Checklist:
+
+**1. Check Backend API Status:**
+```bash
+curl http://localhost:5000/health
+# Should return: {"status":"ok"}
+```
+
+**2. Check Expo Dev Workflow:**
+- Look for: "Tunnel connected" ✅
+- Look for: "Tunnel ready" ✅
+- Look for: "Metro waiting on exp://..." ✅
+- **RED FLAG:** If you see "? Log in" or any prompts → Workflow is stuck!
+
+**3. Verify QR Code:**
+- QR code should be visible in workflow logs
+- URL should be: `exp://xxxxx-anonymous-8081.exp.direct`
+
+---
+
+### 🚨 Common Issues:
+
+**Issue 1: Expo workflow stuck on login prompt**
+```
+Symptoms: "Request timed out" when scanning QR code
+Fix: Restart the Expo Dev workflow
+```
+
+**Issue 2: Backend not running**
+```
+Symptoms: App loads but can't fetch data
+Fix: Check Backend API workflow is RUNNING
+```
+
+**Issue 3: Wrong network**
+```
+Symptoms: Connection works on WiFi but not cellular
+Fix: Use tunnel mode (already configured)
+```
+
+**Issue 4: Firewall blocking tunnel**
+```
+Symptoms: QR code appears but connection fails
+Fix: Check your network allows ngrok tunnels
+```
+
+---
+
+### 🔄 Quick Restart:
+
+If Expo Go isn't connecting:
+1. Stop both workflows in Replit
+2. Wait 10 seconds
+3. Start Backend API workflow
+4. Start Expo Dev workflow
+5. Wait for "Tunnel ready" message
+6. Scan QR code again
+
+---
+
 Need help? Check the console logs or ask questions anytime!
