@@ -16,7 +16,7 @@ import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
 import { SPACING, BORDER_RADIUS, FONT_SIZE } from '../constants/theme';
 
-export const OnboardingScreen = () => {
+export const OnboardingScreen = ({ navigation }) => {
   const { colors } = useTheme();
   const { login, signupWithEmail, signupWithApple } = useAuth();
   
@@ -221,6 +221,17 @@ export const OnboardingScreen = () => {
             )}
           </TouchableOpacity>
 
+          {isLogin && (
+            <TouchableOpacity
+              style={styles.forgotPasswordButton}
+              onPress={() => navigation.navigate('ForgotPassword')}
+            >
+              <Text style={[styles.forgotPasswordText, { color: colors.primary }]}>
+                Forgot Password?
+              </Text>
+            </TouchableOpacity>
+          )}
+
           <View style={styles.divider}>
             <View style={[styles.dividerLine, { backgroundColor: colors.border }]} />
             <Text style={[styles.dividerText, { color: colors.textSecondary }]}>OR</Text>
@@ -418,5 +429,14 @@ const styles = StyleSheet.create({
   checkboxLabel: {
     fontSize: FONT_SIZE.sm,
     flex: 1,
+  },
+  forgotPasswordButton: {
+    alignItems: 'center',
+    marginTop: SPACING.sm,
+    marginBottom: SPACING.sm,
+  },
+  forgotPasswordText: {
+    fontSize: FONT_SIZE.sm,
+    fontWeight: '600',
   },
 });

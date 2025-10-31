@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Alert, ActivityIndicator } from 'react-native';
 import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
-import { COLORS, FONT_SIZE, SPACING } from '../theme';
-import LinearGradient from 'expo-linear-gradient';
+import { FONT_SIZE, SPACING } from '../constants/theme';
+import { LinearGradient } from 'expo-linear-gradient';
 
 export const EmailVerificationScreen = ({ navigation }) => {
   const { firebaseUser, firebaseAuthService, logout } = useAuth();

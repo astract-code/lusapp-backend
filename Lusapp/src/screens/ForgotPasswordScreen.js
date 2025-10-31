@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, StyleSheet, TouchableOpacity, Alert, KeyboardAvoidingView, Platform, ActivityIndicator } from 'react-native';
 import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
-import { COLORS, FONT_SIZE, SPACING } from '../theme';
-import LinearGradient from 'expo-linear-gradient';
+import { FONT_SIZE, SPACING } from '../constants/theme';
+import { LinearGradient } from 'expo-linear-gradient';
 
 export const ForgotPasswordScreen = ({ navigation }) => {
   const { firebaseAuthService } = useAuth();
