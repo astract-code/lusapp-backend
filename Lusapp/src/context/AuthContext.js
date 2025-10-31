@@ -58,6 +58,7 @@ export const AuthProvider = ({ children }) => {
 
   const syncUserWithBackend = async (firebaseUser, idToken) => {
     try {
+      console.log('[AUTH] Syncing user with backend:', API_ENDPOINTS.auth.sync);
       const response = await fetch(API_ENDPOINTS.auth.sync, {
         method: 'POST',
         headers: {
@@ -71,14 +72,19 @@ export const AuthProvider = ({ children }) => {
         }),
       });
 
+      console.log('[AUTH] Backend response status:', response.status);
+
       if (!response.ok) {
-        throw new Error('Failed to sync user with backend');
+        const errorText = await response.text();
+        console.error('[AUTH] Backend error response:', errorText);
+        throw new Error(`Failed to sync user with backend: ${response.status} - ${errorText}`);
       }
 
       const data = await response.json();
+      console.log('[AUTH] User synced successfully');
       return data.user;
     } catch (error) {
-      console.error('Error syncing user:', error);
+      console.error('[AUTH] Error syncing user with backend:', error);
       throw error;
     }
   };
