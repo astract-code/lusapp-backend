@@ -114,12 +114,16 @@ export const GroupChatTab = ({ groupId }) => {
       console.log('[GroupChatTab] API response', { ok: response.ok, status: response.status });
 
       if (response.ok) {
-        const newMessage = await response.json();
-        console.log('[GroupChatTab] Message sent successfully', newMessage);
+        const data = await response.json();
+        console.log('[GroupChatTab] Message sent successfully', data);
+        
+        // API returns { message: {...}, success: true }
+        const messageData = data.message || data;
+        
         setMessages(prev => [...prev, {
-          ...newMessage,
-          sender_name: currentUser?.name || 'Unknown',
-          sender_avatar: currentUser?.avatar || null
+          ...messageData,
+          sender_name: messageData.sender_name || currentUser?.name || 'Unknown',
+          sender_avatar: messageData.sender_avatar || currentUser?.avatar || null
         }]);
 
         setTimeout(() => {
@@ -211,7 +215,7 @@ export const GroupChatTab = ({ groupId }) => {
           ref={flatListRef}
           data={messages}
           renderItem={renderMessage}
-          keyExtractor={(item) => item.id.toString()}
+          keyExtractor={(item) => item?.id?.toString() || Math.random().toString()}
           contentContainerStyle={styles.messagesList}
           onContentSizeChange={() => flatListRef.current?.scrollToEnd({ animated: true })}
         />
