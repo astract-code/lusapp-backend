@@ -275,7 +275,8 @@ export const AppNavigator = () => {
         setUnreadGroups(groupsData.count || 0);
       }
     } catch (error) {
-      console.error('Error fetching unread counts:', error);
+      // Silently fail - unread counts are non-critical
+      // Just keep badges at 0 if network fails
     }
   };
 
