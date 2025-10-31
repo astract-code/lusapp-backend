@@ -143,9 +143,18 @@ npm start  # or use the workflow in Replit
 cd Lusapp
 npx expo start --tunnel
 
-# 3. Scan QR code with Expo Go app
+# 3. FIRST TIME ONLY: Log in to Expo when prompted
+#    (You only need to do this once)
+
+# 4. Scan QR code with Expo Go app
 # Test your changes immediately!
 ```
+
+**⚠️ Important First-Time Setup:**
+- The first time you run Expo, it will ask you to log in
+- This is required for the tunnel to work properly
+- After logging in once, it remembers you
+- Without logging in, connections will timeout
 
 **When testing in Expo Go:**
 - Backend API at `https://lusapp-backend-1.onrender.com` works automatically
@@ -384,7 +393,11 @@ curl http://localhost:5000/health
 - Look for: "Tunnel connected" ✅
 - Look for: "Tunnel ready" ✅
 - Look for: "Metro waiting on exp://..." ✅
-- **RED FLAG:** If you see "? Log in" or any prompts → Workflow is stuck!
+- **If you see "? Log in":** You need to log in to Expo account (first time only)
+  - Stop the workflow
+  - Run `cd Lusapp && npx expo start --tunnel` in terminal
+  - Log in when prompted
+  - Restart the workflow
 
 **3. Verify QR Code:**
 - QR code should be visible in workflow logs
