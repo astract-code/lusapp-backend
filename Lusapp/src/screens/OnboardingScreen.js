@@ -46,8 +46,8 @@ export const OnboardingScreen = () => {
           setError('Name is required');
           return;
         }
-        if (password.length < 8) {
-          setError('Password must be at least 8 characters');
+        if (password.length < 6) {
+          setError('Password must be at least 6 characters');
           return;
         }
         if (password !== confirmPassword) {
@@ -58,7 +58,8 @@ export const OnboardingScreen = () => {
           setError('You must confirm that you are at least 13 years old');
           return;
         }
-        await signupWithEmail(email, password, { name, location, bio, favoriteSport });
+        const result = await signupWithEmail(email, password, { name, location, bio, favoriteSport });
+        Alert.alert('Success', result.message || 'Account created! Please verify your email.');
       }
     } catch (err) {
       setError(err.message || 'Something went wrong. Please try again.');

@@ -3,6 +3,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { Pool } = require('pg');
 const { authMiddleware, JWT_SECRET } = require('../middleware/authMiddleware');
+const { verifyFirebaseToken } = require('../middleware/firebaseAuth');
 
 const router = express.Router();
 
@@ -372,6 +373,68 @@ router.delete('/users/:userId/unfollow', authMiddleware, async (req, res) => {
     res.status(500).json({ error: 'Failed to unfollow user' });
   } finally {
     client.release();
+  }
+});
+
+router.post('/sync', verifyFirebaseToken, async (req, res) => {
+  try {
+    const { firebase_uid, email, name } = req.body;
+    
+    if (!firebase_uid || !email) {
+      return res.status(400).json({ error: 'Firebase UID and email are required' });
+    }
+    
+    let user = await pool.query(
+      'SELECT * FROM users WHERE firebase_uid = $1',
+      [firebase_uid]
+    );
+    
+    if (user.rows.length === 0) {
+      user = await pool.query(
+        'SELECT * FROM users WHERE email = $1',
+        [email]
+      );
+      
+      if (user.rows.length > 0) {
+        await pool.query(
+          'UPDATE users SET firebase_uid = $1 WHERE id = $2',
+          [firebase_uid, user.rows[0].id]
+        );
+      } else {
+        const result = await pool.query(
+          `INSERT INTO users (firebase_uid, email, name, location, bio) 
+           VALUES ($1, $2, $3, $4, $5) 
+           RETURNING *`,
+          [firebase_uid, email, name || email.split('@')[0], 'Unknown', '']
+        );
+        user = result;
+      }
+    }
+    
+    const dbUser = user.rows[0];
+    
+    const userData = {
+      id: dbUser.id.toString(),
+      email: dbUser.email,
+      name: dbUser.name,
+      location: dbUser.location,
+      bio: dbUser.bio,
+      favoriteSport: dbUser.favorite_sport,
+      avatar: getFullAvatarUrl(req, dbUser.avatar),
+      totalRaces: dbUser.total_races,
+      joined_races: dbUser.joined_races || [],
+      completed_races: dbUser.completed_races || [],
+      followers: dbUser.followers || [],
+      following: dbUser.following || [],
+      created_at: dbUser.created_at,
+    };
+    
+    req.user.userId = dbUser.id;
+    
+    res.json({ user: userData });
+  } catch (error) {
+    console.error('Sync error:', error);
+    res.status(500).json({ error: 'Failed to sync user' });
   }
 });
 

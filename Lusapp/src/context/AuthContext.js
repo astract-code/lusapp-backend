@@ -1,70 +1,92 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { onAuthStateChanged } from 'firebase/auth';
+import { auth } from '../config/firebase';
+import { firebaseAuthService } from '../services/firebaseAuth';
 import { API_ENDPOINTS } from '../config/api';
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [firebaseUser, setFirebaseUser] = useState(null);
   const [token, setToken] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [emailVerified, setEmailVerified] = useState(false);
 
   useEffect(() => {
-    checkAuth();
+    const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
+      console.log('[AUTH] Firebase auth state changed:', firebaseUser ? firebaseUser.uid : 'null');
+      
+      if (firebaseUser) {
+        setFirebaseUser(firebaseUser);
+        setEmailVerified(firebaseUser.emailVerified);
+        
+        if (firebaseUser.emailVerified) {
+          try {
+            const idToken = await firebaseUser.getIdToken();
+            setToken(idToken);
+            
+            const dbUser = await syncUserWithBackend(firebaseUser, idToken);
+            setUser(dbUser);
+            
+            await AsyncStorage.setItem('token', idToken);
+            await AsyncStorage.setItem('user', JSON.stringify(dbUser));
+          } catch (error) {
+            console.error('[AUTH] Error syncing user with backend:', error);
+          }
+        } else {
+          console.log('[AUTH] Email not verified yet');
+          setToken(null);
+          setUser(null);
+        }
+      } else {
+        console.log('[AUTH] User logged out');
+        setFirebaseUser(null);
+        setUser(null);
+        setToken(null);
+        setEmailVerified(false);
+        await AsyncStorage.removeItem('token');
+        await AsyncStorage.removeItem('user');
+      }
+      
+      setIsLoading(false);
+    });
+
+    return () => unsubscribe();
   }, []);
 
-  const checkAuth = async () => {
+  const syncUserWithBackend = async (firebaseUser, idToken) => {
     try {
-      const storedToken = await AsyncStorage.getItem('token');
-      
-      if (storedToken) {
-        const response = await fetch(API_ENDPOINTS.auth.me, {
-          headers: {
-            'Authorization': `Bearer ${storedToken}`,
-          },
-        });
+      const response = await fetch(API_ENDPOINTS.auth.sync, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${idToken}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          firebase_uid: firebaseUser.uid,
+          email: firebaseUser.email,
+          name: firebaseUser.displayName || firebaseUser.email.split('@')[0],
+        }),
+      });
 
-        if (response.ok) {
-          const userData = await response.json();
-          setToken(storedToken);
-          setUser(userData);
-        } else {
-          await AsyncStorage.removeItem('token');
-          await AsyncStorage.removeItem('user');
-        }
+      if (!response.ok) {
+        throw new Error('Failed to sync user with backend');
       }
+
+      const data = await response.json();
+      return data.user;
     } catch (error) {
-      console.error('Error checking auth:', error);
-      await AsyncStorage.removeItem('token');
-      await AsyncStorage.removeItem('user');
-    } finally {
-      setIsLoading(false);
+      console.error('Error syncing user:', error);
+      throw error;
     }
   };
 
   const login = async (email, password) => {
     try {
-      const response = await fetch(API_ENDPOINTS.auth.login, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email, password }),
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.error || 'Login failed');
-      }
-
-      setToken(data.token);
-      setUser(data.user);
-      
-      await AsyncStorage.setItem('token', data.token);
-      await AsyncStorage.setItem('user', JSON.stringify(data.user));
-      
-      return data.user;
+      const result = await firebaseAuthService.login(email, password);
+      return result.user;
     } catch (error) {
       console.error('Login error:', error);
       throw error;
@@ -73,34 +95,16 @@ export const AuthProvider = ({ children }) => {
 
   const signupWithEmail = async (email, password, userInfo) => {
     try {
-      const response = await fetch(API_ENDPOINTS.auth.signup, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          email,
-          password,
-          name: userInfo.name,
-          location: userInfo.location,
-          bio: userInfo.bio,
-          favoriteSport: userInfo.favoriteSport,
-        }),
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.error || 'Signup failed');
-      }
-
-      setToken(data.token);
-      setUser(data.user);
+      const result = await firebaseAuthService.signup(
+        email, 
+        password, 
+        userInfo.name
+      );
       
-      await AsyncStorage.setItem('token', data.token);
-      await AsyncStorage.setItem('user', JSON.stringify(data.user));
-      
-      return data.user;
+      return {
+        user: result.user,
+        message: result.message
+      };
     } catch (error) {
       console.error('Signup error:', error);
       throw error;
@@ -117,23 +121,44 @@ export const AuthProvider = ({ children }) => {
   };
 
   const logout = async () => {
-    setUser(null);
-    setToken(null);
-    await AsyncStorage.removeItem('user');
-    await AsyncStorage.removeItem('token');
+    try {
+      await firebaseAuthService.logout();
+    } catch (error) {
+      console.error('Logout error:', error);
+      throw error;
+    }
+  };
+
+  const refreshToken = async () => {
+    try {
+      if (firebaseUser) {
+        const idToken = await firebaseUser.getIdToken(true);
+        setToken(idToken);
+        await AsyncStorage.setItem('token', idToken);
+        return idToken;
+      }
+      return null;
+    } catch (error) {
+      console.error('Error refreshing token:', error);
+      return null;
+    }
   };
 
   return (
     <AuthContext.Provider
       value={{
         user,
+        firebaseUser,
         token,
         isLoading,
+        emailVerified,
         login,
         signupWithEmail,
         signupWithApple,
         logout,
         updateUser,
+        refreshToken,
+        firebaseAuthService,
       }}
     >
       {children}

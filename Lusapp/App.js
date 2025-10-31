@@ -9,13 +9,16 @@ import { AppNavigator } from './src/navigation/AppNavigator';
 import { useAppStore } from './src/context/AppContext';
 
 const AppContent = () => {
-  const { user, isLoading } = useAuth();
+  const { user, firebaseUser, emailVerified, isLoading } = useAuth();
   const { isDarkMode } = useTheme();
   const fetchRaces = useAppStore((state) => state.fetchRaces);
+  const { EmailVerificationScreen } = require('./src/screens/EmailVerificationScreen');
 
   useEffect(() => {
-    fetchRaces();
-  }, []);
+    if (user) {
+      fetchRaces();
+    }
+  }, [user]);
 
   if (isLoading) {
     return null;
@@ -24,12 +27,14 @@ const AppContent = () => {
   return (
     <>
       <StatusBar style={isDarkMode ? 'light' : 'dark'} />
-      {user ? (
+      {!firebaseUser ? (
+        <OnboardingScreen />
+      ) : !emailVerified ? (
+        <EmailVerificationScreen />
+      ) : (
         <NavigationContainer>
           <AppNavigator />
         </NavigationContainer>
-      ) : (
-        <OnboardingScreen />
       )}
     </>
   );
