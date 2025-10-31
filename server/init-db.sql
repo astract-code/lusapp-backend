@@ -24,7 +24,8 @@ CREATE TABLE IF NOT EXISTS users (
   id SERIAL PRIMARY KEY,
   name VARCHAR(100) NOT NULL,
   email VARCHAR(255) UNIQUE NOT NULL,
-  password_hash VARCHAR(255) NOT NULL,
+  password_hash VARCHAR(255),
+  firebase_uid VARCHAR(255) UNIQUE,
   location VARCHAR(255) DEFAULT 'Unknown',
   bio TEXT DEFAULT '',
   favorite_sport VARCHAR(100) DEFAULT '',
@@ -40,6 +41,7 @@ CREATE TABLE IF NOT EXISTS users (
 -- Add missing columns if upgrading from old schema
 ALTER TABLE users ADD COLUMN IF NOT EXISTS following TEXT[] DEFAULT '{}';
 ALTER TABLE users ADD COLUMN IF NOT EXISTS followers TEXT[] DEFAULT '{}';
+ALTER TABLE users ADD COLUMN IF NOT EXISTS firebase_uid VARCHAR(255) UNIQUE;
 
 -- Add new columns to races table if upgrading from old schema
 ALTER TABLE races ADD COLUMN IF NOT EXISTS sport_category VARCHAR(100);
