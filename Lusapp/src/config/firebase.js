@@ -17,6 +17,13 @@ const firebaseConfig = {
   measurementId: Constants.expoConfig?.extra?.FIREBASE_MEASUREMENT_ID || process.env.EXPO_PUBLIC_FIREBASE_MEASUREMENT_ID,
 };
 
+console.log('[FIREBASE CONFIG]', {
+  apiKey: firebaseConfig.apiKey ? `${firebaseConfig.apiKey.substring(0, 10)}...` : 'MISSING',
+  authDomain: firebaseConfig.authDomain || 'MISSING',
+  projectId: firebaseConfig.projectId || 'MISSING',
+  hasAppId: !!firebaseConfig.appId,
+});
+
 const app = initializeApp(firebaseConfig);
 
 const auth = initializeAuth(app, {
