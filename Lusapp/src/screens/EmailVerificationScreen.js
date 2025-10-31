@@ -6,7 +6,7 @@ import { FONT_SIZE, SPACING } from '../constants/theme';
 import { LinearGradient } from 'expo-linear-gradient';
 
 export const EmailVerificationScreen = ({ navigation }) => {
-  const { firebaseUser, firebaseAuthService, logout } = useAuth();
+  const { firebaseUser, firebaseAuthService, logout, refreshEmailVerificationStatus } = useAuth();
   const { colors } = useTheme();
   const [isChecking, setIsChecking] = useState(false);
   const [isResending, setIsResending] = useState(false);
@@ -14,7 +14,7 @@ export const EmailVerificationScreen = ({ navigation }) => {
   const handleCheckVerification = async () => {
     setIsChecking(true);
     try {
-      const isVerified = await firebaseAuthService.checkEmailVerified();
+      const isVerified = await refreshEmailVerificationStatus();
       
       if (isVerified) {
         Alert.alert('Success', 'Email verified! You can now access the app.');

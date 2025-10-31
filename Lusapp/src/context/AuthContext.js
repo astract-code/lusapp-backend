@@ -144,6 +144,35 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const refreshEmailVerificationStatus = async () => {
+    try {
+      const isVerified = await firebaseAuthService.checkEmailVerified();
+      
+      if (!isVerified || !auth.currentUser) {
+        return false;
+      }
+      
+      const firebaseUser = auth.currentUser;
+      
+      const idToken = await firebaseUser.getIdToken(true);
+      
+      const dbUser = await syncUserWithBackend(firebaseUser, idToken);
+      
+      await AsyncStorage.setItem('token', idToken);
+      await AsyncStorage.setItem('user', JSON.stringify(dbUser));
+      
+      setEmailVerified(true);
+      setToken(idToken);
+      setUser(dbUser);
+      
+      return true;
+    } catch (error) {
+      console.error('Error refreshing verification status:', error);
+      setEmailVerified(false);
+      throw error;
+    }
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -158,6 +187,7 @@ export const AuthProvider = ({ children }) => {
         logout,
         updateUser,
         refreshToken,
+        refreshEmailVerificationStatus,
         firebaseAuthService,
       }}
     >
