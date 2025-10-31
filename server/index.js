@@ -306,6 +306,8 @@ app.post('/api/races/:raceId/join', authMiddleware, async (req, res) => {
     const raceId = parseInt(req.params.raceId, 10);
     const userId = req.user.userId;
     
+    console.log(`[RACE JOIN] User ${userId} joining race ${raceId}`);
+    
     if (isNaN(raceId)) {
       return res.status(400).json({ error: 'Invalid race ID' });
     }
@@ -322,6 +324,7 @@ app.post('/api/races/:raceId/join', authMiddleware, async (req, res) => {
       return res.status(404).json({ error: 'Race not found' });
     }
     const race = raceCheck.rows[0];
+    console.log(`[RACE JOIN] Found race: ${race.name}`);
     
     // Add user to joined_races
     await client.query(
@@ -344,6 +347,7 @@ app.post('/api/races/:raceId/join', authMiddleware, async (req, res) => {
     const ADMIN_USER_ID = 1;
     let groupId;
     try {
+      console.log(`[RACE JOIN] Creating/fetching race group for race ${raceId}`);
       // Try to create race group
       const groupResult = await client.query(
         `INSERT INTO groups (name, sport_type, city, country, description, race_id, created_by, member_count)
@@ -363,6 +367,7 @@ app.post('/api/races/:raceId/join', authMiddleware, async (req, res) => {
       
       if (groupResult.rows.length > 0) {
         groupId = groupResult.rows[0].id;
+        console.log(`[RACE JOIN] Created new race group with ID ${groupId}`);
       } else {
         // Group already exists, fetch it
         const existingGroup = await client.query(
@@ -370,17 +375,21 @@ app.post('/api/races/:raceId/join', authMiddleware, async (req, res) => {
           [raceId]
         );
         groupId = existingGroup.rows[0].id;
+        console.log(`[RACE JOIN] Found existing race group with ID ${groupId}`);
       }
     } catch (error) {
+      console.log(`[RACE JOIN] Error creating group, fetching existing:`, error.message);
       // If unique constraint fails, fetch existing group
       const existingGroup = await client.query(
         'SELECT id FROM groups WHERE race_id = $1',
         [raceId]
       );
       groupId = existingGroup.rows[0].id;
+      console.log(`[RACE JOIN] Found existing race group (after error) with ID ${groupId}`);
     }
     
     // Add user to race group (if not already a member)
+    console.log(`[RACE JOIN] Adding user ${userId} to group ${groupId}`);
     await client.query(
       `INSERT INTO group_members (group_id, user_id, role)
        VALUES ($1, $2, 'member')
@@ -402,6 +411,7 @@ app.post('/api/races/:raceId/join', authMiddleware, async (req, res) => {
     );
     
     await client.query('COMMIT');
+    console.log(`[RACE JOIN] Success! User ${userId} added to race ${raceId} and group ${groupId}`);
     
     res.json({
       success: true,
