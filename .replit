@@ -34,12 +34,12 @@ outputType = "webview"
 name = "Expo Dev"
 author = "agent"
 
-[workflows.workflow.metadata]
-outputType = "console"
-
 [[workflows.workflow.tasks]]
 task = "shell.exec"
-args = "cd Lusapp && EXPO_NO_TELEMETRY=1 EXPO_NO_ACCOUNT=1 npx expo start --tunnel"
+args = "cd Lusapp && npx expo start --tunnel --non-interactive"
+
+[workflows.workflow.metadata]
+outputType = "console"
 
 [[ports]]
 localPort = 3000
