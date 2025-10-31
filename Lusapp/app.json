@@ -43,7 +43,14 @@
       "eas": {
         "projectId": "17011401-d4d9-4d78-a931-3e960fb21539"
       },
-      "apiUrl": "https://lusapp-backend-1.onrender.com"
+      "apiUrl": "https://lusapp-backend-1.onrender.com",
+      "FIREBASE_API_KEY": "${FIREBASE_API_KEY}",
+      "FIREBASE_AUTH_DOMAIN": "${FIREBASE_AUTH_DOMAIN}",
+      "FIREBASE_PROJECT_ID": "${FIREBASE_PROJECT_ID}",
+      "FIREBASE_STORAGE_BUCKET": "${FIREBASE_STORAGE_BUCKET}",
+      "FIREBASE_MESSAGING_SENDER_ID": "${FIREBASE_MESSAGING_SENDER_ID}",
+      "FIREBASE_APP_ID": "${FIREBASE_APP_ID}",
+      "FIREBASE_MEASUREMENT_ID": "${FIREBASE_MEASUREMENT_ID}"
     }
   }
 }
