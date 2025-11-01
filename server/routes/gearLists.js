@@ -53,41 +53,52 @@ module.exports = (pool) => {
   });
 
   router.post('/:groupId/gear-lists', verifyFirebaseToken, async (req, res) => {
+    console.log('📝 [CREATE GEAR LIST] Request received for group:', req.params.groupId);
+    console.log('📝 [CREATE GEAR LIST] Body:', req.body);
+    console.log('📝 [CREATE GEAR LIST] User ID:', req.user.userId);
+    
     try {
       const { groupId } = req.params;
       const { title, raceId, visibility } = req.body;
       const userId = req.user.userId;
 
       if (!title || !title.trim()) {
+        console.error('❌ [CREATE GEAR LIST] Title missing');
         return res.status(400).json({ error: 'List title is required' });
       }
 
       const listVisibility = visibility || 'collaborative';
       if (!['collaborative', 'personal'].includes(listVisibility)) {
+        console.error('❌ [CREATE GEAR LIST] Invalid visibility:', visibility);
         return res.status(400).json({ error: 'Invalid visibility type' });
       }
 
+      console.log('🔍 [CREATE GEAR LIST] Checking membership for user:', userId, 'in group:', groupId);
       const memberCheck = await pool.query(
         'SELECT id FROM group_members WHERE group_id = $1 AND user_id = $2',
         [groupId, userId]
       );
 
       if (memberCheck.rows.length === 0) {
+        console.error('❌ [CREATE GEAR LIST] User not a member of group');
         return res.status(403).json({ error: 'Must be a member to create gear lists' });
       }
 
       const ownerId = listVisibility === 'personal' ? userId : null;
 
+      console.log('🔍 [CREATE GEAR LIST] Inserting into database...');
       const result = await pool.query(`
         INSERT INTO group_gear_lists (group_id, race_id, title, visibility, owner_id, created_by)
         VALUES ($1, $2, $3, $4, $5, $6)
         RETURNING id, group_id, race_id, title, visibility, owner_id, created_by, created_at
       `, [groupId, raceId || null, title.trim(), listVisibility, ownerId, userId]);
 
+      console.log('✅ [CREATE GEAR LIST] Successfully created list:', result.rows[0].id);
       res.json({ success: true, list: result.rows[0] });
     } catch (error) {
-      console.error('Error creating gear list:', error);
-      res.status(500).json({ error: 'Failed to create gear list' });
+      console.error('❌ [CREATE GEAR LIST] Error:', error.message);
+      console.error('❌ [CREATE GEAR LIST] Stack:', error.stack);
+      res.status(500).json({ error: 'Failed to create gear list', details: error.message });
     }
   });
 
