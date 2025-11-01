@@ -1,0 +1,93 @@
+🔍 [TOKEN VERIFY] Starting token verification...
+🔍 [TOKEN VERIFY] Token received, length: 926
+🔍 [TOKEN VERIFY] Using Firebase Admin SDK verification
+✅ [TOKEN VERIFY] Admin SDK verification successful
+✅ [TOKEN VERIFY] Token decoded successfully for user: biterdi@gmail.com
+✅ [TOKEN VERIFY] Database user ID: 20
+Error creating gear list: error: column "visibility" of relation "group_gear_lists" does not exist
+    at /opt/render/project/src/node_modules/pg-pool/index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async /opt/render/project/src/server/routes/gearLists.js:81:22 {
+  length: 139,
+  severity: 'ERROR',
+  code: '42703',
+  detail: undefined,
+  hint: undefined,
+  position: '66',
+  internalPosition: undefined,
+  internalQuery: undefined,
+  where: undefined,
+  schema: undefined,
+  table: undefined,
+  column: undefined,
+  dataType: undefined,
+  constraint: undefined,
+  file: 'parse_target.c',
+  line: '1065',
+  routine: 'checkInsertTargets'
+}
+🔍 [TOKEN VERIFY] Starting token verification...
+🔍 [TOKEN VERIFY] Token received, length: 926
+🔍 [TOKEN VERIFY] Using Firebase Admin SDK verification
+✅ [TOKEN VERIFY] Admin SDK verification successful
+✅ [TOKEN VERIFY] Token decoded successfully for user: biterdi@gmail.com
+🔍 [TOKEN VERIFY] Starting token verification...
+🔍 [TOKEN VERIFY] Token received, length: 926
+🔍 [TOKEN VERIFY] Using Firebase Admin SDK verification
+✅ [TOKEN VERIFY] Admin SDK verification successful
+✅ [TOKEN VERIFY] Token decoded successfully for user: biterdi@gmail.com
+✅ [TOKEN VERIFY] Database user ID: 20
+✅ [TOKEN VERIFY] Database user ID: 20
+Error fetching group details: error: invalid input syntax for type integer: "unread-count"
+    at /opt/render/project/src/node_modules/pg-pool/index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async /opt/render/project/src/server/routes/groups.js:186:22 {
+  length: 155,
+  severity: 'ERROR',
+  code: '22P02',
+  detail: undefined,
+  hint: undefined,
+  position: undefined,
+  internalPosition: undefined,
+  internalQuery: undefined,
+  where: "unnamed portal parameter $2 = '...'",
+  schema: undefined,
+  table: undefined,
+  column: undefined,
+  dataType: undefined,
+  constraint: undefined,
+  file: 'numutils.c',
+  line: '616',
+  routine: 'pg_strtoint32_safe'
+}
+🔍 [TOKEN VERIFY] Starting token verification...
+🔍 [TOKEN VERIFY] Token received, length: 926
+🔍 [TOKEN VERIFY] Using Firebase Admin SDK verification
+✅ [TOKEN VERIFY] Admin SDK verification successful
+✅ [TOKEN VERIFY] Token decoded successfully for user: biterdi@gmail.com
+✅ [TOKEN VERIFY] Database user ID: 20
+[RACE JOIN] Firebase user 5aEgEeEsyVf3zu1B2SAgSIUrQ8C3 joining race 27
+[RACE JOIN] Database user ID: 20
+[RACE JOIN] Found race: TCS New York City Marathon
+[RACE JOIN] Creating/fetching race group for race 27
+[RACE JOIN] Found existing race group with ID 15
+[RACE JOIN] Adding user 20 to group 15
+[RACE JOIN] Success! User 20 added to race 27 and group 15
+🔍 [TOKEN VERIFY] Starting token verification...
+🔍 [TOKEN VERIFY] Token received, length: 926
+🔍 [TOKEN VERIFY] Using Firebase Admin SDK verification
+✅ [TOKEN VERIFY] Admin SDK verification successful
+✅ [TOKEN VERIFY] Token decoded successfully for user: biterdi@gmail.com
+✅ [TOKEN VERIFY] Database user ID: 20
+🔍 [TOKEN VERIFY] Starting token verification...
+🔍 [TOKEN VERIFY] Token received, length: 926
+🔍 [TOKEN VERIFY] Using Firebase Admin SDK verification
+✅ [TOKEN VERIFY] Admin SDK verification successful
+✅ [TOKEN VERIFY] Token decoded successfully for user: biterdi@gmail.com
+🔍 [TOKEN VERIFY] Starting token verification...
+🔍 [TOKEN VERIFY] Token received, length: 926
+🔍 [TOKEN VERIFY] Using Firebase Admin SDK verification
+✅ [TOKEN VERIFY] Admin SDK verification successful
+✅ [TOKEN VERIFY] Token decoded successfully for user: biterdi@gmail.com
+✅ [TOKEN VERIFY] Database user ID: 20
+✅ [TOKEN VERIFY] Database user ID: 20
