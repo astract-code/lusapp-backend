@@ -178,6 +178,28 @@ module.exports = (pool) => {
     }
   });
 
+  router.get('/unread-count', verifyFirebaseToken, async (req, res) => {
+    try {
+      const userId = req.user.userId;
+
+      const result = await pool.query(`
+        SELECT COALESCE(SUM(unread), 0)::int as total_unread
+        FROM (
+          SELECT COUNT(*) as unread
+          FROM group_messages gm
+          INNER JOIN group_members mem ON gm.group_id = mem.group_id
+          WHERE mem.user_id = $1
+          AND gm.created_at > mem.last_active_at
+        ) as subquery
+      `, [userId]);
+
+      res.json({ unread_count: result.rows[0]?.total_unread || 0 });
+    } catch (error) {
+      console.error('Error fetching group unread count:', error);
+      res.status(500).json({ error: 'Failed to fetch unread count' });
+    }
+  });
+
   router.get('/:groupId', verifyFirebaseToken, async (req, res) => {
     try {
       const { groupId } = req.params;
