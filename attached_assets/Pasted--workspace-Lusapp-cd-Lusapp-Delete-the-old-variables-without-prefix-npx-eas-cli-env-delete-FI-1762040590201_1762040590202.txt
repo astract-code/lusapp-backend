@@ -1,0 +1,60 @@
+~/workspace/Lusapp$ cd Lusapp
+
+# Delete the old variables (without prefix)
+npx eas-cli env:delete FIREBASE_API_KEY
+npx eas-cli env:delete FIREBASE_AUTH_DOMAIN
+npx eas-cli env:delete FIREBASE_PROJECT_ID
+npx eas-cli env:delete FIREBASE_STORAGE_BUCKET
+npx eas-cli env:delete FIREBASE_MESSAGING_SENDER_ID
+npx eas-cli env:delete FIREBASE_APP_ID
+npx eas-cli env:delete FIREBASE_MEASUREMENT_ID
+
+# Create new variables with EXPO_PUBLIC_ prefix
+npx eas-cli env:create --name EXPO_PUBLIC_FIREBASE_API_KEY --value "$FIREBASE_API_KEY" --environment production preview --visibility sensitive
+npx eas-cli env:create --name EXPO_PUBLIC_FIREBASE_AUTH_DOMAIN --value "$FIREBASE_AUTH_DOMAIN" --environment production preview --visibility sensitive
+npx eas-cli env:create --name EXPO_PUBLIC_FIREBASE_PROJECT_ID --value "$FIREBASE_PROJECT_ID" --environment production preview --visibility sensitive
+npx eas-cli env:create --name EXPO_PUBLIC_FIREBASE_STORAGE_BUCKET --value "$FIREBASE_STORAGE_BUCKET" --environment production preview --visibility sensitive
+npx eas-cli env:create --name EXPO_PUBLIC_FIREBASE_MESSAGING_SENDER_ID --value "$FIREBASE_MESSAGING_SENDER_ID" --environment production preview --visibility sensitive
+npx eas-cli env:create --name EXPO_PUBLIC_FIREBASE_APP_ID --value "$FIREBASE_APP_ID" --environment production preview --visibility sensitive
+npx eas-cli env:create --name EXPO_PUBLIC_FIREBASE_MEASUREMENT_ID --value "$FIREBASE_MEASUREMENT_ID" --environment production preview --visibility sensitive
+
+# Rebuild the APK
+npx eas-cli build --platform android --profile preview
+bash: cd: Lusapp: No such file or directory
+Variable "$environment" got invalid value "FIREBASE_API_KEY"; EnvironmentVariableEnvironment can contain letters, numbers, dashes and underscores.
+    Error: GraphQL request failed.
+Variable "$environment" got invalid value "FIREBASE_AUTH_DOMAIN"; EnvironmentVariableEnvironment can contain letters, numbers, dashes and underscores.
+    Error: GraphQL request failed.
+Variable "$environment" got invalid value "FIREBASE_PROJECT_ID"; EnvironmentVariableEnvironment can contain letters, numbers, dashes and underscores.
+    Error: GraphQL request failed.
+Variable "$environment" got invalid value "FIREBASE_STORAGE_BUCKET"; EnvironmentVariableEnvironment can contain letters, numbers, dashes and underscores.
+    Error: GraphQL request failed.
+Variable "$environment" got invalid value "FIREBASE_MESSAGING_SENDER_ID"; EnvironmentVariableEnvironment can contain letters, numbers, dashes and underscores.
+    Error: GraphQL request failed.
+Variable "$environment" got invalid value "FIREBASE_APP_ID"; EnvironmentVariableEnvironment can contain letters, numbers, dashes and underscores.
+    Error: GraphQL request failed.
+Variable "$environment" got invalid value "FIREBASE_MEASUREMENT_ID"; EnvironmentVariableEnvironment can contain letters, numbers, dashes and underscores.
+    Error: GraphQL request failed.
+✔ Created a new variable EXPO_PUBLIC_FIREBASE_API_KEY on project @biterdi/lusapp.
+✔ Created a new variable EXPO_PUBLIC_FIREBASE_AUTH_DOMAIN on project @biterdi/lusapp.
+✔ Created a new variable EXPO_PUBLIC_FIREBASE_PROJECT_ID on project @biterdi/lusapp.
+✔ Created a new variable EXPO_PUBLIC_FIREBASE_STORAGE_BUCKET on project @biterdi/lusapp.
+✔ Created a new variable EXPO_PUBLIC_FIREBASE_MESSAGING_SENDER_ID on project @biterdi/lusapp.
+✔ Created a new variable EXPO_PUBLIC_FIREBASE_APP_ID on project @biterdi/lusapp.
+✔ Created a new variable EXPO_PUBLIC_FIREBASE_MEASUREMENT_ID on project @biterdi/lusapp.
+Resolved "preview" environment for the build. Learn more: https://docs.expo.dev/eas/environment-variables/#setting-the-environment-for-your-builds
+Environment variables with visibility "Plain text" and "Sensitive" loaded from the "preview" environment on EAS: EXPO_PUBLIC_FIREBASE_API_KEY, EXPO_PUBLIC_FIREBASE_APP_ID, EXPO_PUBLIC_FIREBASE_AUTH_DOMAIN, EXPO_PUBLIC_FIREBASE_MEASUREMENT_ID, EXPO_PUBLIC_FIREBASE_MESSAGING_SENDER_ID, EXPO_PUBLIC_FIREBASE_PROJECT_ID, EXPO_PUBLIC_FIREBASE_STORAGE_BUCKET, FIREBASE_APP_ID, FIREBASE_AUTH_DOMAIN, FIREBASE_MEASUREMENT_ID, FIREBASE_MESSAGING_SENDER_ID, FIREBASE_PROJECT_ID, FIREBASE_STORAGE_BUCKET.
+
+android.versionCode field in app config is ignored when version source is set to remote, but this value will still be in the manifest available via expo-constants. It's recommended to remove this value from app config.
+✔ Using remote Android credentials (Expo server)
+✔ Using Keystore from configuration: Build Credentials wAWyYm5jrQ (default)
+
+Compressing project files and uploading to EAS Build. Learn more: https://expo.fyi/eas-build-archive
+✔ Compressed project files 3s (45.4 MB)
+✔ Uploaded to EAS 8s
+✔ Computed project fingerprint
+
+See logs: https://expo.dev/accounts/biterdi/projects/lusapp/builds/96f55e36-0adb-4542-8257-9037073f151a
+
+Waiting for build to complete. You can press Ctrl+C to exit.
+⠋ Build in progress...
