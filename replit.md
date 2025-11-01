@@ -28,7 +28,15 @@ An Express.js REST API provides endpoints for race CRUD operations, user authent
 
 ### Groups & Community Features
 
-A new Groups system allows athletes to create and join sport-specific groups (public or password-protected). Functionality includes group management, a membership system with roles (Owner, Moderator, Member), real-time group chat, and collaborative gear lists for race preparation. Gear lists allow members to add items with statuses (Needed, Claimed, Completed). All group data is stored in PostgreSQL.
+A new Groups system allows athletes to create and join sport-specific groups (public or password-protected). Functionality includes group management, a membership system with roles (Owner, Moderator, Member), real-time group chat, and gear lists for race preparation. 
+
+**Gear Lists System:**
+- **Personal Lists:** Private lists visible only to the owner (and group moderators). Only the owner can add, claim, or complete items. Perfect for tracking individual race gear needs.
+- **Collaborative Lists:** Shared lists where all group members can contribute. Any member can add items and claim/complete them. Ideal for team logistics where members coordinate who brings what.
+- **Item Statuses:** Items progress through three states: Needed (unclaimed), Claimed (assigned to someone), and Completed (finished).
+- **Share Functionality:** Users can export and share gear lists via WhatsApp, WeChat, or other messaging apps. The share feature generates formatted text with checkboxes ([ ] needed, [~] claimed, [✓] completed) for easy sharing with non-app users.
+
+All group data is stored in PostgreSQL with role-based access control ensuring privacy and security.
 
 ## External Dependencies
 
