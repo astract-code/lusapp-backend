@@ -86,7 +86,12 @@ app.use('/api/posts', postsRoutes);
 
 app.get('/api/races', async (req, res) => {
   try {
-    const result = await pool.query('SELECT *, COALESCE(registered_users, ARRAY[]::text[]) as registered_users FROM races ORDER BY date ASC');
+    const result = await pool.query(
+      `SELECT *, COALESCE(registered_users, ARRAY[]::text[]) as registered_users 
+       FROM races 
+       WHERE date >= CURRENT_DATE 
+       ORDER BY date ASC`
+    );
     res.json(result.rows);
   } catch (error) {
     console.error('Error fetching races:', error);
