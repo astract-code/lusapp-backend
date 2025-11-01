@@ -377,30 +377,39 @@ router.delete('/users/:userId/unfollow', authMiddleware, async (req, res) => {
 });
 
 router.post('/sync', verifyFirebaseToken, async (req, res) => {
+  console.log('🔍 [AUTH SYNC] Starting user sync...');
+  console.log('🔍 [AUTH SYNC] Request body:', JSON.stringify(req.body));
+  console.log('🔍 [AUTH SYNC] req.user from middleware:', JSON.stringify(req.user));
+  
   try {
     const { firebase_uid, email, name } = req.body;
     
     if (!firebase_uid || !email) {
+      console.error('❌ [AUTH SYNC] Missing required fields');
       return res.status(400).json({ error: 'Firebase UID and email are required' });
     }
     
+    console.log('🔍 [AUTH SYNC] Checking for existing user with firebase_uid:', firebase_uid);
     let user = await pool.query(
       'SELECT * FROM users WHERE firebase_uid = $1',
       [firebase_uid]
     );
     
     if (user.rows.length === 0) {
+      console.log('🔍 [AUTH SYNC] No user found with firebase_uid, checking by email:', email);
       user = await pool.query(
         'SELECT * FROM users WHERE email = $1',
         [email]
       );
       
       if (user.rows.length > 0) {
+        console.log('🔍 [AUTH SYNC] Found existing user by email, updating firebase_uid');
         await pool.query(
           'UPDATE users SET firebase_uid = $1 WHERE id = $2',
           [firebase_uid, user.rows[0].id]
         );
       } else {
+        console.log('🔍 [AUTH SYNC] No existing user, creating new user');
         const result = await pool.query(
           `INSERT INTO users (firebase_uid, email, name, location, bio) 
            VALUES ($1, $2, $3, $4, $5) 
@@ -408,7 +417,10 @@ router.post('/sync', verifyFirebaseToken, async (req, res) => {
           [firebase_uid, email, name || email.split('@')[0], 'Unknown', '']
         );
         user = result;
+        console.log('✅ [AUTH SYNC] New user created with ID:', user.rows[0].id);
       }
+    } else {
+      console.log('✅ [AUTH SYNC] Found existing user with firebase_uid:', user.rows[0].id);
     }
     
     const dbUser = user.rows[0];
@@ -431,9 +443,16 @@ router.post('/sync', verifyFirebaseToken, async (req, res) => {
     
     req.user.userId = dbUser.id;
     
+    console.log('✅ [AUTH SYNC] User sync successful, returning user data');
     res.json({ user: userData });
   } catch (error) {
-    console.error('Sync error:', error);
+    console.error('❌ [AUTH SYNC] Sync error:', error.message);
+    console.error('❌ [AUTH SYNC] Full error stack:', error.stack);
+    console.error('❌ [AUTH SYNC] Error details:', {
+      name: error.name,
+      code: error.code,
+      detail: error.detail,
+    });
     res.status(500).json({ error: 'Failed to sync user' });
   }
 });
