@@ -163,30 +163,12 @@ module.exports = (pool) => {
       }
 
       const memberCheck = await pool.query(
-        'SELECT role FROM group_members WHERE group_id = $1 AND user_id = $2',
+        'SELECT id FROM group_members WHERE group_id = $1 AND user_id = $2',
         [groupId, userId]
       );
 
       if (memberCheck.rows.length === 0) {
         return res.status(403).json({ error: 'Must be a member to add items' });
-      }
-
-      const role = memberCheck.rows[0].role;
-      const isModerator = role === 'owner' || role === 'moderator';
-
-      const listCheck = await pool.query(
-        'SELECT visibility, owner_id FROM group_gear_lists WHERE id = $1',
-        [listId]
-      );
-
-      if (listCheck.rows.length === 0) {
-        return res.status(404).json({ error: 'List not found' });
-      }
-
-      const { visibility, owner_id } = listCheck.rows[0];
-      
-      if (visibility === 'personal' && owner_id !== userId && !isModerator) {
-        return res.status(403).json({ error: 'Cannot add items to personal list of another user' });
       }
 
       const result = await pool.query(`
@@ -247,13 +229,19 @@ module.exports = (pool) => {
 
       const { visibility, owner_id } = listCheck.rows[0];
       
-      if (visibility === 'personal' && owner_id !== userId && !isModerator) {
-        return res.status(403).json({ error: 'Cannot modify personal list of another user' });
+      if (visibility === 'personal' && owner_id !== userId) {
+        return res.status(403).json({ error: 'Only the list owner can check off items on their personal list' });
       }
 
       let claimedBy = null;
-      if (status === 'claimed' || status === 'completed') {
-        claimedBy = userId;
+      if (visibility === 'collaborative') {
+        if (status === 'claimed' || status === 'completed') {
+          claimedBy = userId;
+        }
+      } else {
+        if (status === 'completed') {
+          claimedBy = userId;
+        }
       }
 
       const result = await pool.query(`

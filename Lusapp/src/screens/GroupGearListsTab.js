@@ -79,6 +79,7 @@ export const GroupGearListsTab = ({ groupId, navigation, userRole }) => {
           groupId,
           listId: data.list.id,
           listTitle: data.list.title,
+          listVisibility: data.list.visibility,
         });
       } else {
         const error = await response.json();
@@ -99,6 +100,7 @@ export const GroupGearListsTab = ({ groupId, navigation, userRole }) => {
           groupId,
           listId: item.id,
           listTitle: item.title,
+          listVisibility: item.visibility,
         })
       }
     >

@@ -19,7 +19,7 @@ import { SPACING, FONT_SIZE, BORDER_RADIUS } from '../constants/theme';
 import API_URL from '../config/api';
 
 export const GearListDetailScreen = ({ route, navigation }) => {
-  const { groupId, listId, listTitle } = route.params;
+  const { groupId, listId, listTitle, listVisibility } = route.params;
   const { colors } = useTheme();
   const { user, token } = useAuth();
   const [items, setItems] = useState([]);
@@ -28,6 +28,7 @@ export const GearListDetailScreen = ({ route, navigation }) => {
   const [newItemName, setNewItemName] = useState('');
   const [adding, setAdding] = useState(false);
   const [userRole, setUserRole] = useState('member');
+  const isPersonal = listVisibility === 'personal';
 
   useEffect(() => {
     navigation.setOptions({ title: listTitle });
@@ -109,7 +110,9 @@ export const GearListDetailScreen = ({ route, navigation }) => {
   };
 
   const updateItemStatus = async (itemId, currentStatus) => {
-    const statusOrder = ['needed', 'claimed', 'completed'];
+    const statusOrder = isPersonal 
+      ? ['needed', 'completed']
+      : ['needed', 'claimed', 'completed'];
     const currentIndex = statusOrder.indexOf(currentStatus);
     const newStatus = statusOrder[(currentIndex + 1) % statusOrder.length];
 
@@ -128,9 +131,13 @@ export const GearListDetailScreen = ({ route, navigation }) => {
 
       if (response.ok) {
         fetchItems();
+      } else {
+        const error = await response.json();
+        Alert.alert('Error', error.error || 'Failed to update item');
       }
     } catch (error) {
       console.error('Error updating item status:', error);
+      Alert.alert('Error', 'Failed to update item');
     }
   };
 
