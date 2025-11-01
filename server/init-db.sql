@@ -160,6 +160,10 @@ CREATE TABLE IF NOT EXISTS group_gear_lists (
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+-- Add visibility and owner_id columns if upgrading from old schema
+ALTER TABLE group_gear_lists ADD COLUMN IF NOT EXISTS visibility VARCHAR(20) DEFAULT 'collaborative';
+ALTER TABLE group_gear_lists ADD COLUMN IF NOT EXISTS owner_id INTEGER REFERENCES users(id);
+
 -- Create group_gear_items table for items in gear lists
 CREATE TABLE IF NOT EXISTS group_gear_items (
   id SERIAL PRIMARY KEY,
