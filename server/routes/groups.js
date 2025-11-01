@@ -1,12 +1,12 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
-const { authMiddleware } = require('../middleware/authMiddleware');
+const { verifyFirebaseToken } = require('../middleware/firebaseAuth');
 
 const router = express.Router();
 
 module.exports = (pool) => {
   
-  router.post('/create', authMiddleware, async (req, res) => {
+  router.post('/create', verifyFirebaseToken, async (req, res) => {
     console.log('=== GROUP CREATE REQUEST ===');
     console.log('User ID:', req.user?.userId);
     console.log('Request body:', JSON.stringify(req.body, null, 2));
@@ -61,7 +61,7 @@ module.exports = (pool) => {
     }
   });
 
-  router.get('/race/:raceId', authMiddleware, async (req, res) => {
+  router.get('/race/:raceId', verifyFirebaseToken, async (req, res) => {
     try {
       const raceId = parseInt(req.params.raceId, 10);
       
@@ -92,7 +92,7 @@ module.exports = (pool) => {
     }
   });
 
-  router.get('/search', authMiddleware, async (req, res) => {
+  router.get('/search', verifyFirebaseToken, async (req, res) => {
     try {
       const { query, sport_type, city } = req.query;
       
@@ -143,7 +143,7 @@ module.exports = (pool) => {
     }
   });
 
-  router.get('/my-groups', authMiddleware, async (req, res) => {
+  router.get('/my-groups', verifyFirebaseToken, async (req, res) => {
     try {
       const userId = req.user.userId;
 
@@ -178,7 +178,7 @@ module.exports = (pool) => {
     }
   });
 
-  router.get('/:groupId', authMiddleware, async (req, res) => {
+  router.get('/:groupId', verifyFirebaseToken, async (req, res) => {
     try {
       const { groupId } = req.params;
       const userId = req.user.userId;
@@ -210,7 +210,7 @@ module.exports = (pool) => {
     }
   });
 
-  router.post('/:groupId/join', authMiddleware, async (req, res) => {
+  router.post('/:groupId/join', verifyFirebaseToken, async (req, res) => {
     try {
       const { groupId } = req.params;
       const { password } = req.body;
@@ -264,7 +264,7 @@ module.exports = (pool) => {
     }
   });
 
-  router.post('/:groupId/leave', authMiddleware, async (req, res) => {
+  router.post('/:groupId/leave', verifyFirebaseToken, async (req, res) => {
     try {
       const { groupId } = req.params;
       const userId = req.user.userId;
@@ -299,7 +299,7 @@ module.exports = (pool) => {
     }
   });
 
-  router.get('/:groupId/members', authMiddleware, async (req, res) => {
+  router.get('/:groupId/members', verifyFirebaseToken, async (req, res) => {
     try {
       const { groupId } = req.params;
       const userId = req.user.userId;
@@ -336,7 +336,7 @@ module.exports = (pool) => {
     }
   });
 
-  router.delete('/:groupId', authMiddleware, async (req, res) => {
+  router.delete('/:groupId', verifyFirebaseToken, async (req, res) => {
     try {
       const { groupId } = req.params;
       const userId = req.user.userId;

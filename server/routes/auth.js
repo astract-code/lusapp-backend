@@ -145,7 +145,7 @@ router.post('/login', async (req, res) => {
   }
 });
 
-router.get('/me', authMiddleware, async (req, res) => {
+router.get('/me', verifyFirebaseToken, async (req, res) => {
   try {
     const result = await pool.query(
       `SELECT id, email, name, location, bio, favorite_sport, avatar, 
@@ -181,7 +181,7 @@ router.get('/me', authMiddleware, async (req, res) => {
   }
 });
 
-router.delete('/account', authMiddleware, async (req, res) => {
+router.delete('/account', verifyFirebaseToken, async (req, res) => {
   const client = await pool.connect();
   
   try {
@@ -224,7 +224,7 @@ router.delete('/account', authMiddleware, async (req, res) => {
   }
 });
 
-router.get('/users/batch', authMiddleware, async (req, res) => {
+router.get('/users/batch', verifyFirebaseToken, async (req, res) => {
   try {
     const { ids } = req.query;
     
@@ -268,7 +268,7 @@ router.get('/users/batch', authMiddleware, async (req, res) => {
   }
 });
 
-router.post('/users/:userId/follow', authMiddleware, async (req, res) => {
+router.post('/users/:userId/follow', verifyFirebaseToken, async (req, res) => {
   const client = await pool.connect();
   
   try {
@@ -327,7 +327,7 @@ router.post('/users/:userId/follow', authMiddleware, async (req, res) => {
   }
 });
 
-router.delete('/users/:userId/unfollow', authMiddleware, async (req, res) => {
+router.delete('/users/:userId/unfollow', verifyFirebaseToken, async (req, res) => {
   const client = await pool.connect();
   
   try {

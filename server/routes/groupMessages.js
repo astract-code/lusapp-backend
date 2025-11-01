@@ -1,5 +1,5 @@
 const express = require('express');
-const { authMiddleware } = require('../middleware/authMiddleware');
+const { verifyFirebaseToken } = require('../middleware/firebaseAuth');
 
 const router = express.Router();
 
@@ -7,7 +7,7 @@ module.exports = (pool) => {
   
   // Get total unread group message count across all groups
   // IMPORTANT: This must come BEFORE /:groupId/messages to avoid route conflicts
-  router.get('/unread-count', authMiddleware, async (req, res) => {
+  router.get('/unread-count', verifyFirebaseToken, async (req, res) => {
     try {
       const userId = req.user.userId;
 
@@ -42,7 +42,7 @@ module.exports = (pool) => {
     }
   });
 
-  router.get('/:groupId/messages', authMiddleware, async (req, res) => {
+  router.get('/:groupId/messages', verifyFirebaseToken, async (req, res) => {
     try {
       const { groupId } = req.params;
       const userId = req.user.userId;
@@ -96,7 +96,7 @@ module.exports = (pool) => {
     }
   });
 
-  router.post('/:groupId/messages', authMiddleware, async (req, res) => {
+  router.post('/:groupId/messages', verifyFirebaseToken, async (req, res) => {
     try {
       const { groupId } = req.params;
       const { content } = req.body;

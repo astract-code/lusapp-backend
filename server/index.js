@@ -298,8 +298,9 @@ app.post('/api/races/csv-upload', adminAuth, upload.single('csvFile'), async (re
 });
 
 const { authMiddleware } = require('./middleware/authMiddleware');
+const { verifyFirebaseToken } = require('./middleware/firebaseAuth');
 
-app.post('/api/races/:raceId/join', authMiddleware, async (req, res) => {
+app.post('/api/races/:raceId/join', verifyFirebaseToken, async (req, res) => {
   const client = await pool.connect();
   
   try {
@@ -427,7 +428,7 @@ app.post('/api/races/:raceId/join', authMiddleware, async (req, res) => {
   }
 });
 
-app.post('/api/races/:raceId/leave', authMiddleware, async (req, res) => {
+app.post('/api/races/:raceId/leave', verifyFirebaseToken, async (req, res) => {
   const client = await pool.connect();
   
   try {
@@ -475,7 +476,7 @@ app.post('/api/races/:raceId/leave', authMiddleware, async (req, res) => {
   }
 });
 
-app.post('/api/races/:raceId/complete', authMiddleware, async (req, res) => {
+app.post('/api/races/:raceId/complete', verifyFirebaseToken, async (req, res) => {
   try {
     const raceId = parseInt(req.params.raceId, 10);
     const userId = req.user.userId;

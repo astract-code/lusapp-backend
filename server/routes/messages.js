@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const { authMiddleware } = require('../middleware/authMiddleware');
+const { verifyFirebaseToken } = require('../middleware/firebaseAuth');
 
 module.exports = (pool) => {
   // Get all conversations for a user
-  router.get('/conversations', authMiddleware, async (req, res) => {
+  router.get('/conversations', verifyFirebaseToken, async (req, res) => {
     try {
       const userId = req.user.userId;
       
@@ -55,7 +55,7 @@ module.exports = (pool) => {
   });
 
   // Get messages for a conversation
-  router.get('/conversations/:otherUserId/messages', authMiddleware, async (req, res) => {
+  router.get('/conversations/:otherUserId/messages', verifyFirebaseToken, async (req, res) => {
     try {
       const userId = req.user.userId;
       const otherUserId = parseInt(req.params.otherUserId);
@@ -108,7 +108,7 @@ module.exports = (pool) => {
   });
 
   // Get total unread message count
-  router.get('/unread-count', authMiddleware, async (req, res) => {
+  router.get('/unread-count', verifyFirebaseToken, async (req, res) => {
     try {
       const userId = req.user.userId;
       
@@ -133,7 +133,7 @@ module.exports = (pool) => {
   });
 
   // Send a message
-  router.post('/conversations/:otherUserId/messages', authMiddleware, async (req, res) => {
+  router.post('/conversations/:otherUserId/messages', verifyFirebaseToken, async (req, res) => {
     try {
       const userId = req.user.userId;
       const otherUserId = parseInt(req.params.otherUserId);

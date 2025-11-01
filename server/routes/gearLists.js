@@ -1,11 +1,11 @@
 const express = require('express');
-const { authMiddleware } = require('../middleware/authMiddleware');
+const { verifyFirebaseToken } = require('../middleware/firebaseAuth');
 
 const router = express.Router();
 
 module.exports = (pool) => {
   
-  router.get('/:groupId/gear-lists', authMiddleware, async (req, res) => {
+  router.get('/:groupId/gear-lists', verifyFirebaseToken, async (req, res) => {
     try {
       const { groupId } = req.params;
       const userId = req.user.userId;
@@ -44,7 +44,7 @@ module.exports = (pool) => {
     }
   });
 
-  router.post('/:groupId/gear-lists', authMiddleware, async (req, res) => {
+  router.post('/:groupId/gear-lists', verifyFirebaseToken, async (req, res) => {
     try {
       const { groupId } = req.params;
       const { title, raceId } = req.body;
@@ -76,7 +76,7 @@ module.exports = (pool) => {
     }
   });
 
-  router.get('/:groupId/gear-lists/:listId/items', authMiddleware, async (req, res) => {
+  router.get('/:groupId/gear-lists/:listId/items', verifyFirebaseToken, async (req, res) => {
     try {
       const { groupId, listId } = req.params;
       const userId = req.user.userId;
@@ -119,7 +119,7 @@ module.exports = (pool) => {
     }
   });
 
-  router.post('/:groupId/gear-lists/:listId/items', authMiddleware, async (req, res) => {
+  router.post('/:groupId/gear-lists/:listId/items', verifyFirebaseToken, async (req, res) => {
     try {
       const { groupId, listId } = req.params;
       const { description } = req.body;
@@ -163,7 +163,7 @@ module.exports = (pool) => {
     }
   });
 
-  router.patch('/:groupId/gear-lists/:listId/items/:itemId', authMiddleware, async (req, res) => {
+  router.patch('/:groupId/gear-lists/:listId/items/:itemId', verifyFirebaseToken, async (req, res) => {
     try {
       const { groupId, itemId } = req.params;
       const { status } = req.body;
@@ -205,7 +205,7 @@ module.exports = (pool) => {
     }
   });
 
-  router.delete('/:groupId/gear-lists/:listId/items/:itemId', authMiddleware, async (req, res) => {
+  router.delete('/:groupId/gear-lists/:listId/items/:itemId', verifyFirebaseToken, async (req, res) => {
     try {
       const { groupId, itemId } = req.params;
       const userId = req.user.userId;
