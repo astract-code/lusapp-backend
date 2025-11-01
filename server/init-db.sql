@@ -154,6 +154,8 @@ CREATE TABLE IF NOT EXISTS group_gear_lists (
   group_id INTEGER NOT NULL REFERENCES groups(id) ON DELETE CASCADE,
   race_id INTEGER REFERENCES races(id),
   title VARCHAR(255) NOT NULL,
+  visibility VARCHAR(20) DEFAULT 'collaborative' CHECK (visibility IN ('collaborative', 'personal')),
+  owner_id INTEGER REFERENCES users(id),
   created_by INTEGER NOT NULL REFERENCES users(id),
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );

@@ -23,6 +23,7 @@ export const GroupGearListsTab = ({ groupId, navigation, userRole }) => {
   const [loading, setLoading] = useState(true);
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [newListTitle, setNewListTitle] = useState('');
+  const [listVisibility, setListVisibility] = useState('collaborative');
   const [creating, setCreating] = useState(false);
 
   useEffect(() => {
@@ -62,13 +63,17 @@ export const GroupGearListsTab = ({ groupId, navigation, userRole }) => {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ title: newListTitle.trim() }),
+        body: JSON.stringify({ 
+          title: newListTitle.trim(),
+          visibility: listVisibility
+        }),
       });
 
       if (response.ok) {
         const data = await response.json();
         setShowCreateModal(false);
         setNewListTitle('');
+        setListVisibility('collaborative');
         fetchGearLists();
         navigation.navigate('GearListDetail', {
           groupId,
@@ -175,6 +180,48 @@ export const GroupGearListsTab = ({ groupId, navigation, userRole }) => {
               value={newListTitle}
               onChangeText={setNewListTitle}
             />
+
+            <View style={styles.visibilityToggle}>
+              <Text style={[styles.toggleLabel, { color: colors.text }]}>
+                List Type:
+              </Text>
+              <View style={styles.toggleButtons}>
+                <TouchableOpacity
+                  style={[
+                    styles.toggleButton,
+                    { borderColor: colors.border },
+                    listVisibility === 'collaborative' && { backgroundColor: colors.primary },
+                  ]}
+                  onPress={() => setListVisibility('collaborative')}
+                >
+                  <Text
+                    style={[
+                      styles.toggleButtonText,
+                      { color: listVisibility === 'collaborative' ? '#FFFFFF' : colors.text },
+                    ]}
+                  >
+                    👥 Collaborative
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={[
+                    styles.toggleButton,
+                    { borderColor: colors.border },
+                    listVisibility === 'personal' && { backgroundColor: colors.primary },
+                  ]}
+                  onPress={() => setListVisibility('personal')}
+                >
+                  <Text
+                    style={[
+                      styles.toggleButtonText,
+                      { color: listVisibility === 'personal' ? '#FFFFFF' : colors.text },
+                    ]}
+                  >
+                    👤 Personal
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            </View>
 
             <View style={styles.modalButtons}>
               <TouchableOpacity
@@ -304,7 +351,30 @@ const styles = StyleSheet.create({
     borderRadius: BORDER_RADIUS.md,
     padding: SPACING.md,
     fontSize: FONT_SIZE.md,
+    marginBottom: SPACING.md,
+  },
+  visibilityToggle: {
     marginBottom: SPACING.lg,
+  },
+  toggleLabel: {
+    fontSize: FONT_SIZE.md,
+    fontWeight: '600',
+    marginBottom: SPACING.sm,
+  },
+  toggleButtons: {
+    flexDirection: 'row',
+    gap: SPACING.sm,
+  },
+  toggleButton: {
+    flex: 1,
+    padding: SPACING.md,
+    borderWidth: 1,
+    borderRadius: BORDER_RADIUS.md,
+    alignItems: 'center',
+  },
+  toggleButtonText: {
+    fontSize: FONT_SIZE.sm,
+    fontWeight: '500',
   },
   modalButtons: {
     flexDirection: 'row',

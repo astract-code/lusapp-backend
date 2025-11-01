@@ -11,7 +11,7 @@ module.exports = (pool) => {
       const userId = req.user.userId;
 
       const memberCheck = await pool.query(
-        'SELECT id FROM group_members WHERE group_id = $1 AND user_id = $2',
+        'SELECT role FROM group_members WHERE group_id = $1 AND user_id = $2',
         [groupId, userId]
       );
 
@@ -19,9 +19,12 @@ module.exports = (pool) => {
         return res.status(403).json({ error: 'Must be a member to view gear lists' });
       }
 
+      const role = memberCheck.rows[0].role;
+      const isModerator = role === 'owner' || role === 'moderator';
+
       const result = await pool.query(`
         SELECT 
-          gl.id, gl.title, gl.race_id, gl.created_at,
+          gl.id, gl.title, gl.race_id, gl.visibility, gl.owner_id, gl.created_at,
           u.name as creator_name,
           r.name as race_name,
           r.date as race_date,
@@ -34,8 +37,13 @@ module.exports = (pool) => {
         LEFT JOIN users u ON gl.created_by = u.id
         LEFT JOIN races r ON gl.race_id = r.id
         WHERE gl.group_id = $1
+          AND (
+            gl.visibility = 'collaborative' 
+            OR gl.owner_id = $2
+            OR $3 = true
+          )
         ORDER BY gl.created_at DESC
-      `, [groupId]);
+      `, [groupId, userId, isModerator]);
 
       res.json(result.rows);
     } catch (error) {
@@ -47,11 +55,16 @@ module.exports = (pool) => {
   router.post('/:groupId/gear-lists', verifyFirebaseToken, async (req, res) => {
     try {
       const { groupId } = req.params;
-      const { title, raceId } = req.body;
+      const { title, raceId, visibility } = req.body;
       const userId = req.user.userId;
 
       if (!title || !title.trim()) {
         return res.status(400).json({ error: 'List title is required' });
+      }
+
+      const listVisibility = visibility || 'collaborative';
+      if (!['collaborative', 'personal'].includes(listVisibility)) {
+        return res.status(400).json({ error: 'Invalid visibility type' });
       }
 
       const memberCheck = await pool.query(
@@ -63,11 +76,13 @@ module.exports = (pool) => {
         return res.status(403).json({ error: 'Must be a member to create gear lists' });
       }
 
+      const ownerId = listVisibility === 'personal' ? userId : null;
+
       const result = await pool.query(`
-        INSERT INTO group_gear_lists (group_id, race_id, title, created_by)
-        VALUES ($1, $2, $3, $4)
-        RETURNING id, group_id, race_id, title, created_by, created_at
-      `, [groupId, raceId || null, title.trim(), userId]);
+        INSERT INTO group_gear_lists (group_id, race_id, title, visibility, owner_id, created_by)
+        VALUES ($1, $2, $3, $4, $5, $6)
+        RETURNING id, group_id, race_id, title, visibility, owner_id, created_by, created_at
+      `, [groupId, raceId || null, title.trim(), listVisibility, ownerId, userId]);
 
       res.json({ success: true, list: result.rows[0] });
     } catch (error) {
@@ -82,12 +97,30 @@ module.exports = (pool) => {
       const userId = req.user.userId;
 
       const memberCheck = await pool.query(
-        'SELECT id FROM group_members WHERE group_id = $1 AND user_id = $2',
+        'SELECT role FROM group_members WHERE group_id = $1 AND user_id = $2',
         [groupId, userId]
       );
 
       if (memberCheck.rows.length === 0) {
         return res.status(403).json({ error: 'Must be a member to view gear items' });
+      }
+
+      const role = memberCheck.rows[0].role;
+      const isModerator = role === 'owner' || role === 'moderator';
+
+      const listCheck = await pool.query(
+        'SELECT visibility, owner_id FROM group_gear_lists WHERE id = $1',
+        [listId]
+      );
+
+      if (listCheck.rows.length === 0) {
+        return res.status(404).json({ error: 'List not found' });
+      }
+
+      const { visibility, owner_id } = listCheck.rows[0];
+      
+      if (visibility === 'personal' && owner_id !== userId && !isModerator) {
+        return res.status(403).json({ error: 'Cannot view personal list of another user' });
       }
 
       const result = await pool.query(`
@@ -130,12 +163,30 @@ module.exports = (pool) => {
       }
 
       const memberCheck = await pool.query(
-        'SELECT id FROM group_members WHERE group_id = $1 AND user_id = $2',
+        'SELECT role FROM group_members WHERE group_id = $1 AND user_id = $2',
         [groupId, userId]
       );
 
       if (memberCheck.rows.length === 0) {
         return res.status(403).json({ error: 'Must be a member to add items' });
+      }
+
+      const role = memberCheck.rows[0].role;
+      const isModerator = role === 'owner' || role === 'moderator';
+
+      const listCheck = await pool.query(
+        'SELECT visibility, owner_id FROM group_gear_lists WHERE id = $1',
+        [listId]
+      );
+
+      if (listCheck.rows.length === 0) {
+        return res.status(404).json({ error: 'List not found' });
+      }
+
+      const { visibility, owner_id } = listCheck.rows[0];
+      
+      if (visibility === 'personal' && owner_id !== userId && !isModerator) {
+        return res.status(403).json({ error: 'Cannot add items to personal list of another user' });
       }
 
       const result = await pool.query(`
@@ -165,7 +216,7 @@ module.exports = (pool) => {
 
   router.patch('/:groupId/gear-lists/:listId/items/:itemId', verifyFirebaseToken, async (req, res) => {
     try {
-      const { groupId, itemId } = req.params;
+      const { groupId, listId, itemId } = req.params;
       const { status } = req.body;
       const userId = req.user.userId;
 
@@ -174,7 +225,7 @@ module.exports = (pool) => {
       }
 
       const memberCheck = await pool.query(
-        'SELECT id FROM group_members WHERE group_id = $1 AND user_id = $2',
+        'SELECT role FROM group_members WHERE group_id = $1 AND user_id = $2',
         [groupId, userId]
       );
 
@@ -182,8 +233,26 @@ module.exports = (pool) => {
         return res.status(403).json({ error: 'Must be a member to update items' });
       }
 
+      const role = memberCheck.rows[0].role;
+      const isModerator = role === 'owner' || role === 'moderator';
+
+      const listCheck = await pool.query(
+        'SELECT visibility, owner_id FROM group_gear_lists WHERE id = $1',
+        [listId]
+      );
+
+      if (listCheck.rows.length === 0) {
+        return res.status(404).json({ error: 'List not found' });
+      }
+
+      const { visibility, owner_id } = listCheck.rows[0];
+      
+      if (visibility === 'personal' && owner_id !== userId && !isModerator) {
+        return res.status(403).json({ error: 'Cannot modify personal list of another user' });
+      }
+
       let claimedBy = null;
-      if (status === 'claimed') {
+      if (status === 'claimed' || status === 'completed') {
         claimedBy = userId;
       }
 
@@ -241,6 +310,106 @@ module.exports = (pool) => {
     } catch (error) {
       console.error('Error deleting gear item:', error);
       res.status(500).json({ error: 'Failed to delete gear item' });
+    }
+  });
+
+  router.get('/:groupId/gear-lists/:listId/share', verifyFirebaseToken, async (req, res) => {
+    try {
+      const { groupId, listId } = req.params;
+      const userId = req.user.userId;
+
+      const memberCheck = await pool.query(
+        'SELECT role FROM group_members WHERE group_id = $1 AND user_id = $2',
+        [groupId, userId]
+      );
+
+      if (memberCheck.rows.length === 0) {
+        return res.status(403).json({ error: 'Must be a member to share gear lists' });
+      }
+
+      const role = memberCheck.rows[0].role;
+      const isModerator = role === 'owner' || role === 'moderator';
+
+      const listResult = await pool.query(`
+        SELECT 
+          gl.title, gl.visibility, gl.owner_id, gl.race_id,
+          r.name as race_name,
+          r.date as race_date
+        FROM group_gear_lists gl
+        LEFT JOIN races r ON gl.race_id = r.id
+        WHERE gl.id = $1
+      `, [listId]);
+
+      if (listResult.rows.length === 0) {
+        return res.status(404).json({ error: 'List not found' });
+      }
+
+      const list = listResult.rows[0];
+
+      if (list.visibility === 'personal' && list.owner_id !== userId && !isModerator) {
+        return res.status(403).json({ error: 'Cannot share personal list of another user' });
+      }
+
+      const itemsResult = await pool.query(`
+        SELECT 
+          gi.description, gi.status,
+          u.name as claimed_by_name
+        FROM group_gear_items gi
+        LEFT JOIN users u ON gi.claimed_by = u.id
+        WHERE gi.list_id = $1
+        ORDER BY 
+          CASE gi.status
+            WHEN 'needed' THEN 1
+            WHEN 'claimed' THEN 2
+            WHEN 'completed' THEN 3
+          END,
+          gi.created_at ASC
+      `, [listId]);
+
+      let shareText = `📋 ${list.title}\n`;
+      
+      if (list.race_name) {
+        shareText += `🏃 ${list.race_name}`;
+        if (list.race_date) {
+          const raceDate = new Date(list.race_date);
+          shareText += ` - ${raceDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}`;
+        }
+        shareText += '\n';
+      }
+
+      if (list.visibility === 'personal') {
+        shareText += '👤 Personal List\n';
+      } else {
+        shareText += '👥 Collaborative List\n';
+      }
+
+      shareText += '\n';
+
+      if (itemsResult.rows.length === 0) {
+        shareText += 'No items yet';
+      } else {
+        itemsResult.rows.forEach(item => {
+          let icon = '[ ]';
+          let statusText = '';
+          
+          if (item.status === 'claimed') {
+            icon = '[~]';
+            statusText = item.claimed_by_name ? ` (${item.claimed_by_name})` : '';
+          } else if (item.status === 'completed') {
+            icon = '[✓]';
+            statusText = item.claimed_by_name ? ` (${item.claimed_by_name})` : '';
+          }
+          
+          shareText += `${icon} ${item.description}${statusText}\n`;
+        });
+      }
+
+      shareText += '\n📱 Created with Lusapp';
+
+      res.json({ success: true, shareText });
+    } catch (error) {
+      console.error('Error generating share text:', error);
+      res.status(500).json({ error: 'Failed to generate share text' });
     }
   });
 

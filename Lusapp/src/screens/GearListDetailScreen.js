@@ -10,6 +10,7 @@ import {
   TextInput,
   Modal,
   Alert,
+  Share,
 } from 'react-native';
 import { useTheme } from '../context/ThemeContext';
 import { useAuth } from '../context/AuthContext';
@@ -173,6 +174,32 @@ export const GearListDetailScreen = ({ route, navigation }) => {
     ]);
   };
 
+  const shareList = async () => {
+    try {
+      const response = await fetch(
+        `${API_URL}/api/groups/${groupId}/gear-lists/${listId}/share`,
+        {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (response.ok) {
+        const data = await response.json();
+        await Share.share({
+          message: data.shareText,
+        });
+      } else {
+        Alert.alert('Error', 'Failed to generate share text');
+      }
+    } catch (error) {
+      if (error.message !== 'User did not share') {
+        console.error('Error sharing list:', error);
+      }
+    }
+  };
+
   const getStatusColor = (status) => {
     switch (status) {
       case 'needed':
@@ -269,6 +296,13 @@ export const GearListDetailScreen = ({ route, navigation }) => {
         >
           <Text style={styles.addButtonText}>+ Add Item</Text>
         </TouchableOpacity>
+        <TouchableOpacity
+          style={[styles.shareButton, { backgroundColor: colors.card, borderColor: colors.border }]}
+          onPress={shareList}
+        >
+          <Text style={styles.shareIcon}>📤</Text>
+          <Text style={[styles.shareButtonText, { color: colors.primary }]}>Share</Text>
+        </TouchableOpacity>
       </View>
 
       {items.length === 0 ? (
@@ -357,14 +391,33 @@ const styles = StyleSheet.create({
   },
   header: {
     padding: SPACING.md,
+    flexDirection: 'row',
+    gap: SPACING.sm,
   },
   addButton: {
+    flex: 1,
     padding: SPACING.md,
     borderRadius: BORDER_RADIUS.md,
     alignItems: 'center',
   },
   addButtonText: {
     color: '#FFFFFF',
+    fontSize: FONT_SIZE.md,
+    fontWeight: '600',
+  },
+  shareButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: SPACING.md,
+    borderRadius: BORDER_RADIUS.md,
+    borderWidth: 1,
+    gap: SPACING.xs,
+  },
+  shareIcon: {
+    fontSize: 16,
+  },
+  shareButtonText: {
     fontSize: FONT_SIZE.md,
     fontWeight: '600',
   },
