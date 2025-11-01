@@ -1,0 +1,151 @@
+
+  position: undefined,
+  internalPosition: undefined,
+  internalQuery: undefined,
+  where: "unnamed portal parameter $1 = '...'",
+  schema: undefined,
+  table: undefined,
+  column: undefined,
+  dataType: undefined,
+  constraint: undefined,
+  file: 'numutils.c',
+  line: '616',
+  routine: 'pg_strtoint32_safe'
+}
+🔍 [TOKEN VERIFY] Starting token verification...
+🔍 [TOKEN VERIFY] Token received, length: 926
+🔍 [TOKEN VERIFY] Using Firebase Admin SDK verification
+✅ [TOKEN VERIFY] Admin SDK verification successful
+✅ [TOKEN VERIFY] Token decoded successfully for user: biterdi@gmail.com
+🔍 [TOKEN VERIFY] Starting token verification...
+🔍 [TOKEN VERIFY] Token received, length: 926
+🔍 [TOKEN VERIFY] Using Firebase Admin SDK verification
+✅ [TOKEN VERIFY] Admin SDK verification successful
+✅ [TOKEN VERIFY] Token decoded successfully for user: biterdi@gmail.com
+🔍 [TOKEN VERIFY] Starting token verification...
+🔍 [TOKEN VERIFY] Token received, length: 926
+🔍 [TOKEN VERIFY] Using Firebase Admin SDK verification
+✅ [TOKEN VERIFY] Admin SDK verification successful
+✅ [TOKEN VERIFY] Token decoded successfully for user: biterdi@gmail.com
+Error fetching group details: error: invalid input syntax for type integer: "5aEgEeEsyVf3zu1B2SAgSIUrQ8C3"
+    at /opt/render/project/src/node_modules/pg-pool/index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async /opt/render/project/src/server/routes/groups.js:186:22 {
+  length: 171,
+  severity: 'ERROR',
+  code: '22P02',
+  detail: undefined,
+  hint: undefined,
+  position: undefined,
+  internalPosition: undefined,
+  internalQuery: undefined,
+  where: "unnamed portal parameter $1 = '...'",
+  schema: undefined,
+  table: undefined,
+  column: undefined,
+  dataType: undefined,
+  constraint: undefined,
+  file: 'numutils.c',
+  line: '616',
+  routine: 'pg_strtoint32_safe'
+}
+Error fetching unread count: error: invalid input syntax for type integer: "5aEgEeEsyVf3zu1B2SAgSIUrQ8C3"
+    at /opt/render/project/src/node_modules/pg-pool/index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async /opt/render/project/src/server/routes/messages.js:115:22 {
+  length: 171,
+  severity: 'ERROR',
+  code: '22P02',
+  detail: undefined,
+  hint: undefined,
+  position: undefined,
+  internalPosition: undefined,
+  internalQuery: undefined,
+  where: "unnamed portal parameter $1 = '...'",
+  schema: undefined,
+  table: undefined,
+  column: undefined,
+  dataType: undefined,
+  constraint: undefined,
+  file: 'numutils.c',
+  line: '616',
+  routine: 'pg_strtoint32_safe'
+}
+[RACE JOIN] User 5aEgEeEsyVf3zu1B2SAgSIUrQ8C3 joining race 3
+[RACE JOIN] Found race: HYROX Manchester
+Join race error: error: invalid input syntax for type integer: "5aEgEeEsyVf3zu1B2SAgSIUrQ8C3"
+    at /opt/render/project/src/node_modules/pg/lib/client.js:545:17
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async /opt/render/project/src/server/index.js:331:5 {
+  length: 171,
+  severity: 'ERROR',
+  code: '22P02',
+  detail: undefined,
+  hint: undefined,
+  position: undefined,
+  internalPosition: undefined,
+  internalQuery: undefined,
+  where: "unnamed portal parameter $2 = '...'",
+  schema: undefined,
+  table: undefined,
+  column: undefined,
+  dataType: undefined,
+  constraint: undefined,
+  file: 'numutils.c',
+  line: '616',
+  routine: 'pg_strtoint32_safe'
+}
+🔍 [TOKEN VERIFY] Starting token verification...
+🔍 [TOKEN VERIFY] Token received, length: 926
+🔍 [TOKEN VERIFY] Using Firebase Admin SDK verification
+✅ [TOKEN VERIFY] Admin SDK verification successful
+✅ [TOKEN VERIFY] Token decoded successfully for user: biterdi@gmail.com
+Error fetching unread count: error: invalid input syntax for type integer: "5aEgEeEsyVf3zu1B2SAgSIUrQ8C3"
+    at /opt/render/project/src/node_modules/pg-pool/index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async /opt/render/project/src/server/routes/messages.js:115:22 {
+  length: 171,
+  severity: 'ERROR',
+  code: '22P02',
+  detail: undefined,
+  hint: undefined,
+  position: undefined,
+  internalPosition: undefined,
+  internalQuery: undefined,
+  where: "unnamed portal parameter $1 = '...'",
+  schema: undefined,
+  table: undefined,
+  column: undefined,
+  dataType: undefined,
+  constraint: undefined,
+  file: 'numutils.c',
+  line: '616',
+  routine: 'pg_strtoint32_safe'
+}
+🔍 [TOKEN VERIFY] Starting token verification...
+🔍 [TOKEN VERIFY] Token received, length: 926
+🔍 [TOKEN VERIFY] Using Firebase Admin SDK verification
+✅ [TOKEN VERIFY] Admin SDK verification successful
+✅ [TOKEN VERIFY] Token decoded successfully for user: biterdi@gmail.com
+Error fetching group details: error: invalid input syntax for type integer: "5aEgEeEsyVf3zu1B2SAgSIUrQ8C3"
+    at /opt/render/project/src/node_modules/pg-pool/index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async /opt/render/project/src/server/routes/groups.js:186:22 {
+  length: 171,
+  severity: 'ERROR',
+  code: '22P02',
+  detail: undefined,
+  hint: undefined,
+  position: undefined,
+  internalPosition: undefined,
+  internalQuery: undefined,
+  where: "unnamed portal parameter $1 = '...'",
+  schema: undefined,
+  table: undefined,
+  column: undefined,
+  dataType: undefined,
+  constraint: undefined,
+  file: 'numutils.c',
+  line: '616',
+  routine: 'pg_strtoint32_safe'
+}

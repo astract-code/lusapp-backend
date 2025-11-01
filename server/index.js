@@ -305,15 +305,27 @@ app.post('/api/races/:raceId/join', verifyFirebaseToken, async (req, res) => {
   
   try {
     const raceId = parseInt(req.params.raceId, 10);
-    const userId = req.user.userId;
+    const firebaseUid = req.user.firebaseUid;
     
-    console.log(`[RACE JOIN] User ${userId} joining race ${raceId}`);
+    console.log(`[RACE JOIN] Firebase user ${firebaseUid} joining race ${raceId}`);
     
     if (isNaN(raceId)) {
       return res.status(400).json({ error: 'Invalid race ID' });
     }
     
     await client.query('BEGIN');
+    
+    // Get database user ID from Firebase UID
+    const userResult = await client.query(
+      'SELECT id FROM users WHERE firebase_uid = $1',
+      [firebaseUid]
+    );
+    if (userResult.rows.length === 0) {
+      await client.query('ROLLBACK');
+      return res.status(404).json({ error: 'User not found' });
+    }
+    const userId = userResult.rows[0].id;
+    console.log(`[RACE JOIN] Database user ID: ${userId}`);
     
     // Get race details
     const raceCheck = await client.query(
@@ -433,13 +445,24 @@ app.post('/api/races/:raceId/leave', verifyFirebaseToken, async (req, res) => {
   
   try {
     const raceId = parseInt(req.params.raceId, 10);
-    const userId = req.user.userId;
+    const firebaseUid = req.user.firebaseUid;
     
     if (isNaN(raceId)) {
       return res.status(400).json({ error: 'Invalid race ID' });
     }
     
     await client.query('BEGIN');
+    
+    // Get database user ID from Firebase UID
+    const userResult = await client.query(
+      'SELECT id FROM users WHERE firebase_uid = $1',
+      [firebaseUid]
+    );
+    if (userResult.rows.length === 0) {
+      await client.query('ROLLBACK');
+      return res.status(404).json({ error: 'User not found' });
+    }
+    const userId = userResult.rows[0].id;
     
     await client.query(
       `UPDATE users 
@@ -479,11 +502,21 @@ app.post('/api/races/:raceId/leave', verifyFirebaseToken, async (req, res) => {
 app.post('/api/races/:raceId/complete', verifyFirebaseToken, async (req, res) => {
   try {
     const raceId = parseInt(req.params.raceId, 10);
-    const userId = req.user.userId;
+    const firebaseUid = req.user.firebaseUid;
     
     if (isNaN(raceId)) {
       return res.status(400).json({ error: 'Invalid race ID' });
     }
+    
+    // Get database user ID from Firebase UID
+    const userResult = await pool.query(
+      'SELECT id FROM users WHERE firebase_uid = $1',
+      [firebaseUid]
+    );
+    if (userResult.rows.length === 0) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+    const userId = userResult.rows[0].id;
     
     const raceCheck = await pool.query('SELECT id FROM races WHERE id = $1', [raceId]);
     if (raceCheck.rows.length === 0) {

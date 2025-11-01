@@ -74,9 +74,29 @@ async function verifyFirebaseToken(req, res, next) {
 
     console.log('✅ [TOKEN VERIFY] Token decoded successfully for user:', decodedToken.email);
 
+    // Look up database user ID from Firebase UID
+    const { Pool } = require('pg');
+    const pool = new Pool({
+      connectionString: process.env.DATABASE_URL,
+      ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false,
+    });
+    
+    const userResult = await pool.query(
+      'SELECT id FROM users WHERE firebase_uid = $1',
+      [decodedToken.uid]
+    );
+    
+    if (userResult.rows.length === 0) {
+      console.error('❌ [TOKEN VERIFY] No database user found for Firebase UID:', decodedToken.uid);
+      return res.status(404).json({ error: 'User not found in database' });
+    }
+    
+    const dbUserId = userResult.rows[0].id;
+    console.log('✅ [TOKEN VERIFY] Database user ID:', dbUserId);
+
     req.user = {
-      userId: decodedToken.userId || decodedToken.uid,
-      firebaseUid: decodedToken.uid,
+      userId: dbUserId,  // Database integer ID
+      firebaseUid: decodedToken.uid,  // Firebase UID string
       email: decodedToken.email,
       emailVerified: decodedToken.email_verified,
     };
