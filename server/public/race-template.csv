@@ -1,0 +1,3 @@
+name,sport,sport_category,sport_subtype,city,country,continent,date,start_time,distance,description,participants
+Sample Marathon,Running,Road Running,Marathon,New York,USA,North America,2025-12-15,08:00,42.2km,Annual city marathon,5000
+Sample Triathlon,Triathlon,Standard Distance,,Miami,USA,North America,2025-11-20,07:00,Standard,Olympic distance triathlon,1200
