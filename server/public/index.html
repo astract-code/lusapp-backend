@@ -430,7 +430,9 @@
 
     async function downloadCSV() {
       try {
-        const response = await fetch('/api/races/csv-download');
+        const response = await fetch('/api/races/csv-download', {
+          credentials: 'include'
+        });
         
         if (!response.ok) {
           alert('Error downloading CSV. Please try again.');
