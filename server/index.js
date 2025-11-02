@@ -63,6 +63,11 @@ const upload = multer({ dest: 'uploads/' });
 app.use('/admin', adminAuth, express.static('server/public'));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
+// Serve CSV template publicly (no auth required)
+app.get('/race-template.csv', (req, res) => {
+  res.download(path.join(__dirname, 'public', 'race-template.csv'), 'race-template.csv');
+});
+
 // Serve legal documents publicly (no auth required)
 app.get('/privacy-policy', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'privacy-policy.html'));
