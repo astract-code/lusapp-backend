@@ -60,13 +60,11 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 const upload = multer({ dest: 'uploads/' });
 
+// Serve static files (CSV templates) publicly - NO AUTH
+app.use('/static', express.static(path.join(__dirname, 'static')));
+
 app.use('/admin', adminAuth, express.static('server/public'));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
-
-// Serve CSV template publicly (no auth required)
-app.get('/race-template.csv', (req, res) => {
-  res.download(path.join(__dirname, 'public', 'race-template.csv'), 'race-template.csv');
-});
 
 // Serve legal documents publicly (no auth required)
 app.get('/privacy-policy', (req, res) => {
