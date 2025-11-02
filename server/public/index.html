@@ -292,9 +292,9 @@
     <div id="list-tab" class="tab-content">
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
         <h2 style="color: #333; margin: 0;">All Races</h2>
-        <a href="/api/races/csv-download" download class="btn btn-primary" style="text-decoration: none;">
+        <button onclick="downloadCSV()" class="btn btn-primary" style="text-decoration: none;">
           📥 Download CSV
-        </a>
+        </button>
       </div>
       <div id="races-list" class="races-list">
         <p style="text-align: center; color: #666;">Loading races...</p>
@@ -425,6 +425,34 @@
         }
       } catch (error) {
         alert('Error deleting race: ' + error.message);
+      }
+    }
+
+    async function downloadCSV() {
+      try {
+        const response = await fetch('/api/races/csv-download');
+        
+        if (!response.ok) {
+          alert('Error downloading CSV. Please try again.');
+          return;
+        }
+
+        // Get the CSV content
+        const blob = await response.blob();
+        
+        // Create a download link and trigger it
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `lusapp-races-${new Date().toISOString().split('T')[0]}.csv`;
+        document.body.appendChild(a);
+        a.click();
+        
+        // Cleanup
+        window.URL.revokeObjectURL(url);
+        document.body.removeChild(a);
+      } catch (error) {
+        alert('Error downloading CSV: ' + error.message);
       }
     }
   </script>
