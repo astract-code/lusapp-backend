@@ -98,7 +98,7 @@ export const OnboardingScreen = ({ navigation }) => {
             </Text>
           </View>
 
-          <View style={[styles.form, { backgroundColor: 'rgba(255, 255, 255, 0.95)' }]}>
+          <View style={[styles.form, { backgroundColor: colors.card }]}>
           <Text style={[styles.formTitle, { color: colors.text }]}>
             {isLogin ? 'Welcome Back' : 'Join Lusapp'}
           </Text>
@@ -106,28 +106,28 @@ export const OnboardingScreen = ({ navigation }) => {
           {!isLogin && (
             <>
               <TextInput
-                style={[styles.input, { borderColor: colors.border, color: colors.text }]}
+                style={[styles.input, { borderColor: colors.border, color: colors.text, backgroundColor: colors.background }]}
                 placeholder="Full Name"
                 placeholderTextColor={colors.textSecondary}
                 value={name}
                 onChangeText={setName}
               />
               <TextInput
-                style={[styles.input, { borderColor: colors.border, color: colors.text }]}
+                style={[styles.input, { borderColor: colors.border, color: colors.text, backgroundColor: colors.background }]}
                 placeholder="Location (e.g., San Francisco, CA)"
                 placeholderTextColor={colors.textSecondary}
                 value={location}
                 onChangeText={setLocation}
               />
               <TextInput
-                style={[styles.input, { borderColor: colors.border, color: colors.text }]}
+                style={[styles.input, { borderColor: colors.border, color: colors.text, backgroundColor: colors.background }]}
                 placeholder="Favorite Sport (e.g., Marathon, Triathlon)"
                 placeholderTextColor={colors.textSecondary}
                 value={favoriteSport}
                 onChangeText={setFavoriteSport}
               />
               <TextInput
-                style={[styles.textArea, { borderColor: colors.border, color: colors.text }]}
+                style={[styles.textArea, { borderColor: colors.border, color: colors.text, backgroundColor: colors.background }]}
                 placeholder="Bio (optional)"
                 placeholderTextColor={colors.textSecondary}
                 value={bio}
@@ -139,7 +139,7 @@ export const OnboardingScreen = ({ navigation }) => {
           )}
 
           <TextInput
-            style={[styles.input, { borderColor: colors.border, color: colors.text }]}
+            style={[styles.input, { borderColor: colors.border, color: colors.text, backgroundColor: colors.background }]}
             placeholder="Email"
             placeholderTextColor={colors.textSecondary}
             value={email}
@@ -150,7 +150,7 @@ export const OnboardingScreen = ({ navigation }) => {
 
           <View style={styles.passwordContainer}>
             <TextInput
-              style={[styles.passwordInput, { borderColor: colors.border, color: colors.text }]}
+              style={[styles.passwordInput, { borderColor: colors.border, color: colors.text, backgroundColor: colors.background }]}
               placeholder="Password"
               placeholderTextColor={colors.textSecondary}
               value={password}
@@ -168,7 +168,7 @@ export const OnboardingScreen = ({ navigation }) => {
           {!isLogin && (
             <View style={styles.passwordContainer}>
               <TextInput
-                style={[styles.passwordInput, { borderColor: colors.border, color: colors.text }]}
+                style={[styles.passwordInput, { borderColor: colors.border, color: colors.text, backgroundColor: colors.background }]}
                 placeholder="Confirm Password"
                 placeholderTextColor={colors.textSecondary}
                 value={confirmPassword}
