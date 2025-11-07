@@ -164,11 +164,7 @@ export const ProfileScreen = ({ navigation }) => {
         colors={[colors.gradient1, colors.gradient2]}
         style={styles.header}
       >
-        {authUser.avatar ? (
-          <UserAvatar uri={authUser.avatar} size={100} />
-        ) : (
-          <View style={styles.avatarPlaceholder} />
-        )}
+        <UserAvatar uri={authUser.avatar} size={100} />
         
         <TouchableOpacity 
           style={[styles.uploadButton, { backgroundColor: colors.primary }]}
