@@ -46,6 +46,8 @@ export const useAppStore = create((set, get) => ({
         id: race.id.toString(),
         name: race.name,
         sport: race.sport,
+        sport_category: race.sport_category,
+        sport_subtype: race.sport_subtype,
         city: race.city,
         country: race.country,
         continent: race.continent,
@@ -54,7 +56,7 @@ export const useAppStore = create((set, get) => ({
         distance: race.distance,
         description: race.description,
         participants: race.participants,
-        registeredUsers: [],
+        registeredUsers: (race.registered_users || []).map(id => id.toString()),
       }));
       
       console.log(`Successfully loaded ${formattedRaces.length} races from API`);

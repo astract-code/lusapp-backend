@@ -8,6 +8,7 @@ import {
   Alert,
   ActivityIndicator,
   Platform,
+  TextInput,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -27,6 +28,8 @@ export const ProfileScreen = ({ navigation }) => {
   const { user: authUser, logout, updateUser, token } = useAuth();
   const races = useAppStore((state) => state.races);
   const [uploading, setUploading] = useState(false);
+  const [editingName, setEditingName] = useState(false);
+  const [newName, setNewName] = useState(authUser?.name || '');
 
   if (!authUser) return null;
 
@@ -101,6 +104,42 @@ export const ProfileScreen = ({ navigation }) => {
     }
   };
 
+  const handleNameUpdate = async () => {
+    if (!newName.trim()) {
+      Alert.alert('Error', 'Name cannot be empty');
+      return;
+    }
+
+    if (newName === authUser.name) {
+      setEditingName(false);
+      return;
+    }
+
+    try {
+      const response = await fetch(`${API_URL}/api/auth/update-profile`, {
+        method: 'PUT',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ name: newName.trim() }),
+      });
+
+      if (!response.ok) {
+        const data = await response.json();
+        throw new Error(data.error || 'Failed to update name');
+      }
+
+      updateUser({ ...authUser, name: newName.trim() });
+      setEditingName(false);
+      Alert.alert('Success', 'Name updated successfully!');
+    } catch (error) {
+      console.error('Error updating name:', error);
+      Alert.alert('Error', error.message || 'Failed to update name');
+      setNewName(authUser.name);
+    }
+  };
+
   const joinedRaces = races.filter((race) =>
     authUser.joined_races?.includes(race.id.toString())
   );
@@ -145,7 +184,46 @@ export const ProfileScreen = ({ navigation }) => {
           )}
         </TouchableOpacity>
 
-        <Text style={styles.name}>{authUser.name}</Text>
+        {editingName ? (
+          <View style={styles.nameEditContainer}>
+            <TextInput
+              style={[styles.nameInput, { color: '#FFFFFF', borderColor: '#FFFFFF' }]}
+              value={newName}
+              onChangeText={setNewName}
+              placeholder="Enter your name"
+              placeholderTextColor="rgba(255, 255, 255, 0.5)"
+              autoFocus
+              maxLength={50}
+            />
+            <View style={styles.nameEditButtons}>
+              <TouchableOpacity
+                style={[styles.nameEditButton, styles.cancelButton]}
+                onPress={() => {
+                  setNewName(authUser.name);
+                  setEditingName(false);
+                }}
+              >
+                <Text style={styles.nameEditButtonText}>Cancel</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[styles.nameEditButton, styles.saveButton, { backgroundColor: colors.primary }]}
+                onPress={handleNameUpdate}
+              >
+                <Text style={styles.nameEditButtonText}>Save</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        ) : (
+          <View style={styles.nameContainer}>
+            <Text style={styles.name}>{authUser.name}</Text>
+            <TouchableOpacity
+              onPress={() => setEditingName(true)}
+              style={styles.editButton}
+            >
+              <Text style={{ fontSize: 16 }}>✏️</Text>
+            </TouchableOpacity>
+          </View>
+        )}
         <Text style={styles.location}>📍 {authUser.location}</Text>
         <Text style={styles.bio}>{authUser.bio}</Text>
         
@@ -271,11 +349,57 @@ const styles = StyleSheet.create({
     fontSize: FONT_SIZE.sm,
     fontWeight: '600',
   },
+  nameContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: SPACING.md,
+    gap: SPACING.xs,
+  },
   name: {
     fontSize: FONT_SIZE.xl,
     fontWeight: 'bold',
     color: '#FFFFFF',
+  },
+  editButton: {
+    padding: SPACING.xs,
+  },
+  nameEditContainer: {
     marginTop: SPACING.md,
+    width: '80%',
+    alignItems: 'center',
+  },
+  nameInput: {
+    fontSize: FONT_SIZE.lg,
+    fontWeight: 'bold',
+    borderWidth: 1,
+    borderRadius: BORDER_RADIUS.sm,
+    paddingHorizontal: SPACING.md,
+    paddingVertical: SPACING.sm,
+    width: '100%',
+    textAlign: 'center',
+  },
+  nameEditButtons: {
+    flexDirection: 'row',
+    marginTop: SPACING.sm,
+    gap: SPACING.sm,
+  },
+  nameEditButton: {
+    paddingHorizontal: SPACING.lg,
+    paddingVertical: SPACING.sm,
+    borderRadius: BORDER_RADIUS.md,
+    minWidth: 80,
+    alignItems: 'center',
+  },
+  cancelButton: {
+    backgroundColor: 'rgba(255, 255, 255, 0.2)',
+  },
+  saveButton: {
+    backgroundColor: '#667eea',
+  },
+  nameEditButtonText: {
+    color: '#FFFFFF',
+    fontSize: FONT_SIZE.sm,
+    fontWeight: '600',
   },
   location: {
     fontSize: FONT_SIZE.md,

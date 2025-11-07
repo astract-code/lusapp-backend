@@ -8,6 +8,7 @@ import {
   Alert,
   ActivityIndicator,
 } from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { UserAvatar } from '../components/UserAvatar';
 import { useAuth } from '../context/AuthContext';
@@ -20,12 +21,19 @@ export const RaceDetailScreen = ({ route, navigation }) => {
   const { raceId } = route.params;
   const { colors } = useTheme();
   const { user, token, updateUser } = useAuth();
-  const { getRaceById, registerForRace, unregisterFromRace } = useAppStore();
+  const { getRaceById, registerForRace, unregisterFromRace, fetchRaces } = useAppStore();
   const [registeredUsers, setRegisteredUsers] = useState([]);
   const [loadingUsers, setLoadingUsers] = useState(true);
   const [raceGroup, setRaceGroup] = useState(null);
 
   const race = getRaceById(raceId);
+
+  // Refresh race data when screen comes into focus
+  useFocusEffect(
+    React.useCallback(() => {
+      fetchRaces();
+    }, [])
+  );
 
   if (!race) {
     return (

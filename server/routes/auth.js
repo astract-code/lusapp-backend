@@ -181,6 +181,46 @@ router.get('/me', verifyFirebaseToken, async (req, res) => {
   }
 });
 
+router.put('/update-profile', verifyFirebaseToken, async (req, res) => {
+  try {
+    const userId = req.user.userId;
+    const { name } = req.body;
+    
+    if (!name || !name.trim()) {
+      return res.status(400).json({ error: 'Name is required' });
+    }
+    
+    const result = await pool.query(
+      'UPDATE users SET name = $1 WHERE id = $2 RETURNING id, email, name, location, bio, favorite_sport, avatar, total_races',
+      [name.trim(), userId]
+    );
+    
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+    
+    const user = result.rows[0];
+    
+    res.json({
+      success: true,
+      user: {
+        id: user.id.toString(),
+        email: user.email,
+        name: user.name,
+        location: user.location,
+        bio: user.bio,
+        favoriteSport: user.favorite_sport,
+        avatar: getFullAvatarUrl(req, user.avatar),
+        totalRaces: user.total_races
+      }
+    });
+    
+  } catch (error) {
+    console.error('Update profile error:', error);
+    res.status(500).json({ error: 'Failed to update profile' });
+  }
+});
+
 router.delete('/account', verifyFirebaseToken, async (req, res) => {
   const client = await pool.connect();
   
