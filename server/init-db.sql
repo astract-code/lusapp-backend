@@ -49,6 +49,12 @@ ALTER TABLE races ADD COLUMN IF NOT EXISTS sport_subtype VARCHAR(100);
 ALTER TABLE races ADD COLUMN IF NOT EXISTS start_time TIME;
 ALTER TABLE races ADD COLUMN IF NOT EXISTS registered_users TEXT[] DEFAULT '{}';
 
+-- Add approval workflow columns for race moderation
+ALTER TABLE races ADD COLUMN IF NOT EXISTS approval_status VARCHAR(20) DEFAULT 'approved' CHECK (approval_status IN ('pending', 'approved', 'rejected'));
+ALTER TABLE races ADD COLUMN IF NOT EXISTS created_by_user_id INTEGER REFERENCES users(id);
+ALTER TABLE races ADD COLUMN IF NOT EXISTS reviewed_by VARCHAR(255);
+ALTER TABLE races ADD COLUMN IF NOT EXISTS reviewed_at TIMESTAMP;
+
 -- Create indexes for performance
 CREATE INDEX IF NOT EXISTS idx_users_email ON users(email);
 CREATE INDEX IF NOT EXISTS idx_races_date ON races(date);
