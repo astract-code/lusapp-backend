@@ -24,7 +24,12 @@ Firebase Authentication handles user authentication (email/password, verificatio
 
 ### Backend API System
 
-An Express.js REST API provides endpoints for race CRUD operations, user authentication, and account deletion. It includes a CSV upload feature (`/api/races/csv-upload`) for bulk race import with duplicate detection. An admin web interface (`/admin`) allows manual race entry and CSV uploads, secured with HTTP Basic Authentication.
+An Express.js REST API provides endpoints for race CRUD operations, user authentication, and account deletion. It includes both admin and user-facing race creation:
+- **Admin endpoints** (`/api/races`) - Protected by HTTP Basic Auth for admin panel race management
+- **User race creation** (`/api/races/user-create`) - Protected by Firebase Auth, allows authenticated users to create races that are visible to all users
+- **CSV upload** (`/api/races/csv-upload`) - Bulk race import with duplicate detection
+
+The admin web interface (`/admin`) allows manual race entry and CSV uploads, secured with HTTP Basic Authentication.
 
 ### Groups & Community Features
 
