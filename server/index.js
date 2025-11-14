@@ -93,6 +93,7 @@ app.get('/api/races', async (req, res) => {
       `SELECT *, COALESCE(registered_users, ARRAY[]::text[]) as registered_users 
        FROM races 
        WHERE date >= CURRENT_DATE 
+       AND approval_status = 'approved'
        ORDER BY date ASC`
     );
     res.json(result.rows);
@@ -188,12 +189,16 @@ app.post('/api/races/user-create', verifyToken, async (req, res) => {
     }
     
     const result = await pool.query(
-      'INSERT INTO races (name, sport, sport_category, sport_subtype, city, country, continent, date, start_time, distance, description, participants) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) RETURNING *',
-      [name, sport, sport_category || null, sport_subtype || null, city, country, continent, date, start_time || null, distance, description, participants || 0]
+      'INSERT INTO races (name, sport, sport_category, sport_subtype, city, country, continent, date, start_time, distance, description, participants, approval_status, created_by_user_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14) RETURNING *',
+      [name, sport, sport_category || null, sport_subtype || null, city, country, continent, date, start_time || null, distance, description, participants || 0, 'pending', req.user.userId]
     );
     
-    console.log('✅ [USER RACE CREATE] Race created successfully, ID:', result.rows[0].id);
-    res.json(result.rows[0]);
+    console.log('✅ [USER RACE CREATE] Race created with pending status, ID:', result.rows[0].id);
+    res.json({ 
+      success: true,
+      race: result.rows[0],
+      message: 'Race submitted successfully! Waiting for admin approval to avoid duplicates.'
+    });
   } catch (error) {
     console.error('❌ [USER RACE CREATE] Error:', error.message);
     res.status(500).json({ error: 'Failed to create race' });
@@ -226,6 +231,77 @@ app.delete('/api/races/:id', adminAuth, async (req, res) => {
   } catch (error) {
     console.error('Error deleting race:', error);
     res.status(500).json({ error: 'Failed to delete race' });
+  }
+});
+
+// Admin endpoint: Get pending races for approval
+app.get('/api/races/pending', adminAuth, async (req, res) => {
+  try {
+    const result = await pool.query(
+      `SELECT r.*, u.name as created_by_name, u.email as created_by_email
+       FROM races r
+       LEFT JOIN users u ON r.created_by_user_id = u.id
+       WHERE r.approval_status = 'pending'
+       ORDER BY r.created_at DESC`
+    );
+    res.json(result.rows);
+  } catch (error) {
+    console.error('Error fetching pending races:', error);
+    res.status(500).json({ error: 'Failed to fetch pending races' });
+  }
+});
+
+// Admin endpoint: Approve a race
+app.post('/api/races/:id/approve', adminAuth, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const result = await pool.query(
+      `UPDATE races 
+       SET approval_status = 'approved', 
+           reviewed_by = $1, 
+           reviewed_at = CURRENT_TIMESTAMP 
+       WHERE id = $2 
+       RETURNING *`,
+      [req.auth.user || 'admin', id]
+    );
+    
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: 'Race not found' });
+    }
+    
+    console.log(`✅ Race ${id} approved by ${req.auth.user || 'admin'}`);
+    res.json({ success: true, race: result.rows[0] });
+  } catch (error) {
+    console.error('Error approving race:', error);
+    res.status(500).json({ error: 'Failed to approve race' });
+  }
+});
+
+// Admin endpoint: Reject a race
+app.post('/api/races/:id/reject', adminAuth, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { reason } = req.body;
+    
+    const result = await pool.query(
+      `UPDATE races 
+       SET approval_status = 'rejected', 
+           reviewed_by = $1, 
+           reviewed_at = CURRENT_TIMESTAMP 
+       WHERE id = $2 
+       RETURNING *`,
+      [req.auth.user || 'admin', id]
+    );
+    
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: 'Race not found' });
+    }
+    
+    console.log(`❌ Race ${id} rejected by ${req.auth.user || 'admin'}${reason ? `: ${reason}` : ''}`);
+    res.json({ success: true, race: result.rows[0] });
+  } catch (error) {
+    console.error('Error rejecting race:', error);
+    res.status(500).json({ error: 'Failed to reject race' });
   }
 });
 

@@ -201,12 +201,21 @@
     <p class="subtitle">Manage races, upload CSV files, and view all race data</p>
 
     <div class="tabs">
-      <button class="tab active" onclick="switchTab('add')">Add Race Manually</button>
+      <button class="tab" onclick="switchTab('pending')">⏳ Pending Approval</button>
+      <button class="tab" onclick="switchTab('add')">Add Race Manually</button>
       <button class="tab" onclick="switchTab('upload')">Upload CSV</button>
-      <button class="tab" onclick="switchTab('list')">All Races</button>
+      <button class="tab active" onclick="switchTab('list')">All Races</button>
     </div>
 
-    <div id="add-tab" class="tab-content active">
+    <div id="pending-tab" class="tab-content">
+      <h2 style="color: #333; margin-bottom: 20px;">⏳ Pending Races - Awaiting Approval</h2>
+      <p style="color: #666; margin-bottom: 20px;">Review and approve races submitted by users to avoid duplicates</p>
+      <div id="pending-races-list" class="races-list">
+        <p style="text-align: center; color: #666;">Loading pending races...</p>
+      </div>
+    </div>
+
+    <div id="add-tab" class="tab-content">
       <div id="message"></div>
       <form id="race-form">
         <div class="form-group">
@@ -312,6 +321,8 @@
 
       if (tab === 'list') {
         loadRaces();
+      } else if (tab === 'pending') {
+        loadPendingRaces();
       }
     }
 
@@ -425,6 +436,79 @@
         }
       } catch (error) {
         alert('Error deleting race: ' + error.message);
+      }
+    }
+
+    async function loadPendingRaces() {
+      try {
+        const response = await fetch('/api/races/pending');
+        const races = await response.json();
+        
+        const listDiv = document.getElementById('pending-races-list');
+        if (races.length === 0) {
+          listDiv.innerHTML = '<p style="text-align: center; color: #666;">🎉 No pending races! All submissions have been reviewed.</p>';
+          return;
+        }
+
+        listDiv.innerHTML = races.map(race => `
+          <div class="race-card">
+            <div class="race-info">
+              <h3>${race.name}</h3>
+              <p><strong>Sport:</strong> ${race.sport || race.sport_category + ' - ' + race.sport_subtype}</p>
+              <p><strong>Location:</strong> ${race.city ? race.city + ', ' : ''}${race.country || 'N/A'}${race.continent ? ' (' + race.continent + ')' : ''}</p>
+              <p><strong>Date:</strong> ${new Date(race.date).toLocaleDateString()}</p>
+              <p><strong>Distance:</strong> ${race.distance || 'N/A'}</p>
+              <p><strong>Participants:</strong> ${race.participants || 0}</p>
+              <p><strong>Submitted by:</strong> ${race.created_by_name || 'Unknown'} (${race.created_by_email || 'N/A'})</p>
+              <p style="color: #999; font-size: 12px;">Submitted: ${new Date(race.created_at).toLocaleString()}</p>
+            </div>
+            <div class="race-actions">
+              <button class="btn btn-primary" onclick="approveRace(${race.id})">✅ Approve</button>
+              <button class="btn btn-danger" onclick="rejectRace(${race.id})">❌ Reject</button>
+            </div>
+          </div>
+        `).join('');
+      } catch (error) {
+        console.error('Error loading pending races:', error);
+        document.getElementById('pending-races-list').innerHTML = '<p style="text-align: center; color: #f56565;">Error loading pending races. Please try again.</p>';
+      }
+    }
+
+    async function approveRace(id) {
+      if (!confirm('Approve this race? It will be visible to all users.')) return;
+
+      try {
+        const response = await fetch(`/api/races/${id}/approve`, { method: 'POST' });
+        if (response.ok) {
+          alert('✅ Race approved successfully!');
+          loadPendingRaces();
+        } else {
+          alert('Error approving race');
+        }
+      } catch (error) {
+        alert('Error: ' + error.message);
+      }
+    }
+
+    async function rejectRace(id) {
+      const reason = prompt('Reason for rejection (optional):');
+      if (reason === null) return;
+
+      try {
+        const response = await fetch(`/api/races/${id}/reject`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ reason })
+        });
+        
+        if (response.ok) {
+          alert('❌ Race rejected');
+          loadPendingRaces();
+        } else {
+          alert('Error rejecting race');
+        }
+      } catch (error) {
+        alert('Error: ' + error.message);
       }
     }
   </script>

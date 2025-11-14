@@ -117,7 +117,7 @@ export const DiscoverScreen = ({ navigation }) => {
       const createdRace = await response.json();
       console.log('[RACE CREATE] Success:', createdRace);
 
-      Alert.alert('Success', `Added ${newRace.name}! It's now visible to all users.`);
+      Alert.alert('Race Submitted!', createdRace.message || 'Race submitted successfully! Waiting for admin approval to avoid duplicates.');
       
       setNewRace({
         name: '',
