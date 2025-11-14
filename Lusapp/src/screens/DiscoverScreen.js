@@ -52,6 +52,11 @@ export const DiscoverScreen = ({ navigation }) => {
     return COUNTRIES.filter(country => COUNTRY_TO_CONTINENT[country] === selectedContinent);
   }, [selectedContinent]);
 
+  const formFilteredCountries = useMemo(() => {
+    if (!newRace.continent) return COUNTRIES;
+    return COUNTRIES.filter(country => COUNTRY_TO_CONTINENT[country] === newRace.continent);
+  }, [newRace.continent]);
+
   const filteredRaces = useMemo(() => {
     return races.filter((race) => {
       if (selectedCategory || selectedSubtype) {
@@ -268,41 +273,19 @@ export const DiscoverScreen = ({ navigation }) => {
               onChangeText={(text) => setNewRace({ ...newRace, city: text })}
             />
 
-            <Text style={[styles.label, { color: colors.text }]}>Country</Text>
-            <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.sportPicker}>
-              {COUNTRIES.map((country) => (
-                <TouchableOpacity
-                  key={country}
-                  style={[
-                    styles.sportOption,
-                    { backgroundColor: newRace.country === country ? colors.primary : colors.card, borderColor: colors.border }
-                  ]}
-                  onPress={() => setNewRace({ ...newRace, country })}
-                >
-                  <Text style={[styles.sportText, { color: newRace.country === country ? '#FFF' : colors.text }]}>
-                    {country}
-                  </Text>
-                </TouchableOpacity>
-              ))}
-            </ScrollView>
+            <DropdownFilter
+              title="Continent (optional - helps filter countries)"
+              options={CONTINENTS}
+              selectedValue={newRace.continent}
+              onSelect={(value) => setNewRace({ ...newRace, continent: value })}
+            />
 
-            <Text style={[styles.label, { color: colors.text }]}>Continent</Text>
-            <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.sportPicker}>
-              {CONTINENTS.map((continent) => (
-                <TouchableOpacity
-                  key={continent}
-                  style={[
-                    styles.sportOption,
-                    { backgroundColor: newRace.continent === continent ? colors.primary : colors.card, borderColor: colors.border }
-                  ]}
-                  onPress={() => setNewRace({ ...newRace, continent })}
-                >
-                  <Text style={[styles.sportText, { color: newRace.continent === continent ? '#FFF' : colors.text }]}>
-                    {continent}
-                  </Text>
-                </TouchableOpacity>
-              ))}
-            </ScrollView>
+            <DropdownFilter
+              title="Country"
+              options={formFilteredCountries}
+              selectedValue={newRace.country}
+              onSelect={(value) => setNewRace({ ...newRace, country: value })}
+            />
 
             <Text style={[styles.label, { color: colors.text }]}>Distance</Text>
             <TextInput
