@@ -152,6 +152,54 @@ app.post('/api/races', adminAuth, async (req, res) => {
   }
 });
 
+// User-friendly race creation endpoint (Firebase auth)
+const { verifyFirebaseToken: verifyToken } = require('./middleware/firebaseAuth');
+
+app.post('/api/races/user-create', verifyToken, async (req, res) => {
+  try {
+    const { name, sport, sport_category, sport_subtype, city, country, continent, date, start_time, distance, description, participants } = req.body;
+    
+    console.log('📝 [USER RACE CREATE] Request from user:', req.user.email);
+    console.log('📝 [USER RACE CREATE] Race data:', { name, sport_category, sport_subtype, city, country, date });
+    
+    if (!name || !date) {
+      return res.status(400).json({ error: 'Name and date are required' });
+    }
+    
+    // Check for duplicates: same name + date + sport/distance
+    const duplicateCheck = await pool.query(
+      `SELECT * FROM races 
+       WHERE LOWER(name) = LOWER($1) 
+       AND date = $2 
+       AND (
+         (sport_category IS NOT DISTINCT FROM $3 AND sport_subtype IS NOT DISTINCT FROM $4)
+         OR (sport_category IS NULL AND sport_subtype IS NULL AND sport IS NOT DISTINCT FROM $5)
+       )`,
+      [name, date, sport_category || null, sport_subtype || null, sport || null]
+    );
+    
+    if (duplicateCheck.rows.length > 0) {
+      console.log('⚠️  [USER RACE CREATE] Duplicate detected');
+      return res.status(400).json({ 
+        error: 'Duplicate race detected',
+        message: `A race with the same name, date, and sport already exists: "${name}" on ${date}`,
+        existingRace: duplicateCheck.rows[0]
+      });
+    }
+    
+    const result = await pool.query(
+      'INSERT INTO races (name, sport, sport_category, sport_subtype, city, country, continent, date, start_time, distance, description, participants) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) RETURNING *',
+      [name, sport, sport_category || null, sport_subtype || null, city, country, continent, date, start_time || null, distance, description, participants || 0]
+    );
+    
+    console.log('✅ [USER RACE CREATE] Race created successfully, ID:', result.rows[0].id);
+    res.json(result.rows[0]);
+  } catch (error) {
+    console.error('❌ [USER RACE CREATE] Error:', error.message);
+    res.status(500).json({ error: 'Failed to create race' });
+  }
+});
+
 app.put('/api/races/:id', adminAuth, async (req, res) => {
   try {
     const { id } = req.params;

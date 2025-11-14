@@ -16,12 +16,15 @@ import { FilterChip } from '../components/FilterChip';
 import { DropdownFilter } from '../components/DropdownFilter';
 import { useAppStore } from '../context/AppContext';
 import { useTheme } from '../context/ThemeContext';
+import { useAuth } from '../context/AuthContext';
+import API_URL from '../config/api';
 import { SPACING, FONT_SIZE, BORDER_RADIUS, SPORTS, CONTINENTS, COUNTRIES, COUNTRY_TO_CONTINENT } from '../constants/theme';
 import { SPORT_TAXONOMY, SPORT_CATEGORIES, normalizeLegacySport, formatSportDisplay } from '../constants/sportTaxonomy';
 
 export const DiscoverScreen = ({ navigation }) => {
   const { colors } = useTheme();
-  const { races, addRace } = useAppStore();
+  const { races, addRace, fetchRaces } = useAppStore();
+  const { token } = useAuth();
   
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedSubtype, setSelectedSubtype] = useState(null);
@@ -66,46 +69,71 @@ export const DiscoverScreen = ({ navigation }) => {
   }, [races, selectedCategory, selectedSubtype, selectedContinent, selectedCountry, searchQuery]);
 
 
-  const handleAddRace = () => {
+  const handleAddRace = async () => {
     if (!newRace.name.trim() || !newRace.sport_category || !newRace.sport_subtype || !newRace.date) {
       Alert.alert('Error', 'Please fill in at least Name, Sport Category, Distance/Type, and Date');
       return;
     }
 
-    const displaySport = formatSportDisplay(newRace.sport_category, newRace.sport_subtype);
+    try {
+      const displaySport = formatSportDisplay(newRace.sport_category, newRace.sport_subtype);
 
-    const race = {
-      id: `race-${Date.now()}`,
-      name: newRace.name,
-      sport: displaySport,
-      sport_category: newRace.sport_category,
-      sport_subtype: newRace.sport_subtype,
-      city: newRace.city || 'TBD',
-      country: newRace.country || 'TBD',
-      continent: newRace.continent || 'Other',
-      date: newRace.date,
-      distance: newRace.distance || 'TBD',
-      description: newRace.description || '',
-      participants: parseInt(newRace.participants) || 0,
-      registeredUsers: [],
-    };
+      const raceData = {
+        name: newRace.name,
+        sport: displaySport,
+        sport_category: newRace.sport_category,
+        sport_subtype: newRace.sport_subtype,
+        city: newRace.city || 'TBD',
+        country: newRace.country || 'TBD',
+        continent: newRace.continent || 'Other',
+        date: newRace.date,
+        start_time: null,
+        distance: newRace.distance || 'TBD',
+        description: newRace.description || '',
+        participants: parseInt(newRace.participants) || 0,
+      };
 
-    addRace(race);
-    Alert.alert('Success', `Added ${newRace.name}!`);
-    setNewRace({
-      name: '',
-      sport: '',
-      sport_category: '',
-      sport_subtype: '',
-      city: '',
-      country: '',
-      continent: '',
-      date: '',
-      distance: '',
-      description: '',
-      participants: '',
-    });
-    setShowAddForm(false);
+      console.log('[RACE CREATE] Sending to backend:', raceData);
+
+      const response = await fetch(`${API_URL}/api/races/user-create`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+        body: JSON.stringify(raceData),
+      });
+
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.message || 'Failed to create race');
+      }
+
+      const createdRace = await response.json();
+      console.log('[RACE CREATE] Success:', createdRace);
+
+      Alert.alert('Success', `Added ${newRace.name}! It's now visible to all users.`);
+      
+      setNewRace({
+        name: '',
+        sport: '',
+        sport_category: '',
+        sport_subtype: '',
+        city: '',
+        country: '',
+        continent: '',
+        date: '',
+        distance: '',
+        description: '',
+        participants: '',
+      });
+      setShowAddForm(false);
+
+      fetchRaces();
+    } catch (error) {
+      console.error('[RACE CREATE] Error:', error);
+      Alert.alert('Error', error.message || 'Failed to create race. Please try again.');
+    }
   };
 
   const handleContinentSelect = (continent) => {
