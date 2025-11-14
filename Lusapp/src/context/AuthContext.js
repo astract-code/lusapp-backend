@@ -19,21 +19,30 @@ export const AuthProvider = ({ children }) => {
       console.log('[AUTH] Firebase auth state changed:', firebaseUser ? firebaseUser.uid : 'null');
       
       if (firebaseUser) {
-        setFirebaseUser(firebaseUser);
-        setEmailVerified(firebaseUser.emailVerified);
+        // CRITICAL: Reload user to get latest email verification status
+        await firebaseUser.reload();
+        const currentUser = auth.currentUser;
         
-        if (firebaseUser.emailVerified) {
+        setFirebaseUser(currentUser);
+        setEmailVerified(currentUser.emailVerified);
+        
+        console.log('[AUTH] Email verified status:', currentUser.emailVerified);
+        
+        if (currentUser.emailVerified) {
           try {
-            const idToken = await firebaseUser.getIdToken();
+            const idToken = await currentUser.getIdToken();
             setToken(idToken);
             
-            const dbUser = await syncUserWithBackend(firebaseUser, idToken);
+            console.log('[AUTH] Starting backend sync...');
+            const dbUser = await syncUserWithBackend(currentUser, idToken);
             setUser(dbUser);
             
             await AsyncStorage.setItem('token', idToken);
             await AsyncStorage.setItem('user', JSON.stringify(dbUser));
+            console.log('[AUTH] ✅ User fully synced and stored');
           } catch (error) {
-            console.error('[AUTH] Error syncing user with backend:', error);
+            console.error('[AUTH] ❌ Error syncing user with backend:', error);
+            console.error('[AUTH] Error details:', error.message);
           }
         } else {
           console.log('[AUTH] Email not verified yet');
