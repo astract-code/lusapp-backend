@@ -164,4 +164,51 @@ async function verifyTokenClientSide(idToken) {
   });
 }
 
-module.exports = { verifyFirebaseToken, firebaseAdmin };
+async function verifyFirebaseTokenOnly(req, res, next) {
+  console.log('🔍 [TOKEN VERIFY ONLY] Starting token verification (no DB check)...');
+  
+  try {
+    const authHeader = req.headers.authorization;
+    
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+      console.error('❌ [TOKEN VERIFY ONLY] No authorization header or invalid format');
+      return res.status(401).json({ error: 'No token provided' });
+    }
+
+    const idToken = authHeader.split('Bearer ')[1];
+    console.log('🔍 [TOKEN VERIFY ONLY] Token received, length:', idToken.length);
+
+    let decodedToken;
+    
+    if (firebaseAdmin && admin.apps.length > 0) {
+      console.log('🔍 [TOKEN VERIFY ONLY] Using Firebase Admin SDK verification');
+      try {
+        decodedToken = await admin.auth().verifyIdToken(idToken);
+        console.log('✅ [TOKEN VERIFY ONLY] Admin SDK verification successful');
+      } catch (adminError) {
+        console.warn('⚠️  [TOKEN VERIFY ONLY] Admin SDK verification failed:', adminError.message);
+        console.log('🔍 [TOKEN VERIFY ONLY] Falling back to client-side verification');
+        decodedToken = await verifyTokenClientSide(idToken);
+      }
+    } else {
+      console.log('🔍 [TOKEN VERIFY ONLY] Firebase Admin not initialized, using client-side verification');
+      decodedToken = await verifyTokenClientSide(idToken);
+    }
+
+    console.log('✅ [TOKEN VERIFY ONLY] Token decoded successfully for user:', decodedToken.email);
+
+    req.user = {
+      firebaseUid: decodedToken.uid,
+      email: decodedToken.email,
+      emailVerified: decodedToken.email_verified,
+    };
+
+    next();
+  } catch (error) {
+    console.error('❌ [TOKEN VERIFY ONLY] Token verification error:', error.message);
+    console.error('❌ [TOKEN VERIFY ONLY] Full error:', error.stack);
+    return res.status(401).json({ error: 'Invalid or expired token' });
+  }
+}
+
+module.exports = { verifyFirebaseToken, verifyFirebaseTokenOnly, firebaseAdmin };

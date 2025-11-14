@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { Pool } = require('pg');
 const { authMiddleware, JWT_SECRET } = require('../middleware/authMiddleware');
-const { verifyFirebaseToken } = require('../middleware/firebaseAuth');
+const { verifyFirebaseToken, verifyFirebaseTokenOnly } = require('../middleware/firebaseAuth');
 
 const router = express.Router();
 
@@ -416,17 +416,20 @@ router.delete('/users/:userId/unfollow', verifyFirebaseToken, async (req, res) =
   }
 });
 
-router.post('/sync', verifyFirebaseToken, async (req, res) => {
+router.post('/sync', verifyFirebaseTokenOnly, async (req, res) => {
   console.log('🔍 [AUTH SYNC] Starting user sync...');
   console.log('🔍 [AUTH SYNC] Request body:', JSON.stringify(req.body));
   console.log('🔍 [AUTH SYNC] req.user from middleware:', JSON.stringify(req.user));
   
   try {
-    const { firebase_uid, email, name } = req.body;
+    // SECURITY: Use verified token data instead of trusting request body
+    const firebase_uid = req.user.firebaseUid;
+    const email = req.user.email;
+    const { name } = req.body;
     
     if (!firebase_uid || !email) {
-      console.error('❌ [AUTH SYNC] Missing required fields');
-      return res.status(400).json({ error: 'Firebase UID and email are required' });
+      console.error('❌ [AUTH SYNC] Missing required fields in verified token');
+      return res.status(400).json({ error: 'Invalid token data' });
     }
     
     console.log('🔍 [AUTH SYNC] Checking for existing user with firebase_uid:', firebase_uid);
@@ -443,10 +446,25 @@ router.post('/sync', verifyFirebaseToken, async (req, res) => {
       );
       
       if (user.rows.length > 0) {
-        console.log('🔍 [AUTH SYNC] Found existing user by email, updating firebase_uid');
+        // SECURITY: Only allow firebase_uid update if the user doesn't already have one
+        // This prevents account takeover by preventing reassignment of firebase_uid
+        if (user.rows[0].firebase_uid) {
+          console.error('❌ [AUTH SYNC] Email already linked to different Firebase UID');
+          return res.status(409).json({ 
+            error: 'This email is already associated with a different account' 
+          });
+        }
+        
+        console.log('🔍 [AUTH SYNC] Found existing user by email (no firebase_uid), linking accounts');
         await pool.query(
           'UPDATE users SET firebase_uid = $1 WHERE id = $2',
           [firebase_uid, user.rows[0].id]
+        );
+        
+        // Reload user data after update
+        user = await pool.query(
+          'SELECT * FROM users WHERE id = $1',
+          [user.rows[0].id]
         );
       } else {
         console.log('🔍 [AUTH SYNC] No existing user, creating new user');
