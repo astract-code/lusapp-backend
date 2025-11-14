@@ -1,7 +1,9 @@
 {
   "scripts": {
     "start": "node server/index.js",
-    "db:setup": "node server/setup-database.js"
+    "db:setup": "node server/setup-database.js",
+    "db:backup": "node scripts/backup-database.js",
+    "db:restore": "node scripts/restore-database.js"
   },
   "dependencies": {
     "bcrypt": "^6.0.0",

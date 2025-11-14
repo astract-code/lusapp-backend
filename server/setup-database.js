@@ -9,7 +9,22 @@ const pool = new Pool({
 
 async function setupDatabase() {
   try {
-    console.log('Setting up database...');
+    console.log('⚠️  WARNING: This will run database initialization SQL');
+    console.log('⚠️  Only run this on a NEW/EMPTY database or you risk data loss!');
+    
+    // Check if database already has data
+    const userCheck = await pool.query('SELECT COUNT(*) FROM users').catch(() => ({ rows: [{ count: '0' }] }));
+    const userCount = parseInt(userCheck.rows[0].count);
+    
+    if (userCount > 0) {
+      console.log(`\n❌ DANGER: Database already has ${userCount} users!`);
+      console.log('❌ This script should NOT be run on an existing database.');
+      console.log('💡 Use "npm run db:backup" to backup your data first.');
+      console.log('💡 Or use Neon\'s point-in-time restore feature.');
+      process.exit(1);
+    }
+    
+    console.log('Setting up database schema...');
     
     const sql = fs.readFileSync(path.join(__dirname, 'init-db.sql'), 'utf8');
     
