@@ -1,0 +1,43 @@
+
+🔍 [TOKEN VERIFY] Token received, length: 941
+🔍 [TOKEN VERIFY] Using Firebase Admin SDK verification
+✅ [TOKEN VERIFY] Admin SDK verification successful
+✅ [TOKEN VERIFY] Token decoded successfully for user: evapaztaibo@gmail.com
+✅ [TOKEN VERIFY] Database user ID: 14
+✅ [TOKEN VERIFY] Database user ID: 14
+🔍 [TOKEN VERIFY] Starting token verification...
+🔍 [TOKEN VERIFY] Token received, length: 941
+🔍 [TOKEN VERIFY] Using Firebase Admin SDK verification
+✅ [TOKEN VERIFY] Admin SDK verification successful
+✅ [TOKEN VERIFY] Token decoded successfully for user: evapaztaibo@gmail.com
+✅ [TOKEN VERIFY] Database user ID: 14
+🔍 [TOKEN VERIFY] Starting token verification...
+🔍 [TOKEN VERIFY] Token received, length: 941
+🔍 [TOKEN VERIFY] Using Firebase Admin SDK verification
+✅ [TOKEN VERIFY] Admin SDK verification successful
+✅ [TOKEN VERIFY] Token decoded successfully for user: evapaztaibo@gmail.com
+✅ [TOKEN VERIFY] Database user ID: 14
+🔍 [TOKEN VERIFY] Starting token verification...
+🔍 [TOKEN VERIFY] Token received, length: 941
+🔍 [TOKEN VERIFY] Using Firebase Admin SDK verification
+✅ [TOKEN VERIFY] Admin SDK verification successful
+✅ [TOKEN VERIFY] Token decoded successfully for user: evapaztaibo@gmail.com
+🔍 [TOKEN VERIFY] Starting token verification...
+🔍 [TOKEN VERIFY] Token received, length: 941
+🔍 [TOKEN VERIFY] Using Firebase Admin SDK verification
+✅ [TOKEN VERIFY] Admin SDK verification successful
+✅ [TOKEN VERIFY] Token decoded successfully for user: evapaztaibo@gmail.com
+✅ [TOKEN VERIFY] Database user ID: 14
+✅ [TOKEN VERIFY] Database user ID: 14
+🔍 [TOKEN VERIFY] Starting token verification...
+🔍 [TOKEN VERIFY] Token received, length: 941
+🔍 [TOKEN VERIFY] Using Firebase Admin SDK verification
+✅ [TOKEN VERIFY] Admin SDK verification successful
+✅ [TOKEN VERIFY] Token decoded successfully for user: evapaztaibo@gmail.com
+🔍 [TOKEN VERIFY] Starting token verification...
+🔍 [TOKEN VERIFY] Token received, length: 941
+🔍 [TOKEN VERIFY] Using Firebase Admin SDK verification
+✅ [TOKEN VERIFY] Admin SDK verification successful
+✅ [TOKEN VERIFY] Token decoded successfully for user: evapaztaibo@gmail.com
+✅ [TOKEN VERIFY] Database user ID: 14
+✅ [TOKEN VERIFY] Database user ID: 14

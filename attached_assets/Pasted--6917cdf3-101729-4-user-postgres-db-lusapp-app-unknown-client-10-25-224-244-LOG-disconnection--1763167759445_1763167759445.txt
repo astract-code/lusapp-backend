@@ -1,0 +1,14 @@
+[6917cdf3.101729-4] user=postgres,db=lusapp,app=[unknown],client=10.25.224.244,LOG:  disconnection: session time: 0:00:03.100 user=postgres database=lusapp host=10.25.224.244 port=36768
+[6917cdef.101724-4] user=lusapp_user,db=lusapp,app=[unknown],client=10.24.232.3,LOG:  disconnection: session time: 0:00:10.009 user=lusapp_user database=lusapp host=10.24.232.3 port=57178
+[6917cdef.101725-4] user=lusapp_user,db=lusapp,app=[unknown],client=10.24.232.3,LOG:  disconnection: session time: 0:00:10.009 user=lusapp_user database=lusapp host=10.24.232.3 port=57186
+[6917cdfa.101735-1] user=[unknown],db=[unknown],app=[unknown],client=10.24.232.3,LOG:  connection received: host=10.24.232.3 port=53344
+[6917cdfa.101736-1] user=[unknown],db=[unknown],app=[unknown],client=10.24.232.3,LOG:  connection received: host=10.24.232.3 port=53354
+[6917cdfa.101735-2] user=lusapp_user,db=lusapp,app=[unknown],client=10.24.232.3,LOG:  connection authenticated: identity="lusapp_user" method=md5 (/pgdata/dpg-d3ie4b49c44c73and2rg-a/pg_hba.conf:88)
+[6917cdfa.101735-3] user=lusapp_user,db=lusapp,app=[unknown],client=10.24.232.3,LOG:  connection authorized: user=lusapp_user database=lusapp SSL enabled (protocol=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384, bits=256)
+[6917cdfa.101736-2] user=lusapp_user,db=lusapp,app=[unknown],client=10.24.232.3,LOG:  connection authenticated: identity="lusapp_user" method=md5 (/pgdata/dpg-d3ie4b49c44c73and2rg-a/pg_hba.conf:88)
+[6917cdfa.101736-3] user=lusapp_user,db=lusapp,app=[unknown],client=10.24.232.3,LOG:  connection authorized: user=lusapp_user database=lusapp SSL enabled (protocol=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384, bits=256)
+[6917cdf5.101733-4] user=lusapp_user,db=lusapp,app=[unknown],client=10.24.232.3,LOG:  disconnection: session time: 0:00:10.059 user=lusapp_user database=lusapp host=10.24.232.3 port=50874
+[6917cdf5.101734-4] user=lusapp_user,db=lusapp,app=[unknown],client=10.24.232.3,LOG:  disconnection: session time: 0:00:10.060 user=lusapp_user database=lusapp host=10.24.232.3 port=50882
+[6917cdfa.101736-4] user=lusapp_user,db=lusapp,app=[unknown],client=10.24.232.3,LOG:  disconnection: session time: 0:00:10.011 user=lusapp_user database=lusapp host=10.24.232.3 port=53354
+[6917cdfa.101735-4] user=lusapp_user,db=lusapp,app=[unknown],client=10.24.232.3,LOG:  disconnection: session time: 0:00:10.020 user=lusapp_user database=lusapp host=10.24.232.3 port=53344
+[6917cdeb.101723-4] user=lusapp_user,db=lusapp,app=[unknown],client=10.24.232.3,LOG:  disconnection: session time: 0:00:24.901 user=lusapp_user database=lusapp host=10.24.232.3 port=57172
