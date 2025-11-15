@@ -350,6 +350,7 @@
       try {
         const response = await fetch('/api/races', {
           method: 'POST',
+          credentials: 'include',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(raceData)
         });
@@ -380,6 +381,7 @@
       try {
         const response = await fetch('/api/races/csv-upload', {
           method: 'POST',
+          credentials: 'include',
           body: formData
         });
 
@@ -397,7 +399,9 @@
 
     async function loadRaces() {
       try {
-        const response = await fetch('/api/races');
+        const response = await fetch('/api/races', {
+          credentials: 'include'
+        });
         const races = await response.json();
         
         const listDiv = document.getElementById('races-list');
@@ -430,7 +434,10 @@
       if (!confirm('Are you sure you want to delete this race?')) return;
 
       try {
-        const response = await fetch(`/api/races/${id}`, { method: 'DELETE' });
+        const response = await fetch(`/api/races/${id}`, { 
+          method: 'DELETE',
+          credentials: 'include'
+        });
         if (response.ok) {
           loadRaces();
         }
@@ -441,7 +448,9 @@
 
     async function loadPendingRaces() {
       try {
-        const response = await fetch('/api/races/pending');
+        const response = await fetch('/api/races/pending', {
+          credentials: 'include'
+        });
         const races = await response.json();
         
         const listDiv = document.getElementById('pending-races-list');
@@ -478,7 +487,10 @@
       if (!confirm('Approve this race? It will be visible to all users.')) return;
 
       try {
-        const response = await fetch(`/api/races/${id}/approve`, { method: 'POST' });
+        const response = await fetch(`/api/races/${id}/approve`, { 
+          method: 'POST',
+          credentials: 'include'
+        });
         if (response.ok) {
           alert('✅ Race approved successfully!');
           loadPendingRaces();
@@ -497,6 +509,7 @@
       try {
         const response = await fetch(`/api/races/${id}/reject`, {
           method: 'POST',
+          credentials: 'include',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ reason })
         });

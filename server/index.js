@@ -50,6 +50,57 @@ const adminAuth = basicAuth({
   realm: 'Lusapp Admin'
 });
 
+// Middleware to disable CORS for admin endpoints (prevents CSRF attacks)
+const noCors = (req, res, next) => {
+  res.removeHeader('Access-Control-Allow-Origin');
+  res.removeHeader('Access-Control-Allow-Methods');
+  res.removeHeader('Access-Control-Allow-Headers');
+  res.removeHeader('Access-Control-Allow-Credentials');
+  next();
+};
+
+// CSRF protection middleware for admin endpoints
+const csrfProtection = (req, res, next) => {
+  // For state-changing methods, verify the request comes from our admin panel
+  if (req.method !== 'GET' && req.method !== 'HEAD') {
+    const origin = req.get('Origin');
+    const referer = req.get('Referer');
+    const host = req.get('Host');
+    const protocol = req.protocol;
+    const expectedOrigin = `${protocol}://${host}`;
+    
+    // Check Origin header first (most reliable for CORS requests)
+    if (origin) {
+      if (origin !== expectedOrigin) {
+        console.warn(`CSRF attempt blocked: ${req.method} ${req.path} - Origin ${origin} != ${expectedOrigin}`);
+        return res.status(403).json({ error: 'Forbidden: Invalid request origin' });
+      }
+    } 
+    // Fall back to Referer header
+    else if (referer) {
+      try {
+        const refererUrl = new URL(referer);
+        const refererOrigin = `${refererUrl.protocol}//${refererUrl.host}`;
+        
+        // Verify exact origin match AND that path starts with /admin
+        if (refererOrigin !== expectedOrigin || !refererUrl.pathname.startsWith('/admin')) {
+          console.warn(`CSRF attempt blocked: ${req.method} ${req.path} - Referer ${refererOrigin}${refererUrl.pathname} invalid`);
+          return res.status(403).json({ error: 'Forbidden: Invalid request source' });
+        }
+      } catch (e) {
+        console.warn(`CSRF attempt blocked: ${req.method} ${req.path} - Invalid referer URL`);
+        return res.status(403).json({ error: 'Forbidden: Invalid referer' });
+      }
+    }
+    // No origin or referer - block request
+    else {
+      console.warn(`CSRF attempt blocked: ${req.method} ${req.path} - No origin or referer header`);
+      return res.status(403).json({ error: 'Forbidden: Missing origin/referer' });
+    }
+  }
+  next();
+};
+
 if (process.env.NODE_ENV === 'production') {
   app.set('trust proxy', true);
 }
@@ -117,7 +168,7 @@ app.get('/api/races/:id', async (req, res) => {
   }
 });
 
-app.post('/api/races', adminAuth, async (req, res) => {
+app.post('/api/races', noCors, csrfProtection, adminAuth, async (req, res) => {
   try {
     const { name, sport, sport_category, sport_subtype, city, country, continent, date, start_time, distance, description, participants } = req.body;
     
@@ -205,7 +256,7 @@ app.post('/api/races/user-create', verifyToken, async (req, res) => {
   }
 });
 
-app.put('/api/races/:id', adminAuth, async (req, res) => {
+app.put('/api/races/:id', noCors, csrfProtection, adminAuth, async (req, res) => {
   try {
     const { id } = req.params;
     const { name, sport, city, country, continent, date, start_time, distance, description, participants } = req.body;
@@ -223,7 +274,7 @@ app.put('/api/races/:id', adminAuth, async (req, res) => {
   }
 });
 
-app.delete('/api/races/:id', adminAuth, async (req, res) => {
+app.delete('/api/races/:id', noCors, csrfProtection, adminAuth, async (req, res) => {
   try {
     const { id } = req.params;
     await pool.query('DELETE FROM races WHERE id = $1', [id]);
@@ -235,7 +286,7 @@ app.delete('/api/races/:id', adminAuth, async (req, res) => {
 });
 
 // Admin endpoint: Get pending races for approval
-app.get('/api/races/pending', adminAuth, async (req, res) => {
+app.get('/api/races/pending', noCors, csrfProtection, adminAuth, async (req, res) => {
   try {
     const result = await pool.query(
       `SELECT r.*, u.name as created_by_name, u.email as created_by_email
@@ -252,7 +303,7 @@ app.get('/api/races/pending', adminAuth, async (req, res) => {
 });
 
 // Admin endpoint: Approve a race
-app.post('/api/races/:id/approve', adminAuth, async (req, res) => {
+app.post('/api/races/:id/approve', noCors, csrfProtection, adminAuth, async (req, res) => {
   try {
     const { id } = req.params;
     const result = await pool.query(
@@ -278,7 +329,7 @@ app.post('/api/races/:id/approve', adminAuth, async (req, res) => {
 });
 
 // Admin endpoint: Reject a race
-app.post('/api/races/:id/reject', adminAuth, async (req, res) => {
+app.post('/api/races/:id/reject', noCors, csrfProtection, adminAuth, async (req, res) => {
   try {
     const { id } = req.params;
     const { reason } = req.body;
@@ -306,7 +357,7 @@ app.post('/api/races/:id/reject', adminAuth, async (req, res) => {
 });
 
 // Download all races as CSV
-app.get('/api/races/csv-download', adminAuth, async (req, res) => {
+app.get('/api/races/csv-download', noCors, csrfProtection, adminAuth, async (req, res) => {
   try {
     const result = await pool.query('SELECT * FROM races ORDER BY date ASC');
     const races = result.rows;
@@ -354,7 +405,7 @@ app.get('/api/races/csv-download', adminAuth, async (req, res) => {
   }
 });
 
-app.post('/api/races/csv-upload', adminAuth, upload.single('csvFile'), async (req, res) => {
+app.post('/api/races/csv-upload', noCors, csrfProtection, adminAuth, upload.single('csvFile'), async (req, res) => {
   try {
     const results = [];
     const filePath = req.file.path;
