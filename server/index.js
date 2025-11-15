@@ -154,6 +154,58 @@ app.get('/api/races', async (req, res) => {
   }
 });
 
+// Admin endpoint: Get pending races for approval (MUST be before /api/races/:id)
+app.get('/api/races/pending', noCors, csrfProtection, adminAuth, async (req, res) => {
+  try {
+    const result = await pool.query(
+      `SELECT r.*, u.name as created_by_name, u.email as created_by_email
+       FROM races r
+       LEFT JOIN users u ON r.created_by_user_id = u.id
+       WHERE r.approval_status = 'pending'
+       ORDER BY r.created_at DESC`
+    );
+    res.json(result.rows);
+  } catch (error) {
+    console.error('Error fetching pending races:', error);
+    res.status(500).json({ error: 'Failed to fetch pending races' });
+  }
+});
+
+// Download all races as CSV (MUST be before /api/races/:id)
+app.get('/api/races/csv-download', noCors, csrfProtection, adminAuth, async (req, res) => {
+  try {
+    const result = await pool.query('SELECT * FROM races ORDER BY date ASC');
+    const races = result.rows;
+
+    if (races.length === 0) {
+      return res.status(404).json({ error: 'No races found' });
+    }
+
+    // CSV headers
+    const headers = Object.keys(races[0]).join(',');
+    const rows = races.map(race => 
+      Object.values(race).map(val => {
+        // Escape quotes and wrap in quotes if contains comma or quote
+        if (val === null || val === undefined) return '';
+        const str = String(val);
+        if (str.includes(',') || str.includes('"') || str.includes('\n')) {
+          return `"${str.replace(/"/g, '""')}"`;
+        }
+        return str;
+      }).join(',')
+    ).join('\n');
+
+    const csv = `${headers}\n${rows}`;
+
+    res.setHeader('Content-Type', 'text/csv');
+    res.setHeader('Content-Disposition', 'attachment; filename=races.csv');
+    res.send(csv);
+  } catch (error) {
+    console.error('Error generating CSV:', error);
+    res.status(500).json({ error: 'Failed to generate CSV' });
+  }
+});
+
 app.get('/api/races/:id', async (req, res) => {
   try {
     const { id } = req.params;
@@ -194,8 +246,8 @@ app.post('/api/races', noCors, csrfProtection, adminAuth, async (req, res) => {
     }
     
     const result = await pool.query(
-      'INSERT INTO races (name, sport, sport_category, sport_subtype, city, country, continent, date, start_time, distance, description, participants) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) RETURNING *',
-      [name, sport, sport_category || null, sport_subtype || null, city, country, continent, date, start_time || null, distance, description, participants || 0]
+      'INSERT INTO races (name, sport, sport_category, sport_subtype, city, country, continent, date, start_time, distance, description, participants, approval_status) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13) RETURNING *',
+      [name, sport, sport_category || null, sport_subtype || null, city, country, continent, date, start_time || null, distance, description, participants || 0, 'approved']
     );
     res.json(result.rows[0]);
   } catch (error) {
@@ -285,23 +337,6 @@ app.delete('/api/races/:id', noCors, csrfProtection, adminAuth, async (req, res)
   }
 });
 
-// Admin endpoint: Get pending races for approval
-app.get('/api/races/pending', noCors, csrfProtection, adminAuth, async (req, res) => {
-  try {
-    const result = await pool.query(
-      `SELECT r.*, u.name as created_by_name, u.email as created_by_email
-       FROM races r
-       LEFT JOIN users u ON r.created_by_user_id = u.id
-       WHERE r.approval_status = 'pending'
-       ORDER BY r.created_at DESC`
-    );
-    res.json(result.rows);
-  } catch (error) {
-    console.error('Error fetching pending races:', error);
-    res.status(500).json({ error: 'Failed to fetch pending races' });
-  }
-});
-
 // Admin endpoint: Approve a race
 app.post('/api/races/:id/approve', noCors, csrfProtection, adminAuth, async (req, res) => {
   try {
@@ -356,55 +391,6 @@ app.post('/api/races/:id/reject', noCors, csrfProtection, adminAuth, async (req,
   }
 });
 
-// Download all races as CSV
-app.get('/api/races/csv-download', noCors, csrfProtection, adminAuth, async (req, res) => {
-  try {
-    const result = await pool.query('SELECT * FROM races ORDER BY date ASC');
-    const races = result.rows;
-
-    if (races.length === 0) {
-      return res.status(404).json({ error: 'No races to download' });
-    }
-
-    // Generate CSV header
-    const headers = ['id', 'name', 'sport', 'sport_category', 'sport_subtype', 'city', 'country', 'continent', 'date', 'start_time', 'distance', 'description', 'participants', 'created_at'];
-    const csvHeader = headers.join(',');
-
-    // Generate CSV rows
-    const csvRows = races.map(race => {
-      return headers.map(header => {
-        let value = race[header];
-        
-        // Handle nulls and special characters
-        if (value === null || value === undefined) {
-          return '';
-        }
-        
-        // Convert to string and escape quotes
-        value = String(value).replace(/"/g, '""');
-        
-        // Wrap in quotes if contains comma, newline, or quote
-        if (value.includes(',') || value.includes('\n') || value.includes('"')) {
-          return `"${value}"`;
-        }
-        
-        return value;
-      }).join(',');
-    });
-
-    // Combine header and rows
-    const csv = [csvHeader, ...csvRows].join('\n');
-
-    // Set headers for file download
-    res.setHeader('Content-Type', 'text/csv');
-    res.setHeader('Content-Disposition', `attachment; filename="lusapp-races-${new Date().toISOString().split('T')[0]}.csv"`);
-    res.send(csv);
-  } catch (error) {
-    console.error('Error generating CSV:', error);
-    res.status(500).json({ error: 'Failed to generate CSV' });
-  }
-});
-
 app.post('/api/races/csv-upload', noCors, csrfProtection, adminAuth, upload.single('csvFile'), async (req, res) => {
   try {
     const results = [];
@@ -454,8 +440,8 @@ app.post('/api/races/csv-upload', noCors, csrfProtection, adminAuth, upload.sing
               }
               
               await pool.query(
-                'INSERT INTO races (name, sport, sport_category, sport_subtype, city, country, continent, date, start_time, distance, description, participants) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)',
-                [name, sport, sport_category, sport_subtype, city, country, continent, date, start_time, distance, description, participants]
+                'INSERT INTO races (name, sport, sport_category, sport_subtype, city, country, continent, date, start_time, distance, description, participants, approval_status) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)',
+                [name, sport, sport_category, sport_subtype, city, country, continent, date, start_time, distance, description, participants, 'approved']
               );
               imported++;
             }
