@@ -263,14 +263,20 @@ app.post('/api/races/user-create', verifyToken, async (req, res) => {
   try {
     const { name, sport, sport_category, sport_subtype, city, country, continent, date, start_time, distance, description, participants } = req.body;
     
-    console.log('📝 [USER RACE CREATE] Request from user:', req.user.email);
-    console.log('📝 [USER RACE CREATE] Race data:', { name, sport_category, sport_subtype, city, country, date });
+    console.log('📝 [USER RACE CREATE] ===== START =====');
+    console.log('📝 [USER RACE CREATE] Request from user:', req.user.email, '(ID:', req.user.userId, ')');
+    console.log('📝 [USER RACE CREATE] Full payload:', JSON.stringify({ 
+      name, sport, sport_category, sport_subtype, city, country, continent, date, 
+      start_time, distance, description, participants 
+    }, null, 2));
     
     if (!name || !date) {
+      console.log('❌ [USER RACE CREATE] Validation failed: Missing name or date');
       return res.status(400).json({ error: 'Name and date are required' });
     }
     
     // Check for duplicates: same name + date + sport/distance
+    console.log('🔍 [USER RACE CREATE] Checking for duplicates...');
     const duplicateCheck = await pool.query(
       `SELECT * FROM races 
        WHERE LOWER(name) = LOWER($1) 
@@ -283,7 +289,7 @@ app.post('/api/races/user-create', verifyToken, async (req, res) => {
     );
     
     if (duplicateCheck.rows.length > 0) {
-      console.log('⚠️  [USER RACE CREATE] Duplicate detected');
+      console.log('⚠️  [USER RACE CREATE] Duplicate detected:', duplicateCheck.rows[0].id, duplicateCheck.rows[0].name);
       return res.status(400).json({ 
         error: 'Duplicate race detected',
         message: `A race with the same name, date, and sport already exists: "${name}" on ${date}`,
@@ -291,19 +297,32 @@ app.post('/api/races/user-create', verifyToken, async (req, res) => {
       });
     }
     
+    console.log('💾 [USER RACE CREATE] Inserting race into database...');
+    const insertParams = [name, sport, sport_category || null, sport_subtype || null, city, country, continent, date, start_time || null, distance, description, participants || 0, 'pending', req.user.userId];
+    console.log('💾 [USER RACE CREATE] Insert params:', JSON.stringify(insertParams));
+    
     const result = await pool.query(
       'INSERT INTO races (name, sport, sport_category, sport_subtype, city, country, continent, date, start_time, distance, description, participants, approval_status, created_by_user_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14) RETURNING *',
-      [name, sport, sport_category || null, sport_subtype || null, city, country, continent, date, start_time || null, distance, description, participants || 0, 'pending', req.user.userId]
+      insertParams
     );
     
-    console.log('✅ [USER RACE CREATE] Race created with pending status, ID:', result.rows[0].id);
+    console.log('✅ [USER RACE CREATE] SUCCESS! Race created:');
+    console.log('   - ID:', result.rows[0].id);
+    console.log('   - Name:', result.rows[0].name);
+    console.log('   - Approval Status:', result.rows[0].approval_status);
+    console.log('   - Created By User ID:', result.rows[0].created_by_user_id);
+    console.log('   - Created At:', result.rows[0].created_at);
+    console.log('📝 [USER RACE CREATE] ===== END =====');
+    
     res.json({ 
       success: true,
       race: result.rows[0],
       message: 'Race submitted successfully! Waiting for admin approval to avoid duplicates.'
     });
   } catch (error) {
-    console.error('❌ [USER RACE CREATE] Error:', error.message);
+    console.error('❌ [USER RACE CREATE] ERROR:', error.message);
+    console.error('❌ [USER RACE CREATE] Stack:', error.stack);
+    console.log('📝 [USER RACE CREATE] ===== END (ERROR) =====');
     res.status(500).json({ error: 'Failed to create race' });
   }
 });

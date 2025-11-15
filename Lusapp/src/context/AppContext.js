@@ -74,7 +74,7 @@ export const useAppStore = create((set, get) => ({
       race.id === raceId
         ? {
             ...race,
-            registeredUsers: [...(race.registeredUsers || []), userId],
+            registeredUsers: [...(race.registeredUsers || []), userId.toString()],
             participants: race.participants + 1,
           }
         : race
@@ -86,7 +86,7 @@ export const useAppStore = create((set, get) => ({
       race.id === raceId
         ? {
             ...race,
-            registeredUsers: (race.registeredUsers || []).filter(id => id !== userId),
+            registeredUsers: (race.registeredUsers || []).filter(id => id !== userId.toString()),
             participants: Math.max(0, race.participants - 1),
           }
         : race
