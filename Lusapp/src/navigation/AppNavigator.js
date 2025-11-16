@@ -3,6 +3,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useColorScheme, Text } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
+import { Ionicons } from '@expo/vector-icons';
 import { COLORS } from '../constants/theme';
 import { useAuth } from '../context/AuthContext';
 import API_URL from '../config/api';
@@ -306,7 +307,9 @@ export const AppNavigator = () => {
         component={FeedStack}
         options={{
           tabBarLabel: 'Feed',
-          tabBarIcon: ({ color }) => <Text style={{ fontSize: 24, color, fontWeight: '300' }}>≡</Text>,
+          tabBarIcon: ({ color, focused }) => (
+            <Ionicons name={focused ? 'home' : 'home-outline'} size={24} color={color} />
+          ),
         }}
       />
       <Tab.Screen 
@@ -314,7 +317,9 @@ export const AppNavigator = () => {
         component={CalendarStack}
         options={{
           tabBarLabel: 'Calendar',
-          tabBarIcon: ({ color }) => <Text style={{ fontSize: 22, color, fontWeight: '300' }}>▦</Text>,
+          tabBarIcon: ({ color, focused }) => (
+            <Ionicons name={focused ? 'calendar' : 'calendar-outline'} size={24} color={color} />
+          ),
         }}
       />
       <Tab.Screen 
@@ -322,7 +327,9 @@ export const AppNavigator = () => {
         component={DiscoverStack}
         options={{
           tabBarLabel: 'Discover',
-          tabBarIcon: ({ color }) => <Text style={{ fontSize: 22, color, fontWeight: '300' }}>◉</Text>,
+          tabBarIcon: ({ color, focused }) => (
+            <Ionicons name={focused ? 'search' : 'search-outline'} size={24} color={color} />
+          ),
         }}
       />
       <Tab.Screen 
@@ -330,7 +337,9 @@ export const AppNavigator = () => {
         component={GroupsStack}
         options={{
           tabBarLabel: 'Groups',
-          tabBarIcon: ({ color }) => <Text style={{ fontSize: 22, color, fontWeight: '300' }}>◈</Text>,
+          tabBarIcon: ({ color, focused }) => (
+            <Ionicons name={focused ? 'people' : 'people-outline'} size={24} color={color} />
+          ),
           tabBarBadge: unreadGroups > 0 ? unreadGroups : undefined,
         }}
       />
@@ -339,7 +348,9 @@ export const AppNavigator = () => {
         component={MessagesStack}
         options={{
           tabBarLabel: 'Messages',
-          tabBarIcon: ({ color }) => <Text style={{ fontSize: 22, color, fontWeight: '300' }}>◐</Text>,
+          tabBarIcon: ({ color, focused }) => (
+            <Ionicons name={focused ? 'chatbubbles' : 'chatbubbles-outline'} size={24} color={color} />
+          ),
           tabBarBadge: unreadMessages > 0 ? unreadMessages : undefined,
         }}
       />
@@ -348,7 +359,9 @@ export const AppNavigator = () => {
         component={ProfileStack}
         options={{
           tabBarLabel: 'Profile',
-          tabBarIcon: ({ color }) => <Text style={{ fontSize: 22, color, fontWeight: '300' }}>◯</Text>,
+          tabBarIcon: ({ color, focused }) => (
+            <Ionicons name={focused ? 'person' : 'person-outline'} size={24} color={color} />
+          ),
         }}
       />
     </Tab.Navigator>
