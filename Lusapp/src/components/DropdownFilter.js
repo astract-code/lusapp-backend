@@ -8,6 +8,7 @@ import {
   LayoutAnimation,
   Platform,
   UIManager,
+  ScrollView,
 } from 'react-native';
 import { useTheme } from '../context/ThemeContext';
 import { SPACING, FONT_SIZE, BORDER_RADIUS } from '../constants/theme';
@@ -74,49 +75,55 @@ export const DropdownFilter = ({
 
       {isExpanded && (
         <View style={[styles.optionsContainer, { backgroundColor: colors.card, borderColor: colors.border }]}>
-          <TouchableOpacity
-            style={[
-              styles.option,
-              selectedValue === null && styles.selectedOption,
-              { borderBottomColor: colors.border }
-            ]}
-            onPress={() => handleSelect(null)}
+          <ScrollView 
+            style={styles.scrollView}
+            nestedScrollEnabled={true}
+            showsVerticalScrollIndicator={true}
           >
-            <Text style={[
-              styles.optionText,
-              { color: selectedValue === null ? colors.primary : colors.text }
-            ]}>
-              All
-            </Text>
-            {selectedValue === null && (
-              <Text style={[styles.checkmark, { color: colors.primary }]}>✓</Text>
-            )}
-          </TouchableOpacity>
+            <TouchableOpacity
+              style={[
+                styles.option,
+                selectedValue === null && styles.selectedOption,
+                { borderBottomColor: colors.border }
+              ]}
+              onPress={() => handleSelect(null)}
+            >
+              <Text style={[
+                styles.optionText,
+                { color: selectedValue === null ? colors.primary : colors.text }
+              ]}>
+                All
+              </Text>
+              {selectedValue === null && (
+                <Text style={[styles.checkmark, { color: colors.primary }]}>✓</Text>
+              )}
+            </TouchableOpacity>
 
-          {options.map((option, index) => {
-            const isSelected = selectedValue === option;
-            return (
-              <TouchableOpacity
-                key={option}
-                style={[
-                  styles.option,
-                  isSelected && styles.selectedOption,
-                  index < options.length - 1 && { borderBottomColor: colors.border, borderBottomWidth: 1 },
-                ]}
-                onPress={() => handleSelect(option)}
-              >
-                <Text style={[
-                  styles.optionText,
-                  { color: isSelected ? colors.primary : colors.text }
-                ]}>
-                  {renderOption ? renderOption(option) : option}
-                </Text>
-                {isSelected && (
-                  <Text style={[styles.checkmark, { color: colors.primary }]}>✓</Text>
-                )}
-              </TouchableOpacity>
-            );
-          })}
+            {options.map((option, index) => {
+              const isSelected = selectedValue === option;
+              return (
+                <TouchableOpacity
+                  key={option}
+                  style={[
+                    styles.option,
+                    isSelected && styles.selectedOption,
+                    index < options.length - 1 && { borderBottomColor: colors.border, borderBottomWidth: 1 },
+                  ]}
+                  onPress={() => handleSelect(option)}
+                >
+                  <Text style={[
+                    styles.optionText,
+                    { color: isSelected ? colors.primary : colors.text }
+                  ]}>
+                    {renderOption ? renderOption(option) : option}
+                  </Text>
+                  {isSelected && (
+                    <Text style={[styles.checkmark, { color: colors.primary }]}>✓</Text>
+                  )}
+                </TouchableOpacity>
+              );
+            })}
+          </ScrollView>
         </View>
       )}
     </View>
@@ -160,6 +167,9 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     maxHeight: 300,
     overflow: 'hidden',
+  },
+  scrollView: {
+    maxHeight: 300,
   },
   option: {
     flexDirection: 'row',
