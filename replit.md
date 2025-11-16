@@ -16,7 +16,13 @@ The frontend is built with React Native (0.81.4) and Expo SDK (~54.0) for cross-
 
 ### Data Architecture
 
-The application uses a PostgreSQL database for persistent storage, accessed via an Express.js REST API server (port 5000). The database schema includes tables for `races`, `users`, `posts`, `conversations`, `messages`, `groups`, `group_members`, `group_messages`, `group_gear_lists`, and `group_gear_items`. Data models define structures for `User`, `Race`, and `Post`. A hybrid approach is used for data loading, with mock data in development and API in production.
+The application uses a PostgreSQL database for persistent storage, accessed via an Express.js REST API server (port 5000). The database schema includes tables for `races`, `users`, `posts`, `conversations`, `messages`, `groups`, `group_members`, `group_messages`, `group_gear_lists`, and `group_gear_items`. Data models define structures for `User`, `Race`, and `Post`. 
+
+**Geography Data:**
+- Comprehensive country list: 197 countries across all 6 continents (Africa: 54, Asia: 48, Europe: 44, North America: 23, South America: 12, Oceania: 14)
+- Alphabetically sorted country dropdown with proper scrolling support
+- Dynamic country filtering based on continent selection
+- Country-to-continent mapping ensures data consistency
 
 ### Authentication System
 
@@ -25,11 +31,16 @@ Firebase Authentication handles user authentication (email/password, verificatio
 ### Backend API System
 
 An Express.js REST API provides endpoints for race CRUD operations, user authentication, and account deletion. It includes both admin and user-facing race creation:
-- **Admin endpoints** (`/api/races`) - Protected by HTTP Basic Auth for admin panel race management
-- **User race creation** (`/api/races/user-create`) - Protected by Firebase Auth, allows authenticated users to create races that are visible to all users
+- **Admin endpoints** (`/api/races`) - Protected by HTTP Basic Auth for admin panel race management with full edit, approve, and reject capabilities
+- **User race creation** (`/api/races/user-create`) - Protected by Firebase Auth, allows authenticated users to create races that require admin approval before becoming visible
 - **CSV upload** (`/api/races/csv-upload`) - Bulk race import with duplicate detection
+- **Race moderation** - Admin panel at `/admin` provides inline editing for both pending and approved races with XSS protection
 
-The admin web interface (`/admin`) allows manual race entry and CSV uploads, secured with HTTP Basic Authentication.
+The admin web interface features:
+- Manual race entry with comprehensive country list (197 countries across all 6 continents)
+- Inline editing for races at any status (pending or approved)
+- CSV bulk upload with duplicate detection
+- HTTP Basic Authentication security
 
 ### Groups & Community Features
 
