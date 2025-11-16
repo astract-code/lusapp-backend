@@ -11,7 +11,7 @@ import {
   Modal,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { RaceCard } from '../components/RaceCard';
+import { CompactRaceCard } from '../components/CompactRaceCard';
 import { FilterChip } from '../components/FilterChip';
 import { DropdownFilter } from '../components/DropdownFilter';
 import { useAppStore } from '../context/AppContext';
@@ -384,7 +384,7 @@ export const DiscoverScreen = ({ navigation }) => {
           data={filteredRaces}
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => (
-            <RaceCard
+            <CompactRaceCard
               race={item}
               onPress={() => navigation.navigate('RaceDetail', { raceId: item.id })}
             />
