@@ -2,85 +2,85 @@
 
 export const COLORS = {
   light: {
-    // Primary Colors
-    primary: '#6366F1', // Indigo - modern and elegant
-    primaryLight: '#818CF8',
-    primaryDark: '#4F46E5',
+    // Primary Colors - Dark Green
+    primary: '#047857', // Forest Green
+    primaryLight: '#059669',
+    primaryDark: '#065F46',
     
-    // Secondary Colors
-    secondary: '#EC4899', // Pink accent
-    secondaryLight: '#F472B6',
+    // Secondary Colors - Muted Grey-Green
+    secondary: '#6B7280', // Cool Grey
+    secondaryLight: '#9CA3AF',
     
-    // Backgrounds
-    background: '#F8FAFC', // Very light gray
+    // Backgrounds - Clean Greys
+    background: '#F9FAFB', // Very light grey
     backgroundElevated: '#FFFFFF',
     card: '#FFFFFF',
-    surface: '#F1F5F9',
+    surface: '#F3F4F6',
     
-    // Text
-    text: '#0F172A', // Slate 900
-    textSecondary: '#64748B', // Slate 500
-    textTertiary: '#94A3B8', // Slate 400
+    // Text - Professional Greys
+    text: '#111827', // Near black
+    textSecondary: '#6B7280', // Medium grey
+    textTertiary: '#9CA3AF', // Light grey
+    
+    // Borders - Subtle
+    border: '#E5E7EB', // Light grey
+    borderLight: '#F3F4F6',
+    
+    // Status Colors
+    success: '#047857', // Dark green
+    successLight: '#D1FAE5',
+    warning: '#D97706', // Amber
+    warningLight: '#FEF3C7',
+    error: '#DC2626', // Red
+    errorLight: '#FEE2E2',
+    info: '#6B7280', // Grey
+    infoLight: '#F3F4F6',
+    
+    // Gradients - Subtle Green
+    gradient1: '#047857',
+    gradient2: '#065F46',
+    
+    // Overlay
+    overlay: 'rgba(17, 24, 39, 0.5)',
+  },
+  dark: {
+    // Primary Colors - Lighter Green for contrast
+    primary: '#10B981', // Emerald
+    primaryLight: '#34D399',
+    primaryDark: '#059669',
+    
+    // Secondary Colors - Light Grey
+    secondary: '#9CA3AF',
+    secondaryLight: '#D1D5DB',
+    
+    // Backgrounds - Dark Greys
+    background: '#111827', // Dark grey
+    backgroundElevated: '#1F2937', // Medium dark
+    card: '#1F2937',
+    surface: '#374151', // Lighter dark
+    
+    // Text - Light Greys
+    text: '#F9FAFB', // Almost white
+    textSecondary: '#D1D5DB', // Light grey
+    textTertiary: '#9CA3AF', // Medium grey
     
     // Borders
-    border: '#E2E8F0', // Slate 200
-    borderLight: '#F1F5F9',
+    border: '#374151', // Dark grey
+    borderLight: '#4B5563',
     
     // Status Colors
     success: '#10B981', // Emerald
-    successLight: '#D1FAE5',
-    warning: '#F59E0B', // Amber
-    warningLight: '#FEF3C7',
-    error: '#EF4444', // Red
-    errorLight: '#FEE2E2',
-    info: '#3B82F6', // Blue
-    infoLight: '#DBEAFE',
-    
-    // Gradients
-    gradient1: '#6366F1',
-    gradient2: '#EC4899',
-    
-    // Overlay
-    overlay: 'rgba(15, 23, 42, 0.5)',
-  },
-  dark: {
-    // Primary Colors
-    primary: '#818CF8', // Lighter indigo for dark mode
-    primaryLight: '#A5B4FC',
-    primaryDark: '#6366F1',
-    
-    // Secondary Colors
-    secondary: '#F472B6', // Lighter pink for dark mode
-    secondaryLight: '#F9A8D4',
-    
-    // Backgrounds
-    background: '#0F172A', // Slate 900
-    backgroundElevated: '#1E293B', // Slate 800
-    card: '#1E293B',
-    surface: '#334155', // Slate 700
-    
-    // Text
-    text: '#F1F5F9', // Slate 100
-    textSecondary: '#94A3B8', // Slate 400
-    textTertiary: '#64748B', // Slate 500
-    
-    // Borders
-    border: '#334155', // Slate 700
-    borderLight: '#475569',
-    
-    // Status Colors
-    success: '#34D399', // Lighter emerald
     successLight: '#064E3B',
-    warning: '#FBBF24', // Lighter amber
+    warning: '#F59E0B', // Amber
     warningLight: '#78350F',
-    error: '#F87171', // Lighter red
+    error: '#EF4444', // Red
     errorLight: '#7F1D1D',
-    info: '#60A5FA', // Lighter blue
-    infoLight: '#1E3A8A',
+    info: '#9CA3AF', // Grey
+    infoLight: '#1F2937',
     
     // Gradients
-    gradient1: '#818CF8',
-    gradient2: '#F472B6',
+    gradient1: '#10B981',
+    gradient2: '#059669',
     
     // Overlay
     overlay: 'rgba(0, 0, 0, 0.7)',
