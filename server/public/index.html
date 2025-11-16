@@ -446,21 +446,27 @@
           return;
         }
 
-        listDiv.innerHTML = races.map(race => `
-          <div class="race-card">
-            <div class="race-info">
-              <h3>${race.name}</h3>
-              <p><strong>Sport:</strong> ${race.sport}</p>
-              <p><strong>Location:</strong> ${race.city ? race.city + ', ' : ''}${race.country || 'N/A'}</p>
-              <p><strong>Date:</strong> ${new Date(race.date).toLocaleDateString()}</p>
-              <p><strong>Distance:</strong> ${race.distance || 'N/A'}</p>
-              <p><strong>Participants:</strong> ${race.participants || 0}</p>
+        listDiv.innerHTML = races.map(race => {
+          const sportDisplay = race.sport ? escapeHtml(race.sport) : (race.sport_category && race.sport_subtype ? `${escapeHtml(race.sport_category)} - ${escapeHtml(race.sport_subtype)}` : 'N/A');
+          const locationDisplay = race.city ? `${escapeHtml(race.city)}, ` : '';
+          const countryDisplay = race.country ? escapeHtml(race.country) : 'N/A';
+          
+          return `
+            <div class="race-card">
+              <div class="race-info">
+                <h3>${escapeHtml(race.name)}</h3>
+                <p><strong>Sport:</strong> ${sportDisplay}</p>
+                <p><strong>Location:</strong> ${locationDisplay}${countryDisplay}</p>
+                <p><strong>Date:</strong> ${new Date(race.date).toLocaleDateString()}</p>
+                <p><strong>Distance:</strong> ${escapeHtml(race.distance) || 'N/A'}</p>
+                <p><strong>Participants:</strong> ${escapeHtml(String(race.participants || 0))}</p>
+              </div>
+              <div class="race-actions">
+                <button class="btn btn-danger" onclick="deleteRace(${race.id})">Delete</button>
+              </div>
             </div>
-            <div class="race-actions">
-              <button class="btn btn-danger" onclick="deleteRace(${race.id})">Delete</button>
-            </div>
-          </div>
-        `).join('');
+          `;
+        }).join('');
       } catch (error) {
         console.error('Error loading races:', error);
       }
@@ -495,25 +501,32 @@
           return;
         }
 
-        listDiv.innerHTML = races.map(race => `
-          <div class="race-card" id="race-${race.id}">
-            <div class="race-info" style="flex: 1;">
-              <h3>${race.name}</h3>
-              <p><strong>Sport:</strong> ${race.sport || race.sport_category + ' - ' + race.sport_subtype}</p>
-              <p><strong>Location:</strong> ${race.city ? race.city + ', ' : ''}${race.country || 'N/A'}${race.continent ? ' (' + race.continent + ')' : ''}</p>
-              <p><strong>Date:</strong> ${new Date(race.date).toLocaleDateString()}</p>
-              <p><strong>Distance:</strong> ${race.distance || 'N/A'}</p>
-              <p><strong>Participants:</strong> ${race.participants || 0}</p>
-              <p><strong>Submitted by:</strong> ${race.created_by_name || 'Unknown'} (${race.created_by_email || 'N/A'})</p>
-              <p style="color: #999; font-size: 12px;">Submitted: ${new Date(race.created_at).toLocaleString()}</p>
+        listDiv.innerHTML = races.map(race => {
+          const sportDisplay = race.sport ? escapeHtml(race.sport) : (race.sport_category && race.sport_subtype ? `${escapeHtml(race.sport_category)} - ${escapeHtml(race.sport_subtype)}` : 'N/A');
+          const locationDisplay = race.city ? `${escapeHtml(race.city)}, ` : '';
+          const countryDisplay = race.country ? escapeHtml(race.country) : 'N/A';
+          const continentDisplay = race.continent ? ` (${escapeHtml(race.continent)})` : '';
+          
+          return `
+            <div class="race-card" id="race-${race.id}">
+              <div class="race-info" style="flex: 1;">
+                <h3>${escapeHtml(race.name)}</h3>
+                <p><strong>Sport:</strong> ${sportDisplay}</p>
+                <p><strong>Location:</strong> ${locationDisplay}${countryDisplay}${continentDisplay}</p>
+                <p><strong>Date:</strong> ${new Date(race.date).toLocaleDateString()}</p>
+                <p><strong>Distance:</strong> ${escapeHtml(race.distance) || 'N/A'}</p>
+                <p><strong>Participants:</strong> ${escapeHtml(String(race.participants || 0))}</p>
+                <p><strong>Submitted by:</strong> ${escapeHtml(race.created_by_name || 'Unknown')} (${escapeHtml(race.created_by_email || 'N/A')})</p>
+                <p style="color: #999; font-size: 12px;">Submitted: ${new Date(race.created_at).toLocaleString()}</p>
+              </div>
+              <div class="race-actions">
+                <button class="btn btn-warning" onclick="editRace(${race.id})">✏️ Edit</button>
+                <button class="btn btn-primary" onclick="approveRace(${race.id})">✅ Approve</button>
+                <button class="btn btn-danger" onclick="rejectRace(${race.id})">❌ Reject</button>
+              </div>
             </div>
-            <div class="race-actions">
-              <button class="btn btn-warning" onclick="editRace(${race.id})">✏️ Edit</button>
-              <button class="btn btn-primary" onclick="approveRace(${race.id})">✅ Approve</button>
-              <button class="btn btn-danger" onclick="rejectRace(${race.id})">❌ Reject</button>
-            </div>
-          </div>
-        `).join('');
+          `;
+        }).join('');
       } catch (error) {
         console.error('Error loading pending races:', error);
         document.getElementById('pending-races-list').innerHTML = '<p style="text-align: center; color: #f56565;">Error loading pending races. Please try again.</p>';
@@ -562,6 +575,13 @@
       }
     }
 
+    function escapeHtml(text) {
+      if (!text) return '';
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
     async function editRace(id) {
       try {
         const response = await fetch('/api/races/pending', {
@@ -585,38 +605,38 @@
 
         raceCard.innerHTML = `
           <div style="width: 100%;">
-            <h3 style="margin-bottom: 15px;">✏️ Editing: ${race.name}</h3>
+            <h3 style="margin-bottom: 15px;">✏️ Editing: ${escapeHtml(race.name)}</h3>
             <form class="edit-form" id="edit-form-${id}">
               <div class="form-row">
                 <div class="form-group">
                   <label>Race Name *</label>
-                  <input type="text" id="edit-name-${id}" value="${race.name}" required>
+                  <input type="text" id="edit-name-${id}" value="${escapeHtml(race.name)}" required>
                 </div>
                 <div class="form-group">
                   <label>Sport</label>
-                  <input type="text" id="edit-sport-${id}" value="${race.sport || ''}">
+                  <input type="text" id="edit-sport-${id}" value="${escapeHtml(race.sport)}">
                 </div>
               </div>
               
               <div class="form-row">
                 <div class="form-group">
                   <label>Sport Category</label>
-                  <input type="text" id="edit-sport-category-${id}" value="${race.sport_category || ''}">
+                  <input type="text" id="edit-sport-category-${id}" value="${escapeHtml(race.sport_category)}">
                 </div>
                 <div class="form-group">
                   <label>Sport Subtype</label>
-                  <input type="text" id="edit-sport-subtype-${id}" value="${race.sport_subtype || ''}">
+                  <input type="text" id="edit-sport-subtype-${id}" value="${escapeHtml(race.sport_subtype)}">
                 </div>
               </div>
 
               <div class="form-row">
                 <div class="form-group">
                   <label>City</label>
-                  <input type="text" id="edit-city-${id}" value="${race.city || ''}">
+                  <input type="text" id="edit-city-${id}" value="${escapeHtml(race.city)}">
                 </div>
                 <div class="form-group">
                   <label>Country</label>
-                  <input type="text" id="edit-country-${id}" value="${race.country || ''}">
+                  <input type="text" id="edit-country-${id}" value="${escapeHtml(race.country)}">
                 </div>
               </div>
 
@@ -642,17 +662,17 @@
               <div class="form-row">
                 <div class="form-group">
                   <label>Distance</label>
-                  <input type="text" id="edit-distance-${id}" value="${race.distance || ''}">
+                  <input type="text" id="edit-distance-${id}" value="${escapeHtml(race.distance)}">
                 </div>
                 <div class="form-group">
                   <label>Participants</label>
-                  <input type="number" id="edit-participants-${id}" value="${race.participants || 0}" min="0">
+                  <input type="number" id="edit-participants-${id}" value="${escapeHtml(String(race.participants || 0))}" min="0">
                 </div>
               </div>
 
               <div class="form-group">
                 <label>Description</label>
-                <textarea id="edit-description-${id}" style="width: 100%;">${race.description || ''}</textarea>
+                <textarea id="edit-description-${id}" style="width: 100%;">${escapeHtml(race.description)}</textarea>
               </div>
 
               <div style="margin-top: 20px;">
