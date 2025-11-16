@@ -452,8 +452,8 @@
           const countryDisplay = race.country ? escapeHtml(race.country) : 'N/A';
           
           return `
-            <div class="race-card">
-              <div class="race-info">
+            <div class="race-card" id="race-all-${race.id}">
+              <div class="race-info" style="flex: 1;">
                 <h3>${escapeHtml(race.name)}</h3>
                 <p><strong>Sport:</strong> ${sportDisplay}</p>
                 <p><strong>Location:</strong> ${locationDisplay}${countryDisplay}</p>
@@ -462,6 +462,7 @@
                 <p><strong>Participants:</strong> ${escapeHtml(String(race.participants || 0))}</p>
               </div>
               <div class="race-actions">
+                <button class="btn btn-warning" onclick="editRaceFromAll(${race.id})">✏️ Edit</button>
                 <button class="btn btn-danger" onclick="deleteRace(${race.id})">Delete</button>
               </div>
             </div>
@@ -728,6 +729,154 @@
 
     function cancelEdit(id) {
       loadPendingRaces();
+    }
+
+    async function editRaceFromAll(id) {
+      try {
+        const response = await fetch('/api/races', {
+          credentials: 'include'
+        });
+        const races = await response.json();
+        const race = races.find(r => r.id === id);
+        
+        if (!race) {
+          alert('Race not found');
+          return;
+        }
+
+        const raceCard = document.getElementById(`race-all-${id}`);
+        raceCard.classList.add('editing');
+        
+        const formatDate = (dateStr) => {
+          const d = new Date(dateStr);
+          return d.toISOString().split('T')[0];
+        };
+
+        raceCard.innerHTML = `
+          <div style="width: 100%;">
+            <h3 style="margin-bottom: 15px;">✏️ Editing: ${escapeHtml(race.name)}</h3>
+            <form class="edit-form" id="edit-form-all-${id}">
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Race Name *</label>
+                  <input type="text" id="edit-all-name-${id}" value="${escapeHtml(race.name)}" required>
+                </div>
+                <div class="form-group">
+                  <label>Sport</label>
+                  <input type="text" id="edit-all-sport-${id}" value="${escapeHtml(race.sport)}">
+                </div>
+              </div>
+              
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Sport Category</label>
+                  <input type="text" id="edit-all-sport-category-${id}" value="${escapeHtml(race.sport_category)}">
+                </div>
+                <div class="form-group">
+                  <label>Sport Subtype</label>
+                  <input type="text" id="edit-all-sport-subtype-${id}" value="${escapeHtml(race.sport_subtype)}">
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label>City</label>
+                  <input type="text" id="edit-all-city-${id}" value="${escapeHtml(race.city)}">
+                </div>
+                <div class="form-group">
+                  <label>Country</label>
+                  <input type="text" id="edit-all-country-${id}" value="${escapeHtml(race.country)}">
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Continent</label>
+                  <select id="edit-all-continent-${id}">
+                    <option value="">Select Continent</option>
+                    <option value="North America" ${race.continent === 'North America' ? 'selected' : ''}>North America</option>
+                    <option value="South America" ${race.continent === 'South America' ? 'selected' : ''}>South America</option>
+                    <option value="Europe" ${race.continent === 'Europe' ? 'selected' : ''}>Europe</option>
+                    <option value="Africa" ${race.continent === 'Africa' ? 'selected' : ''}>Africa</option>
+                    <option value="Asia" ${race.continent === 'Asia' ? 'selected' : ''}>Asia</option>
+                    <option value="Oceania" ${race.continent === 'Oceania' ? 'selected' : ''}>Oceania</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label>Date *</label>
+                  <input type="date" id="edit-all-date-${id}" value="${formatDate(race.date)}" required>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Distance</label>
+                  <input type="text" id="edit-all-distance-${id}" value="${escapeHtml(race.distance)}">
+                </div>
+                <div class="form-group">
+                  <label>Participants</label>
+                  <input type="number" id="edit-all-participants-${id}" value="${escapeHtml(String(race.participants || 0))}" min="0">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label>Description</label>
+                <textarea id="edit-all-description-${id}" style="width: 100%;">${escapeHtml(race.description)}</textarea>
+              </div>
+
+              <div style="margin-top: 20px;">
+                <button type="button" class="btn btn-primary" onclick="saveRaceEditFromAll(${id})">💾 Save Changes</button>
+                <button type="button" class="btn btn-danger" onclick="cancelEditFromAll(${id})">❌ Cancel</button>
+              </div>
+            </form>
+          </div>
+        `;
+      } catch (error) {
+        alert('Error loading race data: ' + error.message);
+      }
+    }
+
+    async function saveRaceEditFromAll(id) {
+      try {
+        const raceData = {
+          name: document.getElementById(`edit-all-name-${id}`).value,
+          sport: document.getElementById(`edit-all-sport-${id}`).value,
+          sport_category: document.getElementById(`edit-all-sport-category-${id}`).value,
+          sport_subtype: document.getElementById(`edit-all-sport-subtype-${id}`).value,
+          city: document.getElementById(`edit-all-city-${id}`).value,
+          country: document.getElementById(`edit-all-country-${id}`).value,
+          continent: document.getElementById(`edit-all-continent-${id}`).value,
+          date: document.getElementById(`edit-all-date-${id}`).value,
+          distance: document.getElementById(`edit-all-distance-${id}`).value,
+          description: document.getElementById(`edit-all-description-${id}`).value,
+          participants: document.getElementById(`edit-all-participants-${id}`).value
+        };
+
+        if (!raceData.name || !raceData.date) {
+          alert('Name and date are required');
+          return;
+        }
+
+        const response = await fetch(`/api/races/${id}`, {
+          method: 'PUT',
+          credentials: 'include',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(raceData)
+        });
+
+        if (response.ok) {
+          alert('✅ Race updated successfully!');
+          loadRaces();
+        } else {
+          alert('Error updating race');
+        }
+      } catch (error) {
+        alert('Error: ' + error.message);
+      }
+    }
+
+    function cancelEditFromAll(id) {
+      loadRaces();
     }
   </script>
 </body>
