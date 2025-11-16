@@ -11,7 +11,6 @@ import {
   TextInput,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { LinearGradient } from 'expo-linear-gradient';
 import * as ImagePicker from 'expo-image-picker';
 import Constants from 'expo-constants';
 import { UserAvatar } from '../components/UserAvatar';
@@ -28,10 +27,26 @@ export const ProfileScreen = ({ navigation }) => {
   const { user: authUser, logout, updateUser, token } = useAuth();
   const races = useAppStore((state) => state.races);
   const [uploading, setUploading] = useState(false);
-  const [editingName, setEditingName] = useState(false);
-  const [newName, setNewName] = useState(authUser?.name || '');
+  const [isEditing, setIsEditing] = useState(false);
+  const [editedProfile, setEditedProfile] = useState({
+    name: '',
+    bio: '',
+    location: '',
+    favoriteSport: '',
+  });
 
   if (!authUser) return null;
+
+  React.useEffect(() => {
+    if (authUser) {
+      setEditedProfile({
+        name: authUser.name || '',
+        bio: authUser.bio || '',
+        location: authUser.location || '',
+        favoriteSport: authUser.favoriteSport || '',
+      });
+    }
+  }, [authUser]);
 
   const pickAndUploadImage = async () => {
     try {
@@ -104,14 +119,9 @@ export const ProfileScreen = ({ navigation }) => {
     }
   };
 
-  const handleNameUpdate = async () => {
-    if (!newName.trim()) {
+  const handleSaveProfile = async () => {
+    if (!editedProfile.name.trim()) {
       Alert.alert('Error', 'Name cannot be empty');
-      return;
-    }
-
-    if (newName === authUser.name) {
-      setEditingName(false);
       return;
     }
 
@@ -122,22 +132,46 @@ export const ProfileScreen = ({ navigation }) => {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ name: newName.trim() }),
+        body: JSON.stringify({
+          name: editedProfile.name.trim(),
+          bio: editedProfile.bio.trim(),
+          location: editedProfile.location.trim(),
+          favoriteSport: editedProfile.favoriteSport.trim(),
+        }),
       });
 
       if (!response.ok) {
         const data = await response.json();
-        throw new Error(data.error || 'Failed to update name');
+        throw new Error(data.error || 'Failed to update profile');
       }
 
-      updateUser({ ...authUser, name: newName.trim() });
-      setEditingName(false);
-      Alert.alert('Success', 'Name updated successfully!');
+      const data = await response.json();
+      
+      const updatedUser = {
+        ...authUser,
+        name: data.user.name,
+        bio: data.user.bio,
+        location: data.user.location,
+        favoriteSport: data.user.favoriteSport,
+      };
+      
+      updateUser(updatedUser);
+      setIsEditing(false);
+      Alert.alert('Success', 'Profile updated successfully!');
     } catch (error) {
-      console.error('Error updating name:', error);
-      Alert.alert('Error', error.message || 'Failed to update name');
-      setNewName(authUser.name);
+      console.error('Error updating profile:', error);
+      Alert.alert('Error', error.message || 'Failed to update profile');
     }
+  };
+
+  const handleCancelEdit = () => {
+    setEditedProfile({
+      name: authUser.name || '',
+      bio: authUser.bio || '',
+      location: authUser.location || '',
+      favoriteSport: authUser.favoriteSport || '',
+    });
+    setIsEditing(false);
   };
 
   const joinedRaces = races.filter((race) =>
@@ -150,154 +184,220 @@ export const ProfileScreen = ({ navigation }) => {
 
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]} edges={['top']}>
-      <View style={styles.topBar}>
+      <View style={[styles.topBar, { borderBottomColor: colors.border }]}>
         <Text style={[styles.topBarTitle, { color: colors.text }]}>Profile</Text>
-        <TouchableOpacity
-          style={styles.settingsButton}
-          onPress={() => navigation.navigate('Settings')}
-        >
-          <Text style={{ fontSize: 24 }}>⚙️</Text>
-        </TouchableOpacity>
-      </View>
-      <ScrollView>
-        <LinearGradient
-        colors={[colors.gradient1, colors.gradient2]}
-        style={styles.header}
-      >
-        <UserAvatar uri={authUser.avatar} size={100} />
-        
-        <TouchableOpacity 
-          style={[styles.uploadButton, { backgroundColor: colors.primary }]}
-          onPress={pickAndUploadImage}
-          disabled={uploading}
-        >
-          {uploading ? (
-            <ActivityIndicator color="#fff" />
-          ) : (
-            <Text style={styles.uploadButtonText}>
-              {authUser.avatar ? 'Change Photo' : 'Upload Photo'}
-            </Text>
-          )}
-        </TouchableOpacity>
-
-        {editingName ? (
-          <View style={styles.nameEditContainer}>
-            <TextInput
-              style={[styles.nameInput, { color: '#FFFFFF', borderColor: '#FFFFFF' }]}
-              value={newName}
-              onChangeText={setNewName}
-              placeholder="Enter your name"
-              placeholderTextColor="rgba(255, 255, 255, 0.5)"
-              autoFocus
-              maxLength={50}
-            />
-            <View style={styles.nameEditButtons}>
-              <TouchableOpacity
-                style={[styles.nameEditButton, styles.cancelButton]}
-                onPress={() => {
-                  setNewName(authUser.name);
-                  setEditingName(false);
-                }}
-              >
-                <Text style={styles.nameEditButtonText}>Cancel</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={[styles.nameEditButton, styles.saveButton, { backgroundColor: colors.primary }]}
-                onPress={handleNameUpdate}
-              >
-                <Text style={styles.nameEditButtonText}>Save</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        ) : (
-          <View style={styles.nameContainer}>
-            <Text style={styles.name}>{authUser.name}</Text>
+        <View style={styles.topBarButtons}>
+          {!isEditing && (
             <TouchableOpacity
-              onPress={() => setEditingName(true)}
-              style={styles.editButton}
+              style={styles.editIconButton}
+              onPress={() => setIsEditing(true)}
             >
-              <Text style={{ fontSize: 16 }}>✏️</Text>
+              <Text style={{ fontSize: 20 }}>✏️</Text>
+            </TouchableOpacity>
+          )}
+          <TouchableOpacity
+            style={styles.settingsButton}
+            onPress={() => navigation.navigate('Settings')}
+          >
+            <Text style={{ fontSize: 20 }}>⚙️</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+      
+      <ScrollView>
+        <View style={[styles.header, { backgroundColor: colors.surface }]}>
+          <View style={styles.avatarSection}>
+            <UserAvatar uri={authUser.avatar} size={100} />
+            
+            <TouchableOpacity 
+              style={[styles.uploadButton, { backgroundColor: colors.primary }]}
+              onPress={pickAndUploadImage}
+              disabled={uploading}
+            >
+              {uploading ? (
+                <ActivityIndicator color="#fff" />
+              ) : (
+                <Text style={styles.uploadButtonText}>
+                  {authUser.avatar ? 'Change Photo' : 'Upload Photo'}
+                </Text>
+              )}
             </TouchableOpacity>
           </View>
-        )}
-        <Text style={styles.location}>📍 {authUser.location}</Text>
-        <Text style={styles.bio}>{authUser.bio}</Text>
-        
-        <View style={styles.followInfo}>
-          <View style={styles.followStat}>
-            <Text style={styles.followNumber}>{authUser.followers?.length || 0}</Text>
-            <Text style={styles.followLabel}>Followers</Text>
-          </View>
-          <View style={styles.followStat}>
-            <Text style={styles.followNumber}>{authUser.following?.length || 0}</Text>
-            <Text style={styles.followLabel}>Following</Text>
-          </View>
+
+          {isEditing ? (
+            <View style={styles.editContainer}>
+              <View style={styles.inputGroup}>
+                <Text style={[styles.inputLabel, { color: colors.textSecondary }]}>Name</Text>
+                <TextInput
+                  style={[styles.input, { 
+                    color: colors.text,
+                    backgroundColor: colors.card,
+                    borderColor: colors.border,
+                  }]}
+                  value={editedProfile.name}
+                  onChangeText={(text) => setEditedProfile({ ...editedProfile, name: text })}
+                  placeholder="Enter your name"
+                  placeholderTextColor={colors.textTertiary}
+                  maxLength={50}
+                />
+              </View>
+
+              <View style={styles.inputGroup}>
+                <Text style={[styles.inputLabel, { color: colors.textSecondary }]}>Location</Text>
+                <TextInput
+                  style={[styles.input, { 
+                    color: colors.text,
+                    backgroundColor: colors.card,
+                    borderColor: colors.border,
+                  }]}
+                  value={editedProfile.location}
+                  onChangeText={(text) => setEditedProfile({ ...editedProfile, location: text })}
+                  placeholder="e.g., San Francisco, CA"
+                  placeholderTextColor={colors.textTertiary}
+                  maxLength={100}
+                />
+              </View>
+
+              <View style={styles.inputGroup}>
+                <Text style={[styles.inputLabel, { color: colors.textSecondary }]}>Bio</Text>
+                <TextInput
+                  style={[styles.textArea, { 
+                    color: colors.text,
+                    backgroundColor: colors.card,
+                    borderColor: colors.border,
+                  }]}
+                  value={editedProfile.bio}
+                  onChangeText={(text) => setEditedProfile({ ...editedProfile, bio: text })}
+                  placeholder="Tell us about yourself..."
+                  placeholderTextColor={colors.textTertiary}
+                  multiline
+                  numberOfLines={3}
+                  maxLength={200}
+                />
+              </View>
+
+              <View style={styles.inputGroup}>
+                <Text style={[styles.inputLabel, { color: colors.textSecondary }]}>Favorite Sport</Text>
+                <TextInput
+                  style={[styles.input, { 
+                    color: colors.text,
+                    backgroundColor: colors.card,
+                    borderColor: colors.border,
+                  }]}
+                  value={editedProfile.favoriteSport}
+                  onChangeText={(text) => setEditedProfile({ ...editedProfile, favoriteSport: text })}
+                  placeholder="e.g., Marathon, Triathlon"
+                  placeholderTextColor={colors.textTertiary}
+                  maxLength={50}
+                />
+              </View>
+
+              <View style={styles.editButtons}>
+                <TouchableOpacity
+                  style={[styles.button, styles.cancelButton, { backgroundColor: colors.surface }]}
+                  onPress={handleCancelEdit}
+                >
+                  <Text style={[styles.buttonText, { color: colors.text }]}>Cancel</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={[styles.button, styles.saveButton, { backgroundColor: colors.primary }]}
+                  onPress={handleSaveProfile}
+                >
+                  <Text style={[styles.buttonText, { color: '#FFFFFF' }]}>Save Changes</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          ) : (
+            <View style={styles.profileInfo}>
+              <Text style={[styles.name, { color: colors.text }]}>{authUser.name}</Text>
+              <Text style={[styles.location, { color: colors.textSecondary }]}>
+                📍 {authUser.location || 'Location not set'}
+              </Text>
+              <Text style={[styles.bio, { color: colors.textSecondary }]}>
+                {authUser.bio || 'No bio yet'}
+              </Text>
+              
+              <View style={styles.followInfo}>
+                <View style={styles.followStat}>
+                  <Text style={[styles.followNumber, { color: colors.text }]}>
+                    {authUser.followers?.length || 0}
+                  </Text>
+                  <Text style={[styles.followLabel, { color: colors.textSecondary }]}>Followers</Text>
+                </View>
+                <View style={styles.followStat}>
+                  <Text style={[styles.followNumber, { color: colors.text }]}>
+                    {authUser.following?.length || 0}
+                  </Text>
+                  <Text style={[styles.followLabel, { color: colors.textSecondary }]}>Following</Text>
+                </View>
+              </View>
+            </View>
+          )}
         </View>
-      </LinearGradient>
 
-      <View style={styles.stats}>
-        <StatCard
-          icon="🏆"
-          label="Total Races"
-          value={authUser.totalRaces || 0}
-        />
-        <StatCard
-          icon="❤️"
-          label="Favorite Sport"
-          value={authUser.favoriteSport || 'Not set'}
-        />
-      </View>
-
-      <View style={styles.section}>
-        <Text style={[styles.sectionTitle, { color: colors.text }]}>
-          Joined Races ({joinedRaces.length})
-        </Text>
-        {joinedRaces.map((race) => (
-          <CompactRaceCard
-            key={race.id}
-            race={race}
-            onPress={() => navigation.navigate('RaceDetail', { raceId: race.id })}
+        <View style={styles.stats}>
+          <StatCard
+            icon="🏆"
+            label="Total Races"
+            value={authUser.totalRaces || 0}
           />
-        ))}
-        {joinedRaces.length === 0 && (
-          <Text style={[styles.emptyText, { color: colors.textSecondary }]}>
-            No joined races yet
-          </Text>
-        )}
-      </View>
-
-      <View style={styles.section}>
-        <Text style={[styles.sectionTitle, { color: colors.text }]}>
-          Completed Races ({completedRaces.length})
-        </Text>
-        {completedRaces.map((race) => (
-          <CompactRaceCard
-            key={race.id}
-            race={race}
-            onPress={() => navigation.navigate('RaceDetail', { raceId: race.id })}
+          <StatCard
+            icon="❤️"
+            label="Favorite Sport"
+            value={authUser.favoriteSport || 'Not set'}
           />
-        ))}
-        {completedRaces.length === 0 && (
-          <Text style={[styles.emptyText, { color: colors.textSecondary }]}>
-            No completed races yet
+        </View>
+
+        <View style={styles.section}>
+          <Text style={[styles.sectionTitle, { color: colors.text }]}>
+            Joined Races ({joinedRaces.length})
           </Text>
-        )}
-      </View>
+          {joinedRaces.map((race) => (
+            <CompactRaceCard
+              key={race.id}
+              race={race}
+              onPress={() => navigation.navigate('RaceDetail', { raceId: race.id })}
+            />
+          ))}
+          {joinedRaces.length === 0 && (
+            <Text style={[styles.emptyText, { color: colors.textSecondary }]}>
+              No joined races yet
+            </Text>
+          )}
+        </View>
 
-      <TouchableOpacity
-        style={[styles.logoutButton, { backgroundColor: colors.error }]}
-        onPress={logout}
-      >
-        <Text style={styles.logoutText}>Log Out</Text>
-      </TouchableOpacity>
+        <View style={styles.section}>
+          <Text style={[styles.sectionTitle, { color: colors.text }]}>
+            Completed Races ({completedRaces.length})
+          </Text>
+          {completedRaces.map((race) => (
+            <CompactRaceCard
+              key={race.id}
+              race={race}
+              onPress={() => navigation.navigate('RaceDetail', { raceId: race.id })}
+            />
+          ))}
+          {completedRaces.length === 0 && (
+            <Text style={[styles.emptyText, { color: colors.textSecondary }]}>
+              No completed races yet
+            </Text>
+          )}
+        </View>
 
-      <View style={styles.versionContainer}>
-        <Text style={[styles.versionText, { color: colors.textSecondary }]}>
-          Version {Constants.expoConfig?.version || '1.0.0'} ({Platform.OS === 'ios' 
-            ? Constants.expoConfig?.ios?.buildNumber || '1'
-            : Constants.expoConfig?.android?.versionCode || '1'})
-        </Text>
-      </View>
+        <TouchableOpacity
+          style={[styles.logoutButton, { backgroundColor: colors.error }]}
+          onPress={logout}
+        >
+          <Text style={styles.logoutText}>Log Out</Text>
+        </TouchableOpacity>
+
+        <View style={styles.versionContainer}>
+          <Text style={[styles.versionText, { color: colors.textSecondary }]}>
+            Version {Constants.expoConfig?.version || '1.0.0'} ({Platform.OS === 'ios' 
+              ? Constants.expoConfig?.ios?.buildNumber || '1'
+              : Constants.expoConfig?.android?.versionCode || '1'})
+          </Text>
+        </View>
       </ScrollView>
     </SafeAreaView>
   );
@@ -311,26 +411,30 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingHorizontal: SPACING.md,
-    paddingVertical: SPACING.sm,
+    paddingHorizontal: SPACING.lg,
+    paddingVertical: SPACING.md,
+    borderBottomWidth: 1,
   },
   topBarTitle: {
-    fontSize: FONT_SIZE.xl,
-    fontWeight: 'bold',
+    fontSize: FONT_SIZE.xxl,
+    fontWeight: '700',
+  },
+  topBarButtons: {
+    flexDirection: 'row',
+    gap: SPACING.md,
+  },
+  editIconButton: {
+    padding: SPACING.xs,
   },
   settingsButton: {
     padding: SPACING.xs,
   },
   header: {
-    alignItems: 'center',
     padding: SPACING.lg,
-    paddingTop: SPACING.xxl,
+    paddingTop: SPACING.xl,
   },
-  avatarPlaceholder: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
-    backgroundColor: 'rgba(255, 255, 255, 0.2)',
+  avatarSection: {
+    alignItems: 'center',
   },
   uploadButton: {
     marginTop: SPACING.md,
@@ -345,101 +449,105 @@ const styles = StyleSheet.create({
     fontSize: FONT_SIZE.sm,
     fontWeight: '600',
   },
-  nameContainer: {
-    flexDirection: 'row',
+  profileInfo: {
     alignItems: 'center',
-    marginTop: SPACING.md,
-    gap: SPACING.xs,
+    marginTop: SPACING.lg,
   },
   name: {
-    fontSize: FONT_SIZE.xl,
-    fontWeight: 'bold',
-    color: '#FFFFFF',
-  },
-  editButton: {
-    padding: SPACING.xs,
-  },
-  nameEditContainer: {
-    marginTop: SPACING.md,
-    width: '80%',
-    alignItems: 'center',
-  },
-  nameInput: {
-    fontSize: FONT_SIZE.lg,
-    fontWeight: 'bold',
-    borderWidth: 1,
-    borderRadius: BORDER_RADIUS.sm,
-    paddingHorizontal: SPACING.md,
-    paddingVertical: SPACING.sm,
-    width: '100%',
-    textAlign: 'center',
-  },
-  nameEditButtons: {
-    flexDirection: 'row',
-    marginTop: SPACING.sm,
-    gap: SPACING.sm,
-  },
-  nameEditButton: {
-    paddingHorizontal: SPACING.lg,
-    paddingVertical: SPACING.sm,
-    borderRadius: BORDER_RADIUS.md,
-    minWidth: 80,
-    alignItems: 'center',
-  },
-  cancelButton: {
-    backgroundColor: 'rgba(255, 255, 255, 0.2)',
-  },
-  saveButton: {
-    backgroundColor: '#667eea',
-  },
-  nameEditButtonText: {
-    color: '#FFFFFF',
-    fontSize: FONT_SIZE.sm,
-    fontWeight: '600',
+    fontSize: FONT_SIZE.xxl,
+    fontWeight: '700',
   },
   location: {
     fontSize: FONT_SIZE.md,
-    color: '#FFFFFF',
     marginTop: SPACING.xs,
-    opacity: 0.9,
   },
   bio: {
     fontSize: FONT_SIZE.sm,
-    color: '#FFFFFF',
     marginTop: SPACING.sm,
     textAlign: 'center',
-    opacity: 0.9,
+    paddingHorizontal: SPACING.lg,
   },
   followInfo: {
     flexDirection: 'row',
-    marginTop: SPACING.md,
-    gap: SPACING.xl,
+    marginTop: SPACING.lg,
+    gap: SPACING.xxxl,
   },
   followStat: {
     alignItems: 'center',
   },
   followNumber: {
     fontSize: FONT_SIZE.xl,
-    fontWeight: 'bold',
-    color: '#FFFFFF',
+    fontWeight: '700',
   },
   followLabel: {
     fontSize: FONT_SIZE.sm,
-    color: '#FFFFFF',
-    opacity: 0.9,
     marginTop: SPACING.xs,
+  },
+  editContainer: {
+    marginTop: SPACING.lg,
+  },
+  inputGroup: {
+    marginBottom: SPACING.md,
+  },
+  inputLabel: {
+    fontSize: FONT_SIZE.sm,
+    fontWeight: '600',
+    marginBottom: SPACING.xs,
+    textTransform: 'uppercase',
+    letterSpacing: 0.5,
+  },
+  input: {
+    fontSize: FONT_SIZE.md,
+    borderWidth: 1,
+    borderRadius: BORDER_RADIUS.md,
+    paddingHorizontal: SPACING.md,
+    paddingVertical: SPACING.sm,
+  },
+  textArea: {
+    fontSize: FONT_SIZE.md,
+    borderWidth: 1,
+    borderRadius: BORDER_RADIUS.md,
+    paddingHorizontal: SPACING.md,
+    paddingVertical: SPACING.sm,
+    minHeight: 80,
+    textAlignVertical: 'top',
+  },
+  editButtons: {
+    flexDirection: 'row',
+    marginTop: SPACING.lg,
+    gap: SPACING.md,
+  },
+  button: {
+    flex: 1,
+    paddingVertical: SPACING.md,
+    borderRadius: BORDER_RADIUS.md,
+    alignItems: 'center',
+  },
+  cancelButton: {
+    borderWidth: 1,
+    borderColor: '#E5E7EB',
+  },
+  saveButton: {
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 2,
+  },
+  buttonText: {
+    fontSize: FONT_SIZE.md,
+    fontWeight: '600',
   },
   stats: {
     flexDirection: 'row',
     padding: SPACING.md,
-    marginTop: -SPACING.lg,
   },
   section: {
     padding: SPACING.md,
   },
   sectionTitle: {
     fontSize: FONT_SIZE.lg,
-    fontWeight: 'bold',
+    fontWeight: '700',
     marginBottom: SPACING.md,
   },
   emptyText: {
@@ -448,7 +556,7 @@ const styles = StyleSheet.create({
     marginVertical: SPACING.lg,
   },
   logoutButton: {
-    margin: SPACING.md,
+    margin: SPACING.lg,
     padding: SPACING.md,
     borderRadius: BORDER_RADIUS.md,
     alignItems: 'center',
@@ -456,7 +564,7 @@ const styles = StyleSheet.create({
   logoutText: {
     color: '#FFFFFF',
     fontSize: FONT_SIZE.md,
-    fontWeight: 'bold',
+    fontWeight: '600',
   },
   versionContainer: {
     alignItems: 'center',

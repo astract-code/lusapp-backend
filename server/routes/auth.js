@@ -184,15 +184,21 @@ router.get('/me', verifyFirebaseToken, async (req, res) => {
 router.put('/update-profile', verifyFirebaseToken, async (req, res) => {
   try {
     const userId = req.user.userId;
-    const { name } = req.body;
+    const { name, bio, location, favoriteSport } = req.body;
     
     if (!name || !name.trim()) {
       return res.status(400).json({ error: 'Name is required' });
     }
     
     const result = await pool.query(
-      'UPDATE users SET name = $1 WHERE id = $2 RETURNING id, email, name, location, bio, favorite_sport, avatar, total_races',
-      [name.trim(), userId]
+      'UPDATE users SET name = $1, bio = $2, location = $3, favorite_sport = $4 WHERE id = $5 RETURNING id, email, name, location, bio, favorite_sport, avatar, total_races',
+      [
+        name.trim(), 
+        bio ? bio.trim() : null, 
+        location ? location.trim() : null, 
+        favoriteSport ? favoriteSport.trim() : null,
+        userId
+      ]
     );
     
     if (result.rows.length === 0) {
