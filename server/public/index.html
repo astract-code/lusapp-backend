@@ -129,6 +129,15 @@
       background: #e53e3e;
     }
 
+    .btn-warning {
+      background: #f6ad55;
+      color: white;
+    }
+
+    .btn-warning:hover {
+      background: #ed8936;
+    }
+
     .races-list {
       margin-top: 30px;
     }
@@ -141,6 +150,33 @@
       display: flex;
       justify-content: space-between;
       align-items: start;
+    }
+
+    .race-card.editing {
+      background: #fff3cd;
+      border: 2px solid #f6ad55;
+    }
+
+    .edit-form {
+      width: 100%;
+      margin-top: 15px;
+      padding-top: 15px;
+      border-top: 2px solid #ddd;
+    }
+
+    .edit-form .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+      margin-bottom: 15px;
+    }
+
+    .edit-form .form-group {
+      margin-bottom: 0;
+    }
+
+    .edit-form .btn {
+      margin-right: 10px;
     }
 
     .race-info h3 {
@@ -460,8 +496,8 @@
         }
 
         listDiv.innerHTML = races.map(race => `
-          <div class="race-card">
-            <div class="race-info">
+          <div class="race-card" id="race-${race.id}">
+            <div class="race-info" style="flex: 1;">
               <h3>${race.name}</h3>
               <p><strong>Sport:</strong> ${race.sport || race.sport_category + ' - ' + race.sport_subtype}</p>
               <p><strong>Location:</strong> ${race.city ? race.city + ', ' : ''}${race.country || 'N/A'}${race.continent ? ' (' + race.continent + ')' : ''}</p>
@@ -472,6 +508,7 @@
               <p style="color: #999; font-size: 12px;">Submitted: ${new Date(race.created_at).toLocaleString()}</p>
             </div>
             <div class="race-actions">
+              <button class="btn btn-warning" onclick="editRace(${race.id})">✏️ Edit</button>
               <button class="btn btn-primary" onclick="approveRace(${race.id})">✅ Approve</button>
               <button class="btn btn-danger" onclick="rejectRace(${race.id})">❌ Reject</button>
             </div>
@@ -523,6 +560,154 @@
       } catch (error) {
         alert('Error: ' + error.message);
       }
+    }
+
+    async function editRace(id) {
+      try {
+        const response = await fetch('/api/races/pending', {
+          credentials: 'include'
+        });
+        const races = await response.json();
+        const race = races.find(r => r.id === id);
+        
+        if (!race) {
+          alert('Race not found');
+          return;
+        }
+
+        const raceCard = document.getElementById(`race-${id}`);
+        raceCard.classList.add('editing');
+        
+        const formatDate = (dateStr) => {
+          const d = new Date(dateStr);
+          return d.toISOString().split('T')[0];
+        };
+
+        raceCard.innerHTML = `
+          <div style="width: 100%;">
+            <h3 style="margin-bottom: 15px;">✏️ Editing: ${race.name}</h3>
+            <form class="edit-form" id="edit-form-${id}">
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Race Name *</label>
+                  <input type="text" id="edit-name-${id}" value="${race.name}" required>
+                </div>
+                <div class="form-group">
+                  <label>Sport</label>
+                  <input type="text" id="edit-sport-${id}" value="${race.sport || ''}">
+                </div>
+              </div>
+              
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Sport Category</label>
+                  <input type="text" id="edit-sport-category-${id}" value="${race.sport_category || ''}">
+                </div>
+                <div class="form-group">
+                  <label>Sport Subtype</label>
+                  <input type="text" id="edit-sport-subtype-${id}" value="${race.sport_subtype || ''}">
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label>City</label>
+                  <input type="text" id="edit-city-${id}" value="${race.city || ''}">
+                </div>
+                <div class="form-group">
+                  <label>Country</label>
+                  <input type="text" id="edit-country-${id}" value="${race.country || ''}">
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Continent</label>
+                  <select id="edit-continent-${id}">
+                    <option value="">Select Continent</option>
+                    <option value="North America" ${race.continent === 'North America' ? 'selected' : ''}>North America</option>
+                    <option value="South America" ${race.continent === 'South America' ? 'selected' : ''}>South America</option>
+                    <option value="Europe" ${race.continent === 'Europe' ? 'selected' : ''}>Europe</option>
+                    <option value="Africa" ${race.continent === 'Africa' ? 'selected' : ''}>Africa</option>
+                    <option value="Asia" ${race.continent === 'Asia' ? 'selected' : ''}>Asia</option>
+                    <option value="Oceania" ${race.continent === 'Oceania' ? 'selected' : ''}>Oceania</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label>Date *</label>
+                  <input type="date" id="edit-date-${id}" value="${formatDate(race.date)}" required>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Distance</label>
+                  <input type="text" id="edit-distance-${id}" value="${race.distance || ''}">
+                </div>
+                <div class="form-group">
+                  <label>Participants</label>
+                  <input type="number" id="edit-participants-${id}" value="${race.participants || 0}" min="0">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label>Description</label>
+                <textarea id="edit-description-${id}" style="width: 100%;">${race.description || ''}</textarea>
+              </div>
+
+              <div style="margin-top: 20px;">
+                <button type="button" class="btn btn-primary" onclick="saveRaceEdit(${id})">💾 Save Changes</button>
+                <button type="button" class="btn btn-danger" onclick="cancelEdit(${id})">❌ Cancel</button>
+              </div>
+            </form>
+          </div>
+        `;
+      } catch (error) {
+        alert('Error loading race data: ' + error.message);
+      }
+    }
+
+    async function saveRaceEdit(id) {
+      try {
+        const raceData = {
+          name: document.getElementById(`edit-name-${id}`).value,
+          sport: document.getElementById(`edit-sport-${id}`).value,
+          sport_category: document.getElementById(`edit-sport-category-${id}`).value,
+          sport_subtype: document.getElementById(`edit-sport-subtype-${id}`).value,
+          city: document.getElementById(`edit-city-${id}`).value,
+          country: document.getElementById(`edit-country-${id}`).value,
+          continent: document.getElementById(`edit-continent-${id}`).value,
+          date: document.getElementById(`edit-date-${id}`).value,
+          distance: document.getElementById(`edit-distance-${id}`).value,
+          description: document.getElementById(`edit-description-${id}`).value,
+          participants: document.getElementById(`edit-participants-${id}`).value
+        };
+
+        if (!raceData.name || !raceData.date) {
+          alert('Name and date are required');
+          return;
+        }
+
+        const response = await fetch(`/api/races/${id}`, {
+          method: 'PUT',
+          credentials: 'include',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(raceData)
+        });
+
+        if (response.ok) {
+          alert('✅ Race updated successfully!');
+          loadPendingRaces();
+        } else {
+          alert('Error updating race');
+        }
+      } catch (error) {
+        alert('Error: ' + error.message);
+      }
+    }
+
+    function cancelEdit(id) {
+      loadPendingRaces();
     }
   </script>
 </body>

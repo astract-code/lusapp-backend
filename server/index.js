@@ -330,14 +330,19 @@ app.post('/api/races/user-create', verifyToken, async (req, res) => {
 app.put('/api/races/:id', noCors, csrfProtection, adminAuth, async (req, res) => {
   try {
     const { id } = req.params;
-    const { name, sport, city, country, continent, date, start_time, distance, description, participants } = req.body;
+    const { name, sport, sport_category, sport_subtype, city, country, continent, date, start_time, distance, description, participants } = req.body;
+    
+    console.log(`📝 [ADMIN RACE UPDATE] Updating race ${id} by ${req.auth.user || 'admin'}`);
+    
     const result = await pool.query(
-      'UPDATE races SET name = $1, sport = $2, city = $3, country = $4, continent = $5, date = $6, start_time = $7, distance = $8, description = $9, participants = $10 WHERE id = $11 RETURNING *',
-      [name, sport, city, country, continent, date, start_time || null, distance, description, participants, id]
+      'UPDATE races SET name = $1, sport = $2, sport_category = $3, sport_subtype = $4, city = $5, country = $6, continent = $7, date = $8, start_time = $9, distance = $10, description = $11, participants = $12 WHERE id = $13 RETURNING *',
+      [name, sport || null, sport_category || null, sport_subtype || null, city, country, continent, date, start_time || null, distance, description, participants || 0, id]
     );
     if (result.rows.length === 0) {
       return res.status(404).json({ error: 'Race not found' });
     }
+    
+    console.log(`✅ [ADMIN RACE UPDATE] Race ${id} updated successfully`);
     res.json(result.rows[0]);
   } catch (error) {
     console.error('Error updating race:', error);
