@@ -38,9 +38,17 @@ An Express.js REST API provides endpoints for race CRUD operations, user authent
 
 The admin web interface features:
 - Manual race entry with comprehensive country list (197 countries across all 6 continents)
+- **Sport taxonomy consistency** - Dropdown menus for Sport Category and Distance/Type that exactly match the mobile app's taxonomy to prevent data entry errors
 - Inline editing for races at any status (pending or approved)
 - CSV bulk upload with duplicate detection
 - HTTP Basic Authentication security
+
+**Sport Taxonomy (matches mobile app exactly):**
+- Running: 5K, 10K, Half Marathon, Marathon, Ultra Marathon, Trail Running, Cross Country, Custom Distance
+- Triathlon: Sprint, Olympic, Half Ironman, Ironman, Aquathlon, Duathlon, Custom Distance
+- Cycling: Criterium, Gran Fondo, Mountain Biking, Road Race, Custom Distance
+- Obstacle: Spartan Race, HYROX, Obstacle Course, Custom Distance
+- Swimming: Open Water Swim, Pool Competition, Custom Distance
 
 ### Groups & Community Features
 

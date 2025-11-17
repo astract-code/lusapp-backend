@@ -260,17 +260,16 @@
         </div>
 
         <div class="form-group">
-          <label>Sport *</label>
-          <select id="sport" required>
-            <option value="">Select Sport</option>
-            <option value="Triathlon">Triathlon</option>
-            <option value="Marathon">Marathon</option>
-            <option value="Half Marathon">Half Marathon</option>
-            <option value="Cycling">Cycling</option>
-            <option value="Trail Running">Trail Running</option>
-            <option value="Ultra Marathon">Ultra Marathon</option>
-            <option value="Ironman">Ironman</option>
-            <option value="Sprint Triathlon">Sprint Triathlon</option>
+          <label>Sport Category *</label>
+          <select id="sport-category" required onchange="updateSubtypeOptions()">
+            <option value="">Select Sport Category</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Distance / Type *</label>
+          <select id="sport-subtype" required>
+            <option value="">Select category first</option>
           </select>
         </div>
 
@@ -348,6 +347,32 @@
   </div>
 
   <script>
+    // Sport Taxonomy - MUST match the mobile app exactly
+    const SPORT_TAXONOMY = {
+      Running: {
+        icon: '🏃',
+        subtypes: ['5K', '10K', 'Half Marathon', 'Marathon', 'Ultra Marathon', 'Trail Running', 'Cross Country', 'Custom Distance']
+      },
+      Triathlon: {
+        icon: '🏊',
+        subtypes: ['Sprint', 'Olympic', 'Half Ironman', 'Ironman', 'Aquathlon', 'Duathlon', 'Custom Distance']
+      },
+      Cycling: {
+        icon: '🚴',
+        subtypes: ['Criterium', 'Gran Fondo', 'Mountain Biking', 'Road Race', 'Custom Distance']
+      },
+      Obstacle: {
+        icon: '💪',
+        subtypes: ['Spartan Race', 'HYROX', 'Obstacle Course', 'Custom Distance']
+      },
+      Swimming: {
+        icon: '🏊',
+        subtypes: ['Open Water Swim', 'Pool Competition', 'Custom Distance']
+      }
+    };
+
+    const SPORT_CATEGORIES = Object.keys(SPORT_TAXONOMY);
+
     function switchTab(tab) {
       document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
       document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
@@ -368,12 +393,40 @@
       setTimeout(() => messageDiv.innerHTML = '', 5000);
     }
 
+    // Populate sport category dropdown
+    function initializeSportDropdowns() {
+      const categorySelect = document.getElementById('sport-category');
+      SPORT_CATEGORIES.forEach(category => {
+        const option = document.createElement('option');
+        option.value = category;
+        option.textContent = `${SPORT_TAXONOMY[category].icon} ${category}`;
+        categorySelect.appendChild(option);
+      });
+    }
+
+    // Update sport subtype dropdown based on selected category
+    function updateSubtypeOptions() {
+      const category = document.getElementById('sport-category').value;
+      const subtypeSelect = document.getElementById('sport-subtype');
+      subtypeSelect.innerHTML = '<option value="">Select Distance/Type</option>';
+      
+      if (category && SPORT_TAXONOMY[category]) {
+        SPORT_TAXONOMY[category].subtypes.forEach(subtype => {
+          const option = document.createElement('option');
+          option.value = subtype;
+          option.textContent = subtype;
+          subtypeSelect.appendChild(option);
+        });
+      }
+    }
+
     document.getElementById('race-form').addEventListener('submit', async (e) => {
       e.preventDefault();
       
       const raceData = {
         name: document.getElementById('name').value,
-        sport: document.getElementById('sport').value,
+        sport_category: document.getElementById('sport-category').value,
+        sport_subtype: document.getElementById('sport-subtype').value,
         city: document.getElementById('city').value,
         country: document.getElementById('country').value,
         continent: document.getElementById('continent').value,
@@ -614,34 +667,38 @@
                   <input type="text" id="edit-name-${id}" value="${escapeHtml(race.name)}" required>
                 </div>
                 <div class="form-group">
-                  <label>Sport</label>
-                  <input type="text" id="edit-sport-${id}" value="${escapeHtml(race.sport)}">
+                  <label>Sport Category *</label>
+                  <select id="edit-sport-category-${id}" onchange="updateEditSubtypeOptions(${id})">
+                    <option value="">Select Sport Category</option>
+                    ${SPORT_CATEGORIES.map(cat => 
+                      `<option value="${cat}" ${race.sport_category === cat ? 'selected' : ''}>${SPORT_TAXONOMY[cat].icon} ${cat}</option>`
+                    ).join('')}
+                  </select>
                 </div>
               </div>
               
               <div class="form-row">
                 <div class="form-group">
-                  <label>Sport Category</label>
-                  <input type="text" id="edit-sport-category-${id}" value="${escapeHtml(race.sport_category)}">
+                  <label>Distance / Type *</label>
+                  <select id="edit-sport-subtype-${id}">
+                    <option value="">Select Distance/Type</option>
+                    ${race.sport_category && SPORT_TAXONOMY[race.sport_category] ? 
+                      SPORT_TAXONOMY[race.sport_category].subtypes.map(sub => 
+                        `<option value="${sub}" ${race.sport_subtype === sub ? 'selected' : ''}>${sub}</option>`
+                      ).join('') : ''}
+                  </select>
                 </div>
-                <div class="form-group">
-                  <label>Sport Subtype</label>
-                  <input type="text" id="edit-sport-subtype-${id}" value="${escapeHtml(race.sport_subtype)}">
-                </div>
-              </div>
-
-              <div class="form-row">
                 <div class="form-group">
                   <label>City</label>
                   <input type="text" id="edit-city-${id}" value="${escapeHtml(race.city)}">
                 </div>
+              </div>
+
+              <div class="form-row">
                 <div class="form-group">
                   <label>Country</label>
                   <input type="text" id="edit-country-${id}" value="${escapeHtml(race.country)}">
                 </div>
-              </div>
-
-              <div class="form-row">
                 <div class="form-group">
                   <label>Continent</label>
                   <select id="edit-continent-${id}">
@@ -688,11 +745,42 @@
       }
     }
 
+    // Update subtype options in edit mode
+    function updateEditSubtypeOptions(id) {
+      const category = document.getElementById(`edit-sport-category-${id}`).value;
+      const subtypeSelect = document.getElementById(`edit-sport-subtype-${id}`);
+      subtypeSelect.innerHTML = '<option value="">Select Distance/Type</option>';
+      
+      if (category && SPORT_TAXONOMY[category]) {
+        SPORT_TAXONOMY[category].subtypes.forEach(subtype => {
+          const option = document.createElement('option');
+          option.value = subtype;
+          option.textContent = subtype;
+          subtypeSelect.appendChild(option);
+        });
+      }
+    }
+
+    // Update subtype options in edit mode for All Races tab
+    function updateEditAllSubtypeOptions(id) {
+      const category = document.getElementById(`edit-all-sport-category-${id}`).value;
+      const subtypeSelect = document.getElementById(`edit-all-sport-subtype-${id}`);
+      subtypeSelect.innerHTML = '<option value="">Select Distance/Type</option>';
+      
+      if (category && SPORT_TAXONOMY[category]) {
+        SPORT_TAXONOMY[category].subtypes.forEach(subtype => {
+          const option = document.createElement('option');
+          option.value = subtype;
+          option.textContent = subtype;
+          subtypeSelect.appendChild(option);
+        });
+      }
+    }
+
     async function saveRaceEdit(id) {
       try {
         const raceData = {
           name: document.getElementById(`edit-name-${id}`).value,
-          sport: document.getElementById(`edit-sport-${id}`).value,
           sport_category: document.getElementById(`edit-sport-category-${id}`).value,
           sport_subtype: document.getElementById(`edit-sport-subtype-${id}`).value,
           city: document.getElementById(`edit-city-${id}`).value,
@@ -762,34 +850,38 @@
                   <input type="text" id="edit-all-name-${id}" value="${escapeHtml(race.name)}" required>
                 </div>
                 <div class="form-group">
-                  <label>Sport</label>
-                  <input type="text" id="edit-all-sport-${id}" value="${escapeHtml(race.sport)}">
+                  <label>Sport Category *</label>
+                  <select id="edit-all-sport-category-${id}" onchange="updateEditAllSubtypeOptions(${id})">
+                    <option value="">Select Sport Category</option>
+                    ${SPORT_CATEGORIES.map(cat => 
+                      `<option value="${cat}" ${race.sport_category === cat ? 'selected' : ''}>${SPORT_TAXONOMY[cat].icon} ${cat}</option>`
+                    ).join('')}
+                  </select>
                 </div>
               </div>
               
               <div class="form-row">
                 <div class="form-group">
-                  <label>Sport Category</label>
-                  <input type="text" id="edit-all-sport-category-${id}" value="${escapeHtml(race.sport_category)}">
+                  <label>Distance / Type *</label>
+                  <select id="edit-all-sport-subtype-${id}">
+                    <option value="">Select Distance/Type</option>
+                    ${race.sport_category && SPORT_TAXONOMY[race.sport_category] ? 
+                      SPORT_TAXONOMY[race.sport_category].subtypes.map(sub => 
+                        `<option value="${sub}" ${race.sport_subtype === sub ? 'selected' : ''}>${sub}</option>`
+                      ).join('') : ''}
+                  </select>
                 </div>
-                <div class="form-group">
-                  <label>Sport Subtype</label>
-                  <input type="text" id="edit-all-sport-subtype-${id}" value="${escapeHtml(race.sport_subtype)}">
-                </div>
-              </div>
-
-              <div class="form-row">
                 <div class="form-group">
                   <label>City</label>
                   <input type="text" id="edit-all-city-${id}" value="${escapeHtml(race.city)}">
                 </div>
+              </div>
+
+              <div class="form-row">
                 <div class="form-group">
                   <label>Country</label>
                   <input type="text" id="edit-all-country-${id}" value="${escapeHtml(race.country)}">
                 </div>
-              </div>
-
-              <div class="form-row">
                 <div class="form-group">
                   <label>Continent</label>
                   <select id="edit-all-continent-${id}">
@@ -802,17 +894,20 @@
                     <option value="Oceania" ${race.continent === 'Oceania' ? 'selected' : ''}>Oceania</option>
                   </select>
                 </div>
-                <div class="form-group">
-                  <label>Date *</label>
-                  <input type="date" id="edit-all-date-${id}" value="${formatDate(race.date)}" required>
-                </div>
               </div>
 
               <div class="form-row">
                 <div class="form-group">
+                  <label>Date *</label>
+                  <input type="date" id="edit-all-date-${id}" value="${formatDate(race.date)}" required>
+                </div>
+                <div class="form-group">
                   <label>Distance</label>
                   <input type="text" id="edit-all-distance-${id}" value="${escapeHtml(race.distance)}">
                 </div>
+              </div>
+
+              <div class="form-row">
                 <div class="form-group">
                   <label>Participants</label>
                   <input type="number" id="edit-all-participants-${id}" value="${escapeHtml(String(race.participants || 0))}" min="0">
@@ -840,7 +935,6 @@
       try {
         const raceData = {
           name: document.getElementById(`edit-all-name-${id}`).value,
-          sport: document.getElementById(`edit-all-sport-${id}`).value,
           sport_category: document.getElementById(`edit-all-sport-category-${id}`).value,
           sport_subtype: document.getElementById(`edit-all-sport-subtype-${id}`).value,
           city: document.getElementById(`edit-all-city-${id}`).value,
@@ -878,6 +972,12 @@
     function cancelEditFromAll(id) {
       loadRaces();
     }
+
+    // Initialize page when DOM is ready
+    document.addEventListener('DOMContentLoaded', () => {
+      initializeSportDropdowns();
+      loadRaces(); // Load races by default
+    });
   </script>
 </body>
 </html>
