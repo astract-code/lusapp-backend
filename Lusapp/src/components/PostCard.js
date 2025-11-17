@@ -66,6 +66,18 @@ export const PostCard = ({ post, onUserPress, onRacePress }) => {
               {race?.name || 'a race'}
             </Text>
           </Text>
+        ) : post.type === 'race_created' ? (
+          <Text style={[styles.activityText, { color: colors.text }]}>
+            🆕 Added a new race:{' '}
+            <Text style={[styles.raceLink, { color: colors.primary }]} onPress={() => race && onRacePress(race.id)}>
+              {race?.name || post.raceName || 'a race'}
+            </Text>
+            {race && (
+              <Text style={[styles.raceDetails, { color: colors.textSecondary }]}>
+                {'\n'}📍 {race.city}, {race.country} • 📅 {new Date(race.date).toLocaleDateString()}
+              </Text>
+            )}
+          </Text>
         ) : (
           <View>
             <Text style={[styles.activityText, { color: colors.text }]}>
@@ -182,6 +194,11 @@ const styles = StyleSheet.create({
   },
   raceLink: {
     fontWeight: '600',
+  },
+  raceDetails: {
+    fontSize: FONT_SIZE.sm,
+    lineHeight: 20,
+    marginTop: SPACING.xs,
   },
   timeText: {
     fontSize: FONT_SIZE.sm,

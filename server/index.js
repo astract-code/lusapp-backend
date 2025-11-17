@@ -363,9 +363,14 @@ app.delete('/api/races/:id', noCors, csrfProtection, adminAuth, async (req, res)
 
 // Admin endpoint: Approve a race
 app.post('/api/races/:id/approve', noCors, csrfProtection, adminAuth, async (req, res) => {
+  const client = await pool.connect();
+  
   try {
     const { id } = req.params;
-    const result = await pool.query(
+    
+    await client.query('BEGIN');
+    
+    const result = await client.query(
       `UPDATE races 
        SET approval_status = 'approved', 
            reviewed_by = $1, 
@@ -376,14 +381,32 @@ app.post('/api/races/:id/approve', noCors, csrfProtection, adminAuth, async (req
     );
     
     if (result.rows.length === 0) {
+      await client.query('ROLLBACK');
       return res.status(404).json({ error: 'Race not found' });
     }
     
+    const race = result.rows[0];
+    
+    // Auto-create PUBLIC "race_created" post (visible to everyone, not just followers)
+    // If the race was created by a user, credit them; otherwise skip post (admin-created races)
+    if (race.created_by_user_id) {
+      await client.query(
+        `INSERT INTO posts (user_id, type, race_id, timestamp, liked_by, comments)
+         VALUES ($1, 'race_created', $2, NOW(), ARRAY[]::text[], '[]'::text)`,
+        [race.created_by_user_id, id]
+      );
+      console.log(`📢 [RACE APPROVED] Created public post for race ${id} by user ${race.created_by_user_id}`);
+    }
+    
+    await client.query('COMMIT');
     console.log(`✅ Race ${id} approved by ${req.auth.user || 'admin'}`);
-    res.json({ success: true, race: result.rows[0] });
+    res.json({ success: true, race: race });
   } catch (error) {
+    await client.query('ROLLBACK');
     console.error('Error approving race:', error);
     res.status(500).json({ error: 'Failed to approve race' });
+  } finally {
+    client.release();
   }
 });
 
@@ -615,6 +638,14 @@ app.post('/api/races/:raceId/join', verifyFirebaseToken, async (req, res) => {
       [userId]
     );
     
+    // Auto-create "signup" post to share with followers
+    await client.query(
+      `INSERT INTO posts (user_id, type, race_id, timestamp, liked_by, comments)
+       VALUES ($1, 'signup', $2, NOW(), ARRAY[]::text[], '[]'::text)`,
+      [userId, raceId]
+    );
+    console.log(`[RACE JOIN] Created signup post for user ${userId} and race ${raceId}`);
+    
     await client.query('COMMIT');
     console.log(`[RACE JOIN] Success! User ${userId} added to race ${raceId} and group ${groupId}`);
     
@@ -693,6 +724,8 @@ app.post('/api/races/:raceId/leave', verifyFirebaseToken, async (req, res) => {
 });
 
 app.post('/api/races/:raceId/complete', verifyFirebaseToken, async (req, res) => {
+  const client = await pool.connect();
+  
   try {
     const raceId = parseInt(req.params.raceId, 10);
     const firebaseUid = req.user.firebaseUid;
@@ -701,32 +734,67 @@ app.post('/api/races/:raceId/complete', verifyFirebaseToken, async (req, res) =>
       return res.status(400).json({ error: 'Invalid race ID' });
     }
     
-    // Get database user ID from Firebase UID
-    const userResult = await pool.query(
-      'SELECT id FROM users WHERE firebase_uid = $1',
+    await client.query('BEGIN');
+    
+    // Get database user ID and current completed races with row-level lock to prevent concurrent duplicates
+    const userResult = await client.query(
+      'SELECT id, completed_races FROM users WHERE firebase_uid = $1 FOR UPDATE',
       [firebaseUid]
     );
     if (userResult.rows.length === 0) {
+      await client.query('ROLLBACK');
       return res.status(404).json({ error: 'User not found' });
     }
     const userId = userResult.rows[0].id;
+    const completedRaces = userResult.rows[0].completed_races || [];
     
-    const raceCheck = await pool.query('SELECT id FROM races WHERE id = $1', [raceId]);
+    // Idempotency check: if already completed, return success without creating duplicate post
+    if (completedRaces.includes(raceId.toString())) {
+      await client.query('ROLLBACK');
+      console.log(`[RACE COMPLETE] Race ${raceId} already completed by user ${userId}, skipping`);
+      return res.json({
+        success: true,
+        completedRaces: completedRaces,
+        alreadyCompleted: true
+      });
+    }
+    
+    const raceCheck = await client.query('SELECT id FROM races WHERE id = $1', [raceId]);
     if (raceCheck.rows.length === 0) {
+      await client.query('ROLLBACK');
       return res.status(404).json({ error: 'Race not found' });
     }
     
-    await pool.query(
+    await client.query(
       `UPDATE users 
        SET completed_races = ARRAY(SELECT DISTINCT unnest(COALESCE(completed_races, ARRAY[]::text[]) || ARRAY[$1::text]))
        WHERE id = $2`,
       [raceId.toString(), userId]
     );
     
-    const result = await pool.query(
+    // Auto-create "completion" post to share with followers (check for duplicates first)
+    const existingPostCheck = await client.query(
+      `SELECT id FROM posts WHERE user_id = $1 AND race_id = $2 AND type = 'completion'`,
+      [userId, raceId]
+    );
+    
+    if (existingPostCheck.rows.length === 0) {
+      await client.query(
+        `INSERT INTO posts (user_id, type, race_id, timestamp, liked_by, comments)
+         VALUES ($1, 'completion', $2, NOW(), ARRAY[]::text[], '[]'::text)`,
+        [userId, raceId]
+      );
+      console.log(`[RACE COMPLETE] Created completion post for user ${userId} and race ${raceId}`);
+    } else {
+      console.log(`[RACE COMPLETE] Completion post already exists for user ${userId} and race ${raceId}, skipping`);
+    }
+    
+    const result = await client.query(
       'SELECT completed_races FROM users WHERE id = $1',
       [userId]
     );
+    
+    await client.query('COMMIT');
     
     res.json({
       success: true,
@@ -734,8 +802,11 @@ app.post('/api/races/:raceId/complete', verifyFirebaseToken, async (req, res) =>
     });
     
   } catch (error) {
+    await client.query('ROLLBACK');
     console.error('Complete race error:', error);
     res.status(500).json({ error: 'Failed to complete race' });
+  } finally {
+    client.release();
   }
 });
 

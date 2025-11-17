@@ -14,6 +14,7 @@ router.post('/', verifyFirebaseToken, async (req, res) => {
     const { type, raceId, content } = req.body;
     const userId = req.user.userId;
     
+    // NOTE: 'race_created' is NOT in this allowlist - it can only be created server-side during race approval
     if (!type || !['signup', 'completion', 'general'].includes(type)) {
       return res.status(400).json({ error: 'Valid post type is required (signup, completion, or general)' });
     }
@@ -61,6 +62,7 @@ router.get('/feed', verifyFirebaseToken, async (req, res) => {
     const following = userResult.rows[0]?.following || [];
     const userIds = [userId.toString(), ...following];
     
+    // Fetch both follower posts AND public race_created posts
     const result = await pool.query(
       `SELECT p.id, p.user_id, p.type, p.race_id, p.timestamp, p.liked_by, p.comments,
               u.name as user_name, u.avatar as user_avatar,
@@ -68,7 +70,7 @@ router.get('/feed', verifyFirebaseToken, async (req, res) => {
        FROM posts p
        JOIN users u ON p.user_id = u.id
        LEFT JOIN races r ON p.race_id = r.id
-       WHERE p.user_id::text = ANY($1)
+       WHERE (p.user_id::text = ANY($1) OR p.type = 'race_created')
        ORDER BY p.timestamp DESC
        LIMIT $2 OFFSET $3`,
       [userIds, limit, offset]
