@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, FlatList, TouchableOpacity, RefreshControl } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Calendar } from 'react-native-calendars';
 import { CompactRaceCard } from '../components/CompactRaceCard';
@@ -10,11 +10,12 @@ import { SPACING, FONT_SIZE, BORDER_RADIUS } from '../constants/theme';
 
 export const CalendarScreen = ({ navigation }) => {
   const { colors } = useTheme();
-  const { user } = useAuth();
-  const races = useAppStore((state) => state.races);
+  const { user, refreshUser } = useAuth();
+  const { races, fetchRaces } = useAppStore();
   
   const [viewMode, setViewMode] = useState('calendar');
   const [selectedDate, setSelectedDate] = useState('');
+  const [refreshing, setRefreshing] = useState(false);
 
   // Filter to only show races the user has joined
   const joinedRaceIds = user?.joined_races || [];
@@ -45,6 +46,15 @@ export const CalendarScreen = ({ navigation }) => {
   const filteredRaces = selectedDate
     ? upcomingRaces.filter((race) => race.date === selectedDate)
     : upcomingRaces;
+
+  const onRefresh = async () => {
+    setRefreshing(true);
+    await Promise.all([
+      fetchRaces(),
+      refreshUser(),
+    ]);
+    setRefreshing(false);
+  };
 
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
@@ -127,6 +137,13 @@ export const CalendarScreen = ({ navigation }) => {
               ? 'No registered races on this date'
               : 'No registered upcoming races. Go to Discover to find races!'}
           </Text>
+        }
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+            tintColor={colors.primary}
+          />
         }
       />
     </SafeAreaView>

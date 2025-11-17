@@ -9,6 +9,7 @@ import {
   Alert,
   TextInput,
   Modal,
+  RefreshControl,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { CompactRaceCard } from '../components/CompactRaceCard';
@@ -32,6 +33,7 @@ export const DiscoverScreen = ({ navigation }) => {
   const [selectedCountry, setSelectedCountry] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [showAddForm, setShowAddForm] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
   
   const [newRace, setNewRace] = useState({
     name: '',
@@ -394,6 +396,17 @@ export const DiscoverScreen = ({ navigation }) => {
             <Text style={[styles.resultCount, { color: colors.textSecondary }]}>
               {filteredRaces.length} {filteredRaces.length === 1 ? 'race' : 'races'} found
             </Text>
+          }
+          refreshControl={
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={async () => {
+                setRefreshing(true);
+                await fetchRaces();
+                setRefreshing(false);
+              }}
+              tintColor={colors.primary}
+            />
           }
         />
       </View>

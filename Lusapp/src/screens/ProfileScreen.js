@@ -9,6 +9,7 @@ import {
   ActivityIndicator,
   Platform,
   TextInput,
+  RefreshControl,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import * as ImagePicker from 'expo-image-picker';
@@ -24,10 +25,11 @@ import API_URL from '../config/api';
 
 export const ProfileScreen = ({ navigation }) => {
   const { colors } = useTheme();
-  const { user: authUser, logout, updateUser, token } = useAuth();
-  const races = useAppStore((state) => state.races);
+  const { user: authUser, logout, updateUser, token, refreshUser } = useAuth();
+  const { races, fetchRaces } = useAppStore();
   const [uploading, setUploading] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
   const [editedProfile, setEditedProfile] = useState({
     name: '',
     bio: '',
@@ -182,6 +184,15 @@ export const ProfileScreen = ({ navigation }) => {
     authUser.completed_races?.includes(race.id.toString())
   );
 
+  const onRefresh = async () => {
+    setRefreshing(true);
+    await Promise.all([
+      fetchRaces(),
+      refreshUser(),
+    ]);
+    setRefreshing(false);
+  };
+
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]} edges={['top']}>
       <View style={[styles.topBar, { borderBottomColor: colors.border }]}>
@@ -204,7 +215,15 @@ export const ProfileScreen = ({ navigation }) => {
         </View>
       </View>
       
-      <ScrollView>
+      <ScrollView
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+            tintColor={colors.primary}
+          />
+        }
+      >
         <View style={[styles.header, { backgroundColor: colors.surface }]}>
           <View style={styles.avatarSection}>
             <UserAvatar uri={authUser.avatar} size={100} />

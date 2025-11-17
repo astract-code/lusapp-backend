@@ -25,10 +25,10 @@ This project uses a **Render PostgreSQL database** (NOT Replit's built-in Neon d
 
 The frontend is built with React Native (0.81.4) and Expo SDK (~54.0) for cross-platform development. Navigation is handled by React Navigation v7 (bottom tabs + native stack) with deep linking. State management utilizes Zustand v5.0.8 for global state and React Context for authentication, with AsyncStorage for persistent local data. A comprehensive design system supports theming (Light/Dark/Auto), semantic color tokens, and reusable components with spring-based animations.
 
-**Smart Distance Display:**
-- Automatically shows standard distances for race types (Marathon = 42.2 km, 5K = 5 km, etc.)
-- Falls back to custom distance if provided in database
-- Eliminates "TBD" by inferring from sport_subtype when distance field is empty
+**UI/UX Features:**
+- **Pull-to-refresh** - All main screens (Feed, Calendar, Discover, Profile, Groups) support pull-to-refresh gesture to reload data from the server
+- **Smart Distance Display** - Automatically shows standard distances for race types (Marathon = 42.2 km, 5K = 5 km, etc.), falls back to custom distance if provided in database, eliminates "TBD" by inferring from sport_subtype when distance field is empty
+- **Cross-stack Navigation** - Smart back buttons in group detail screens ensure users can always navigate back even when jumping between tabs
 
 ### Data Architecture
 
