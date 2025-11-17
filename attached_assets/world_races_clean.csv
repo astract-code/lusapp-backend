@@ -1,0 +1,37 @@
+name,sport,sport_category,sport_subtype,city,country,continent,date,start_time,distance,description,participants
+Tokyo Marathon,Running,Road Running,Marathon,Tokyo,Japan,Asia,2026-03-01,09:10,42.2km,One of the Abbott World Marathon Majors known for its blend of elite and mass participation,38000
+Boston Marathon,Running,Road Running,Marathon,Boston,USA,North America,2026-04-20,10:00,42.2km,The worlds oldest annual marathon part of the World Marathon Majors,30000
+London Marathon,Running,Road Running,Marathon,London,UK,Europe,2026-04-26,10:00,42.2km,TCS London Marathon a World Marathon Major famous for its charity fundraising and vibrant crowds,50000
+Paris Marathon,Running,Road Running,Marathon,Paris,France,Europe,2026-04-12,09:10,42.2km,Schneider Electric Paris Marathon passing iconic landmarks like the Eiffel Tower,20000
+Rome Marathon,Running,Road Running,Marathon,Rome,Italy,Europe,2026-03-21,08:30,42.195km,The Rome Marathon winding through ancient ruins and historic sites,12000
+Rotterdam Marathon,Running,Road Running,Marathon,Rotterdam,Netherlands,Europe,2026-04-05,10:00,42.2km,One of Europes fastest and flattest courses known for personal bests,15000
+Vienna City Marathon,Running,Road Running,Marathon,Vienna,Austria,Europe,2026-04-26,09:00,42.195km,Passing by landmarks like the State Opera and Belvedere Palace,4500
+Madrid Marathon,Running,Road Running,Marathon,Madrid,Spain,Europe,2026-04-26,09:00,42.2km,A top race with a route reconfigured every edition through the Spanish capital,12000
+Berlin Marathon,Running,Road Running,Marathon,Berlin,Germany,Europe,2026-09-27,09:15,42.2km,BMW Berlin-Marathon renowned for its flat fast course and world records,25000
+Hamburg Marathon,Running,Road Running,Marathon,Hamburg,Germany,Europe,2026-04-19,09:30,42.2km,Running along the banks of the Elbe River in northern Germany,14000
+Copenhagen Marathon,Running,Road Running,Marathon,Copenhagen,Denmark,Europe,2026-05-16,09:30,42.2km,Flat and spectator-friendly route through the Danish capital,10000
+Stockholm Marathon,Running,Road Running,Marathon,Stockholm,Sweden,Europe,2026-06-06,12:00,42.2km,Unique course looping around the citys 14 islands,8000
+Prague Marathon,Running,Road Running,Marathon,Prague,Czech Republic,Europe,2026-05-03,09:00,42.2km,Scenic route along the Vltava River and across historic bridges,10000
+Valencia Marathon,Running,Road Running,Marathon,Valencia,Spain,Europe,2026-12-13,08:00,42.195km,Trinidad Alfonso Valencia Marathon a Platinum Label race with a flat scenic route,10000
+Amsterdam Marathon,Running,Road Running,Marathon,Amsterdam,Netherlands,Europe,2026-10-18,09:30,42.2km,Running through canals and historic districts a popular European event,16000
+Frankfurt Marathon,Running,Road Running,Marathon,Frankfurt,Germany,Europe,2026-10-25,09:15,42.2km,One of the fastest city marathons in Germany featuring the Main River,4500
+Edinburgh Marathon,Running,Road Running,Marathon,Edinburgh,UK,Europe,2026-05-24,10:00,42.2km,Point-to-point course from Linlithgow to Scotlands capital,15000
+Dublin Marathon,Running,Road Running,Marathon,Dublin,Ireland,Europe,2026-10-25,08:45,42.2km,One of Europes most popular marathons through the vibrant city streets,20000
+Chicago Marathon,Running,Road Running,Marathon,Chicago,USA,North America,2026-10-11,07:20,42.2km,Bank of America Chicago Marathon site of recent world records,45000
+New York City Marathon,Running,Road Running,Marathon,New York,USA,North America,2026-11-01,08:00,42.2km,TCS New York City Marathon the largest marathon in the world running through all five boroughs,55000
+IRONMAN World Championship,Triathlon,Full Distance,Full Ironman,Kailua-Kona,Hawaii,Oceania,2026-10-10,07:00,226km,The pinnacle of triathlon the original Ironman race on the Big Island of Hawaii,2500
+Challenge Roth,Triathlon,Full Distance,Full Ironman,Roth,Germany,Europe,2026-07-12,07:00,226km,One of Europes largest and most prestigious Ironman-distance races with massive crowds,4000
+IRONMAN Copenhagen,Triathlon,Full Distance,Full Ironman,Copenhagen,Denmark,Europe,2026-08-16,07:00,226km,Fast course through the Danish capital known for high finish rates,3000
+IRONMAN Barcelona,Triathlon,Full Distance,Full Ironman,Barcelona,Spain,Europe,2026-10-04,07:00,226km,Flat and fast Mediterranean course in vibrant Barcelona,2500
+Sub7,Triathlon,Non-Standard,100km,Samorin,Slovakia,Europe,2026-07-25,06:00,100km,Superhuman limit-pushing race with sub-7 hour challenge for men and sub-8 for women,1000
+T100 Triathlon Gold Coast,Triathlon,Non-Standard,T100,Gold Coast,Australia,Oceania,2026-03-21,07:00,100km,High-profile T100 series race with pro and age-group events on stunning Australian coast,2000
+T100 Triathlon Singapore,Triathlon,Non-Standard,T100,Singapore,Singapore,Asia,2026-04-25,07:00,100km,Southeast Asias premier triathlon event in the T100 World Tour,1500
+IRONMAN 70.3 World Championship,Triathlon,Half Distance,Half Ironman,Nice,France,Europe,2026-09-27,07:00,113km,The half-distance world championship in the French Riviera,3000
+IRONMAN 70.3 Hawaii,Triathlon,Half Distance,Half Ironman,Kailua-Kona,Hawaii,Oceania,2026-05-31,07:00,113km,Iconic half-Ironman in the birthplace of the sport,2500
+IRONMAN 70.3 UK,Triathlon,Half Distance,Half Ironman,Bolton,UK,Europe,2026-06-14,07:00,113km,Challenging course in northern England with significant climbs,2000
+World Triathlon Championship Finals,Triathlon,Olympic Distance,Standard,Pontevedra,Spain,Europe,2026-09-27,08:00,51.5km,Crowning event for World Triathlon series elite and age-group championships,5000
+WTCS Abu Dhabi,Triathlon,Olympic Distance,Standard,Abu Dhabi,UAE,Asia,2026-03-28,08:00,51.5km,Opening race of the World Triathlon Championship Series in the Middle East,3000
+WTCS Yokohama,Triathlon,Olympic Distance,Standard,Yokohama,Japan,Asia,2026-05-16,07:00,51.5km,Fast and scenic Olympic-distance race in Japan,2500
+T100 Triathlon Nice,Triathlon,Non-Standard,T100,Nice,France,Europe,2026-05-30,07:00,100km,Exciting T100 event on the French Riviera with pro racing,2000
+T100 Triathlon London,Triathlon,Non-Standard,T100,London,UK,Europe,2026-07-25,07:00,100km,Urban T100 race through iconic London landmarks,2500
+T100 Triathlon Vancouver,Triathlon,Non-Standard,T100,Vancouver,Canada,North America,2026-08-15,07:00,100km,Stunning coastal T100 event in beautiful British Columbia,2000
