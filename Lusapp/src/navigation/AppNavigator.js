@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { useColorScheme, Text } from 'react-native';
+import { useColorScheme, Text, TouchableOpacity } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 import { COLORS } from '../constants/theme';
@@ -224,7 +224,26 @@ const GroupsStack = () => {
       <Stack.Screen 
         name="GroupDetail" 
         component={GroupDetailScreen}
-        options={{ title: 'Group Details' }}
+        options={({ navigation }) => ({ 
+          title: 'Group Details',
+          headerBackTitleVisible: false,
+          headerLeft: () => (
+            <TouchableOpacity onPress={() => {
+              if (navigation.canGoBack()) {
+                navigation.goBack();
+              } else {
+                navigation.navigate('GroupsMain');
+              }
+            }}>
+              <Ionicons 
+                name="arrow-back" 
+                size={24} 
+                color={theme.primary}
+                style={{ marginLeft: 10 }}
+              />
+            </TouchableOpacity>
+          ),
+        })}
       />
       <Stack.Screen 
         name="GearListDetail" 
