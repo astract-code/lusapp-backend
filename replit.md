@@ -8,6 +8,17 @@ Lusapp is a React Native mobile application built with Expo for athletes to disc
 
 Preferred communication style: Simple, everyday language.
 
+## ⚠️ CRITICAL DATABASE CONFIGURATION
+
+**DO NOT MODIFY THE DATABASE_URL ENVIRONMENT VARIABLE**
+
+This project uses a **Render PostgreSQL database** (NOT Replit's built-in Neon database):
+- Database URL: `postgresql://lusapp_user:***@dpg-d3ie4b49c44c73and2rg-a.oregon-postgres.render.com/lusapp`
+- SSL is REQUIRED for Render database connections
+- Backend configuration: `ssl: { rejectUnauthorized: false }`
+
+**Never change or migrate to a different database without explicit user approval.** All production data is stored in the Render database.
+
 ## System Architecture
 
 ### Frontend Architecture
