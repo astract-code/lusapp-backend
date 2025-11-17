@@ -65,7 +65,7 @@ CREATE INDEX IF NOT EXISTS idx_races_category ON races(sport_category);
 CREATE TABLE IF NOT EXISTS posts (
   id SERIAL PRIMARY KEY,
   user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-  type VARCHAR(50) NOT NULL CHECK (type IN ('signup', 'completion', 'general')),
+  type VARCHAR(50) NOT NULL CHECK (type IN ('signup', 'completion', 'general', 'race_created')),
   race_id INTEGER REFERENCES races(id),
   timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   liked_by TEXT[] DEFAULT '{}',
