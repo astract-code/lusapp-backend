@@ -16,6 +16,7 @@ import { useAppStore } from '../context/AppContext';
 import { useTheme } from '../context/ThemeContext';
 import { SPACING, FONT_SIZE, BORDER_RADIUS, SPORTS } from '../constants/theme';
 import API_URL from '../config/api';
+import { getDisplayDistance } from '../utils/distanceHelper';
 
 export const RaceDetailScreen = ({ route, navigation }) => {
   const { raceId } = route.params;
@@ -216,15 +217,13 @@ export const RaceDetailScreen = ({ route, navigation }) => {
           </View>
         )}
 
-        {shouldShowDistance() && race.distance && (
-          <View style={styles.infoRow}>
-            <Text style={styles.icon}>📏</Text>
-            <View style={styles.infoText}>
-              <Text style={[styles.label, { color: colors.textSecondary }]}>Distance</Text>
-              <Text style={[styles.value, { color: colors.text }]}>{race.distance}</Text>
-            </View>
+        <View style={styles.infoRow}>
+          <Text style={styles.icon}>📏</Text>
+          <View style={styles.infoText}>
+            <Text style={[styles.label, { color: colors.textSecondary }]}>Distance</Text>
+            <Text style={[styles.value, { color: colors.text }]}>{getDisplayDistance(race)}</Text>
           </View>
-        )}
+        </View>
 
         <View style={styles.infoRow}>
           <Text style={styles.icon}>👥</Text>

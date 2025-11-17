@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { SPACING, BORDER_RADIUS, FONT_SIZE, SPORTS } from '../constants/theme';
 import { useTheme } from '../context/ThemeContext';
+import { getDisplayDistance } from '../utils/distanceHelper';
 
 export const RaceCard = ({ race, onPress }) => {
   const { colors } = useTheme();
@@ -60,7 +61,7 @@ export const RaceCard = ({ race, onPress }) => {
             </View>
             <View style={styles.detailRow}>
               <Text style={styles.detailIcon}>📏</Text>
-              <Text style={styles.detailText}>{race.distance}</Text>
+              <Text style={styles.detailText}>{getDisplayDistance(race)}</Text>
             </View>
           </View>
           

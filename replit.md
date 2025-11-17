@@ -14,6 +14,11 @@ Preferred communication style: Simple, everyday language.
 
 The frontend is built with React Native (0.81.4) and Expo SDK (~54.0) for cross-platform development. Navigation is handled by React Navigation v7 (bottom tabs + native stack) with deep linking. State management utilizes Zustand v5.0.8 for global state and React Context for authentication, with AsyncStorage for persistent local data. A comprehensive design system supports theming (Light/Dark/Auto), semantic color tokens, and reusable components with spring-based animations.
 
+**Smart Distance Display:**
+- Automatically shows standard distances for race types (Marathon = 42.2 km, 5K = 5 km, etc.)
+- Falls back to custom distance if provided in database
+- Eliminates "TBD" by inferring from sport_subtype when distance field is empty
+
 ### Data Architecture
 
 The application uses a PostgreSQL database for persistent storage, accessed via an Express.js REST API server (port 5000). The database schema includes tables for `races`, `users`, `posts`, `conversations`, `messages`, `groups`, `group_members`, `group_messages`, `group_gear_lists`, and `group_gear_items`. Data models define structures for `User`, `Race`, and `Post`. 

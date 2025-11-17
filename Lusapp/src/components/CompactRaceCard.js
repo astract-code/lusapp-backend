@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { useTheme } from '../context/ThemeContext';
 import { SPACING, FONT_SIZE, BORDER_RADIUS } from '../constants/theme';
+import { getDisplayDistance } from '../utils/distanceHelper';
 
 const sportIcons = {
   'Marathon': '🏃',
@@ -88,7 +89,7 @@ export const CompactRaceCard = ({ race, onPress }) => {
           <View style={styles.distanceContainer}>
             <Text style={[styles.distanceIcon, { color: getDistanceColor() }]}>📍</Text>
             <Text style={[styles.distance, { color: colors.text }]}>
-              {race.distance}
+              {getDisplayDistance(race)}
             </Text>
           </View>
           
