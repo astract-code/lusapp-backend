@@ -1,0 +1,21 @@
+name,sport,sport_category,sport_subtype,city,country,continent,date,start_time,distance,description,participants
+Tokyo Marathon,Running,Road Running,Marathon,Tokyo,Japan,Asia,2025-03-02,09:10,42.2km,One of the Abbott World Marathon Majors known for its blend of elite and mass participation,38000
+Boston Marathon,Running,Road Running,Marathon,Boston,USA,North America,2025-04-21,10:00,42.2km,The world's oldest annual marathon part of the World Marathon Majors,30000
+London Marathon,Running,Road Running,Marathon,London,UK,Europe,2025-04-27,10:00,42.2km,TCS London Marathon a World Marathon Major famous for its charity fundraising and vibrant crowds,50000
+Berlin Marathon,Running,Road Running,Marathon,Berlin,Germany,Europe,2025-09-28,09:15,42.2km,BMW Berlin-Marathon renowned for its flat fast course and world records,25000
+Chicago Marathon,Running,Road Running,Marathon,Chicago,USA,North America,2025-10-12,07:20,42.2km,Bank of America Chicago Marathon site of recent world records,45000
+New York City Marathon,Running,Road Running,Marathon,New York,USA,North America,2025-11-02,08:00,42.2km,TCS New York City Marathon the largest marathon in the world running through all five boroughs,55000
+Sydney Marathon,Running,Road Running,Marathon,Sydney,Australia,Oceania,2025-09-14,07:00,42.2km,TCS Sydney Marathon the newest World Marathon Major with stunning harbor views,20000
+Paris Marathon,Running,Road Running,Marathon,Paris,France,Europe,2025-04-13,09:10,42.2km,Schneider Electric Paris Marathon passing iconic landmarks like the Eiffel Tower,20000
+Rome Marathon,Running,Road Running,Marathon,Rome,Italy,Europe,2025-03-16,08:30,42.195km,The Rome Marathon winding through ancient ruins and historic sites,12000
+Rotterdam Marathon,Running,Road Running,Marathon,Rotterdam,Netherlands,Europe,2025-04-06,10:00,42.2km,One of Europe's fastest and flattest courses known for personal bests,15000
+Valencia Marathon,Running,Road Running,Marathon,Valencia,Spain,Europe,2025-12-14,08:00,42.195km,Trinidad Alfonso Valencia Marathon a Platinum Label race with a flat scenic route,10000
+Amsterdam Marathon,Running,Road Running,Marathon,Amsterdam,Netherlands,Europe,2025-10-19,09:30,42.2km,Running through canals and historic districts a popular European event,16000
+Frankfurt Marathon,Running,Road Running,Marathon,Frankfurt,Germany,Europe,2025-10-26,09:15,42.2km,One of the fastest city marathons in Germany featuring the Main River,4500
+Stockholm Marathon,Running,Road Running,Marathon,Stockholm,Sweden,Europe,2025-06-07,12:00,42.2km,Unique course looping around the city's 14 islands,8000
+Copenhagen Marathon,Running,Road Running,Marathon,Copenhagen,Denmark,Europe,2025-05-17,09:30,42.2km,Flat and spectator-friendly route through the Danish capital,10000
+Vienna City Marathon,Running,Road Running,Marathon,Vienna,Austria,Europe,2025-04-27,09:00,42.195km,Passing by landmarks like the State Opera and Belvedere Palace,4500
+Prague Marathon,Running,Road Running,Marathon,Prague,Czech Republic,Europe,2025-05-04,09:00,42.2km,Scenic route along the Vltava River and across historic bridges,10000
+Edinburgh Marathon,Running,Road Running,Marathon,Edinburgh,UK,Europe,2025-05-25,10:00,42.2km,Point-to-point course from Linlithgow to Scotland's capital,15000
+Dublin Marathon,Running,Road Running,Marathon,Dublin,Ireland,Europe,2025-10-26,08:45,42.2km,One of Europe's most popular marathons through the vibrant city streets,20000
+Los Angeles Marathon,Running,Road Running,Marathon,Los Angeles,USA,North America,2025-03-02,07:00,42.2km,From Dodger Stadium to Santa Monica Pier showcasing LA's diverse neighborhoods,18000
