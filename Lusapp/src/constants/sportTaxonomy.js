@@ -11,13 +11,17 @@ export const SPORT_TAXONOMY = {
     icon: '🚴',
     subtypes: ['Criterium', 'Gran Fondo', 'Mountain Biking', 'Road Race', 'Custom Distance']
   },
-  Obstacle: {
+  Fitness: {
     icon: '💪',
-    subtypes: ['Spartan Race', 'HYROX', 'Obstacle Course', 'Custom Distance']
+    subtypes: ['Spartan Race', 'HYROX', 'Obstacle Course', 'CrossFit', 'Bootcamp', 'Custom Distance']
   },
   Swimming: {
     icon: '🏊',
     subtypes: ['Open Water Swim', 'Pool Competition', 'Custom Distance']
+  },
+  Custom: {
+    icon: '⭐',
+    subtypes: ['Custom Event']
   }
 };
 
@@ -60,12 +64,14 @@ export const normalizeLegacySport = (sportString) => {
     'mountain bike': { category: 'Cycling', subtype: 'Mountain Biking' },
     'mtb': { category: 'Cycling', subtype: 'Mountain Biking' },
     
-    'spartan race': { category: 'Obstacle', subtype: 'Spartan Race' },
-    'spartan': { category: 'Obstacle', subtype: 'Spartan Race' },
-    'hyrox': { category: 'Obstacle', subtype: 'HYROX' },
-    'obstacle course': { category: 'Obstacle', subtype: 'Obstacle Course' },
-    'obstacle': { category: 'Obstacle', subtype: 'Obstacle Course' },
-    'ocr': { category: 'Obstacle', subtype: 'Obstacle Course' },
+    'spartan race': { category: 'Fitness', subtype: 'Spartan Race' },
+    'spartan': { category: 'Fitness', subtype: 'Spartan Race' },
+    'hyrox': { category: 'Fitness', subtype: 'HYROX' },
+    'obstacle course': { category: 'Fitness', subtype: 'Obstacle Course' },
+    'obstacle': { category: 'Fitness', subtype: 'Obstacle Course' },
+    'ocr': { category: 'Fitness', subtype: 'Obstacle Course' },
+    'crossfit': { category: 'Fitness', subtype: 'CrossFit' },
+    'bootcamp': { category: 'Fitness', subtype: 'Bootcamp' },
     
     'open water swim': { category: 'Swimming', subtype: 'Open Water Swim' },
     'swim': { category: 'Swimming', subtype: 'Open Water Swim' },
