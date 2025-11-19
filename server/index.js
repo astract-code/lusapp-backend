@@ -109,7 +109,23 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-const upload = multer({ dest: 'uploads/' });
+const storage = multer.memoryStorage();
+const upload = multer({ 
+  storage: storage,
+  limits: { fileSize: 10 * 1024 * 1024 },
+  fileFilter: (req, file, cb) => {
+    const allowedTypes = /jpeg|jpg|png|gif|pdf/;
+    const extname = allowedTypes.test(file.originalname.toLowerCase());
+    const isPdf = file.mimetype === 'application/pdf';
+    const isImage = /^image\/(jpeg|jpg|png|gif)$/.test(file.mimetype);
+    
+    if (isPdf || (isImage && extname)) {
+      return cb(null, true);
+    } else {
+      cb(new Error('Only image files (jpeg, jpg, png, gif) and PDF files are allowed'));
+    }
+  }
+});
 
 // Serve static files (CSV templates) publicly - NO AUTH
 app.use('/static', express.static(path.join(__dirname, 'static')));
@@ -723,12 +739,15 @@ app.post('/api/races/:raceId/leave', verifyFirebaseToken, async (req, res) => {
   }
 });
 
-app.post('/api/races/:raceId/complete', verifyFirebaseToken, async (req, res) => {
+app.post('/api/races/:raceId/complete', verifyFirebaseToken, upload.single('certificate'), async (req, res) => {
   const client = await pool.connect();
   
   try {
     const raceId = parseInt(req.params.raceId, 10);
-    const firebaseUid = req.user.firebaseUid;
+    const userId = req.user.userId;
+    const { completion_time, position, notes } = req.body;
+    
+    console.log(`[RACE COMPLETE] User ${userId} completing race ${raceId} with time: ${completion_time}, position: ${position}`);
     
     if (isNaN(raceId)) {
       return res.status(400).json({ error: 'Invalid race ID' });
@@ -736,34 +755,54 @@ app.post('/api/races/:raceId/complete', verifyFirebaseToken, async (req, res) =>
     
     await client.query('BEGIN');
     
-    // Get database user ID and current completed races with row-level lock to prevent concurrent duplicates
-    const userResult = await client.query(
-      'SELECT id, completed_races FROM users WHERE firebase_uid = $1 FOR UPDATE',
-      [firebaseUid]
-    );
-    if (userResult.rows.length === 0) {
-      await client.query('ROLLBACK');
-      return res.status(404).json({ error: 'User not found' });
-    }
-    const userId = userResult.rows[0].id;
-    const completedRaces = userResult.rows[0].completed_races || [];
-    
-    // Idempotency check: if already completed, return success without creating duplicate post
-    if (completedRaces.includes(raceId.toString())) {
-      await client.query('ROLLBACK');
-      console.log(`[RACE COMPLETE] Race ${raceId} already completed by user ${userId}, skipping`);
-      return res.json({
-        success: true,
-        completedRaces: completedRaces,
-        alreadyCompleted: true
-      });
-    }
-    
     const raceCheck = await client.query('SELECT id FROM races WHERE id = $1', [raceId]);
     if (raceCheck.rows.length === 0) {
       await client.query('ROLLBACK');
       return res.status(404).json({ error: 'Race not found' });
     }
+    
+    let certificateUrl = null;
+    
+    if (req.file) {
+      console.log(`[RACE COMPLETE] Uploading certificate PDF to Cloudinary...`);
+      const cloudinary = require('cloudinary').v2;
+      
+      cloudinary.config({
+        cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+        api_key: process.env.CLOUDINARY_API_KEY,
+        api_secret: process.env.CLOUDINARY_API_SECRET
+      });
+      
+      const uploadResult = await new Promise((resolve, reject) => {
+        const uploadStream = cloudinary.uploader.upload_stream(
+          {
+            folder: 'lusapp/certificates',
+            resource_type: 'raw',
+            format: 'pdf'
+          },
+          (error, result) => {
+            if (error) reject(error);
+            else resolve(result);
+          }
+        );
+        uploadStream.end(req.file.buffer);
+      });
+      
+      certificateUrl = uploadResult.secure_url;
+      console.log(`[RACE COMPLETE] Certificate uploaded: ${certificateUrl}`);
+    }
+    
+    await client.query(
+      `INSERT INTO race_completions (user_id, race_id, completion_time, position, certificate_url, notes)
+       VALUES ($1, $2, $3, $4, $5, $6)
+       ON CONFLICT (user_id, race_id) DO UPDATE SET
+         completion_time = EXCLUDED.completion_time,
+         position = EXCLUDED.position,
+         certificate_url = COALESCE(EXCLUDED.certificate_url, race_completions.certificate_url),
+         notes = EXCLUDED.notes,
+         completed_at = CURRENT_TIMESTAMP`,
+      [userId, raceId, completion_time || null, position || null, certificateUrl, notes || null]
+    );
     
     await client.query(
       `UPDATE users 
@@ -772,7 +811,6 @@ app.post('/api/races/:raceId/complete', verifyFirebaseToken, async (req, res) =>
       [raceId.toString(), userId]
     );
     
-    // Auto-create "completion" post to share with followers (check for duplicates first)
     const existingPostCheck = await client.query(
       `SELECT id FROM posts WHERE user_id = $1 AND race_id = $2 AND type = 'completion'`,
       [userId, raceId]
@@ -785,26 +823,110 @@ app.post('/api/races/:raceId/complete', verifyFirebaseToken, async (req, res) =>
         [userId, raceId]
       );
       console.log(`[RACE COMPLETE] Created completion post for user ${userId} and race ${raceId}`);
-    } else {
-      console.log(`[RACE COMPLETE] Completion post already exists for user ${userId} and race ${raceId}, skipping`);
     }
     
-    const result = await client.query(
-      'SELECT completed_races FROM users WHERE id = $1',
-      [userId]
+    const completionResult = await client.query(
+      'SELECT * FROM race_completions WHERE user_id = $1 AND race_id = $2',
+      [userId, raceId]
     );
     
     await client.query('COMMIT');
     
     res.json({
       success: true,
-      completedRaces: result.rows[0].completed_races || []
+      completion: completionResult.rows[0]
     });
     
   } catch (error) {
     await client.query('ROLLBACK');
     console.error('Complete race error:', error);
     res.status(500).json({ error: 'Failed to complete race' });
+  } finally {
+    client.release();
+  }
+});
+
+app.get('/api/races/:raceId/completion', verifyFirebaseToken, async (req, res) => {
+  try {
+    const raceId = parseInt(req.params.raceId, 10);
+    const userId = req.user.userId;
+    
+    if (isNaN(raceId)) {
+      return res.status(400).json({ error: 'Invalid race ID' });
+    }
+    
+    const result = await pool.query(
+      'SELECT * FROM race_completions WHERE user_id = $1 AND race_id = $2',
+      [userId, raceId]
+    );
+    
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: 'No completion found for this race' });
+    }
+    
+    res.json(result.rows[0]);
+  } catch (error) {
+    console.error('Get completion error:', error);
+    res.status(500).json({ error: 'Failed to get completion' });
+  }
+});
+
+app.get('/api/users/:userId/completions', verifyFirebaseToken, async (req, res) => {
+  try {
+    const userId = parseInt(req.params.userId, 10);
+    
+    if (req.user.userId !== userId) {
+      return res.status(403).json({ error: 'Unauthorized' });
+    }
+    
+    const result = await pool.query(
+      `SELECT rc.*, r.name, r.date, r.sport_category, r.sport_subtype, r.city, r.country
+       FROM race_completions rc
+       JOIN races r ON rc.race_id = r.id
+       WHERE rc.user_id = $1
+       ORDER BY rc.completed_at DESC`,
+      [userId]
+    );
+    
+    res.json(result.rows);
+  } catch (error) {
+    console.error('Get user completions error:', error);
+    res.status(500).json({ error: 'Failed to get completions' });
+  }
+});
+
+app.delete('/api/races/:raceId/completion', verifyFirebaseToken, async (req, res) => {
+  const client = await pool.connect();
+  
+  try {
+    const raceId = parseInt(req.params.raceId, 10);
+    const userId = req.user.userId;
+    
+    if (isNaN(raceId)) {
+      return res.status(400).json({ error: 'Invalid race ID' });
+    }
+    
+    await client.query('BEGIN');
+    
+    await client.query(
+      'DELETE FROM race_completions WHERE user_id = $1 AND race_id = $2',
+      [userId, raceId]
+    );
+    
+    await client.query(
+      `UPDATE users 
+       SET completed_races = array_remove(completed_races, $1)
+       WHERE id = $2`,
+      [raceId.toString(), userId]
+    );
+    
+    await client.query('COMMIT');
+    
+    res.json({ success: true });
+  } catch (error) {
+    await client.query('ROLLBACK');
+    console.error('Delete completion error:', error);
+    res.status(500).json({ error: 'Failed to delete completion' });
   } finally {
     client.release();
   }
