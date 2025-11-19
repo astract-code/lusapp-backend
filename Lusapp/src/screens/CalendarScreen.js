@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, FlatList, TouchableOpacity, RefreshControl } from 'react-native';
+import { View, Text, StyleSheet, SectionList, TouchableOpacity, RefreshControl } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Calendar } from 'react-native-calendars';
 import { CompactRaceCard } from '../components/CompactRaceCard';
@@ -19,13 +19,35 @@ export const CalendarScreen = ({ navigation }) => {
 
   // Filter to only show races the user has joined
   const joinedRaceIds = user?.joined_races || [];
+  const completedRaceIds = user?.completed_races || [];
+  
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  
   const upcomingRaces = races
     .filter((race) => {
-      const isUpcoming = new Date(race.date) >= new Date();
+      const isUpcoming = new Date(race.date) >= today;
       const isJoined = joinedRaceIds.includes(race.id.toString());
       return isUpcoming && isJoined;
     })
     .sort((a, b) => new Date(a.date) - new Date(b.date));
+  
+  const completedRaces = races
+    .filter((race) => {
+      const isPast = new Date(race.date) < today;
+      const isCompleted = completedRaceIds.includes(race.id.toString());
+      return isPast && isCompleted;
+    })
+    .sort((a, b) => new Date(b.date) - new Date(a.date));
+  
+  const pastUncompletedRaces = races
+    .filter((race) => {
+      const isPast = new Date(race.date) < today;
+      const isJoined = joinedRaceIds.includes(race.id.toString());
+      const isCompleted = completedRaceIds.includes(race.id.toString());
+      return isPast && isJoined && !isCompleted;
+    })
+    .sort((a, b) => new Date(b.date) - new Date(a.date));
 
   const markedDates = {};
   upcomingRaces.forEach((race) => {
@@ -43,9 +65,25 @@ export const CalendarScreen = ({ navigation }) => {
     };
   }
 
-  const filteredRaces = selectedDate
-    ? upcomingRaces.filter((race) => race.date === selectedDate)
-    : upcomingRaces;
+  const sections = [];
+  
+  if (!selectedDate) {
+    if (upcomingRaces.length > 0) {
+      sections.push({ title: 'Upcoming Races', data: upcomingRaces });
+    }
+    if (pastUncompletedRaces.length > 0) {
+      sections.push({ title: 'Past Races (Not Marked Complete)', data: pastUncompletedRaces });
+    }
+    if (completedRaces.length > 0) {
+      sections.push({ title: 'Completed Races', data: completedRaces });
+    }
+  } else {
+    const filteredRaces = [...upcomingRaces, ...pastUncompletedRaces, ...completedRaces]
+      .filter((race) => race.date === selectedDate);
+    if (filteredRaces.length > 0) {
+      sections.push({ title: 'Races on ' + selectedDate, data: filteredRaces });
+    }
+  }
 
   const onRefresh = async () => {
     setRefreshing(true);
@@ -121,21 +159,26 @@ export const CalendarScreen = ({ navigation }) => {
         />
       )}
 
-      <FlatList
-        data={filteredRaces}
-        keyExtractor={(item) => item.id}
+      <SectionList
+        sections={sections}
+        keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
           <CompactRaceCard
             race={item}
             onPress={() => navigation.navigate('RaceDetail', { raceId: item.id })}
           />
         )}
+        renderSectionHeader={({ section: { title } }) => (
+          <View style={[styles.sectionHeader, { backgroundColor: colors.background }]}>
+            <Text style={[styles.sectionTitle, { color: colors.text }]}>{title}</Text>
+          </View>
+        )}
         contentContainerStyle={styles.list}
         ListEmptyComponent={
           <Text style={[styles.emptyText, { color: colors.textSecondary }]}>
             {selectedDate
               ? 'No registered races on this date'
-              : 'No registered upcoming races. Go to Discover to find races!'}
+              : 'No registered races. Go to Discover to find races!'}
           </Text>
         }
         refreshControl={
@@ -192,5 +235,13 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: FONT_SIZE.md,
     marginTop: SPACING.lg,
+  },
+  sectionHeader: {
+    paddingVertical: SPACING.sm,
+    paddingHorizontal: SPACING.md,
+  },
+  sectionTitle: {
+    fontSize: FONT_SIZE.lg,
+    fontWeight: 'bold',
   },
 });
