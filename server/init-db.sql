@@ -204,3 +204,21 @@ CREATE INDEX IF NOT EXISTS idx_group_gear_lists_race ON group_gear_lists(race_id
 -- Create indexes for group_gear_items performance
 CREATE INDEX IF NOT EXISTS idx_group_gear_items_list ON group_gear_items(list_id);
 CREATE INDEX IF NOT EXISTS idx_group_gear_items_status ON group_gear_items(status);
+
+-- Create race_completions table for tracking completed races with results
+CREATE TABLE IF NOT EXISTS race_completions (
+  id SERIAL PRIMARY KEY,
+  user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  race_id INTEGER NOT NULL REFERENCES races(id) ON DELETE CASCADE,
+  completion_time VARCHAR(20),
+  position INTEGER,
+  certificate_url TEXT,
+  notes TEXT,
+  completed_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  UNIQUE(user_id, race_id)
+);
+
+-- Create indexes for race_completions performance
+CREATE INDEX IF NOT EXISTS idx_race_completions_user ON race_completions(user_id);
+CREATE INDEX IF NOT EXISTS idx_race_completions_race ON race_completions(race_id);
+CREATE INDEX IF NOT EXISTS idx_race_completions_date ON race_completions(completed_at DESC);
