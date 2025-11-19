@@ -7,9 +7,14 @@ import {
   TouchableOpacity,
   Alert,
   ActivityIndicator,
+  Modal,
+  TextInput,
+  Platform,
+  Linking,
 } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
+import * as DocumentPicker from 'expo-document-picker';
 import { UserAvatar } from '../components/UserAvatar';
 import { useAuth } from '../context/AuthContext';
 import { useAppStore } from '../context/AppContext';
@@ -26,8 +31,19 @@ export const RaceDetailScreen = ({ route, navigation }) => {
   const [registeredUsers, setRegisteredUsers] = useState([]);
   const [loadingUsers, setLoadingUsers] = useState(true);
   const [raceGroup, setRaceGroup] = useState(null);
+  
+  const [completion, setCompletion] = useState(null);
+  const [showCompletionModal, setShowCompletionModal] = useState(false);
+  const [completionTime, setCompletionTime] = useState('');
+  const [position, setPosition] = useState('');
+  const [notes, setNotes] = useState('');
+  const [certificate, setCertificate] = useState(null);
+  const [submitting, setSubmitting] = useState(false);
 
   const race = getRaceById(raceId);
+  
+  const isPastRace = race && new Date(race.date) < new Date();
+  const isCompleted = user?.completed_races?.includes(raceId.toString());
 
   // Refresh race data when screen comes into focus
   useFocusEffect(
@@ -75,7 +91,10 @@ export const RaceDetailScreen = ({ route, navigation }) => {
     if (isRegistered) {
       fetchRaceGroup();
     }
-  }, [race.registeredUsers, isRegistered]);
+    if (isCompleted) {
+      fetchCompletion();
+    }
+  }, [race.registeredUsers, isRegistered, isCompleted]);
 
   const fetchRegisteredUsers = async () => {
     if (!race.registeredUsers || race.registeredUsers.length === 0) {
@@ -120,6 +139,93 @@ export const RaceDetailScreen = ({ route, navigation }) => {
       }
     } catch (error) {
       console.error('Error fetching race group:', error);
+    }
+  };
+
+  const fetchCompletion = async () => {
+    try {
+      const response = await fetch(`${API_URL}/api/races/${raceId}/completion`, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        },
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setCompletion(data);
+        setCompletionTime(data.completion_time || '');
+        setPosition(data.position?.toString() || '');
+        setNotes(data.notes || '');
+      }
+    } catch (error) {
+      console.error('Error fetching completion:', error);
+    }
+  };
+
+  const handlePickCertificate = async () => {
+    try {
+      const result = await DocumentPicker.getDocumentAsync({
+        type: 'application/pdf',
+        copyToCacheDirectory: true,
+      });
+
+      if (!result.canceled && result.assets && result.assets[0]) {
+        setCertificate(result.assets[0]);
+        Alert.alert('Success', 'Certificate selected');
+      }
+    } catch (error) {
+      console.error('Error picking certificate:', error);
+      Alert.alert('Error', 'Failed to pick certificate');
+    }
+  };
+
+  const handleMarkComplete = () => {
+    setShowCompletionModal(true);
+  };
+
+  const handleSubmitCompletion = async () => {
+    try {
+      setSubmitting(true);
+
+      const formData = new FormData();
+      if (completionTime) formData.append('completion_time', completionTime);
+      if (position) formData.append('position', position);
+      if (notes) formData.append('notes', notes);
+      
+      if (certificate) {
+        formData.append('certificate', {
+          uri: certificate.uri,
+          type: 'application/pdf',
+          name: certificate.name || 'certificate.pdf',
+        });
+      }
+
+      const response = await fetch(`${API_URL}/api/races/${raceId}/complete`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        },
+        body: formData,
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setCompletion(data.completion);
+        updateUser({
+          ...user,
+          completed_races: [...(user.completed_races || []), raceId.toString()]
+        });
+        setShowCompletionModal(false);
+        Alert.alert('Success', 'Race marked as completed!');
+      } else {
+        const error = await response.json();
+        Alert.alert('Error', error.error || 'Failed to mark race as completed');
+      }
+    } catch (error) {
+      console.error('Error submitting completion:', error);
+      Alert.alert('Error', 'Failed to submit completion');
+    } finally {
+      setSubmitting(false);
     }
   };
 
@@ -265,17 +371,64 @@ export const RaceDetailScreen = ({ route, navigation }) => {
         </View>
       )}
 
-      <TouchableOpacity
-        style={[
-          styles.registerButton,
-          { backgroundColor: isRegistered ? colors.textSecondary : colors.primary },
-        ]}
-        onPress={handleRegister}
-      >
-        <Text style={styles.registerButtonText}>
-          {isRegistered ? 'Unregister' : 'Sign Up for Race'}
-        </Text>
-      </TouchableOpacity>
+      {isCompleted && completion && (
+        <View style={[styles.card, { backgroundColor: colors.card }]}>
+          <View style={styles.completionHeader}>
+            <Text style={[styles.sectionTitle, { color: colors.text }]}>
+              Race Completed ✓
+            </Text>
+          </View>
+          {completion.completion_time && (
+            <View style={styles.completionRow}>
+              <Text style={[styles.completionLabel, { color: colors.textSecondary }]}>Finish Time:</Text>
+              <Text style={[styles.completionValue, { color: colors.text }]}>{completion.completion_time}</Text>
+            </View>
+          )}
+          {completion.position && (
+            <View style={styles.completionRow}>
+              <Text style={[styles.completionLabel, { color: colors.textSecondary }]}>Position:</Text>
+              <Text style={[styles.completionValue, { color: colors.text }]}>{completion.position}</Text>
+            </View>
+          )}
+          {completion.notes && (
+            <View style={styles.completionRow}>
+              <Text style={[styles.completionLabel, { color: colors.textSecondary }]}>Notes:</Text>
+              <Text style={[styles.completionValue, { color: colors.text }]}>{completion.notes}</Text>
+            </View>
+          )}
+          {completion.certificate_url && (
+            <TouchableOpacity
+              style={[styles.certificateButton, { backgroundColor: colors.primary }]}
+              onPress={() => Linking.openURL(completion.certificate_url)}
+            >
+              <Text style={styles.certificateButtonText}>View Certificate PDF</Text>
+            </TouchableOpacity>
+          )}
+        </View>
+      )}
+
+      {!isPastRace && (
+        <TouchableOpacity
+          style={[
+            styles.registerButton,
+            { backgroundColor: isRegistered ? colors.textSecondary : colors.primary },
+          ]}
+          onPress={handleRegister}
+        >
+          <Text style={styles.registerButtonText}>
+            {isRegistered ? 'Unregister' : 'Sign Up for Race'}
+          </Text>
+        </TouchableOpacity>
+      )}
+
+      {isPastRace && isRegistered && !isCompleted && (
+        <TouchableOpacity
+          style={[styles.registerButton, { backgroundColor: colors.primary }]}
+          onPress={handleMarkComplete}
+        >
+          <Text style={styles.registerButtonText}>Mark as Completed</Text>
+        </TouchableOpacity>
+      )}
 
       {isRegistered && raceGroup && (
         <TouchableOpacity
@@ -294,6 +447,79 @@ export const RaceDetailScreen = ({ route, navigation }) => {
           </View>
         </TouchableOpacity>
       )}
+
+      <Modal
+        visible={showCompletionModal}
+        animationType="slide"
+        transparent={true}
+        onRequestClose={() => setShowCompletionModal(false)}
+      >
+        <View style={styles.modalContainer}>
+          <View style={[styles.modalContent, { backgroundColor: colors.card }]}>
+            <Text style={[styles.modalTitle, { color: colors.text }]}>Mark Race as Completed</Text>
+
+            <Text style={[styles.inputLabel, { color: colors.textSecondary }]}>Finish Time (optional)</Text>
+            <TextInput
+              style={[styles.input, { backgroundColor: colors.background, color: colors.text, borderColor: colors.border }]}
+              placeholder="e.g. 3:45:30 or 03:45:30"
+              placeholderTextColor={colors.textSecondary}
+              value={completionTime}
+              onChangeText={setCompletionTime}
+            />
+
+            <Text style={[styles.inputLabel, { color: colors.textSecondary }]}>Position (optional)</Text>
+            <TextInput
+              style={[styles.input, { backgroundColor: colors.background, color: colors.text, borderColor: colors.border }]}
+              placeholder="e.g. 42"
+              placeholderTextColor={colors.textSecondary}
+              keyboardType="number-pad"
+              value={position}
+              onChangeText={setPosition}
+            />
+
+            <Text style={[styles.inputLabel, { color: colors.textSecondary }]}>Notes (optional)</Text>
+            <TextInput
+              style={[styles.textArea, { backgroundColor: colors.background, color: colors.text, borderColor: colors.border }]}
+              placeholder="How was the race? Any memorable moments?"
+              placeholderTextColor={colors.textSecondary}
+              multiline
+              numberOfLines={3}
+              value={notes}
+              onChangeText={setNotes}
+            />
+
+            <TouchableOpacity
+              style={[styles.pickCertificateButton, { borderColor: colors.primary }]}
+              onPress={handlePickCertificate}
+            >
+              <Text style={[styles.pickCertificateText, { color: colors.primary }]}>
+                {certificate ? '✓ Certificate Selected' : '📄 Upload Certificate PDF (optional)'}
+              </Text>
+            </TouchableOpacity>
+
+            <View style={styles.modalButtons}>
+              <TouchableOpacity
+                style={[styles.modalButton, { backgroundColor: colors.textSecondary }]}
+                onPress={() => setShowCompletionModal(false)}
+                disabled={submitting}
+              >
+                <Text style={styles.modalButtonText}>Cancel</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[styles.modalButton, { backgroundColor: colors.primary }]}
+                onPress={handleSubmitCompletion}
+                disabled={submitting}
+              >
+                {submitting ? (
+                  <ActivityIndicator color="#FFFFFF" />
+                ) : (
+                  <Text style={styles.modalButtonText}>Save</Text>
+                )}
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </Modal>
     </ScrollView>
   );
 };
@@ -418,5 +644,103 @@ const styles = StyleSheet.create({
     fontSize: FONT_SIZE.md,
     textAlign: 'center',
     marginTop: SPACING.xxl,
+  },
+  completionHeader: {
+    marginBottom: SPACING.md,
+  },
+  completionRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: SPACING.sm,
+    paddingVertical: SPACING.xs,
+  },
+  completionLabel: {
+    fontSize: FONT_SIZE.md,
+    fontWeight: '600',
+  },
+  completionValue: {
+    fontSize: FONT_SIZE.md,
+  },
+  certificateButton: {
+    marginTop: SPACING.md,
+    padding: SPACING.sm,
+    borderRadius: BORDER_RADIUS.md,
+    alignItems: 'center',
+  },
+  certificateButtonText: {
+    color: '#FFFFFF',
+    fontSize: FONT_SIZE.sm,
+    fontWeight: '600',
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  modalContent: {
+    width: '90%',
+    maxWidth: 400,
+    padding: SPACING.lg,
+    borderRadius: BORDER_RADIUS.lg,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  modalTitle: {
+    fontSize: FONT_SIZE.lg,
+    fontWeight: 'bold',
+    marginBottom: SPACING.lg,
+    textAlign: 'center',
+  },
+  inputLabel: {
+    fontSize: FONT_SIZE.sm,
+    marginBottom: SPACING.xs,
+    marginTop: SPACING.sm,
+  },
+  input: {
+    padding: SPACING.sm,
+    borderRadius: BORDER_RADIUS.md,
+    borderWidth: 1,
+    fontSize: FONT_SIZE.md,
+  },
+  textArea: {
+    padding: SPACING.sm,
+    borderRadius: BORDER_RADIUS.md,
+    borderWidth: 1,
+    fontSize: FONT_SIZE.md,
+    minHeight: 80,
+    textAlignVertical: 'top',
+  },
+  pickCertificateButton: {
+    marginTop: SPACING.md,
+    padding: SPACING.md,
+    borderRadius: BORDER_RADIUS.md,
+    borderWidth: 2,
+    borderStyle: 'dashed',
+    alignItems: 'center',
+  },
+  pickCertificateText: {
+    fontSize: FONT_SIZE.md,
+    fontWeight: '600',
+  },
+  modalButtons: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: SPACING.lg,
+  },
+  modalButton: {
+    flex: 1,
+    padding: SPACING.md,
+    borderRadius: BORDER_RADIUS.md,
+    alignItems: 'center',
+    marginHorizontal: SPACING.xs,
+  },
+  modalButtonText: {
+    color: '#FFFFFF',
+    fontSize: FONT_SIZE.md,
+    fontWeight: 'bold',
   },
 });
