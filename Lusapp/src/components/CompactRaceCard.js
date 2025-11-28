@@ -15,7 +15,7 @@ const sportIcons = {
   'Other': '🏅',
 };
 
-export const CompactRaceCard = ({ race, onPress }) => {
+export const CompactRaceCard = ({ race, onPress, isPastUncompleted, isCompleted, completionData, onMarkComplete }) => {
   const { colors } = useTheme();
 
   const sportIcon = sportIcons[race.sport_category] || sportIcons[race.sport] || '🏅';
@@ -93,15 +93,52 @@ export const CompactRaceCard = ({ race, onPress }) => {
             </Text>
           </View>
           
-          <TouchableOpacity
-            style={[styles.button, { backgroundColor: colors.primary }]}
-            onPress={onPress}
-            activeOpacity={0.8}
-          >
-            <Text style={styles.buttonText}>View</Text>
-          </TouchableOpacity>
+          {isPastUncompleted ? (
+            <TouchableOpacity
+              style={[styles.button, styles.markCompleteButton]}
+              onPress={onMarkComplete}
+              activeOpacity={0.8}
+            >
+              <Text style={styles.buttonText}>Mark Complete</Text>
+            </TouchableOpacity>
+          ) : isCompleted ? (
+            <View style={styles.completedBadge}>
+              <Text style={styles.completedBadgeText}>✓ Done</Text>
+            </View>
+          ) : (
+            <TouchableOpacity
+              style={[styles.button, { backgroundColor: colors.primary }]}
+              onPress={onPress}
+              activeOpacity={0.8}
+            >
+              <Text style={styles.buttonText}>View</Text>
+            </TouchableOpacity>
+          )}
         </View>
       </View>
+      
+      {/* Completion details for completed races */}
+      {isCompleted && completionData && (
+        <View style={[styles.completionDetails, { borderTopColor: colors.border }]}>
+          {completionData.completion_time && (
+            <View style={styles.completionStat}>
+              <Text style={[styles.completionLabel, { color: colors.textSecondary }]}>Time</Text>
+              <Text style={[styles.completionValue, { color: colors.text }]}>{completionData.completion_time}</Text>
+            </View>
+          )}
+          {completionData.position && (
+            <View style={styles.completionStat}>
+              <Text style={[styles.completionLabel, { color: colors.textSecondary }]}>Position</Text>
+              <Text style={[styles.completionValue, { color: colors.text }]}>#{completionData.position}</Text>
+            </View>
+          )}
+          {completionData.certificate_url && (
+            <View style={styles.completionStat}>
+              <Text style={styles.certificateBadge}>📄 Certificate</Text>
+            </View>
+          )}
+        </View>
+      )}
     </TouchableOpacity>
   );
 };
@@ -202,5 +239,44 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontSize: FONT_SIZE.sm,
     fontWeight: '600',
+  },
+  markCompleteButton: {
+    backgroundColor: '#48BB78',
+    minWidth: 100,
+  },
+  completedBadge: {
+    backgroundColor: '#48BB7820',
+    paddingHorizontal: SPACING.sm,
+    paddingVertical: SPACING.xs,
+    borderRadius: BORDER_RADIUS.md,
+  },
+  completedBadgeText: {
+    color: '#48BB78',
+    fontSize: FONT_SIZE.sm,
+    fontWeight: '600',
+  },
+  completionDetails: {
+    flexDirection: 'row',
+    marginTop: SPACING.sm,
+    paddingTop: SPACING.sm,
+    borderTopWidth: 1,
+    justifyContent: 'flex-start',
+    gap: SPACING.lg,
+  },
+  completionStat: {
+    alignItems: 'center',
+  },
+  completionLabel: {
+    fontSize: FONT_SIZE.xs,
+    marginBottom: 2,
+  },
+  completionValue: {
+    fontSize: FONT_SIZE.sm,
+    fontWeight: '600',
+  },
+  certificateBadge: {
+    fontSize: FONT_SIZE.sm,
+    color: '#3182CE',
+    fontWeight: '500',
   },
 });

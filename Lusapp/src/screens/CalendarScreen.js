@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { View, Text, StyleSheet, SectionList, TouchableOpacity, RefreshControl } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Calendar } from 'react-native-calendars';
@@ -7,15 +7,44 @@ import { useAppStore } from '../context/AppContext';
 import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
 import { SPACING, FONT_SIZE, BORDER_RADIUS } from '../constants/theme';
+import { API_BASE_URL } from '../config/api';
 
 export const CalendarScreen = ({ navigation }) => {
   const { colors } = useTheme();
-  const { user, refreshUser } = useAuth();
+  const { user, token, refreshUser } = useAuth();
   const { races, fetchRaces } = useAppStore();
   
   const [viewMode, setViewMode] = useState('calendar');
   const [selectedDate, setSelectedDate] = useState('');
   const [refreshing, setRefreshing] = useState(false);
+  const [completionDataMap, setCompletionDataMap] = useState({});
+
+  const fetchCompletionData = useCallback(async () => {
+    if (!token || !user?.id || !user?.completed_races?.length) return;
+    
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/users/${user.id}/completions`, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        },
+      });
+      
+      if (response.ok) {
+        const completions = await response.json();
+        const dataMap = {};
+        completions.forEach(c => {
+          dataMap[c.race_id.toString()] = c;
+        });
+        setCompletionDataMap(dataMap);
+      }
+    } catch (error) {
+      console.error('Error fetching completion data:', error);
+    }
+  }, [token, user?.id, user?.completed_races]);
+
+  useEffect(() => {
+    fetchCompletionData();
+  }, [fetchCompletionData]);
 
   // Filter to only show races the user has joined
   const joinedRaceIds = user?.joined_races || [];
@@ -90,8 +119,13 @@ export const CalendarScreen = ({ navigation }) => {
     await Promise.all([
       fetchRaces(),
       refreshUser(),
+      fetchCompletionData(),
     ]);
     setRefreshing(false);
+  };
+
+  const handleMarkComplete = (race) => {
+    navigation.navigate('RaceDetail', { raceId: race.id, openCompletionModal: true });
   };
 
   return (
@@ -162,12 +196,26 @@ export const CalendarScreen = ({ navigation }) => {
       <SectionList
         sections={sections}
         keyExtractor={(item) => item.id.toString()}
-        renderItem={({ item }) => (
-          <CompactRaceCard
-            race={item}
-            onPress={() => navigation.navigate('RaceDetail', { raceId: item.id })}
-          />
-        )}
+        renderItem={({ item }) => {
+          const raceDate = new Date(item.date);
+          raceDate.setHours(0, 0, 0, 0);
+          const isPastRace = raceDate < today;
+          const isJoined = joinedRaceIds.includes(item.id.toString());
+          const isCompleted = completedRaceIds.includes(item.id.toString());
+          const isPastUncompleted = isPastRace && isJoined && !isCompleted;
+          const completionData = completionDataMap[item.id.toString()];
+          
+          return (
+            <CompactRaceCard
+              race={item}
+              onPress={() => navigation.navigate('RaceDetail', { raceId: item.id })}
+              isPastUncompleted={isPastUncompleted}
+              isCompleted={isCompleted}
+              completionData={completionData}
+              onMarkComplete={() => handleMarkComplete(item)}
+            />
+          );
+        }}
         renderSectionHeader={({ section: { title } }) => (
           <View style={[styles.sectionHeader, { backgroundColor: colors.background }]}>
             <Text style={[styles.sectionTitle, { color: colors.text }]}>{title}</Text>

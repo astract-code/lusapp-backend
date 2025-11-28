@@ -24,7 +24,7 @@ import API_URL from '../config/api';
 import { getDisplayDistance } from '../utils/distanceHelper';
 
 export const RaceDetailScreen = ({ route, navigation }) => {
-  const { raceId } = route.params;
+  const { raceId, openCompletionModal } = route.params;
   const { colors } = useTheme();
   const { user, token, updateUser } = useAuth();
   const { getRaceById, registerForRace, unregisterFromRace, fetchRaces } = useAppStore();
@@ -39,6 +39,7 @@ export const RaceDetailScreen = ({ route, navigation }) => {
   const [notes, setNotes] = useState('');
   const [certificate, setCertificate] = useState(null);
   const [submitting, setSubmitting] = useState(false);
+  const [hasAutoOpened, setHasAutoOpened] = useState(false);
 
   const race = getRaceById(raceId);
   
@@ -95,6 +96,13 @@ export const RaceDetailScreen = ({ route, navigation }) => {
       fetchCompletion();
     }
   }, [race.registeredUsers, isRegistered, isCompleted]);
+
+  useEffect(() => {
+    if (openCompletionModal && isPastRace && isRegistered && !isCompleted && !hasAutoOpened) {
+      setShowCompletionModal(true);
+      setHasAutoOpened(true);
+    }
+  }, [openCompletionModal, isPastRace, isRegistered, isCompleted, hasAutoOpened]);
 
   const fetchRegisteredUsers = async () => {
     if (!race.registeredUsers || race.registeredUsers.length === 0) {
