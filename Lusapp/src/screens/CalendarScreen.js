@@ -11,25 +11,26 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Calendar } from 'react-native-calendars';
 import { LinearGradient } from 'expo-linear-gradient';
+import { Ionicons } from '@expo/vector-icons';
 import { useAppStore } from '../context/AppContext';
 import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
-import { SPACING, FONT_SIZE, BORDER_RADIUS } from '../constants/theme';
+import { SPACING, BORDER_RADIUS, GRADIENTS, SHADOWS } from '../constants/theme';
 import { API_BASE_URL } from '../config/api';
 import { getDisplayDistance } from '../utils/distanceHelper';
 import haptic from '../utils/haptics';
 
 const raceTypeColors = {
-  'Running': { primary: '#10B981', secondary: '#059669', dot: '#10B981' },
-  'Marathon': { primary: '#10B981', secondary: '#059669', dot: '#10B981' },
-  'Triathlon': { primary: '#3B82F6', secondary: '#2563EB', dot: '#3B82F6' },
-  'Cycling': { primary: '#8B5CF6', secondary: '#7C3AED', dot: '#8B5CF6' },
-  'Swimming': { primary: '#06B6D4', secondary: '#0891B2', dot: '#06B6D4' },
-  'Fitness': { primary: '#F59E0B', secondary: '#D97706', dot: '#F59E0B' },
-  'HYROX': { primary: '#EF4444', secondary: '#DC2626', dot: '#EF4444' },
-  'Trail Running': { primary: '#84CC16', secondary: '#65A30D', dot: '#84CC16' },
-  'Ultra Marathon': { primary: '#EC4899', secondary: '#DB2777', dot: '#EC4899' },
-  'default': { primary: '#10B981', secondary: '#059669', dot: '#10B981' },
+  'Running': { primary: '#4ADE80', secondary: '#22C55E', dot: '#4ADE80' },
+  'Marathon': { primary: '#4ADE80', secondary: '#22C55E', dot: '#4ADE80' },
+  'Triathlon': { primary: '#38BDF8', secondary: '#0EA5E9', dot: '#38BDF8' },
+  'Cycling': { primary: '#A78BFA', secondary: '#8B5CF6', dot: '#A78BFA' },
+  'Swimming': { primary: '#22D3EE', secondary: '#06B6D4', dot: '#22D3EE' },
+  'Fitness': { primary: '#FB923C', secondary: '#F97316', dot: '#FB923C' },
+  'HYROX': { primary: '#F87171', secondary: '#EF4444', dot: '#F87171' },
+  'Trail Running': { primary: '#A3E635', secondary: '#84CC16', dot: '#A3E635' },
+  'Ultra Marathon': { primary: '#F472B6', secondary: '#EC4899', dot: '#F472B6' },
+  'default': { primary: '#4ADE80', secondary: '#22C55E', dot: '#4ADE80' },
 };
 
 const getRaceColors = (race) => {
@@ -38,7 +39,8 @@ const getRaceColors = (race) => {
 
 const ModernRaceCard = ({ race, onPress, isPastUncompleted, isCompleted, completionData, onMarkComplete }) => {
   const scaleAnim = useRef(new Animated.Value(1)).current;
-  const colors = getRaceColors(race);
+  const { colors, isDark } = useTheme();
+  const raceColors = getRaceColors(race);
 
   const handlePressIn = () => {
     haptic.light();
@@ -74,78 +76,100 @@ const ModernRaceCard = ({ race, onPress, isPastUncompleted, isCompleted, complet
         onPressOut={handlePressOut}
         activeOpacity={1}
       >
-        <LinearGradient
-          colors={[colors.primary, colors.secondary]}
-          start={{ x: 0, y: 0 }}
-          end={{ x: 1, y: 1 }}
-          style={styles.gradientCard}
-        >
-          <View style={styles.glassOverlay}>
+        <View style={[
+          styles.modernCard,
+          { backgroundColor: isDark ? '#1E293B' : '#FFFFFF' },
+          SHADOWS.md,
+        ]}>
+          <View style={styles.cardLeftAccent}>
+            <LinearGradient
+              colors={[raceColors.primary, raceColors.secondary]}
+              style={styles.accentBar}
+            />
+          </View>
+          
+          <View style={styles.cardContent}>
             <View style={styles.cardHeader}>
               <View style={styles.cardTitleSection}>
-                <Text style={styles.cardTitle} numberOfLines={1}>{race.name}</Text>
-                <Text style={styles.cardSubtitle}>{race.sport_category || 'Race'}</Text>
+                <Text style={[styles.cardTitle, { color: colors.text }]} numberOfLines={1}>
+                  {race.name}
+                </Text>
+                <View style={styles.cardMeta}>
+                  <Text style={[styles.sportBadge, { color: raceColors.primary }]}>
+                    {race.sport_category || 'Race'}
+                  </Text>
+                  <Text style={[styles.metaDot, { color: colors.textTertiary }]}>•</Text>
+                  <Text style={[styles.cardDate, { color: colors.textSecondary }]}>
+                    {formatDate(race.date)}
+                  </Text>
+                </View>
               </View>
-              <View style={styles.distanceBadge}>
-                <Text style={styles.distanceText}>{getDisplayDistance(race)}</Text>
-              </View>
-            </View>
-
-            <View style={styles.cardDetails}>
-              <View style={styles.detailRow}>
-                <Text style={styles.detailIcon}>📍</Text>
-                <Text style={styles.detailText}>{race.city}, {race.country}</Text>
-              </View>
-              <View style={styles.detailRow}>
-                <Text style={styles.detailIcon}>📅</Text>
-                <Text style={styles.detailText}>{formatDate(race.date)}</Text>
+              <View style={[styles.distanceBadge, { backgroundColor: raceColors.primary + '15' }]}>
+                <Text style={[styles.distanceText, { color: raceColors.primary }]}>
+                  {getDisplayDistance(race)}
+                </Text>
               </View>
             </View>
 
             <View style={styles.cardFooter}>
-              {race.participants > 0 && (
-                <Text style={styles.participants}>👥 {race.participants} athletes</Text>
-              )}
+              <View style={styles.locationRow}>
+                <Ionicons name="location-outline" size={14} color={colors.textTertiary} style={styles.locationIcon} />
+                <Text style={[styles.locationText, { color: colors.textSecondary }]} numberOfLines={1}>
+                  {race.city}, {race.country}
+                </Text>
+              </View>
               
               {isPastUncompleted ? (
                 <TouchableOpacity
                   style={styles.actionButton}
                   onPress={onMarkComplete}
                 >
-                  <Text style={styles.actionButtonText}>Mark Complete</Text>
+                  <LinearGradient
+                    colors={GRADIENTS.primary}
+                    start={{ x: 0, y: 0 }}
+                    end={{ x: 1, y: 0 }}
+                    style={styles.actionButtonGradient}
+                  >
+                    <Text style={styles.actionButtonText}>Complete</Text>
+                  </LinearGradient>
                 </TouchableOpacity>
               ) : isCompleted ? (
-                <View style={styles.completedBadge}>
-                  <Text style={styles.completedText}>✓ Completed</Text>
+                <View style={styles.completedChip}>
+                  <Text style={styles.completedIcon}>✓</Text>
+                  <Text style={styles.completedText}>Done</Text>
                 </View>
               ) : null}
             </View>
 
-            {isCompleted && completionData && (
-              <View style={styles.completionInfo}>
+            {isCompleted && completionData && (completionData.completion_time || completionData.position) && (
+              <View style={[styles.completionInfo, { borderTopColor: colors.border }]}>
                 {completionData.completion_time && (
                   <View style={styles.completionStat}>
-                    <Text style={styles.completionLabel}>Time</Text>
-                    <Text style={styles.completionValue}>{completionData.completion_time}</Text>
+                    <Text style={[styles.completionLabel, { color: colors.textTertiary }]}>Time</Text>
+                    <Text style={[styles.completionValue, { color: colors.text }]}>
+                      {completionData.completion_time}
+                    </Text>
                   </View>
                 )}
                 {completionData.position && (
                   <View style={styles.completionStat}>
-                    <Text style={styles.completionLabel}>Position</Text>
-                    <Text style={styles.completionValue}>#{completionData.position}</Text>
+                    <Text style={[styles.completionLabel, { color: colors.textTertiary }]}>Pos</Text>
+                    <Text style={[styles.completionValue, { color: colors.text }]}>
+                      #{completionData.position}
+                    </Text>
                   </View>
                 )}
               </View>
             )}
           </View>
-        </LinearGradient>
+        </View>
       </TouchableOpacity>
     </Animated.View>
   );
 };
 
 export const CalendarScreen = ({ navigation }) => {
-  const { colors } = useTheme();
+  const { colors, isDark } = useTheme();
   const { user, token, refreshUser } = useAuth();
   const { races, fetchRaces } = useAppStore();
   
@@ -153,7 +177,6 @@ export const CalendarScreen = ({ navigation }) => {
   const [selectedDate, setSelectedDate] = useState('');
   const [refreshing, setRefreshing] = useState(false);
   const [completionDataMap, setCompletionDataMap] = useState({});
-  const selectionAnim = useRef(new Animated.Value(0)).current;
 
   const fetchCompletionData = useCallback(async () => {
     if (!token || !user?.id || !user?.completed_races?.length) return;
@@ -227,25 +250,12 @@ export const CalendarScreen = ({ navigation }) => {
     markedDates[selectedDate] = {
       ...markedDates[selectedDate],
       selected: true,
-      selectedColor: '#10B981',
+      selectedColor: '#4ADE80',
     };
   }
 
   const handleDayPress = (day) => {
     haptic.selection();
-    Animated.sequence([
-      Animated.timing(selectionAnim, {
-        toValue: 1,
-        duration: 100,
-        useNativeDriver: true,
-      }),
-      Animated.timing(selectionAnim, {
-        toValue: 0,
-        duration: 100,
-        useNativeDriver: true,
-      }),
-    ]).start();
-    
     setSelectedDate(day.dateString);
   };
 
@@ -253,10 +263,10 @@ export const CalendarScreen = ({ navigation }) => {
   
   if (!selectedDate) {
     if (upcomingRaces.length > 0) {
-      sections.push({ title: 'Upcoming Races', data: upcomingRaces, type: 'upcoming' });
+      sections.push({ title: 'Upcoming', data: upcomingRaces, type: 'upcoming' });
     }
     if (pastUncompletedRaces.length > 0) {
-      sections.push({ title: 'Needs Completion', data: pastUncompletedRaces, type: 'pending' });
+      sections.push({ title: 'Mark Complete', data: pastUncompletedRaces, type: 'pending' });
     }
     if (completedRaces.length > 0) {
       sections.push({ title: 'Completed', data: completedRaces, type: 'completed' });
@@ -289,157 +299,170 @@ export const CalendarScreen = ({ navigation }) => {
   };
 
   return (
-    <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
-      <View style={styles.header}>
-        <Text style={styles.headerTitle}>My Calendar</Text>
-        <View style={styles.viewToggle}>
-          <TouchableOpacity
-            style={[
-              styles.toggleButton,
-              viewMode === 'calendar' && styles.toggleButtonActive,
-            ]}
-            onPress={() => setViewMode('calendar')}
-          >
-            <Text style={[
-              styles.toggleText,
-              viewMode === 'calendar' && styles.toggleTextActive,
-            ]}>
-              📅
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[
-              styles.toggleButton,
-              viewMode === 'list' && styles.toggleButtonActive,
-            ]}
-            onPress={() => setViewMode('list')}
-          >
-            <Text style={[
-              styles.toggleText,
-              viewMode === 'list' && styles.toggleTextActive,
-            ]}>
-              📋
-            </Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-
-      {viewMode === 'calendar' && (
-        <View style={styles.calendarContainer}>
-          <Calendar
-            firstDay={1}
-            markedDates={markedDates}
-            onDayPress={handleDayPress}
-            theme={{
-              backgroundColor: 'transparent',
-              calendarBackground: 'transparent',
-              textSectionTitleColor: '#6B7280',
-              selectedDayBackgroundColor: '#10B981',
-              selectedDayTextColor: '#FFFFFF',
-              todayTextColor: '#10B981',
-              todayBackgroundColor: '#10B98115',
-              dayTextColor: '#1F2937',
-              textDisabledColor: '#D1D5DB',
-              dotColor: '#10B981',
-              selectedDotColor: '#FFFFFF',
-              arrowColor: '#10B981',
-              monthTextColor: '#1F2937',
-              textDayFontWeight: '500',
-              textMonthFontWeight: '700',
-              textDayHeaderFontWeight: '600',
-              textDayFontSize: 15,
-              textMonthFontSize: 18,
-              textDayHeaderFontSize: 13,
-            }}
-            style={styles.calendar}
-          />
-          
-          {selectedDate && (
-            <TouchableOpacity 
-              style={styles.clearButton}
-              onPress={() => setSelectedDate('')}
+    <View style={[styles.container, { backgroundColor: isDark ? '#0B0F1A' : colors.background }]}>
+      <LinearGradient
+        colors={isDark ? ['#0B0F1A', '#1E293B'] : [colors.background, colors.surface]}
+        style={styles.backgroundGradient}
+      />
+      
+      <SafeAreaView style={styles.safeArea} edges={['top']}>
+        <View style={styles.header}>
+          <Text style={[styles.headerTitle, { color: colors.text }]}>Calendar</Text>
+          <View style={styles.viewToggle}>
+            <TouchableOpacity
+              style={[styles.toggleButton, viewMode === 'calendar' && styles.toggleButtonActive]}
+              onPress={() => { haptic.selection(); setViewMode('calendar'); }}
             >
-              <Text style={styles.clearButtonText}>Show All Races</Text>
+              {viewMode === 'calendar' ? (
+                <LinearGradient
+                  colors={GRADIENTS.primary}
+                  style={styles.toggleButtonGradient}
+                >
+                  <Text style={styles.toggleTextActive}>▣</Text>
+                </LinearGradient>
+              ) : (
+                <Text style={[styles.toggleText, { color: colors.textSecondary }]}>▣</Text>
+              )}
             </TouchableOpacity>
-          )}
-
-          <View style={styles.legendContainer}>
-            <View style={styles.legendItem}>
-              <View style={[styles.legendDot, { backgroundColor: '#10B981' }]} />
-              <Text style={styles.legendText}>Running</Text>
-            </View>
-            <View style={styles.legendItem}>
-              <View style={[styles.legendDot, { backgroundColor: '#3B82F6' }]} />
-              <Text style={styles.legendText}>Triathlon</Text>
-            </View>
-            <View style={styles.legendItem}>
-              <View style={[styles.legendDot, { backgroundColor: '#F59E0B' }]} />
-              <Text style={styles.legendText}>Fitness</Text>
-            </View>
-            <View style={styles.legendItem}>
-              <View style={[styles.legendDot, { backgroundColor: '#8B5CF6' }]} />
-              <Text style={styles.legendText}>Cycling</Text>
-            </View>
+            <TouchableOpacity
+              style={[styles.toggleButton, viewMode === 'list' && styles.toggleButtonActive]}
+              onPress={() => { haptic.selection(); setViewMode('list'); }}
+            >
+              {viewMode === 'list' ? (
+                <LinearGradient
+                  colors={GRADIENTS.primary}
+                  style={styles.toggleButtonGradient}
+                >
+                  <Text style={styles.toggleTextActive}>≡</Text>
+                </LinearGradient>
+              ) : (
+                <Text style={[styles.toggleText, { color: colors.textSecondary }]}>≡</Text>
+              )}
+            </TouchableOpacity>
           </View>
         </View>
-      )}
 
-      <SectionList
-        sections={sections}
-        keyExtractor={(item) => item.id.toString()}
-        renderItem={({ item }) => {
-          const raceDate = new Date(item.date);
-          raceDate.setHours(0, 0, 0, 0);
-          const isPastRace = raceDate < today;
-          const isJoined = joinedRaceIds.includes(item.id.toString());
-          const isCompleted = completedRaceIds.includes(item.id.toString());
-          const isPastUncompleted = isPastRace && isJoined && !isCompleted;
-          const completionData = completionDataMap[item.id.toString()];
-          
-          return (
-            <ModernRaceCard
-              race={item}
-              onPress={() => navigation.navigate('RaceDetail', { raceId: item.id })}
-              isPastUncompleted={isPastUncompleted}
-              isCompleted={isCompleted}
-              completionData={completionData}
-              onMarkComplete={() => handleMarkComplete(item)}
+        {viewMode === 'calendar' && (
+          <View style={[
+            styles.calendarContainer, 
+            { backgroundColor: isDark ? '#1E293B' : '#FFFFFF' },
+            SHADOWS.lg,
+          ]}>
+            <Calendar
+              firstDay={1}
+              markedDates={markedDates}
+              onDayPress={handleDayPress}
+              theme={{
+                backgroundColor: 'transparent',
+                calendarBackground: 'transparent',
+                textSectionTitleColor: colors.textSecondary,
+                selectedDayBackgroundColor: '#4ADE80',
+                selectedDayTextColor: '#FFFFFF',
+                todayTextColor: '#4ADE80',
+                todayBackgroundColor: isDark ? 'rgba(74, 222, 128, 0.15)' : 'rgba(74, 222, 128, 0.1)',
+                dayTextColor: colors.text,
+                textDisabledColor: colors.textTertiary,
+                dotColor: '#4ADE80',
+                selectedDotColor: '#FFFFFF',
+                arrowColor: '#4ADE80',
+                monthTextColor: colors.text,
+                textDayFontWeight: '500',
+                textMonthFontWeight: '700',
+                textDayHeaderFontWeight: '600',
+                textDayFontSize: 15,
+                textMonthFontSize: 18,
+                textDayHeaderFontSize: 12,
+              }}
+              style={styles.calendar}
             />
-          );
-        }}
-        renderSectionHeader={({ section: { title, type } }) => (
-          <View style={styles.sectionHeader}>
-            <Text style={styles.sectionTitle}>{title}</Text>
-            {type === 'upcoming' && (
-              <View style={styles.sectionBadge}>
-                <Text style={styles.sectionBadgeText}>{upcomingRaces.length}</Text>
-              </View>
+            
+            {selectedDate && (
+              <TouchableOpacity 
+                style={[styles.clearButton, { backgroundColor: isDark ? colors.surface : '#F1F5F9' }]}
+                onPress={() => { haptic.selection(); setSelectedDate(''); }}
+              >
+                <Text style={[styles.clearButtonText, { color: colors.textSecondary }]}>
+                  Show All Races
+                </Text>
+              </TouchableOpacity>
             )}
+
+            <View style={styles.legendContainer}>
+              {[
+                { color: '#4ADE80', label: 'Running' },
+                { color: '#38BDF8', label: 'Tri' },
+                { color: '#A78BFA', label: 'Cycling' },
+                { color: '#FB923C', label: 'Fitness' },
+              ].map((item) => (
+                <View key={item.label} style={styles.legendItem}>
+                  <View style={[styles.legendDot, { backgroundColor: item.color }]} />
+                  <Text style={[styles.legendText, { color: colors.textTertiary }]}>{item.label}</Text>
+                </View>
+              ))}
+            </View>
           </View>
         )}
-        contentContainerStyle={styles.list}
-        ListEmptyComponent={
-          <View style={styles.emptyContainer}>
-            <Text style={styles.emptyIcon}>📅</Text>
-            <Text style={styles.emptyTitle}>
-              {selectedDate ? 'No races on this date' : 'No races yet'}
-            </Text>
-            <Text style={styles.emptyText}>
-              {selectedDate
-                ? 'Try selecting a different date'
-                : 'Discover and join races to see them here!'}
-            </Text>
-          </View>
-        }
-        refreshControl={
-          <RefreshControl
-            refreshing={refreshing}
-            onRefresh={onRefresh}
-            tintColor="#10B981"
-          />
-        }
-      />
-    </SafeAreaView>
+
+        <SectionList
+          sections={sections}
+          keyExtractor={(item) => item.id.toString()}
+          renderItem={({ item }) => {
+            const raceDate = new Date(item.date);
+            raceDate.setHours(0, 0, 0, 0);
+            const isPastRace = raceDate < today;
+            const isJoined = joinedRaceIds.includes(item.id.toString());
+            const isCompleted = completedRaceIds.includes(item.id.toString());
+            const isPastUncompleted = isPastRace && isJoined && !isCompleted;
+            const completionData = completionDataMap[item.id.toString()];
+            
+            return (
+              <ModernRaceCard
+                race={item}
+                onPress={() => navigation.navigate('RaceDetail', { raceId: item.id })}
+                isPastUncompleted={isPastUncompleted}
+                isCompleted={isCompleted}
+                completionData={completionData}
+                onMarkComplete={() => handleMarkComplete(item)}
+              />
+            );
+          }}
+          renderSectionHeader={({ section: { title, type, data } }) => (
+            <View style={styles.sectionHeader}>
+              <Text style={[styles.sectionTitle, { color: colors.text }]}>{title}</Text>
+              <View style={[
+                styles.sectionBadge, 
+                { backgroundColor: type === 'upcoming' ? '#4ADE80' : type === 'pending' ? '#FBBF24' : '#38BDF8' }
+              ]}>
+                <Text style={styles.sectionBadgeText}>{data.length}</Text>
+              </View>
+            </View>
+          )}
+          contentContainerStyle={styles.list}
+          ListEmptyComponent={
+            <View style={styles.emptyContainer}>
+              <View style={[styles.emptyIcon, { backgroundColor: isDark ? colors.surface : '#F1F5F9' }]}>
+                <Text style={styles.emptyIconText}>▣</Text>
+              </View>
+              <Text style={[styles.emptyTitle, { color: colors.text }]}>
+                {selectedDate ? 'No races on this date' : 'No races yet'}
+              </Text>
+              <Text style={[styles.emptyText, { color: colors.textSecondary }]}>
+                {selectedDate
+                  ? 'Try selecting a different date'
+                  : 'Discover and join races to see them here'}
+              </Text>
+            </View>
+          }
+          refreshControl={
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={onRefresh}
+              tintColor="#4ADE80"
+            />
+          }
+        />
+      </SafeAreaView>
+    </View>
   );
 };
 
@@ -447,113 +470,111 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
+  backgroundGradient: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+  },
+  safeArea: {
+    flex: 1,
+  },
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingHorizontal: 20,
-    paddingVertical: 16,
+    paddingHorizontal: SPACING.xl,
+    paddingVertical: SPACING.md,
   },
   headerTitle: {
     fontSize: 28,
     fontWeight: '800',
-    color: '#1F2937',
   },
   viewToggle: {
     flexDirection: 'row',
-    backgroundColor: '#F1F5F9',
+    backgroundColor: 'rgba(100, 116, 139, 0.15)',
     borderRadius: 12,
     padding: 4,
   },
   toggleButton: {
-    paddingHorizontal: 16,
+    borderRadius: 10,
+    overflow: 'hidden',
+  },
+  toggleButtonActive: {},
+  toggleButtonGradient: {
+    paddingHorizontal: 14,
     paddingVertical: 8,
     borderRadius: 10,
   },
-  toggleButtonActive: {
-    backgroundColor: '#FFFFFF',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 2,
-  },
   toggleText: {
     fontSize: 18,
+    paddingHorizontal: 14,
+    paddingVertical: 8,
   },
   toggleTextActive: {
-    color: '#10B981',
+    fontSize: 18,
+    color: '#FFFFFF',
   },
   calendarContainer: {
-    backgroundColor: '#FFFFFF',
-    marginHorizontal: 16,
-    borderRadius: 20,
-    padding: 16,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.1,
-    shadowRadius: 12,
-    elevation: 5,
-    marginBottom: 16,
+    marginHorizontal: SPACING.lg,
+    borderRadius: BORDER_RADIUS.xxl,
+    padding: SPACING.md,
+    marginBottom: SPACING.md,
   },
   calendar: {
-    borderRadius: 16,
+    borderRadius: BORDER_RADIUS.xl,
   },
   clearButton: {
     alignSelf: 'center',
-    marginTop: 12,
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-    backgroundColor: '#F1F5F9',
-    borderRadius: 20,
+    marginTop: SPACING.sm,
+    paddingHorizontal: SPACING.lg,
+    paddingVertical: SPACING.sm,
+    borderRadius: 100,
   },
   clearButtonText: {
-    color: '#6B7280',
-    fontSize: 14,
+    fontSize: 13,
     fontWeight: '600',
   },
   legendContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
     flexWrap: 'wrap',
-    marginTop: 16,
-    gap: 16,
+    marginTop: SPACING.md,
+    gap: SPACING.lg,
   },
   legendItem: {
     flexDirection: 'row',
     alignItems: 'center',
   },
   legendDot: {
-    width: 10,
-    height: 10,
-    borderRadius: 5,
+    width: 8,
+    height: 8,
+    borderRadius: 4,
     marginRight: 6,
   },
   legendText: {
-    fontSize: 12,
-    color: '#6B7280',
+    fontSize: 11,
+    fontWeight: '500',
   },
   list: {
-    paddingHorizontal: 16,
-    paddingBottom: 20,
+    paddingHorizontal: SPACING.lg,
+    paddingBottom: SPACING.xxxl,
   },
   sectionHeader: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingVertical: 12,
-    paddingHorizontal: 4,
+    paddingVertical: SPACING.md,
   },
   sectionTitle: {
     fontSize: 18,
     fontWeight: '700',
-    color: '#1F2937',
   },
   sectionBadge: {
-    backgroundColor: '#10B981',
+    marginLeft: SPACING.sm,
     paddingHorizontal: 10,
     paddingVertical: 4,
-    borderRadius: 12,
-    marginLeft: 10,
+    borderRadius: 10,
   },
   sectionBadgeText: {
     color: '#FFFFFF',
@@ -562,132 +583,155 @@ const styles = StyleSheet.create({
   },
   emptyContainer: {
     alignItems: 'center',
-    paddingVertical: 40,
+    paddingVertical: SPACING.xxxl,
   },
   emptyIcon: {
-    fontSize: 48,
-    marginBottom: 16,
+    width: 64,
+    height: 64,
+    borderRadius: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: SPACING.lg,
+  },
+  emptyIconText: {
+    fontSize: 28,
+    color: '#64748B',
   },
   emptyTitle: {
     fontSize: 18,
     fontWeight: '700',
-    color: '#1F2937',
-    marginBottom: 8,
+    marginBottom: SPACING.xs,
   },
   emptyText: {
     fontSize: 14,
-    color: '#6B7280',
     textAlign: 'center',
-    paddingHorizontal: 40,
+    paddingHorizontal: SPACING.xxxl,
   },
   cardContainer: {
-    marginBottom: 12,
+    marginBottom: SPACING.md,
   },
-  gradientCard: {
-    borderRadius: 20,
+  modernCard: {
+    flexDirection: 'row',
+    borderRadius: BORDER_RADIUS.xl,
     overflow: 'hidden',
   },
-  glassOverlay: {
-    backgroundColor: 'rgba(255, 255, 255, 0.15)',
-    padding: 16,
+  cardLeftAccent: {
+    width: 4,
+  },
+  accentBar: {
+    flex: 1,
+  },
+  cardContent: {
+    flex: 1,
+    padding: SPACING.md,
   },
   cardHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'flex-start',
-    marginBottom: 12,
+    marginBottom: SPACING.sm,
   },
   cardTitleSection: {
     flex: 1,
-    marginRight: 12,
+    marginRight: SPACING.sm,
   },
   cardTitle: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: '700',
-    color: '#FFFFFF',
     marginBottom: 4,
   },
-  cardSubtitle: {
-    fontSize: 13,
-    color: 'rgba(255, 255, 255, 0.8)',
-  },
-  distanceBadge: {
-    backgroundColor: 'rgba(255, 255, 255, 0.25)',
-    paddingHorizontal: 12,
-    paddingVertical: 6,
-    borderRadius: 20,
-  },
-  distanceText: {
-    color: '#FFFFFF',
-    fontSize: 14,
-    fontWeight: '600',
-  },
-  cardDetails: {
-    marginBottom: 12,
-  },
-  detailRow: {
+  cardMeta: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 6,
   },
-  detailIcon: {
-    fontSize: 14,
-    marginRight: 8,
+  sportBadge: {
+    fontSize: 12,
+    fontWeight: '600',
   },
-  detailText: {
-    fontSize: 14,
-    color: 'rgba(255, 255, 255, 0.9)',
+  metaDot: {
+    marginHorizontal: 6,
+    fontSize: 8,
+  },
+  cardDate: {
+    fontSize: 12,
+  },
+  distanceBadge: {
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    borderRadius: 8,
+  },
+  distanceText: {
+    fontSize: 13,
+    fontWeight: '700',
   },
   cardFooter: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
   },
-  participants: {
+  locationRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    flex: 1,
+  },
+  locationIcon: {
+    fontSize: 10,
+    marginRight: 6,
+  },
+  locationText: {
     fontSize: 13,
-    color: 'rgba(255, 255, 255, 0.8)',
+    flex: 1,
   },
   actionButton: {
-    backgroundColor: 'rgba(255, 255, 255, 0.25)',
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-    borderRadius: 20,
+    borderRadius: 8,
+    overflow: 'hidden',
+  },
+  actionButtonGradient: {
+    paddingHorizontal: 14,
+    paddingVertical: 6,
+    borderRadius: 8,
   },
   actionButtonText: {
     color: '#FFFFFF',
-    fontSize: 13,
-    fontWeight: '600',
+    fontSize: 12,
+    fontWeight: '700',
   },
-  completedBadge: {
-    backgroundColor: 'rgba(255, 255, 255, 0.25)',
-    paddingHorizontal: 12,
-    paddingVertical: 6,
-    borderRadius: 16,
+  completedChip: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: 'rgba(74, 222, 128, 0.15)',
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    borderRadius: 8,
+  },
+  completedIcon: {
+    color: '#4ADE80',
+    fontSize: 12,
+    fontWeight: '700',
+    marginRight: 4,
   },
   completedText: {
-    color: '#FFFFFF',
-    fontSize: 13,
+    color: '#4ADE80',
+    fontSize: 12,
     fontWeight: '600',
   },
   completionInfo: {
     flexDirection: 'row',
-    marginTop: 12,
-    paddingTop: 12,
+    marginTop: SPACING.sm,
+    paddingTop: SPACING.sm,
     borderTopWidth: 1,
-    borderTopColor: 'rgba(255, 255, 255, 0.2)',
-    gap: 24,
+    gap: SPACING.xl,
   },
   completionStat: {
     alignItems: 'center',
   },
   completionLabel: {
-    fontSize: 11,
-    color: 'rgba(255, 255, 255, 0.7)',
+    fontSize: 10,
+    fontWeight: '500',
     marginBottom: 2,
   },
   completionValue: {
-    fontSize: 15,
+    fontSize: 14,
     fontWeight: '700',
-    color: '#FFFFFF',
   },
 });

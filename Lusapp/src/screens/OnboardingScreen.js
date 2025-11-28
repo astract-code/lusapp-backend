@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import {
   View,
   Text,
@@ -10,37 +10,61 @@ import {
   Platform,
   Alert,
   ActivityIndicator,
-  SafeAreaView,
+  Animated,
+  Dimensions,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
+import { Ionicons } from '@expo/vector-icons';
 import { useAuth } from '../context/AuthContext';
-import { useTheme } from '../context/ThemeContext';
-import { SPACING, BORDER_RADIUS, FONT_SIZE } from '../constants/theme';
+import { SPACING, BORDER_RADIUS, GRADIENTS } from '../constants/theme';
+import haptic from '../utils/haptics';
 
-const InputWithIcon = ({ icon, placeholder, value, onChangeText, secureTextEntry, keyboardType, autoCapitalize, showToggle, isVisible, onToggleVisibility }) => (
-  <View style={styles.inputWrapper}>
-    <Text style={styles.inputIcon}>{icon}</Text>
-    <TextInput
-      style={styles.inputField}
-      placeholder={placeholder}
-      placeholderTextColor="#9CA3AF"
-      value={value}
-      onChangeText={onChangeText}
-      secureTextEntry={secureTextEntry && !isVisible}
-      keyboardType={keyboardType}
-      autoCapitalize={autoCapitalize}
-    />
-    {showToggle && (
-      <TouchableOpacity onPress={onToggleVisibility} style={styles.eyeButton}>
-        <Text style={styles.eyeIcon}>{isVisible ? '👁️' : '👁️‍🗨️'}</Text>
-      </TouchableOpacity>
-    )}
-  </View>
-);
+const { width, height } = Dimensions.get('window');
+
+const InputField = ({ 
+  icon, 
+  placeholder, 
+  value, 
+  onChangeText, 
+  secureTextEntry, 
+  keyboardType, 
+  autoCapitalize,
+  showToggle,
+  isVisible,
+  onToggleVisibility,
+}) => {
+  const [isFocused, setIsFocused] = useState(false);
+
+  return (
+    <View style={[
+      styles.inputWrapper,
+      isFocused && styles.inputWrapperFocused,
+    ]}>
+      <Ionicons name={icon} size={18} color="#64748B" style={styles.inputIcon} />
+      <TextInput
+        style={styles.inputField}
+        placeholder={placeholder}
+        placeholderTextColor="#64748B"
+        value={value}
+        onChangeText={onChangeText}
+        secureTextEntry={secureTextEntry && !isVisible}
+        keyboardType={keyboardType}
+        autoCapitalize={autoCapitalize}
+        onFocus={() => setIsFocused(true)}
+        onBlur={() => setIsFocused(false)}
+      />
+      {showToggle && (
+        <TouchableOpacity onPress={onToggleVisibility} style={styles.eyeButton}>
+          <Ionicons name={isVisible ? 'eye-outline' : 'eye-off-outline'} size={20} color="#64748B" />
+        </TouchableOpacity>
+      )}
+    </View>
+  );
+};
 
 export const OnboardingScreen = ({ navigation }) => {
-  const { colors } = useTheme();
-  const { login, signupWithEmail, signupWithApple } = useAuth();
+  const { login, signupWithEmail } = useAuth();
   
   const [isLogin, setIsLogin] = useState(true);
   const [email, setEmail] = useState('');
@@ -55,6 +79,8 @@ export const OnboardingScreen = ({ navigation }) => {
   const [ageConfirmed, setAgeConfirmed] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  
+  const buttonScale = useRef(new Animated.Value(1)).current;
 
   const handleEmailAuth = async () => {
     setError('');
@@ -90,20 +116,42 @@ export const OnboardingScreen = ({ navigation }) => {
     }
   };
 
-  const handleAppleSignIn = async () => {
+  const handleButtonPressIn = () => {
+    haptic.light();
+    Animated.spring(buttonScale, {
+      toValue: 0.97,
+      useNativeDriver: true,
+      speed: 50,
+    }).start();
+  };
+
+  const handleButtonPressOut = () => {
+    Animated.spring(buttonScale, {
+      toValue: 1,
+      useNativeDriver: true,
+      speed: 50,
+    }).start();
+  };
+
+  const handleAppleSignIn = () => {
     Alert.alert(
       'Coming Soon',
-      'Apple sign-in will be available in the next update. Please use email signup for now.',
+      'Apple sign-in will be available in the next update.',
       [{ text: 'OK' }]
     );
   };
 
   return (
-    <SafeAreaView style={styles.safeArea}>
+    <View style={styles.container}>
       <LinearGradient
-        colors={['#10B981', '#059669', '#047857']}
-        style={styles.gradient}
-      >
+        colors={['#0B0F1A', '#1E293B', '#0B0F1A']}
+        style={styles.backgroundGradient}
+      />
+      
+      <View style={styles.glowEffect} />
+      <View style={styles.glowEffect2} />
+      
+      <SafeAreaView style={styles.safeArea}>
         <KeyboardAvoidingView
           behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
           style={styles.keyboardView}
@@ -113,62 +161,84 @@ export const OnboardingScreen = ({ navigation }) => {
             keyboardShouldPersistTaps="handled"
             showsVerticalScrollIndicator={false}
           >
-            <View style={styles.logoContainer}>
-              <View style={styles.logoCircle}>
-                <Text style={styles.logoEmoji}>🏃</Text>
-              </View>
-              <Text style={styles.appName}>Lusapp</Text>
+            <View style={styles.header}>
+              <LinearGradient
+                colors={GRADIENTS.primary}
+                style={styles.logoContainer}
+              >
+                <Text style={styles.logoText}>L</Text>
+              </LinearGradient>
+              <Text style={styles.appName}>LUSAPP</Text>
               <Text style={styles.tagline}>
-                Your race calendar & athletic community
+                Race. Connect. Achieve.
               </Text>
             </View>
 
-            <View style={styles.welcomeCard}>
-              <Text style={styles.welcomeTitle}>
-                {isLogin ? 'Welcome Back' : 'Join Lusapp'}
-              </Text>
-              <Text style={styles.welcomeSubtitle}>
-                {isLogin ? 'Sign in to your account' : 'Create your athlete profile'}
-              </Text>
+            <View style={styles.card}>
+              <View style={styles.tabContainer}>
+                <TouchableOpacity
+                  style={[styles.tab, isLogin && styles.tabActive]}
+                  onPress={() => { haptic.selection(); setIsLogin(true); }}
+                >
+                  {isLogin ? (
+                    <LinearGradient
+                      colors={GRADIENTS.primary}
+                      start={{ x: 0, y: 0 }}
+                      end={{ x: 1, y: 0 }}
+                      style={styles.tabGradient}
+                    >
+                      <Text style={styles.tabTextActive}>Sign In</Text>
+                    </LinearGradient>
+                  ) : (
+                    <Text style={styles.tabText}>Sign In</Text>
+                  )}
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={[styles.tab, !isLogin && styles.tabActive]}
+                  onPress={() => { haptic.selection(); setIsLogin(false); }}
+                >
+                  {!isLogin ? (
+                    <LinearGradient
+                      colors={GRADIENTS.primary}
+                      start={{ x: 0, y: 0 }}
+                      end={{ x: 1, y: 0 }}
+                      style={styles.tabGradient}
+                    >
+                      <Text style={styles.tabTextActive}>Sign Up</Text>
+                    </LinearGradient>
+                  ) : (
+                    <Text style={styles.tabText}>Sign Up</Text>
+                  )}
+                </TouchableOpacity>
+              </View>
 
               <View style={styles.inputContainer}>
                 {!isLogin && (
                   <>
-                    <InputWithIcon
-                      icon="👤"
+                    <InputField
+                      icon="person-outline"
                       placeholder="Full Name"
                       value={name}
                       onChangeText={setName}
+                      autoCapitalize="words"
                     />
-                    <InputWithIcon
-                      icon="📍"
-                      placeholder="Location (e.g., San Francisco, CA)"
+                    <InputField
+                      icon="location-outline"
+                      placeholder="Location (optional)"
                       value={location}
                       onChangeText={setLocation}
                     />
-                    <InputWithIcon
-                      icon="🏅"
-                      placeholder="Favorite Sport (e.g., Marathon)"
+                    <InputField
+                      icon="trophy-outline"
+                      placeholder="Favorite Sport (optional)"
                       value={favoriteSport}
                       onChangeText={setFavoriteSport}
                     />
-                    <View style={styles.inputWrapper}>
-                      <Text style={[styles.inputIcon, { alignSelf: 'flex-start', marginTop: 12 }]}>📝</Text>
-                      <TextInput
-                        style={[styles.inputField, styles.textArea]}
-                        placeholder="Bio (optional)"
-                        placeholderTextColor="#9CA3AF"
-                        value={bio}
-                        onChangeText={setBio}
-                        multiline
-                        numberOfLines={3}
-                      />
-                    </View>
                   </>
                 )}
 
-                <InputWithIcon
-                  icon="✉️"
+                <InputField
+                  icon="mail-outline"
                   placeholder="Email"
                   value={email}
                   onChangeText={setEmail}
@@ -176,8 +246,8 @@ export const OnboardingScreen = ({ navigation }) => {
                   autoCapitalize="none"
                 />
 
-                <InputWithIcon
-                  icon="🔒"
+                <InputField
+                  icon="lock-closed-outline"
                   placeholder="Password"
                   value={password}
                   onChangeText={setPassword}
@@ -188,31 +258,31 @@ export const OnboardingScreen = ({ navigation }) => {
                 />
 
                 {!isLogin && (
-                  <InputWithIcon
-                    icon="🔒"
-                    placeholder="Confirm Password"
-                    value={confirmPassword}
-                    onChangeText={setConfirmPassword}
-                    secureTextEntry
-                    showToggle
-                    isVisible={showConfirmPassword}
-                    onToggleVisibility={() => setShowConfirmPassword(!showConfirmPassword)}
-                  />
-                )}
+                  <>
+                    <InputField
+                      icon="lock-closed-outline"
+                      placeholder="Confirm Password"
+                      value={confirmPassword}
+                      onChangeText={setConfirmPassword}
+                      secureTextEntry
+                      showToggle
+                      isVisible={showConfirmPassword}
+                      onToggleVisibility={() => setShowConfirmPassword(!showConfirmPassword)}
+                    />
 
-                {!isLogin && (
-                  <TouchableOpacity
-                    style={styles.checkboxContainer}
-                    onPress={() => setAgeConfirmed(!ageConfirmed)}
-                    activeOpacity={0.7}
-                  >
-                    <View style={[styles.checkbox, ageConfirmed && styles.checkboxChecked]}>
-                      {ageConfirmed && <Text style={styles.checkmark}>✓</Text>}
-                    </View>
-                    <Text style={styles.checkboxLabel}>
-                      I confirm that I am at least 13 years old
-                    </Text>
-                  </TouchableOpacity>
+                    <TouchableOpacity
+                      style={styles.checkboxContainer}
+                      onPress={() => { haptic.selection(); setAgeConfirmed(!ageConfirmed); }}
+                      activeOpacity={0.7}
+                    >
+                      <View style={[styles.checkbox, ageConfirmed && styles.checkboxChecked]}>
+                        {ageConfirmed && <Ionicons name="checkmark-outline" size={14} color="#FFFFFF" />}
+                      </View>
+                      <Text style={styles.checkboxLabel}>
+                        I confirm that I am at least 13 years old
+                      </Text>
+                    </TouchableOpacity>
+                  </>
                 )}
               </View>
 
@@ -222,19 +292,30 @@ export const OnboardingScreen = ({ navigation }) => {
                 </View>
               ) : null}
 
-              <TouchableOpacity
-                style={[styles.primaryButton, isLoading && styles.buttonDisabled]}
-                onPress={handleEmailAuth}
-                disabled={isLoading}
-              >
-                {isLoading ? (
-                  <ActivityIndicator color="#FFFFFF" />
-                ) : (
-                  <Text style={styles.primaryButtonText}>
-                    {isLogin ? 'Log In' : 'Sign Up'}
-                  </Text>
-                )}
-              </TouchableOpacity>
+              <Animated.View style={{ transform: [{ scale: buttonScale }] }}>
+                <TouchableOpacity
+                  onPress={handleEmailAuth}
+                  onPressIn={handleButtonPressIn}
+                  onPressOut={handleButtonPressOut}
+                  disabled={isLoading}
+                  activeOpacity={1}
+                >
+                  <LinearGradient
+                    colors={GRADIENTS.primary}
+                    start={{ x: 0, y: 0 }}
+                    end={{ x: 1, y: 0 }}
+                    style={[styles.primaryButton, isLoading && styles.buttonDisabled]}
+                  >
+                    {isLoading ? (
+                      <ActivityIndicator color="#FFFFFF" />
+                    ) : (
+                      <Text style={styles.primaryButtonText}>
+                        {isLogin ? 'Sign In' : 'Create Account'}
+                      </Text>
+                    )}
+                  </LinearGradient>
+                </TouchableOpacity>
+              </Animated.View>
 
               {isLogin && (
                 <TouchableOpacity
@@ -258,32 +339,51 @@ export const OnboardingScreen = ({ navigation }) => {
                 <Text style={styles.appleIcon}></Text>
                 <Text style={styles.appleButtonText}>Continue with Apple</Text>
               </TouchableOpacity>
-
-              <TouchableOpacity 
-                style={styles.switchContainer}
-                onPress={() => setIsLogin(!isLogin)}
-              >
-                <Text style={styles.switchText}>
-                  {isLogin ? "Don't have an account? " : 'Already have an account? '}
-                  <Text style={styles.switchLink}>
-                    {isLogin ? 'Sign Up' : 'Log In'}
-                  </Text>
-                </Text>
-              </TouchableOpacity>
             </View>
+
+            <Text style={styles.termsText}>
+              By continuing, you agree to our Terms of Service and Privacy Policy
+            </Text>
           </ScrollView>
         </KeyboardAvoidingView>
-      </LinearGradient>
-    </SafeAreaView>
+      </SafeAreaView>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  safeArea: {
+  container: {
     flex: 1,
-    backgroundColor: '#10B981',
+    backgroundColor: '#0B0F1A',
   },
-  gradient: {
+  backgroundGradient: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+  },
+  glowEffect: {
+    position: 'absolute',
+    top: -100,
+    left: -100,
+    width: 300,
+    height: 300,
+    borderRadius: 150,
+    backgroundColor: '#4ADE80',
+    opacity: 0.1,
+  },
+  glowEffect2: {
+    position: 'absolute',
+    bottom: -50,
+    right: -100,
+    width: 250,
+    height: 250,
+    borderRadius: 125,
+    backgroundColor: '#38BDF8',
+    opacity: 0.08,
+  },
+  safeArea: {
     flex: 1,
   },
   keyboardView: {
@@ -292,93 +392,113 @@ const styles = StyleSheet.create({
   scrollContent: {
     flexGrow: 1,
     justifyContent: 'center',
-    padding: SPACING.lg,
-    paddingBottom: SPACING.xxl,
+    padding: SPACING.xl,
+    paddingBottom: SPACING.xxxl,
+  },
+  header: {
+    alignItems: 'center',
+    marginBottom: SPACING.xxl,
   },
   logoContainer: {
-    alignItems: 'center',
-    marginBottom: SPACING.xl,
-  },
-  logoCircle: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
-    backgroundColor: 'rgba(255, 255, 255, 0.2)',
+    width: 80,
+    height: 80,
+    borderRadius: 24,
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: SPACING.md,
-  },
-  logoEmoji: {
-    fontSize: 50,
-  },
-  appName: {
-    fontSize: 32,
-    fontWeight: 'bold',
-    color: '#FFFFFF',
-    marginBottom: SPACING.xs,
-    letterSpacing: 1,
-  },
-  tagline: {
-    fontSize: FONT_SIZE.md,
-    color: 'rgba(255, 255, 255, 0.9)',
-    textAlign: 'center',
-  },
-  welcomeCard: {
-    backgroundColor: '#FFFFFF',
-    borderRadius: BORDER_RADIUS.xxl,
-    padding: SPACING.xl,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 10 },
-    shadowOpacity: 0.15,
+    shadowColor: '#4ADE80',
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0.5,
     shadowRadius: 20,
     elevation: 10,
   },
-  welcomeTitle: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#1F2937',
-    textAlign: 'center',
+  logoText: {
+    fontSize: 40,
+    fontWeight: '800',
+    color: '#FFFFFF',
+  },
+  appName: {
+    fontSize: 28,
+    fontWeight: '800',
+    color: '#FFFFFF',
+    letterSpacing: 4,
     marginBottom: SPACING.xs,
   },
-  welcomeSubtitle: {
-    fontSize: FONT_SIZE.md,
-    color: '#6B7280',
+  tagline: {
+    fontSize: 15,
+    color: '#94A3B8',
+    letterSpacing: 1,
+  },
+  card: {
+    backgroundColor: 'rgba(30, 41, 59, 0.8)',
+    borderRadius: BORDER_RADIUS.xxl,
+    padding: SPACING.xl,
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.1)',
+  },
+  tabContainer: {
+    flexDirection: 'row',
+    backgroundColor: 'rgba(15, 23, 42, 0.6)',
+    borderRadius: BORDER_RADIUS.lg,
+    padding: 4,
+    marginBottom: SPACING.xl,
+  },
+  tab: {
+    flex: 1,
+    overflow: 'hidden',
+    borderRadius: BORDER_RADIUS.md,
+  },
+  tabActive: {},
+  tabGradient: {
+    paddingVertical: SPACING.md,
+    alignItems: 'center',
+    borderRadius: BORDER_RADIUS.md,
+  },
+  tabText: {
+    fontSize: 15,
+    fontWeight: '600',
+    color: '#64748B',
     textAlign: 'center',
-    marginBottom: SPACING.lg,
+    paddingVertical: SPACING.md,
+  },
+  tabTextActive: {
+    fontSize: 15,
+    fontWeight: '700',
+    color: '#FFFFFF',
   },
   inputContainer: {
-    marginBottom: SPACING.sm,
+    marginBottom: SPACING.md,
   },
   inputWrapper: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#F9FAFB',
+    backgroundColor: 'rgba(15, 23, 42, 0.6)',
     borderRadius: BORDER_RADIUS.lg,
     borderWidth: 1,
-    borderColor: '#E5E7EB',
+    borderColor: 'rgba(255, 255, 255, 0.1)',
     marginBottom: SPACING.md,
     paddingHorizontal: SPACING.md,
   },
+  inputWrapperFocused: {
+    borderColor: '#4ADE80',
+  },
   inputIcon: {
-    fontSize: 18,
+    fontSize: 16,
+    color: '#64748B',
     marginRight: SPACING.sm,
   },
   inputField: {
     flex: 1,
-    paddingVertical: SPACING.md,
-    fontSize: FONT_SIZE.md,
-    color: '#1F2937',
-  },
-  textArea: {
-    minHeight: 80,
-    textAlignVertical: 'top',
-    paddingTop: SPACING.md,
+    paddingVertical: SPACING.md + 2,
+    fontSize: 16,
+    color: '#F8FAFC',
   },
   eyeButton: {
     padding: SPACING.xs,
   },
   eyeIcon: {
-    fontSize: 18,
+    fontSize: 20,
+    color: '#64748B',
   },
   checkboxContainer: {
     flexDirection: 'row',
@@ -390,15 +510,15 @@ const styles = StyleSheet.create({
     width: 22,
     height: 22,
     borderWidth: 2,
-    borderColor: '#D1D5DB',
+    borderColor: '#475569',
     borderRadius: 6,
     marginRight: SPACING.sm,
     alignItems: 'center',
     justifyContent: 'center',
   },
   checkboxChecked: {
-    backgroundColor: '#10B981',
-    borderColor: '#10B981',
+    backgroundColor: '#4ADE80',
+    borderColor: '#4ADE80',
   },
   checkmark: {
     color: '#FFFFFF',
@@ -406,96 +526,89 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   checkboxLabel: {
-    fontSize: FONT_SIZE.sm,
-    color: '#6B7280',
+    fontSize: 13,
+    color: '#94A3B8',
     flex: 1,
   },
   errorContainer: {
-    backgroundColor: '#FEE2E2',
+    backgroundColor: 'rgba(239, 68, 68, 0.2)',
+    borderWidth: 1,
+    borderColor: 'rgba(239, 68, 68, 0.3)',
     padding: SPACING.sm,
     borderRadius: BORDER_RADIUS.md,
     marginBottom: SPACING.md,
   },
   errorText: {
-    color: '#DC2626',
-    fontSize: FONT_SIZE.sm,
+    color: '#F87171',
+    fontSize: 14,
     textAlign: 'center',
   },
   primaryButton: {
-    backgroundColor: '#10B981',
     borderRadius: BORDER_RADIUS.lg,
-    paddingVertical: SPACING.md + 2,
+    paddingVertical: SPACING.md + 4,
     alignItems: 'center',
-    marginBottom: SPACING.sm,
-    shadowColor: '#10B981',
+    shadowColor: '#4ADE80',
     shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.3,
-    shadowRadius: 8,
-    elevation: 4,
+    shadowOpacity: 0.4,
+    shadowRadius: 12,
+    elevation: 8,
   },
   buttonDisabled: {
     opacity: 0.7,
   },
   primaryButtonText: {
     color: '#FFFFFF',
-    fontSize: FONT_SIZE.md,
-    fontWeight: 'bold',
+    fontSize: 17,
+    fontWeight: '700',
     letterSpacing: 0.5,
   },
   forgotPasswordButton: {
     alignItems: 'center',
-    marginTop: SPACING.xs,
-    marginBottom: SPACING.sm,
+    marginTop: SPACING.md,
   },
   forgotPasswordText: {
-    color: '#10B981',
-    fontSize: FONT_SIZE.sm,
+    color: '#4ADE80',
+    fontSize: 14,
     fontWeight: '600',
   },
   divider: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginVertical: SPACING.md,
+    marginVertical: SPACING.lg,
   },
   dividerLine: {
     flex: 1,
     height: 1,
-    backgroundColor: '#E5E7EB',
+    backgroundColor: 'rgba(255, 255, 255, 0.1)',
   },
   dividerText: {
     marginHorizontal: SPACING.md,
-    color: '#9CA3AF',
-    fontSize: FONT_SIZE.sm,
+    color: '#64748B',
+    fontSize: 13,
   },
   appleButton: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#000000',
+    backgroundColor: '#FFFFFF',
     borderRadius: BORDER_RADIUS.lg,
     paddingVertical: SPACING.md,
-    marginBottom: SPACING.md,
   },
   appleIcon: {
-    fontSize: 18,
-    color: '#FFFFFF',
+    fontSize: 20,
+    color: '#000000',
     marginRight: SPACING.sm,
   },
   appleButtonText: {
-    color: '#FFFFFF',
-    fontSize: FONT_SIZE.md,
+    color: '#000000',
+    fontSize: 16,
     fontWeight: '600',
   },
-  switchContainer: {
-    marginTop: SPACING.sm,
-  },
-  switchText: {
+  termsText: {
     textAlign: 'center',
-    color: '#6B7280',
-    fontSize: FONT_SIZE.sm,
-  },
-  switchLink: {
-    color: '#10B981',
-    fontWeight: '600',
+    color: '#64748B',
+    fontSize: 12,
+    marginTop: SPACING.xl,
+    lineHeight: 18,
   },
 });

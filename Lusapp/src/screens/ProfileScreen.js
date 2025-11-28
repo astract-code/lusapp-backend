@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import {
   View,
   Text,
@@ -10,8 +10,12 @@ import {
   Platform,
   TextInput,
   RefreshControl,
+  Animated,
+  Dimensions,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { LinearGradient } from 'expo-linear-gradient';
+import { Ionicons } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
 import Constants from 'expo-constants';
 import { UserAvatar } from '../components/UserAvatar';
@@ -20,11 +24,14 @@ import { CompactRaceCard } from '../components/CompactRaceCard';
 import { useAuth } from '../context/AuthContext';
 import { useAppStore } from '../context/AppContext';
 import { useTheme } from '../context/ThemeContext';
-import { SPACING, FONT_SIZE, BORDER_RADIUS } from '../constants/theme';
+import { SPACING, BORDER_RADIUS, GRADIENTS, SHADOWS } from '../constants/theme';
 import API_URL from '../config/api';
+import haptic from '../utils/haptics';
+
+const { width } = Dimensions.get('window');
 
 export const ProfileScreen = ({ navigation }) => {
-  const { colors } = useTheme();
+  const { colors, isDark } = useTheme();
   const { user: authUser, logout, updateUser, token, refreshUser } = useAuth();
   const { races, fetchRaces } = useAppStore();
   const [uploading, setUploading] = useState(false);
@@ -37,6 +44,8 @@ export const ProfileScreen = ({ navigation }) => {
     location: '',
     favoriteSport: '',
   });
+
+  const headerAnim = useRef(new Animated.Value(0)).current;
 
   const fetchCompletionData = useCallback(async () => {
     if (!token || !authUser?.id) return;
@@ -79,11 +88,12 @@ export const ProfileScreen = ({ navigation }) => {
   }, [authUser]);
 
   const pickAndUploadImage = async () => {
+    haptic.light();
     try {
       const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
       
       if (permissionResult.granted === false) {
-        Alert.alert('Permission Required', 'Please allow access to your photos to upload a profile picture.');
+        Alert.alert('Permission Required', 'Please allow access to your photos.');
         return;
       }
 
@@ -139,6 +149,7 @@ export const ProfileScreen = ({ navigation }) => {
 
       const avatarUrl = data.avatar.startsWith('http') ? data.avatar : `${API_URL}${data.avatar}`;
       updateUser({ ...authUser, avatar: avatarUrl });
+      haptic.success();
       Alert.alert('Success', 'Profile photo updated!');
 
     } catch (error) {
@@ -187,7 +198,8 @@ export const ProfileScreen = ({ navigation }) => {
       
       updateUser(updatedUser);
       setIsEditing(false);
-      Alert.alert('Success', 'Profile updated successfully!');
+      haptic.success();
+      Alert.alert('Success', 'Profile updated!');
     } catch (error) {
       console.error('Error updating profile:', error);
       Alert.alert('Error', error.message || 'Failed to update profile');
@@ -261,258 +273,288 @@ export const ProfileScreen = ({ navigation }) => {
   };
 
   return (
-    <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]} edges={['top']}>
-      <View style={[styles.topBar, { borderBottomColor: colors.border }]}>
-        <Text style={[styles.topBarTitle, { color: colors.text }]}>Profile</Text>
-        <View style={styles.topBarButtons}>
-          {!isEditing && (
-            <TouchableOpacity
-              style={styles.editIconButton}
-              onPress={() => setIsEditing(true)}
-            >
-              <Text style={{ fontSize: 20 }}>✏️</Text>
-            </TouchableOpacity>
-          )}
-          <TouchableOpacity
-            style={styles.settingsButton}
-            onPress={() => navigation.navigate('Settings')}
-          >
-            <Text style={{ fontSize: 20 }}>⚙️</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
+    <View style={[styles.container, { backgroundColor: isDark ? '#0B0F1A' : colors.background }]}>
+      <LinearGradient
+        colors={isDark ? ['#0B0F1A', '#1E293B'] : [colors.background, colors.surface]}
+        style={styles.backgroundGradient}
+      />
       
-      <ScrollView
-        refreshControl={
-          <RefreshControl
-            refreshing={refreshing}
-            onRefresh={onRefresh}
-            tintColor={colors.primary}
-          />
-        }
-      >
-        <View style={[styles.header, { backgroundColor: colors.surface }]}>
-          <View style={styles.avatarSection}>
-            <UserAvatar uri={authUser.avatar} size={100} />
-            
-            <TouchableOpacity 
-              style={[styles.uploadButton, { backgroundColor: colors.primary }]}
-              onPress={pickAndUploadImage}
-              disabled={uploading}
+      <SafeAreaView style={styles.safeArea} edges={['top']}>
+        <View style={styles.topBar}>
+          <Text style={[styles.topBarTitle, { color: colors.text }]}>Profile</Text>
+          <View style={styles.topBarButtons}>
+            {!isEditing && (
+              <TouchableOpacity
+                style={[styles.iconButton, { backgroundColor: isDark ? colors.surface : '#F1F5F9' }]}
+                onPress={() => { haptic.light(); setIsEditing(true); }}
+              >
+                <Ionicons name="create-outline" size={20} color={colors.text} />
+              </TouchableOpacity>
+            )}
+            <TouchableOpacity
+              style={[styles.iconButton, { backgroundColor: isDark ? colors.surface : '#F1F5F9' }]}
+              onPress={() => { haptic.light(); navigation.navigate('Settings'); }}
             >
-              {uploading ? (
-                <ActivityIndicator color="#fff" />
-              ) : (
-                <Text style={styles.uploadButtonText}>
-                  {authUser.avatar ? 'Change Photo' : 'Upload Photo'}
-                </Text>
-              )}
+              <Ionicons name="settings-outline" size={20} color={colors.text} />
             </TouchableOpacity>
           </View>
-
-          {isEditing ? (
-            <View style={styles.editContainer}>
-              <View style={styles.inputGroup}>
-                <Text style={[styles.inputLabel, { color: colors.textSecondary }]}>Name</Text>
-                <TextInput
-                  style={[styles.input, { 
-                    color: colors.text,
-                    backgroundColor: colors.card,
-                    borderColor: colors.border,
-                  }]}
-                  value={editedProfile.name}
-                  onChangeText={(text) => setEditedProfile({ ...editedProfile, name: text })}
-                  placeholder="Enter your name"
-                  placeholderTextColor={colors.textTertiary}
-                  maxLength={50}
-                />
-              </View>
-
-              <View style={styles.inputGroup}>
-                <Text style={[styles.inputLabel, { color: colors.textSecondary }]}>Location</Text>
-                <TextInput
-                  style={[styles.input, { 
-                    color: colors.text,
-                    backgroundColor: colors.card,
-                    borderColor: colors.border,
-                  }]}
-                  value={editedProfile.location}
-                  onChangeText={(text) => setEditedProfile({ ...editedProfile, location: text })}
-                  placeholder="e.g., San Francisco, CA"
-                  placeholderTextColor={colors.textTertiary}
-                  maxLength={100}
-                />
-              </View>
-
-              <View style={styles.inputGroup}>
-                <Text style={[styles.inputLabel, { color: colors.textSecondary }]}>Bio</Text>
-                <TextInput
-                  style={[styles.textArea, { 
-                    color: colors.text,
-                    backgroundColor: colors.card,
-                    borderColor: colors.border,
-                  }]}
-                  value={editedProfile.bio}
-                  onChangeText={(text) => setEditedProfile({ ...editedProfile, bio: text })}
-                  placeholder="Tell us about yourself..."
-                  placeholderTextColor={colors.textTertiary}
-                  multiline
-                  numberOfLines={3}
-                  maxLength={200}
-                />
-              </View>
-
-              <View style={styles.inputGroup}>
-                <Text style={[styles.inputLabel, { color: colors.textSecondary }]}>Favorite Sport</Text>
-                <TextInput
-                  style={[styles.input, { 
-                    color: colors.text,
-                    backgroundColor: colors.card,
-                    borderColor: colors.border,
-                  }]}
-                  value={editedProfile.favoriteSport}
-                  onChangeText={(text) => setEditedProfile({ ...editedProfile, favoriteSport: text })}
-                  placeholder="e.g., Marathon, Triathlon"
-                  placeholderTextColor={colors.textTertiary}
-                  maxLength={50}
-                />
-              </View>
-
-              <View style={styles.editButtons}>
-                <TouchableOpacity
-                  style={[styles.button, styles.cancelButton, { backgroundColor: colors.surface }]}
-                  onPress={handleCancelEdit}
-                >
-                  <Text style={[styles.buttonText, { color: colors.text }]}>Cancel</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  style={[styles.button, styles.saveButton, { backgroundColor: colors.primary }]}
-                  onPress={handleSaveProfile}
-                >
-                  <Text style={[styles.buttonText, { color: '#FFFFFF' }]}>Save Changes</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-          ) : (
-            <View style={styles.profileInfo}>
-              <Text style={[styles.name, { color: colors.text }]}>{authUser.name}</Text>
-              <Text style={[styles.location, { color: colors.textSecondary }]}>
-                📍 {authUser.location || 'Location not set'}
-              </Text>
-              <Text style={[styles.bio, { color: colors.textSecondary }]}>
-                {authUser.bio || 'No bio yet'}
-              </Text>
-              
-              <View style={styles.followInfo}>
-                <View style={styles.followStat}>
-                  <Text style={[styles.followNumber, { color: colors.text }]}>
-                    {authUser.followers?.length || 0}
-                  </Text>
-                  <Text style={[styles.followLabel, { color: colors.textSecondary }]}>Followers</Text>
-                </View>
-                <View style={styles.followStat}>
-                  <Text style={[styles.followNumber, { color: colors.text }]}>
-                    {authUser.following?.length || 0}
-                  </Text>
-                  <Text style={[styles.followLabel, { color: colors.textSecondary }]}>Following</Text>
-                </View>
-              </View>
-            </View>
-          )}
         </View>
-
-        <View style={styles.statsContainer}>
-          <StatCard
-            icon="trophy"
-            label="Joined Races"
-            value={joinedRaceIds.length || 0}
-            color="#10B981"
-          />
-          <StatCard
-            icon="check"
-            label="Completed"
-            value={completedRaces.length || 0}
-            color="#3B82F6"
-          />
-          <StatCard
-            icon="target"
-            label="Best Distance"
-            value={getBestDistance()}
-            color="#F59E0B"
-          />
-        </View>
-
-        <View style={styles.section}>
-          <Text style={[styles.sectionTitle, { color: colors.text }]}>
-            Upcoming Races ({upcomingRaces.length})
-          </Text>
-          {upcomingRaces.map((race) => (
-            <CompactRaceCard
-              key={race.id}
-              race={race}
-              onPress={() => navigation.navigate('RaceDetail', { raceId: race.id })}
+        
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          refreshControl={
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={onRefresh}
+              tintColor={colors.primary}
             />
-          ))}
-          {upcomingRaces.length === 0 && (
-            <Text style={[styles.emptyText, { color: colors.textSecondary }]}>
-              No upcoming races
-            </Text>
-          )}
-        </View>
-
-        {pastUncompletedRaces.length > 0 && (
-          <View style={styles.section}>
-            <Text style={[styles.sectionTitle, { color: colors.text }]}>
-              Past Races - Mark as Complete ({pastUncompletedRaces.length})
-            </Text>
-            {pastUncompletedRaces.map((race) => (
-              <CompactRaceCard
-                key={race.id}
-                race={race}
-                onPress={() => navigation.navigate('RaceDetail', { raceId: race.id })}
-                isPastUncompleted={true}
-                onMarkComplete={() => handleMarkComplete(race)}
-              />
-            ))}
-          </View>
-        )}
-
-        <View style={styles.section}>
-          <Text style={[styles.sectionTitle, { color: colors.text }]}>
-            Completed Races ({completedRaces.length})
-          </Text>
-          {completedRaces.map((race) => (
-            <CompactRaceCard
-              key={race.id}
-              race={race}
-              onPress={() => navigation.navigate('RaceDetail', { raceId: race.id })}
-              isCompleted={true}
-              completionData={completionDataMap[race.id.toString()]}
-            />
-          ))}
-          {completedRaces.length === 0 && (
-            <Text style={[styles.emptyText, { color: colors.textSecondary }]}>
-              No completed races yet
-            </Text>
-          )}
-        </View>
-
-        <TouchableOpacity
-          style={[styles.logoutButton, { backgroundColor: colors.error }]}
-          onPress={logout}
+          }
         >
-          <Text style={styles.logoutText}>Log Out</Text>
-        </TouchableOpacity>
+          <View style={styles.headerSection}>
+            <View style={styles.avatarContainer}>
+              <UserAvatar uri={authUser.avatar} size={100} />
+              <TouchableOpacity 
+                style={styles.uploadBadge}
+                onPress={pickAndUploadImage}
+                disabled={uploading}
+              >
+                <LinearGradient
+                  colors={GRADIENTS.primary}
+                  style={styles.uploadBadgeGradient}
+                >
+                  {uploading ? (
+                    <ActivityIndicator color="#FFF" size="small" />
+                  ) : (
+                    <Ionicons name="camera-outline" size={16} color="#FFFFFF" />
+                  )}
+                </LinearGradient>
+              </TouchableOpacity>
+            </View>
 
-        <View style={styles.versionContainer}>
-          <Text style={[styles.versionText, { color: colors.textSecondary }]}>
-            Version {Constants.expoConfig?.version || '1.0.0'} ({Platform.OS === 'ios' 
-              ? Constants.expoConfig?.ios?.buildNumber || '1'
-              : Constants.expoConfig?.android?.versionCode || '1'})
-          </Text>
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+            {isEditing ? (
+              <View style={styles.editContainer}>
+                <View style={styles.inputGroup}>
+                  <Text style={[styles.inputLabel, { color: colors.textSecondary }]}>Name</Text>
+                  <TextInput
+                    style={[styles.input, { 
+                      color: colors.text,
+                      backgroundColor: isDark ? colors.surface : '#F8FAFC',
+                      borderColor: isDark ? colors.border : '#E2E8F0',
+                    }]}
+                    value={editedProfile.name}
+                    onChangeText={(text) => setEditedProfile({ ...editedProfile, name: text })}
+                    placeholder="Enter your name"
+                    placeholderTextColor={colors.textTertiary}
+                    maxLength={50}
+                  />
+                </View>
+
+                <View style={styles.inputGroup}>
+                  <Text style={[styles.inputLabel, { color: colors.textSecondary }]}>Location</Text>
+                  <TextInput
+                    style={[styles.input, { 
+                      color: colors.text,
+                      backgroundColor: isDark ? colors.surface : '#F8FAFC',
+                      borderColor: isDark ? colors.border : '#E2E8F0',
+                    }]}
+                    value={editedProfile.location}
+                    onChangeText={(text) => setEditedProfile({ ...editedProfile, location: text })}
+                    placeholder="e.g., San Francisco, CA"
+                    placeholderTextColor={colors.textTertiary}
+                    maxLength={100}
+                  />
+                </View>
+
+                <View style={styles.inputGroup}>
+                  <Text style={[styles.inputLabel, { color: colors.textSecondary }]}>Bio</Text>
+                  <TextInput
+                    style={[styles.textArea, { 
+                      color: colors.text,
+                      backgroundColor: isDark ? colors.surface : '#F8FAFC',
+                      borderColor: isDark ? colors.border : '#E2E8F0',
+                    }]}
+                    value={editedProfile.bio}
+                    onChangeText={(text) => setEditedProfile({ ...editedProfile, bio: text })}
+                    placeholder="Tell us about yourself..."
+                    placeholderTextColor={colors.textTertiary}
+                    multiline
+                    numberOfLines={3}
+                    maxLength={200}
+                  />
+                </View>
+
+                <View style={styles.inputGroup}>
+                  <Text style={[styles.inputLabel, { color: colors.textSecondary }]}>Favorite Sport</Text>
+                  <TextInput
+                    style={[styles.input, { 
+                      color: colors.text,
+                      backgroundColor: isDark ? colors.surface : '#F8FAFC',
+                      borderColor: isDark ? colors.border : '#E2E8F0',
+                    }]}
+                    value={editedProfile.favoriteSport}
+                    onChangeText={(text) => setEditedProfile({ ...editedProfile, favoriteSport: text })}
+                    placeholder="e.g., Marathon, Triathlon"
+                    placeholderTextColor={colors.textTertiary}
+                    maxLength={50}
+                  />
+                </View>
+
+                <View style={styles.editButtons}>
+                  <TouchableOpacity
+                    style={[styles.cancelButton, { backgroundColor: isDark ? colors.surface : '#F1F5F9' }]}
+                    onPress={handleCancelEdit}
+                  >
+                    <Text style={[styles.cancelButtonText, { color: colors.text }]}>Cancel</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity onPress={handleSaveProfile}>
+                    <LinearGradient
+                      colors={GRADIENTS.primary}
+                      start={{ x: 0, y: 0 }}
+                      end={{ x: 1, y: 0 }}
+                      style={styles.saveButton}
+                    >
+                      <Text style={styles.saveButtonText}>Save</Text>
+                    </LinearGradient>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            ) : (
+              <View style={styles.profileInfo}>
+                <Text style={[styles.name, { color: colors.text }]}>{authUser.name}</Text>
+                
+                {authUser.location && (
+                  <View style={styles.locationRow}>
+                    <Ionicons name="location-outline" size={14} color="#4ADE80" style={styles.locationIcon} />
+                    <Text style={[styles.location, { color: colors.textSecondary }]}>
+                      {authUser.location}
+                    </Text>
+                  </View>
+                )}
+                
+                {authUser.bio && (
+                  <Text style={[styles.bio, { color: colors.textSecondary }]}>
+                    {authUser.bio}
+                  </Text>
+                )}
+                
+                <View style={styles.followInfo}>
+                  <TouchableOpacity style={styles.followStat}>
+                    <Text style={[styles.followNumber, { color: colors.text }]}>
+                      {authUser.followers?.length || 0}
+                    </Text>
+                    <Text style={[styles.followLabel, { color: colors.textTertiary }]}>Followers</Text>
+                  </TouchableOpacity>
+                  <View style={[styles.followDivider, { backgroundColor: colors.border }]} />
+                  <TouchableOpacity style={styles.followStat}>
+                    <Text style={[styles.followNumber, { color: colors.text }]}>
+                      {authUser.following?.length || 0}
+                    </Text>
+                    <Text style={[styles.followLabel, { color: colors.textTertiary }]}>Following</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            )}
+          </View>
+
+          <View style={styles.statsContainer}>
+            <StatCard
+              icon="trophy"
+              label="Joined"
+              value={joinedRaceIds.length || 0}
+              color="#4ADE80"
+            />
+            <StatCard
+              icon="check"
+              label="Completed"
+              value={completedRaces.length || 0}
+              color="#38BDF8"
+            />
+            <StatCard
+              icon="target"
+              label="Best"
+              value={getBestDistance()}
+              color="#FBBF24"
+            />
+          </View>
+
+          {upcomingRaces.length > 0 && (
+            <View style={styles.section}>
+              <View style={styles.sectionHeader}>
+                <Text style={[styles.sectionTitle, { color: colors.text }]}>Upcoming</Text>
+                <View style={[styles.sectionBadge, { backgroundColor: '#4ADE80' }]}>
+                  <Text style={styles.sectionBadgeText}>{upcomingRaces.length}</Text>
+                </View>
+              </View>
+              {upcomingRaces.slice(0, 3).map((race) => (
+                <CompactRaceCard
+                  key={race.id}
+                  race={race}
+                  onPress={() => navigation.navigate('RaceDetail', { raceId: race.id })}
+                />
+              ))}
+            </View>
+          )}
+
+          {pastUncompletedRaces.length > 0 && (
+            <View style={styles.section}>
+              <View style={styles.sectionHeader}>
+                <Text style={[styles.sectionTitle, { color: colors.text }]}>Mark Complete</Text>
+                <View style={[styles.sectionBadge, { backgroundColor: '#FBBF24' }]}>
+                  <Text style={styles.sectionBadgeText}>{pastUncompletedRaces.length}</Text>
+                </View>
+              </View>
+              {pastUncompletedRaces.map((race) => (
+                <CompactRaceCard
+                  key={race.id}
+                  race={race}
+                  onPress={() => navigation.navigate('RaceDetail', { raceId: race.id })}
+                  isPastUncompleted={true}
+                  onMarkComplete={() => handleMarkComplete(race)}
+                />
+              ))}
+            </View>
+          )}
+
+          {completedRaces.length > 0 && (
+            <View style={styles.section}>
+              <View style={styles.sectionHeader}>
+                <Text style={[styles.sectionTitle, { color: colors.text }]}>Completed</Text>
+                <View style={[styles.sectionBadge, { backgroundColor: '#38BDF8' }]}>
+                  <Text style={styles.sectionBadgeText}>{completedRaces.length}</Text>
+                </View>
+              </View>
+              {completedRaces.slice(0, 5).map((race) => (
+                <CompactRaceCard
+                  key={race.id}
+                  race={race}
+                  onPress={() => navigation.navigate('RaceDetail', { raceId: race.id })}
+                  isCompleted={true}
+                  completionData={completionDataMap[race.id.toString()]}
+                />
+              ))}
+            </View>
+          )}
+
+          <TouchableOpacity
+            style={styles.logoutButton}
+            onPress={() => {
+              haptic.warning();
+              logout();
+            }}
+          >
+            <Text style={styles.logoutText}>Log Out</Text>
+          </TouchableOpacity>
+
+          <View style={styles.versionContainer}>
+            <Text style={[styles.versionText, { color: colors.textTertiary }]}>
+              Version {Constants.expoConfig?.version || '1.0.0'} ({Platform.OS === 'ios' 
+                ? Constants.expoConfig?.ios?.buildNumber || '1'
+                : Constants.expoConfig?.android?.versionCode || '1'})
+            </Text>
+          </View>
+        </ScrollView>
+      </SafeAreaView>
+    </View>
   );
 };
 
@@ -520,173 +562,226 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
+  backgroundGradient: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+  },
+  safeArea: {
+    flex: 1,
+  },
   topBar: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingHorizontal: SPACING.lg,
+    paddingHorizontal: SPACING.xl,
     paddingVertical: SPACING.md,
-    borderBottomWidth: 1,
   },
   topBarTitle: {
-    fontSize: FONT_SIZE.xxl,
-    fontWeight: '700',
+    fontSize: 28,
+    fontWeight: '800',
   },
   topBarButtons: {
     flexDirection: 'row',
-    gap: SPACING.md,
+    gap: SPACING.sm,
   },
-  editIconButton: {
-    padding: SPACING.xs,
-  },
-  settingsButton: {
-    padding: SPACING.xs,
-  },
-  header: {
-    padding: SPACING.lg,
-    paddingTop: SPACING.xl,
-  },
-  avatarSection: {
+  iconButton: {
+    width: 40,
+    height: 40,
+    borderRadius: 12,
     alignItems: 'center',
+    justifyContent: 'center',
   },
-  uploadButton: {
-    marginTop: SPACING.md,
-    paddingHorizontal: SPACING.lg,
-    paddingVertical: SPACING.sm,
-    borderRadius: BORDER_RADIUS.md,
-    minWidth: 120,
+  iconButtonText: {
+    fontSize: 18,
+  },
+  headerSection: {
     alignItems: 'center',
+    paddingHorizontal: SPACING.xl,
+    paddingBottom: SPACING.xl,
   },
-  uploadButtonText: {
+  avatarContainer: {
+    position: 'relative',
+    marginBottom: SPACING.lg,
+  },
+  uploadBadge: {
+    position: 'absolute',
+    bottom: 0,
+    right: 0,
+    borderRadius: 20,
+    overflow: 'hidden',
+  },
+  uploadBadgeGradient: {
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 3,
+    borderColor: '#0B0F1A',
+  },
+  uploadBadgeIcon: {
     color: '#FFFFFF',
-    fontSize: FONT_SIZE.sm,
-    fontWeight: '600',
+    fontSize: 16,
+    fontWeight: '700',
   },
   profileInfo: {
     alignItems: 'center',
-    marginTop: SPACING.lg,
   },
   name: {
-    fontSize: FONT_SIZE.xxl,
-    fontWeight: '700',
+    fontSize: 26,
+    fontWeight: '800',
+    marginBottom: SPACING.xs,
+  },
+  locationRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: SPACING.sm,
+  },
+  locationIcon: {
+    fontSize: 12,
+    color: '#4ADE80',
+    marginRight: SPACING.xs,
   },
   location: {
-    fontSize: FONT_SIZE.md,
-    marginTop: SPACING.xs,
+    fontSize: 14,
   },
   bio: {
-    fontSize: FONT_SIZE.sm,
-    marginTop: SPACING.sm,
+    fontSize: 14,
     textAlign: 'center',
-    paddingHorizontal: SPACING.lg,
+    paddingHorizontal: SPACING.xl,
+    marginBottom: SPACING.lg,
+    lineHeight: 20,
   },
   followInfo: {
     flexDirection: 'row',
-    marginTop: SPACING.lg,
-    gap: SPACING.xxxl,
+    alignItems: 'center',
   },
   followStat: {
     alignItems: 'center',
+    paddingHorizontal: SPACING.xl,
+  },
+  followDivider: {
+    width: 1,
+    height: 30,
   },
   followNumber: {
-    fontSize: FONT_SIZE.xl,
-    fontWeight: '700',
+    fontSize: 20,
+    fontWeight: '800',
   },
   followLabel: {
-    fontSize: FONT_SIZE.sm,
-    marginTop: SPACING.xs,
+    fontSize: 12,
+    marginTop: 2,
   },
   editContainer: {
-    marginTop: SPACING.lg,
+    width: '100%',
+    marginTop: SPACING.md,
   },
   inputGroup: {
     marginBottom: SPACING.md,
   },
   inputLabel: {
-    fontSize: FONT_SIZE.sm,
+    fontSize: 12,
     fontWeight: '600',
     marginBottom: SPACING.xs,
     textTransform: 'uppercase',
     letterSpacing: 0.5,
   },
   input: {
-    fontSize: FONT_SIZE.md,
+    fontSize: 15,
     borderWidth: 1,
-    borderRadius: BORDER_RADIUS.md,
+    borderRadius: BORDER_RADIUS.lg,
     paddingHorizontal: SPACING.md,
-    paddingVertical: SPACING.sm,
+    paddingVertical: SPACING.md,
   },
   textArea: {
-    fontSize: FONT_SIZE.md,
+    fontSize: 15,
     borderWidth: 1,
-    borderRadius: BORDER_RADIUS.md,
+    borderRadius: BORDER_RADIUS.lg,
     paddingHorizontal: SPACING.md,
-    paddingVertical: SPACING.sm,
+    paddingVertical: SPACING.md,
     minHeight: 80,
     textAlignVertical: 'top',
   },
   editButtons: {
     flexDirection: 'row',
-    marginTop: SPACING.lg,
+    marginTop: SPACING.md,
     gap: SPACING.md,
   },
-  button: {
+  cancelButton: {
     flex: 1,
     paddingVertical: SPACING.md,
-    borderRadius: BORDER_RADIUS.md,
+    borderRadius: BORDER_RADIUS.lg,
     alignItems: 'center',
   },
-  cancelButton: {
-    borderWidth: 1,
-    borderColor: '#E5E7EB',
+  cancelButtonText: {
+    fontSize: 15,
+    fontWeight: '600',
   },
   saveButton: {
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 2,
+    flex: 1,
+    paddingVertical: SPACING.md,
+    paddingHorizontal: SPACING.xxl,
+    borderRadius: BORDER_RADIUS.lg,
+    alignItems: 'center',
   },
-  buttonText: {
-    fontSize: FONT_SIZE.md,
-    fontWeight: '600',
+  saveButtonText: {
+    color: '#FFFFFF',
+    fontSize: 15,
+    fontWeight: '700',
   },
   statsContainer: {
     flexDirection: 'row',
-    paddingHorizontal: SPACING.md,
-    paddingVertical: SPACING.lg,
+    paddingHorizontal: SPACING.lg,
+    paddingBottom: SPACING.lg,
   },
   section: {
-    padding: SPACING.md,
+    paddingHorizontal: SPACING.lg,
+    marginBottom: SPACING.lg,
   },
-  sectionTitle: {
-    fontSize: FONT_SIZE.lg,
-    fontWeight: '700',
+  sectionHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
     marginBottom: SPACING.md,
   },
-  emptyText: {
-    fontSize: FONT_SIZE.sm,
-    textAlign: 'center',
-    marginVertical: SPACING.lg,
+  sectionTitle: {
+    fontSize: 18,
+    fontWeight: '700',
+  },
+  sectionBadge: {
+    marginLeft: SPACING.sm,
+    paddingHorizontal: 10,
+    paddingVertical: 4,
+    borderRadius: 10,
+  },
+  sectionBadgeText: {
+    color: '#FFFFFF',
+    fontSize: 12,
+    fontWeight: '700',
   },
   logoutButton: {
-    margin: SPACING.lg,
-    padding: SPACING.md,
-    borderRadius: BORDER_RADIUS.md,
+    marginHorizontal: SPACING.lg,
+    marginTop: SPACING.lg,
+    paddingVertical: SPACING.md,
+    borderRadius: BORDER_RADIUS.lg,
+    backgroundColor: 'rgba(239, 68, 68, 0.15)',
+    borderWidth: 1,
+    borderColor: 'rgba(239, 68, 68, 0.3)',
     alignItems: 'center',
   },
   logoutText: {
-    color: '#FFFFFF',
-    fontSize: FONT_SIZE.md,
+    color: '#EF4444',
+    fontSize: 15,
     fontWeight: '600',
   },
   versionContainer: {
     alignItems: 'center',
-    paddingVertical: SPACING.md,
-    paddingBottom: SPACING.xl,
+    paddingVertical: SPACING.xl,
+    paddingBottom: SPACING.xxxl,
   },
   versionText: {
-    fontSize: FONT_SIZE.xs,
-    fontWeight: '500',
+    fontSize: 12,
   },
 });

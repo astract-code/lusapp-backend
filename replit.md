@@ -29,6 +29,31 @@ Preferred communication style: Simple, everyday language.
 
 The frontend is built with React Native (0.81.4) and Expo SDK (~54.0) for cross-platform development. Navigation is handled by React Navigation v7 (bottom tabs + native stack) with deep linking. State management utilizes Zustand v5.0.8 for global state and React Context for authentication, with AsyncStorage for persistent local data. A comprehensive design system supports theming (Light/Dark/Auto), semantic color tokens, and reusable components with spring-based animations.
 
+### Design System (2024/2025 Athletic Theme)
+
+**Color Palette:**
+- Primary: Neon Lime (#4ADE80) - Main accent color for buttons, active states
+- Background Dark: Midnight Navy (#0B0F1A) - Dark mode backgrounds
+- Surface Dark: Slate (#1E293B) - Cards and elevated surfaces
+- Gradients: Linear gradients for primary buttons and sport-type badges
+
+**Sport Type Colors:**
+- Running/Marathon: Green (#4ADE80)
+- Triathlon: Blue (#38BDF8)
+- Cycling: Purple (#A78BFA)
+- Swimming: Cyan (#22D3EE)
+- Fitness/HYROX: Orange (#FB923C)
+- Trail Running: Lime (#A3E635)
+- Ultra Marathon: Pink (#F472B6)
+
+**Icons:** Uses @expo/vector-icons (Ionicons) throughout the app for consistent, scalable vector icons
+
+**Components:**
+- Modern Icon component with gradient support (Lusapp/src/components/Icon.js)
+- Premium Button component with press animations and gradient variants
+- StatCard with animated entrance and gradient icon backgrounds
+- Floating card design with soft shadows (SHADOWS.md, SHADOWS.lg, SHADOWS.xl)
+
 **UI/UX Features:**
 - **Pull-to-refresh** - All main screens (Feed, Calendar, Discover, Profile, Groups) support pull-to-refresh gesture to reload data from the server
 - **Smart Distance Display** - Automatically shows standard distances for race types (Marathon = 42.2 km, 5K = 5 km, etc.), falls back to custom distance if provided in database, eliminates "TBD" by inferring from sport_subtype when distance field is empty

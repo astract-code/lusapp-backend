@@ -334,25 +334,27 @@ export const AppNavigator = () => {
     return () => clearInterval(interval);
   }, [token]);
 
+  const isDark = colorScheme === 'dark';
+
   return (
     <Tab.Navigator
       screenOptions={{
         headerShown: false,
         tabBarStyle: {
-          backgroundColor: '#FFFFFF',
+          backgroundColor: isDark ? '#0B0F1A' : '#FFFFFF',
           borderTopWidth: 1,
-          borderTopColor: '#F1F5F9',
+          borderTopColor: isDark ? 'rgba(255,255,255,0.08)' : '#F1F5F9',
           paddingBottom: 10,
           paddingTop: 10,
-          height: 70,
-          elevation: 10,
+          height: 75,
+          elevation: 20,
           shadowColor: '#000',
-          shadowOffset: { width: 0, height: -2 },
-          shadowOpacity: 0.1,
-          shadowRadius: 10,
+          shadowOffset: { width: 0, height: -4 },
+          shadowOpacity: isDark ? 0.3 : 0.12,
+          shadowRadius: 16,
         },
-        tabBarActiveTintColor: '#10B981',
-        tabBarInactiveTintColor: '#9CA3AF',
+        tabBarActiveTintColor: '#4ADE80',
+        tabBarInactiveTintColor: isDark ? '#64748B' : '#94A3B8',
         tabBarShowLabel: false,
       }}
     >
