@@ -314,18 +314,27 @@ export const AppNavigator = () => {
       screenOptions={{
         headerShown: false,
         tabBarStyle: {
-          backgroundColor: theme.card,
-          borderTopColor: theme.border,
+          backgroundColor: '#FFFFFF',
+          borderTopWidth: 1,
+          borderTopColor: '#F1F5F9',
+          paddingBottom: 10,
+          paddingTop: 10,
+          height: 70,
+          elevation: 10,
+          shadowColor: '#000',
+          shadowOffset: { width: 0, height: -2 },
+          shadowOpacity: 0.1,
+          shadowRadius: 10,
         },
-        tabBarActiveTintColor: theme.primary,
-        tabBarInactiveTintColor: theme.textSecondary,
+        tabBarActiveTintColor: '#10B981',
+        tabBarInactiveTintColor: '#9CA3AF',
+        tabBarShowLabel: false,
       }}
     >
       <Tab.Screen 
         name="Feed" 
         component={FeedStack}
         options={{
-          tabBarLabel: 'Feed',
           tabBarIcon: ({ color, focused }) => (
             <Ionicons name={focused ? 'home' : 'home-outline'} size={24} color={color} />
           ),
@@ -335,7 +344,6 @@ export const AppNavigator = () => {
         name="Calendar" 
         component={CalendarStack}
         options={{
-          tabBarLabel: 'Calendar',
           tabBarIcon: ({ color, focused }) => (
             <Ionicons name={focused ? 'calendar' : 'calendar-outline'} size={24} color={color} />
           ),
@@ -345,7 +353,6 @@ export const AppNavigator = () => {
         name="Discover" 
         component={DiscoverStack}
         options={{
-          tabBarLabel: 'Discover',
           tabBarIcon: ({ color, focused }) => (
             <Ionicons name={focused ? 'search' : 'search-outline'} size={24} color={color} />
           ),
@@ -355,29 +362,38 @@ export const AppNavigator = () => {
         name="Groups" 
         component={GroupsStack}
         options={{
-          tabBarLabel: 'Groups',
           tabBarIcon: ({ color, focused }) => (
             <Ionicons name={focused ? 'people' : 'people-outline'} size={24} color={color} />
           ),
           tabBarBadge: unreadGroups > 0 ? unreadGroups : undefined,
+          tabBarBadgeStyle: {
+            backgroundColor: '#EF4444',
+            fontSize: 10,
+            minWidth: 18,
+            height: 18,
+          },
         }}
       />
       <Tab.Screen 
         name="Messages" 
         component={MessagesStack}
         options={{
-          tabBarLabel: 'Messages',
           tabBarIcon: ({ color, focused }) => (
             <Ionicons name={focused ? 'chatbubbles' : 'chatbubbles-outline'} size={24} color={color} />
           ),
           tabBarBadge: unreadMessages > 0 ? unreadMessages : undefined,
+          tabBarBadgeStyle: {
+            backgroundColor: '#EF4444',
+            fontSize: 10,
+            minWidth: 18,
+            height: 18,
+          },
         }}
       />
       <Tab.Screen 
         name="Profile" 
         component={ProfileStack}
         options={{
-          tabBarLabel: 'Profile',
           tabBarIcon: ({ color, focused }) => (
             <Ionicons name={focused ? 'person' : 'person-outline'} size={24} color={color} />
           ),
