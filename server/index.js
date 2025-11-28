@@ -779,7 +779,9 @@ app.post('/api/races/:raceId/complete', verifyFirebaseToken, upload.single('cert
           {
             folder: 'lusapp/certificates',
             resource_type: 'raw',
-            format: 'pdf'
+            format: 'pdf',
+            access_mode: 'public',
+            type: 'upload'
           },
           (error, result) => {
             if (error) reject(error);
