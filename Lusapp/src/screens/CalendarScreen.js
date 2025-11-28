@@ -17,6 +17,7 @@ import { useTheme } from '../context/ThemeContext';
 import { SPACING, FONT_SIZE, BORDER_RADIUS } from '../constants/theme';
 import { API_BASE_URL } from '../config/api';
 import { getDisplayDistance } from '../utils/distanceHelper';
+import haptic from '../utils/haptics';
 
 const raceTypeColors = {
   'Running': { primary: '#10B981', secondary: '#059669', dot: '#10B981' },
@@ -40,6 +41,7 @@ const ModernRaceCard = ({ race, onPress, isPastUncompleted, isCompleted, complet
   const colors = getRaceColors(race);
 
   const handlePressIn = () => {
+    haptic.light();
     Animated.spring(scaleAnim, {
       toValue: 0.98,
       useNativeDriver: true,
@@ -230,6 +232,7 @@ export const CalendarScreen = ({ navigation }) => {
   }
 
   const handleDayPress = (day) => {
+    haptic.selection();
     Animated.sequence([
       Animated.timing(selectionAnim, {
         toValue: 1,

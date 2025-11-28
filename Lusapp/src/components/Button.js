@@ -2,6 +2,7 @@ import React, { useRef } from 'react';
 import { TouchableOpacity, Text, StyleSheet, Animated, ActivityIndicator } from 'react-native';
 import { useTheme } from '../context/ThemeContext';
 import { SPACING, BORDER_RADIUS, TYPOGRAPHY } from '../constants/theme';
+import haptic from '../utils/haptics';
 
 export const Button = ({
   children,
@@ -19,6 +20,7 @@ export const Button = ({
   const scaleAnim = useRef(new Animated.Value(1)).current;
 
   const handlePressIn = () => {
+    haptic.light();
     Animated.spring(scaleAnim, {
       toValue: 0.96,
       useNativeDriver: true,
