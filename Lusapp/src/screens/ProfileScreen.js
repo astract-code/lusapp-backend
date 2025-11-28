@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
   View,
   Text,
@@ -30,12 +30,40 @@ export const ProfileScreen = ({ navigation }) => {
   const [uploading, setUploading] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
+  const [completionDataMap, setCompletionDataMap] = useState({});
   const [editedProfile, setEditedProfile] = useState({
     name: '',
     bio: '',
     location: '',
     favoriteSport: '',
   });
+
+  const fetchCompletionData = useCallback(async () => {
+    if (!token || !authUser?.id) return;
+    
+    try {
+      const response = await fetch(`${API_URL}/api/users/${authUser.id}/completions`, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        },
+      });
+      
+      if (response.ok) {
+        const completions = await response.json();
+        const dataMap = {};
+        completions.forEach(c => {
+          dataMap[c.race_id.toString()] = c;
+        });
+        setCompletionDataMap(dataMap);
+      }
+    } catch (error) {
+      console.error('Error fetching completion data:', error);
+    }
+  }, [token, authUser?.id]);
+
+  useEffect(() => {
+    fetchCompletionData();
+  }, [fetchCompletionData]);
 
   if (!authUser) return null;
 
@@ -176,19 +204,40 @@ export const ProfileScreen = ({ navigation }) => {
     setIsEditing(false);
   };
 
-  const joinedRaces = races.filter((race) =>
-    authUser.joined_races?.includes(race.id.toString())
-  );
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  const joinedRaceIds = (authUser.joined_races || []).map(id => id.toString());
+  const completedRaceIds = (authUser.completed_races || []).map(id => id.toString());
+
+  const upcomingRaces = races.filter((race) => {
+    const raceDate = new Date(race.date);
+    raceDate.setHours(0, 0, 0, 0);
+    return joinedRaceIds.includes(race.id.toString()) && raceDate >= today;
+  }).sort((a, b) => new Date(a.date) - new Date(b.date));
+
+  const pastUncompletedRaces = races.filter((race) => {
+    const raceDate = new Date(race.date);
+    raceDate.setHours(0, 0, 0, 0);
+    const isJoined = joinedRaceIds.includes(race.id.toString());
+    const isCompleted = completedRaceIds.includes(race.id.toString());
+    return isJoined && raceDate < today && !isCompleted;
+  }).sort((a, b) => new Date(b.date) - new Date(a.date));
 
   const completedRaces = races.filter((race) =>
-    authUser.completed_races?.includes(race.id.toString())
-  );
+    completedRaceIds.includes(race.id.toString())
+  ).sort((a, b) => new Date(b.date) - new Date(a.date));
+
+  const handleMarkComplete = (race) => {
+    navigation.navigate('RaceDetail', { raceId: race.id, openCompletionModal: true });
+  };
 
   const onRefresh = async () => {
     setRefreshing(true);
     await Promise.all([
       fetchRaces(),
       refreshUser(),
+      fetchCompletionData(),
     ]);
     setRefreshing(false);
   };
@@ -369,21 +418,38 @@ export const ProfileScreen = ({ navigation }) => {
 
         <View style={styles.section}>
           <Text style={[styles.sectionTitle, { color: colors.text }]}>
-            Joined Races ({joinedRaces.length})
+            Upcoming Races ({upcomingRaces.length})
           </Text>
-          {joinedRaces.map((race) => (
+          {upcomingRaces.map((race) => (
             <CompactRaceCard
               key={race.id}
               race={race}
               onPress={() => navigation.navigate('RaceDetail', { raceId: race.id })}
             />
           ))}
-          {joinedRaces.length === 0 && (
+          {upcomingRaces.length === 0 && (
             <Text style={[styles.emptyText, { color: colors.textSecondary }]}>
-              No joined races yet
+              No upcoming races
             </Text>
           )}
         </View>
+
+        {pastUncompletedRaces.length > 0 && (
+          <View style={styles.section}>
+            <Text style={[styles.sectionTitle, { color: colors.text }]}>
+              Past Races - Mark as Complete ({pastUncompletedRaces.length})
+            </Text>
+            {pastUncompletedRaces.map((race) => (
+              <CompactRaceCard
+                key={race.id}
+                race={race}
+                onPress={() => navigation.navigate('RaceDetail', { raceId: race.id })}
+                isPastUncompleted={true}
+                onMarkComplete={() => handleMarkComplete(race)}
+              />
+            ))}
+          </View>
+        )}
 
         <View style={styles.section}>
           <Text style={[styles.sectionTitle, { color: colors.text }]}>
@@ -394,6 +460,8 @@ export const ProfileScreen = ({ navigation }) => {
               key={race.id}
               race={race}
               onPress={() => navigation.navigate('RaceDetail', { raceId: race.id })}
+              isCompleted={true}
+              completionData={completionDataMap[race.id.toString()]}
             />
           ))}
           {completedRaces.length === 0 && (
