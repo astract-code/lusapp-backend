@@ -17,6 +17,27 @@ import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
 import { SPACING, BORDER_RADIUS, FONT_SIZE } from '../constants/theme';
 
+const InputWithIcon = ({ icon, placeholder, value, onChangeText, secureTextEntry, keyboardType, autoCapitalize, showToggle, isVisible, onToggleVisibility }) => (
+  <View style={styles.inputWrapper}>
+    <Text style={styles.inputIcon}>{icon}</Text>
+    <TextInput
+      style={styles.inputField}
+      placeholder={placeholder}
+      placeholderTextColor="#9CA3AF"
+      value={value}
+      onChangeText={onChangeText}
+      secureTextEntry={secureTextEntry && !isVisible}
+      keyboardType={keyboardType}
+      autoCapitalize={autoCapitalize}
+    />
+    {showToggle && (
+      <TouchableOpacity onPress={onToggleVisibility} style={styles.eyeButton}>
+        <Text style={styles.eyeIcon}>{isVisible ? '👁️' : '👁️‍🗨️'}</Text>
+      </TouchableOpacity>
+    )}
+  </View>
+);
+
 export const OnboardingScreen = ({ navigation }) => {
   const { colors } = useTheme();
   const { login, signupWithEmail, signupWithApple } = useAuth();
@@ -76,27 +97,6 @@ export const OnboardingScreen = ({ navigation }) => {
       [{ text: 'OK' }]
     );
   };
-
-  const InputWithIcon = ({ icon, placeholder, value, onChangeText, secureTextEntry, keyboardType, autoCapitalize, showToggle, isVisible, onToggleVisibility }) => (
-    <View style={styles.inputWrapper}>
-      <Text style={styles.inputIcon}>{icon}</Text>
-      <TextInput
-        style={styles.inputField}
-        placeholder={placeholder}
-        placeholderTextColor="#9CA3AF"
-        value={value}
-        onChangeText={onChangeText}
-        secureTextEntry={secureTextEntry && !isVisible}
-        keyboardType={keyboardType}
-        autoCapitalize={autoCapitalize}
-      />
-      {showToggle && (
-        <TouchableOpacity onPress={onToggleVisibility} style={styles.eyeButton}>
-          <Text style={styles.eyeIcon}>{isVisible ? '👁️' : '👁️‍🗨️'}</Text>
-        </TouchableOpacity>
-      )}
-    </View>
-  );
 
   return (
     <SafeAreaView style={styles.safeArea}>

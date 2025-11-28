@@ -425,7 +425,7 @@ export const ProfileScreen = ({ navigation }) => {
           <StatCard
             icon="trophy"
             label="Joined Races"
-            value={userRaces.length || 0}
+            value={joinedRaceIds.length || 0}
             color="#10B981"
           />
           <StatCard
