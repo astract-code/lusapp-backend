@@ -201,11 +201,19 @@ export const RaceDetailScreen = ({ route, navigation }) => {
       if (notes) formData.append('notes', notes);
       
       if (certificate) {
-        formData.append('certificate', {
-          uri: certificate.uri,
-          type: 'application/pdf',
-          name: certificate.name || 'certificate.pdf',
-        });
+        if (Platform.OS === 'web') {
+          // On web, fetch the file and create a Blob
+          const response = await fetch(certificate.uri);
+          const blob = await response.blob();
+          formData.append('certificate', blob, certificate.name || 'certificate.pdf');
+        } else {
+          // On native, use the React Native file format
+          formData.append('certificate', {
+            uri: certificate.uri,
+            type: 'application/pdf',
+            name: certificate.name || 'certificate.pdf',
+          });
+        }
       }
 
       const response = await fetch(`${API_URL}/api/races/${raceId}/complete`, {
