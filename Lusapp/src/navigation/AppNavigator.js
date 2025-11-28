@@ -24,6 +24,13 @@ import { GearListDetailScreen } from '../screens/GearListDetailScreen';
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
+const screenOptions = {
+  animation: 'slide_from_right',
+  animationDuration: 250,
+  gestureEnabled: true,
+  gestureDirection: 'horizontal',
+};
+
 const FeedStack = () => {
   const colorScheme = useColorScheme();
   const theme = COLORS[colorScheme] || COLORS.light;
@@ -31,9 +38,12 @@ const FeedStack = () => {
   return (
     <Stack.Navigator
       screenOptions={{
+        ...screenOptions,
         headerStyle: { backgroundColor: theme.card },
         headerTintColor: theme.primary,
-        headerTitleStyle: { fontWeight: 'bold' },
+        headerTitleStyle: { fontWeight: '600' },
+        headerShadowVisible: false,
+        headerBackTitleVisible: false,
       }}
     >
       <Stack.Screen 
@@ -67,9 +77,12 @@ const CalendarStack = () => {
   return (
     <Stack.Navigator
       screenOptions={{
+        ...screenOptions,
         headerStyle: { backgroundColor: theme.card },
         headerTintColor: theme.primary,
-        headerTitleStyle: { fontWeight: 'bold' },
+        headerTitleStyle: { fontWeight: '600' },
+        headerShadowVisible: false,
+        headerBackTitleVisible: false,
       }}
     >
       <Stack.Screen 
@@ -103,9 +116,12 @@ const DiscoverStack = () => {
   return (
     <Stack.Navigator
       screenOptions={{
+        ...screenOptions,
         headerStyle: { backgroundColor: theme.card },
         headerTintColor: theme.primary,
-        headerTitleStyle: { fontWeight: 'bold' },
+        headerTitleStyle: { fontWeight: '600' },
+        headerShadowVisible: false,
+        headerBackTitleVisible: false,
       }}
     >
       <Stack.Screen 
@@ -139,9 +155,12 @@ const MessagesStack = () => {
   return (
     <Stack.Navigator
       screenOptions={{
+        ...screenOptions,
         headerStyle: { backgroundColor: theme.card },
         headerTintColor: theme.primary,
-        headerTitleStyle: { fontWeight: 'bold' },
+        headerTitleStyle: { fontWeight: '600' },
+        headerShadowVisible: false,
+        headerBackTitleVisible: false,
       }}
     >
       <Stack.Screen 
@@ -170,9 +189,12 @@ const ProfileStack = () => {
   return (
     <Stack.Navigator
       screenOptions={{
+        ...screenOptions,
         headerStyle: { backgroundColor: theme.card },
         headerTintColor: theme.primary,
-        headerTitleStyle: { fontWeight: 'bold' },
+        headerTitleStyle: { fontWeight: '600' },
+        headerShadowVisible: false,
+        headerBackTitleVisible: false,
       }}
     >
       <Stack.Screen 
@@ -211,9 +233,12 @@ const GroupsStack = () => {
   return (
     <Stack.Navigator
       screenOptions={{
+        ...screenOptions,
         headerStyle: { backgroundColor: theme.card },
         headerTintColor: theme.primary,
-        headerTitleStyle: { fontWeight: 'bold' },
+        headerTitleStyle: { fontWeight: '600' },
+        headerShadowVisible: false,
+        headerBackTitleVisible: false,
       }}
     >
       <Stack.Screen 
