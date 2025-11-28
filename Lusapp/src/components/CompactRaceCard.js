@@ -12,6 +12,8 @@ const sportIcons = {
   'Swimming': '🏊',
   'Trail Running': '⛰️',
   'Ultra Marathon': '🏃',
+  'Fitness': '💪',
+  'HYROX': '🏋️',
   'Other': '🏅',
 };
 
@@ -22,80 +24,44 @@ export const CompactRaceCard = ({ race, onPress, isPastUncompleted, isCompleted,
   
   const formatDate = (dateString) => {
     const date = new Date(dateString);
-    const month = date.toLocaleDateString('en-US', { month: 'short' });
-    const day = date.getDate();
-    return `${month} ${day}`;
-  };
-
-  const getDistanceColor = () => {
-    const dist = parseFloat(race.distance);
-    if (dist >= 100) return '#E53E3E'; // Red for ultra distances
-    if (dist >= 42) return '#DD6B20'; // Orange for marathon+
-    if (dist >= 21) return '#D69E2E'; // Yellow for half marathon+
-    return '#48BB78'; // Green for shorter
+    return date.toLocaleDateString('en-US', { 
+      month: 'short', 
+      day: 'numeric' 
+    });
   };
 
   return (
     <TouchableOpacity
-      style={[styles.card, { backgroundColor: colors.card }]}
+      style={styles.container}
       onPress={onPress}
       activeOpacity={0.7}
     >
-      <View style={styles.content}>
-        {/* Left: Icon */}
-        <View style={[styles.iconContainer, { backgroundColor: colors.background }]}>
-          <Text style={styles.icon}>{sportIcon}</Text>
+      <View style={styles.header}>
+        <View style={styles.titleRow}>
+          <Text style={styles.sportIcon}>{sportIcon}</Text>
+          <Text style={styles.title} numberOfLines={1}>{race.name}</Text>
         </View>
+        <View style={styles.distanceBadge}>
+          <Text style={styles.distanceText}>{getDisplayDistance(race)}</Text>
+        </View>
+      </View>
 
-        {/* Middle: Info */}
-        <View style={styles.infoContainer}>
-          <View style={styles.nameRow}>
-            <Text style={[styles.name, { color: colors.text }]} numberOfLines={1}>
-              {race.name}
-            </Text>
-            {race.sport_subtype && (
-              <View style={[styles.badge, { backgroundColor: colors.primary + '20' }]}>
-                <Text style={[styles.badgeText, { color: colors.primary }]}>
-                  {race.sport_subtype}
-                </Text>
-              </View>
-            )}
-          </View>
+      <View style={styles.location}>
+        <Text style={styles.locationIcon}>📍</Text>
+        <Text style={styles.locationText} numberOfLines={1}>{race.city}, {race.country}</Text>
+      </View>
 
-          <View style={styles.detailsRow}>
-            <Text style={[styles.location, { color: colors.textSecondary }]} numberOfLines={1}>
-              📍 {race.city}, {race.country}
-            </Text>
-          </View>
-
-          <View style={styles.statsRow}>
-            <View style={styles.stat}>
-              <Text style={[styles.statText, { color: colors.textSecondary }]}>
-                📅 {formatDate(race.date)}
-              </Text>
+      <View style={styles.dateContainer}>
+        <Text style={styles.date}>📅 {formatDate(race.date)}</Text>
+        <View style={styles.rightSection}>
+          {race.participants > 0 && (
+            <View style={styles.participants}>
+              <Text style={styles.participantsText}>👥 {race.participants}</Text>
             </View>
-            {race.participants > 0 && (
-              <View style={styles.stat}>
-                <Text style={[styles.statText, { color: colors.textSecondary }]}>
-                  👥 {race.participants}
-                </Text>
-              </View>
-            )}
-          </View>
-        </View>
-
-        {/* Right: Distance & Button */}
-        <View style={styles.rightContainer}>
-          <View style={styles.distanceContainer}>
-            <Text style={[styles.distanceIcon, { color: getDistanceColor() }]}>📍</Text>
-            <Text style={[styles.distance, { color: colors.text }]}>
-              {getDisplayDistance(race)}
-            </Text>
-          </View>
-          
+          )}
           {isPastUncompleted ? (
             <TouchableOpacity
-              style={[styles.button, styles.markCompleteButton]}
+              style={styles.markCompleteButton}
               onPress={onMarkComplete}
               activeOpacity={0.8}
             >
@@ -105,31 +71,22 @@ export const CompactRaceCard = ({ race, onPress, isPastUncompleted, isCompleted,
             <View style={styles.completedBadge}>
               <Text style={styles.completedBadgeText}>✓ Done</Text>
             </View>
-          ) : (
-            <TouchableOpacity
-              style={[styles.button, { backgroundColor: colors.primary }]}
-              onPress={onPress}
-              activeOpacity={0.8}
-            >
-              <Text style={styles.buttonText}>View</Text>
-            </TouchableOpacity>
-          )}
+          ) : null}
         </View>
       </View>
       
-      {/* Completion details for completed races */}
       {isCompleted && completionData && (
-        <View style={[styles.completionDetails, { borderTopColor: colors.border }]}>
+        <View style={styles.completionDetails}>
           {completionData.completion_time && (
             <View style={styles.completionStat}>
-              <Text style={[styles.completionLabel, { color: colors.textSecondary }]}>Time</Text>
-              <Text style={[styles.completionValue, { color: colors.text }]}>{completionData.completion_time}</Text>
+              <Text style={styles.completionLabel}>Time</Text>
+              <Text style={styles.completionValue}>{completionData.completion_time}</Text>
             </View>
           )}
           {completionData.position && (
             <View style={styles.completionStat}>
-              <Text style={[styles.completionLabel, { color: colors.textSecondary }]}>Position</Text>
-              <Text style={[styles.completionValue, { color: colors.text }]}>#{completionData.position}</Text>
+              <Text style={styles.completionLabel}>Position</Text>
+              <Text style={styles.completionValue}>#{completionData.position}</Text>
             </View>
           )}
           {completionData.certificate_url && (
@@ -144,139 +101,133 @@ export const CompactRaceCard = ({ race, onPress, isPastUncompleted, isCompleted,
 };
 
 const styles = StyleSheet.create({
-  card: {
-    borderRadius: BORDER_RADIUS.lg,
-    marginBottom: SPACING.sm,
-    padding: SPACING.sm,
-    elevation: 1,
+  container: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 16,
+    padding: 16,
+    marginBottom: 12,
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.05,
-    shadowRadius: 2,
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.1,
+    shadowRadius: 12,
+    elevation: 5,
   },
-  content: {
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 10,
+  },
+  titleRow: {
     flexDirection: 'row',
     alignItems: 'center',
-  },
-  iconContainer: {
-    width: 50,
-    height: 50,
-    borderRadius: 25,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginRight: SPACING.sm,
-  },
-  icon: {
-    fontSize: 24,
-  },
-  infoContainer: {
     flex: 1,
-    marginRight: SPACING.sm,
+    marginRight: 12,
   },
-  nameRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 2,
+  sportIcon: {
+    fontSize: 22,
+    marginRight: 8,
   },
-  name: {
-    fontSize: FONT_SIZE.md,
-    fontWeight: '600',
+  title: {
+    fontSize: 16,
+    fontWeight: '700',
+    color: '#1F2937',
     flex: 1,
-    marginRight: SPACING.xs,
   },
-  badge: {
-    paddingHorizontal: SPACING.xs,
-    paddingVertical: 2,
-    borderRadius: BORDER_RADIUS.sm,
+  distanceBadge: {
+    backgroundColor: '#10B981',
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 20,
   },
-  badgeText: {
-    fontSize: 10,
+  distanceText: {
+    color: '#FFFFFF',
+    fontSize: 13,
     fontWeight: '600',
-  },
-  detailsRow: {
-    marginBottom: 2,
   },
   location: {
-    fontSize: FONT_SIZE.xs,
-    marginBottom: 2,
-  },
-  statsRow: {
     flexDirection: 'row',
     alignItems: 'center',
+    marginBottom: 8,
   },
-  stat: {
-    marginRight: SPACING.md,
+  locationIcon: {
+    fontSize: 13,
+    marginRight: 6,
   },
-  statText: {
-    fontSize: FONT_SIZE.xs,
-  },
-  rightContainer: {
-    alignItems: 'flex-end',
-    justifyContent: 'space-between',
-    minHeight: 50,
-  },
-  distanceContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: SPACING.xs,
-  },
-  distanceIcon: {
+  locationText: {
+    color: '#6B7280',
     fontSize: 14,
-    marginRight: 2,
+    flex: 1,
   },
-  distance: {
-    fontSize: FONT_SIZE.sm,
+  dateContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  date: {
+    color: '#10B981',
+    fontSize: 14,
     fontWeight: '600',
   },
-  button: {
-    paddingHorizontal: SPACING.md,
-    paddingVertical: SPACING.xs,
-    borderRadius: BORDER_RADIUS.md,
-    minWidth: 60,
+  rightSection: {
+    flexDirection: 'row',
     alignItems: 'center',
+    gap: 10,
+  },
+  participants: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  participantsText: {
+    color: '#6B7280',
+    fontSize: 14,
+  },
+  markCompleteButton: {
+    backgroundColor: '#10B981',
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 16,
   },
   buttonText: {
     color: '#FFFFFF',
-    fontSize: FONT_SIZE.sm,
+    fontSize: 12,
     fontWeight: '600',
   },
-  markCompleteButton: {
-    backgroundColor: '#48BB78',
-    minWidth: 100,
-  },
   completedBadge: {
-    backgroundColor: '#48BB7820',
-    paddingHorizontal: SPACING.sm,
-    paddingVertical: SPACING.xs,
-    borderRadius: BORDER_RADIUS.md,
+    backgroundColor: '#D1FAE5',
+    paddingHorizontal: 10,
+    paddingVertical: 4,
+    borderRadius: 12,
   },
   completedBadgeText: {
-    color: '#48BB78',
-    fontSize: FONT_SIZE.sm,
+    color: '#059669',
+    fontSize: 12,
     fontWeight: '600',
   },
   completionDetails: {
     flexDirection: 'row',
-    marginTop: SPACING.sm,
-    paddingTop: SPACING.sm,
+    marginTop: 12,
+    paddingTop: 12,
     borderTopWidth: 1,
-    justifyContent: 'flex-start',
-    gap: SPACING.lg,
+    borderTopColor: '#F1F5F9',
+    gap: 20,
   },
   completionStat: {
     alignItems: 'center',
   },
   completionLabel: {
-    fontSize: FONT_SIZE.xs,
+    fontSize: 11,
+    color: '#9CA3AF',
     marginBottom: 2,
   },
   completionValue: {
-    fontSize: FONT_SIZE.sm,
+    fontSize: 14,
     fontWeight: '600',
+    color: '#1F2937',
   },
   certificateBadge: {
-    fontSize: FONT_SIZE.sm,
-    color: '#3182CE',
+    fontSize: 13,
+    color: '#3B82F6',
     fontWeight: '500',
   },
 });

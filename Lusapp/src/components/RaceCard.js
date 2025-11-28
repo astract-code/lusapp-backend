@@ -1,6 +1,5 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
 import { SPACING, BORDER_RADIUS, FONT_SIZE, SPORTS } from '../constants/theme';
 import { useTheme } from '../context/ThemeContext';
 import { getDisplayDistance } from '../utils/distanceHelper';
@@ -9,6 +8,16 @@ export const RaceCard = ({ race, onPress }) => {
   const { colors } = useTheme();
   const sport = SPORTS.find(s => s.id === race.sport || s.name === race.sport) || SPORTS[0];
   
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-US', { 
+      weekday: 'short',
+      month: 'short', 
+      day: 'numeric',
+      year: 'numeric'
+    });
+  };
+
   const formatTime = (time) => {
     if (!time) return '';
     return time.slice(0, 5);
@@ -16,128 +25,131 @@ export const RaceCard = ({ race, onPress }) => {
 
   const getRaceSubtitle = () => {
     const category = race.sport_category || '';
-    
-    // For Hyrox, just show the category without subtype
     if (category.toLowerCase().includes('hyrox')) {
       return category;
     }
-    
-    // Only show sport_subtype if it's meaningful and different from category
     if (race.sport_subtype && race.sport_subtype !== category) {
       return race.sport_subtype;
     }
-    
     return category || sport.name;
   };
 
   return (
-    <TouchableOpacity onPress={onPress} style={styles.container}>
-      <LinearGradient
-        colors={[colors.gradient1, colors.gradient2]}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y: 1 }}
-        style={styles.gradient}
-      >
-        <View style={styles.content}>
-          <View style={styles.header}>
-            <Text style={styles.sportIcon}>{sport.icon}</Text>
-            <View style={styles.headerText}>
-              <Text style={styles.title} numberOfLines={2}>{race.name}</Text>
-              <Text style={styles.sport}>{getRaceSubtitle()}</Text>
-            </View>
-          </View>
-          
-          <View style={styles.details}>
-            <View style={styles.detailRow}>
-              <Text style={styles.detailIcon}>📍</Text>
-              <Text style={styles.detailText}>{race.city}, {race.country}</Text>
-            </View>
-            <View style={styles.detailRow}>
-              <Text style={styles.detailIcon}>📅</Text>
-              <Text style={styles.detailText}>
-                {new Date(race.date).toLocaleDateString()}
-                {race.start_time && ` • ${formatTime(race.start_time)}`}
-              </Text>
-            </View>
-            <View style={styles.detailRow}>
-              <Text style={styles.detailIcon}>📏</Text>
-              <Text style={styles.detailText}>{getDisplayDistance(race)}</Text>
-            </View>
-          </View>
-          
-          <View style={styles.footer}>
-            <Text style={styles.participants}>👥 {race.participants} participants</Text>
+    <TouchableOpacity onPress={onPress} style={styles.container} activeOpacity={0.7}>
+      <View style={styles.header}>
+        <View style={styles.titleContainer}>
+          <Text style={styles.sportIcon}>{sport.icon}</Text>
+          <View style={styles.titleTextContainer}>
+            <Text style={styles.title} numberOfLines={2}>{race.name}</Text>
+            <Text style={styles.subtitle}>{getRaceSubtitle()}</Text>
           </View>
         </View>
-      </LinearGradient>
+        <View style={styles.distanceBadge}>
+          <Text style={styles.distanceText}>{getDisplayDistance(race)}</Text>
+        </View>
+      </View>
+
+      <View style={styles.location}>
+        <Text style={styles.locationIcon}>📍</Text>
+        <Text style={styles.locationText}>{race.city}, {race.country}</Text>
+      </View>
+
+      <View style={styles.dateContainer}>
+        <Text style={styles.date}>
+          📅 {formatDate(race.date)}
+          {race.start_time && ` • ${formatTime(race.start_time)}`}
+        </Text>
+        {race.participants > 0 && (
+          <View style={styles.participants}>
+            <Text style={styles.participantsText}>👥 {race.participants}</Text>
+          </View>
+        )}
+      </View>
     </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    marginBottom: SPACING.md,
-    borderRadius: BORDER_RADIUS.lg,
-    overflow: 'hidden',
+    backgroundColor: '#FFFFFF',
+    borderRadius: 16,
+    padding: 16,
+    marginBottom: 16,
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
+    shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.1,
-    shadowRadius: 8,
-    elevation: 3,
-  },
-  gradient: {
-    borderRadius: BORDER_RADIUS.lg,
-  },
-  content: {
-    padding: SPACING.md,
+    shadowRadius: 12,
+    elevation: 5,
   },
   header: {
     flexDirection: 'row',
+    justifyContent: 'space-between',
     alignItems: 'flex-start',
-    marginBottom: SPACING.md,
+    marginBottom: 12,
+  },
+  titleContainer: {
+    flexDirection: 'row',
+    flex: 1,
+    marginRight: 12,
   },
   sportIcon: {
-    fontSize: 32,
-    marginRight: SPACING.sm,
+    fontSize: 28,
+    marginRight: 10,
   },
-  headerText: {
+  titleTextContainer: {
     flex: 1,
   },
   title: {
-    fontSize: FONT_SIZE.lg,
-    fontWeight: 'bold',
+    fontSize: 18,
+    fontWeight: '700',
+    color: '#1F2937',
+    marginBottom: 2,
+  },
+  subtitle: {
+    fontSize: 13,
+    color: '#6B7280',
+  },
+  distanceBadge: {
+    backgroundColor: '#10B981',
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 20,
+    alignSelf: 'flex-start',
+  },
+  distanceText: {
     color: '#FFFFFF',
-    marginBottom: SPACING.xs,
+    fontSize: 14,
+    fontWeight: '600',
   },
-  sport: {
-    fontSize: FONT_SIZE.sm,
-    color: '#FFFFFF',
-    opacity: 0.9,
-  },
-  details: {
-    marginBottom: SPACING.sm,
-  },
-  detailRow: {
+  location: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: SPACING.xs,
+    marginBottom: 8,
   },
-  detailIcon: {
-    fontSize: FONT_SIZE.md,
-    marginRight: SPACING.xs,
+  locationIcon: {
+    fontSize: 14,
+    marginRight: 6,
   },
-  detailText: {
-    fontSize: FONT_SIZE.sm,
-    color: '#FFFFFF',
+  locationText: {
+    color: '#6B7280',
+    fontSize: 14,
   },
-  footer: {
-    borderTopWidth: 1,
-    borderTopColor: 'rgba(255, 255, 255, 0.3)',
-    paddingTop: SPACING.sm,
+  dateContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  date: {
+    color: '#10B981',
+    fontSize: 14,
+    fontWeight: '600',
   },
   participants: {
-    fontSize: FONT_SIZE.sm,
-    color: '#FFFFFF',
-    fontWeight: '600',
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  participantsText: {
+    color: '#6B7280',
+    fontSize: 14,
   },
 });
