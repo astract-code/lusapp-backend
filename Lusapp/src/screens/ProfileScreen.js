@@ -232,6 +232,24 @@ export const ProfileScreen = ({ navigation }) => {
     navigation.navigate('RaceDetail', { raceId: race.id, openCompletionModal: true });
   };
 
+  const getBestDistance = () => {
+    if (completedRaces.length === 0) return '-';
+    
+    let maxDistance = 0;
+    completedRaces.forEach(race => {
+      const dist = parseFloat(race.distance) || 0;
+      if (dist > maxDistance) {
+        maxDistance = dist;
+      }
+    });
+    
+    if (maxDistance === 0) return '-';
+    if (maxDistance >= 100) return `${maxDistance}km`;
+    if (maxDistance >= 42.195) return '42.2km';
+    if (maxDistance >= 21.0975) return '21.1km';
+    return `${maxDistance}km`;
+  };
+
   const onRefresh = async () => {
     setRefreshing(true);
     await Promise.all([
@@ -403,16 +421,24 @@ export const ProfileScreen = ({ navigation }) => {
           )}
         </View>
 
-        <View style={styles.stats}>
+        <View style={styles.statsContainer}>
           <StatCard
-            icon="🏆"
-            label="Total Races"
-            value={authUser.totalRaces || 0}
+            icon="trophy"
+            label="Joined Races"
+            value={userRaces.length || 0}
+            color="#10B981"
           />
           <StatCard
-            icon="❤️"
-            label="Favorite Sport"
-            value={authUser.favoriteSport || 'Not set'}
+            icon="check"
+            label="Completed"
+            value={completedRaces.length || 0}
+            color="#3B82F6"
+          />
+          <StatCard
+            icon="target"
+            label="Best Distance"
+            value={getBestDistance()}
+            color="#F59E0B"
           />
         </View>
 
@@ -625,9 +651,10 @@ const styles = StyleSheet.create({
     fontSize: FONT_SIZE.md,
     fontWeight: '600',
   },
-  stats: {
+  statsContainer: {
     flexDirection: 'row',
-    padding: SPACING.md,
+    paddingHorizontal: SPACING.md,
+    paddingVertical: SPACING.lg,
   },
   section: {
     padding: SPACING.md,

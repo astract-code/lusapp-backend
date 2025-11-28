@@ -1,16 +1,34 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { SPACING, BORDER_RADIUS, FONT_SIZE } from '../constants/theme';
-import { useTheme } from '../context/ThemeContext';
 
-export const StatCard = ({ icon, label, value }) => {
-  const { colors } = useTheme();
+const iconMap = {
+  trophy: '🏆',
+  users: '👥',
+  target: '🎯',
+  medal: '🏅',
+  fire: '🔥',
+  star: '⭐',
+  heart: '❤️',
+  running: '🏃',
+  calendar: '📅',
+  check: '✓',
+};
+
+export const StatCard = ({ 
+  icon, 
+  label, 
+  value, 
+  color = '#10B981' 
+}) => {
+  const displayIcon = iconMap[icon] || icon;
 
   return (
-    <View style={[styles.container, { backgroundColor: colors.card }]}>
-      <Text style={styles.icon}>{icon}</Text>
-      <Text style={[styles.value, { color: colors.text }]}>{value}</Text>
-      <Text style={[styles.label, { color: colors.textSecondary }]}>{label}</Text>
+    <View style={styles.container}>
+      <View style={[styles.iconContainer, { backgroundColor: `${color}15` }]}>
+        <Text style={styles.icon}>{displayIcon}</Text>
+      </View>
+      <Text style={[styles.value, { color: '#1F2937' }]}>{value}</Text>
+      <Text style={styles.label}>{label}</Text>
     </View>
   );
 };
@@ -19,26 +37,36 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    padding: SPACING.md,
-    borderRadius: BORDER_RADIUS.lg,
-    marginHorizontal: SPACING.xs,
+    backgroundColor: '#FFFFFF',
+    paddingVertical: 20,
+    paddingHorizontal: 12,
+    borderRadius: 16,
+    marginHorizontal: 6,
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 2,
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.08,
+    shadowRadius: 12,
+    elevation: 4,
+  },
+  iconContainer: {
+    width: 48,
+    height: 48,
+    borderRadius: 24,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 12,
   },
   icon: {
-    fontSize: 32,
-    marginBottom: SPACING.xs,
+    fontSize: 24,
   },
   value: {
-    fontSize: FONT_SIZE.xl,
-    fontWeight: 'bold',
-    marginBottom: SPACING.xs,
+    fontSize: 20,
+    fontWeight: '700',
+    marginBottom: 4,
   },
   label: {
-    fontSize: FONT_SIZE.xs,
+    fontSize: 12,
+    color: '#6B7280',
     textAlign: 'center',
   },
 });
