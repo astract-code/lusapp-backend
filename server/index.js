@@ -156,11 +156,11 @@ app.use('/api/posts', postsRoutes);
 
 app.get('/api/races', async (req, res) => {
   try {
-    // Include past races (up to 1 year ago) so users can mark them complete
+    // Include all past races so users can mark them complete
     const result = await pool.query(
       `SELECT *, COALESCE(registered_users, ARRAY[]::text[]) as registered_users 
        FROM races 
-       WHERE date >= CURRENT_DATE - INTERVAL '1 year'
+       WHERE date >= CURRENT_DATE - INTERVAL '100 years'
        AND approval_status = 'approved'
        ORDER BY date ASC`
     );
