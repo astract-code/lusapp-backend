@@ -2,85 +2,93 @@
 
 export const COLORS = {
   light: {
-    // Primary Colors - Dark Green
-    primary: '#047857', // Forest Green
-    primaryLight: '#059669',
-    primaryDark: '#065F46',
+    // Primary Colors - Emerald Green
+    primary: '#10B981',        // Emerald Green (primary-500)
+    primaryLight: '#34D399',   // Light Green (primary-400)
+    primaryDark: '#059669',    // Darker Green (primary-600)
     
-    // Secondary Colors - Muted Grey-Green
-    secondary: '#6B7280', // Cool Grey
-    secondaryLight: '#9CA3AF',
+    // Secondary Colors - Blue
+    secondary: '#3B82F6',      // Blue (secondary-500)
+    secondaryLight: '#60A5FA', // Light Blue (secondary-400)
     
-    // Backgrounds - Clean Greys
-    background: '#F9FAFB', // Very light grey
-    backgroundElevated: '#FFFFFF',
-    card: '#FFFFFF',
-    surface: '#F3F4F6',
+    // Backgrounds
+    background: '#FAFAFA',     // Light Gray
+    backgroundElevated: '#FFFFFF', // White (surface)
+    card: '#FFFFFF',           // White (surface)
+    surface: '#F8FAFC',        // Off-white (surface-2)
     
-    // Text - Professional Greys
-    text: '#111827', // Near black
-    textSecondary: '#6B7280', // Medium grey
-    textTertiary: '#9CA3AF', // Light grey
+    // Text
+    text: '#1F2937',           // Dark Gray (text-primary)
+    textSecondary: '#6B7280',  // Medium Gray (text-secondary)
+    textTertiary: '#9CA3AF',   // Light Gray (text-muted)
     
-    // Borders - Subtle
-    border: '#E5E7EB', // Light grey
+    // Borders
+    border: '#E5E7EB',         // Light grey
     borderLight: '#F3F4F6',
     
     // Status Colors
-    success: '#047857', // Dark green
+    success: '#10B981',        // Emerald Green
     successLight: '#D1FAE5',
-    warning: '#D97706', // Amber
+    warning: '#F59E0B',        // Gold
     warningLight: '#FEF3C7',
-    error: '#DC2626', // Red
+    error: '#EF4444',          // Red
     errorLight: '#FEE2E2',
-    info: '#6B7280', // Grey
-    infoLight: '#F3F4F6',
+    info: '#3B82F6',           // Blue
+    infoLight: '#DBEAFE',
     
-    // Gradients - Subtle Green
-    gradient1: '#047857',
-    gradient2: '#065F46',
+    // Accent Colors
+    gold: '#F59E0B',           // Gold for medals
+    purple: '#8B5CF6',         // Purple for premium
+    
+    // Gradients
+    gradient1: '#10B981',      // Emerald Green
+    gradient2: '#059669',      // Darker Green
     
     // Overlay
-    overlay: 'rgba(17, 24, 39, 0.5)',
+    overlay: 'rgba(31, 41, 55, 0.5)',
   },
   dark: {
-    // Primary Colors - Lighter Green for contrast
-    primary: '#10B981', // Emerald
-    primaryLight: '#34D399',
-    primaryDark: '#059669',
+    // Primary Colors - Emerald Green (brighter for dark mode)
+    primary: '#10B981',        // Emerald Green (primary-500)
+    primaryLight: '#34D399',   // Light Green (primary-400)
+    primaryDark: '#059669',    // Darker Green (primary-600)
     
-    // Secondary Colors - Light Grey
-    secondary: '#9CA3AF',
-    secondaryLight: '#D1D5DB',
+    // Secondary Colors - Blue
+    secondary: '#60A5FA',      // Light Blue (secondary-400)
+    secondaryLight: '#93C5FD',
     
-    // Backgrounds - Dark Greys
-    background: '#111827', // Dark grey
-    backgroundElevated: '#1F2937', // Medium dark
+    // Backgrounds - Dark
+    background: '#111827',     // Dark grey
+    backgroundElevated: '#1F2937',
     card: '#1F2937',
-    surface: '#374151', // Lighter dark
+    surface: '#374151',
     
-    // Text - Light Greys
-    text: '#F9FAFB', // Almost white
-    textSecondary: '#D1D5DB', // Light grey
-    textTertiary: '#9CA3AF', // Medium grey
+    // Text - Light
+    text: '#F9FAFB',           // Almost white
+    textSecondary: '#D1D5DB',
+    textTertiary: '#9CA3AF',   // text-muted
     
     // Borders
-    border: '#374151', // Dark grey
+    border: '#374151',
     borderLight: '#4B5563',
     
     // Status Colors
-    success: '#10B981', // Emerald
+    success: '#10B981',        // Emerald
     successLight: '#064E3B',
-    warning: '#F59E0B', // Amber
+    warning: '#F59E0B',        // Gold
     warningLight: '#78350F',
-    error: '#EF4444', // Red
+    error: '#EF4444',          // Red
     errorLight: '#7F1D1D',
-    info: '#9CA3AF', // Grey
-    infoLight: '#1F2937',
+    info: '#60A5FA',           // Light Blue
+    infoLight: '#1E3A5F',
+    
+    // Accent Colors
+    gold: '#F59E0B',           // Gold for medals
+    purple: '#8B5CF6',         // Purple for premium
     
     // Gradients
-    gradient1: '#10B981',
-    gradient2: '#059669',
+    gradient1: '#10B981',      // Emerald Green
+    gradient2: '#059669',      // Darker Green
     
     // Overlay
     overlay: 'rgba(0, 0, 0, 0.7)',
