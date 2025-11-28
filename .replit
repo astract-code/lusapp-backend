@@ -16,30 +16,31 @@ args = "Backend API"
 
 [[workflows.workflow.tasks]]
 task = "workflow.run"
-args = "Expo Dev"
+args = "Expo Web"
 
 [[workflows.workflow]]
 name = "Backend API"
 author = "agent"
 
+[workflows.workflow.metadata]
+outputType = "console"
+
 [[workflows.workflow.tasks]]
 task = "shell.exec"
-args = "node server/index.js"
-waitForPort = 5000
+args = "PORT=3000 node server/index.js"
+waitForPort = 3000
+
+[[workflows.workflow]]
+name = "Expo Web"
+author = "agent"
 
 [workflows.workflow.metadata]
 outputType = "webview"
 
-[[workflows.workflow]]
-name = "Expo Dev"
-author = "agent"
-
 [[workflows.workflow.tasks]]
 task = "shell.exec"
-args = "cd Lusapp && npx expo start --tunnel --non-interactive"
-
-[workflows.workflow.metadata]
-outputType = "console"
+args = "cd Lusapp && EXPO_WEB_PORT=5000 npx expo start --web --port 5000"
+waitForPort = 5000
 
 [[ports]]
 localPort = 3000
@@ -50,8 +51,8 @@ localPort = 5000
 externalPort = 80
 
 [[ports]]
-localPort = 8081
-externalPort = 8081
+localPort = 5001
+externalPort = 5000
 
 [[ports]]
 localPort = 8082
@@ -60,6 +61,10 @@ externalPort = 3003
 [[ports]]
 localPort = 37273
 externalPort = 4200
+
+[[ports]]
+localPort = 40099
+externalPort = 5173
 
 [[ports]]
 localPort = 40811

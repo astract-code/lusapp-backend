@@ -2,10 +2,10 @@ import { initializeApp } from 'firebase/app';
 import { 
   getAuth, 
   initializeAuth,
-  getReactNativePersistence 
+  browserLocalPersistence,
 } from 'firebase/auth';
+import { Platform } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import Constants from 'expo-constants';
 
 const firebaseConfig = {
   apiKey: process.env.EXPO_PUBLIC_FIREBASE_API_KEY,
@@ -26,9 +26,17 @@ console.log('[FIREBASE CONFIG]', {
 
 const app = initializeApp(firebaseConfig);
 
-const auth = initializeAuth(app, {
-  persistence: getReactNativePersistence(AsyncStorage)
-});
+let auth;
+if (Platform.OS === 'web') {
+  auth = initializeAuth(app, {
+    persistence: browserLocalPersistence
+  });
+} else {
+  const { getReactNativePersistence } = require('firebase/auth');
+  auth = initializeAuth(app, {
+    persistence: getReactNativePersistence(AsyncStorage)
+  });
+}
 
 export { auth };
 export default app;
