@@ -156,6 +156,15 @@ export const SHADOWS = {
 
 // Typography System
 export const TYPOGRAPHY = {
+  // Semantic Typography Styles
+  h1: { fontSize: 32, fontWeight: '800', lineHeight: 40 },
+  h2: { fontSize: 24, fontWeight: '700', lineHeight: 32 },
+  h3: { fontSize: 20, fontWeight: '700', lineHeight: 28 },
+  h4: { fontSize: 18, fontWeight: '600', lineHeight: 26 },
+  body1: { fontSize: 16, fontWeight: '400', lineHeight: 24 },
+  body2: { fontSize: 14, fontWeight: '400', lineHeight: 20 },
+  caption: { fontSize: 12, fontWeight: '400', lineHeight: 16 },
+  
   // Font Families (using system defaults for Expo compatibility)
   fontFamily: {
     regular: 'System',
@@ -164,16 +173,16 @@ export const TYPOGRAPHY = {
     bold: 'System',
   },
   
-  // Font Sizes
+  // Font Sizes (legacy support)
   fontSize: {
-    xs: 11,
-    sm: 13,
-    base: 15,
-    md: 16,
-    lg: 18,
-    xl: 20,
-    xxl: 24,
-    xxxl: 30,
+    xs: 12,   // caption
+    sm: 14,   // body2
+    base: 16, // body1
+    md: 16,   // body1
+    lg: 18,   // h4
+    xl: 20,   // h3
+    xxl: 24,  // h2
+    xxxl: 32, // h1
     huge: 36,
   },
   
@@ -183,13 +192,18 @@ export const TYPOGRAPHY = {
     medium: '500',
     semibold: '600',
     bold: '700',
+    extrabold: '800',
   },
   
   // Line Heights
   lineHeight: {
-    tight: 1.2,
-    normal: 1.5,
-    relaxed: 1.75,
+    tight: 16,   // caption
+    snug: 20,    // body2
+    normal: 24,  // body1
+    relaxed: 26, // h4
+    loose: 28,   // h3
+    spacious: 32, // h2
+    generous: 40, // h1
   },
 };
 
