@@ -1,13 +1,13 @@
 import React, { useRef } from 'react';
 import { TouchableOpacity, Text, StyleSheet, Animated, ActivityIndicator } from 'react-native';
 import { useTheme } from '../context/ThemeContext';
-import { SPACING, BORDER_RADIUS, TYPOGRAPHY, SHADOWS } from '../constants/theme';
+import { SPACING, BORDER_RADIUS, TYPOGRAPHY } from '../constants/theme';
 
 export const Button = ({
   children,
   onPress,
-  variant = 'primary', // primary, secondary, outline, ghost, danger
-  size = 'md', // sm, md, lg
+  variant = 'primary',
+  size = 'md',
   fullWidth = false,
   disabled = false,
   loading = false,
@@ -37,99 +37,76 @@ export const Button = ({
   };
 
   const getButtonStyle = () => {
-    const baseStyle = {
-      transform: [{ scale: scaleAnim }],
-    };
-
     const sizeStyles = {
-      sm: {
-        paddingHorizontal: SPACING.md,
-        paddingVertical: SPACING.sm,
-        borderRadius: BORDER_RADIUS.sm,
-      },
-      md: {
-        paddingHorizontal: SPACING.lg,
-        paddingVertical: SPACING.md,
-        borderRadius: BORDER_RADIUS.md,
-      },
-      lg: {
-        paddingHorizontal: SPACING.xl,
-        paddingVertical: SPACING.lg,
-        borderRadius: BORDER_RADIUS.lg,
-      },
+      sm: styles.sizeSm,
+      md: styles.sizeMd,
+      lg: styles.sizeLg,
     };
 
     const variantStyles = {
-      primary: {
-        backgroundColor: colors.primary,
-        ...SHADOWS.md,
-      },
-      secondary: {
-        backgroundColor: colors.secondary,
-        ...SHADOWS.md,
-      },
-      outline: {
-        backgroundColor: 'transparent',
-        borderWidth: 2,
-        borderColor: colors.primary,
-      },
-      ghost: {
-        backgroundColor: 'transparent',
-      },
-      danger: {
-        backgroundColor: colors.error,
-        ...SHADOWS.md,
-      },
+      primary: styles.primaryButton,
+      secondary: styles.secondaryButton,
+      outline: styles.outlineButton,
+      ghost: styles.ghostButton,
+      danger: styles.dangerButton,
     };
 
     return [
       styles.button,
-      baseStyle,
       sizeStyles[size],
       variantStyles[variant],
       fullWidth && styles.fullWidth,
       disabled && styles.disabled,
+      style,
     ];
   };
 
   const getTextStyle = () => {
     const sizeStyles = {
-      sm: { fontSize: TYPOGRAPHY.fontSize.sm },
-      md: { fontSize: TYPOGRAPHY.fontSize.base },
-      lg: { fontSize: TYPOGRAPHY.fontSize.lg },
+      sm: styles.textSm,
+      md: styles.textMd,
+      lg: styles.textLg,
     };
 
     const variantStyles = {
-      primary: { color: '#FFFFFF' },
-      secondary: { color: '#FFFFFF' },
-      outline: { color: colors.primary },
-      ghost: { color: colors.primary },
-      danger: { color: '#FFFFFF' },
+      primary: styles.primaryButtonText,
+      secondary: styles.secondaryButtonText,
+      outline: styles.outlineButtonText,
+      ghost: styles.ghostButtonText,
+      danger: styles.dangerButtonText,
     };
 
     return [
       styles.text,
       sizeStyles[size],
       variantStyles[variant],
+      textStyle,
     ];
   };
 
+  const getLoaderColor = () => {
+    if (variant === 'outline' || variant === 'ghost') {
+      return '#10B981';
+    }
+    return '#FFFFFF';
+  };
+
   return (
-    <Animated.View style={getButtonStyle()}>
+    <Animated.View style={{ transform: [{ scale: scaleAnim }], alignSelf: fullWidth ? 'stretch' : 'flex-start' }}>
       <TouchableOpacity
         onPress={onPress}
         onPressIn={handlePressIn}
         onPressOut={handlePressOut}
         disabled={disabled || loading}
-        style={[styles.touchable, style]}
+        style={getButtonStyle()}
         activeOpacity={0.8}
       >
         {loading ? (
-          <ActivityIndicator color={variant === 'outline' || variant === 'ghost' ? colors.primary : '#FFFFFF'} />
+          <ActivityIndicator color={getLoaderColor()} />
         ) : (
           <>
             {icon && <Text style={styles.icon}>{icon}</Text>}
-            <Text style={[getTextStyle(), textStyle]}>{children}</Text>
+            <Text style={getTextStyle()}>{children}</Text>
           </>
         )}
       </TouchableOpacity>
@@ -139,25 +116,104 @@ export const Button = ({
 
 const styles = StyleSheet.create({
   button: {
-    alignSelf: 'flex-start',
-  },
-  touchable: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
   },
   text: {
-    fontWeight: TYPOGRAPHY.fontWeight.semibold,
     textAlign: 'center',
   },
   icon: {
-    marginRight: SPACING.sm,
-    fontSize: TYPOGRAPHY.fontSize.lg,
+    marginRight: 8,
+    fontSize: 18,
   },
   fullWidth: {
-    alignSelf: 'stretch',
+    width: '100%',
   },
   disabled: {
     opacity: 0.5,
+  },
+
+  sizeSm: {
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    borderRadius: 8,
+  },
+  sizeMd: {
+    paddingHorizontal: 24,
+    paddingVertical: 14,
+    borderRadius: 12,
+  },
+  sizeLg: {
+    paddingHorizontal: 32,
+    paddingVertical: 18,
+    borderRadius: 16,
+  },
+
+  textSm: {
+    fontSize: 14,
+  },
+  textMd: {
+    fontSize: 16,
+  },
+  textLg: {
+    fontSize: 18,
+  },
+
+  primaryButton: {
+    backgroundColor: '#10B981',
+    shadowColor: '#10B981',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    elevation: 4,
+  },
+  primaryButtonText: {
+    color: '#FFFFFF',
+    fontWeight: '600',
+  },
+
+  secondaryButton: {
+    backgroundColor: '#F1F5F9',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.05,
+    shadowRadius: 4,
+    elevation: 2,
+  },
+  secondaryButtonText: {
+    color: '#1F2937',
+    fontWeight: '600',
+  },
+
+  outlineButton: {
+    backgroundColor: 'transparent',
+    borderWidth: 2,
+    borderColor: '#10B981',
+  },
+  outlineButtonText: {
+    color: '#10B981',
+    fontWeight: '600',
+  },
+
+  ghostButton: {
+    backgroundColor: 'transparent',
+  },
+  ghostButtonText: {
+    color: '#10B981',
+    fontWeight: '600',
+  },
+
+  dangerButton: {
+    backgroundColor: '#EF4444',
+    shadowColor: '#EF4444',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    elevation: 4,
+  },
+  dangerButtonText: {
+    color: '#FFFFFF',
+    fontWeight: '600',
   },
 });
