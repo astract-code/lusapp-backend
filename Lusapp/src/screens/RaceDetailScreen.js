@@ -393,6 +393,12 @@ export const RaceDetailScreen = ({ route, navigation }) => {
             <Text style={[styles.sectionTitle, { color: colors.text }]}>
               Race Completed ✓
             </Text>
+            <TouchableOpacity
+              style={[styles.editButton, { backgroundColor: colors.primary }]}
+              onPress={() => setShowCompletionModal(true)}
+            >
+              <Text style={styles.editButtonText}>Edit</Text>
+            </TouchableOpacity>
           </View>
           {completion.completion_time && (
             <View style={styles.completionRow}>
@@ -662,6 +668,9 @@ const styles = StyleSheet.create({
     marginTop: SPACING.xxl,
   },
   completionHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
     marginBottom: SPACING.md,
   },
   completionRow: {
@@ -684,6 +693,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   certificateButtonText: {
+    color: '#FFFFFF',
+    fontSize: FONT_SIZE.sm,
+    fontWeight: '600',
+  },
+  editButton: {
+    paddingHorizontal: SPACING.md,
+    paddingVertical: SPACING.xs,
+    borderRadius: BORDER_RADIUS.sm,
+  },
+  editButtonText: {
     color: '#FFFFFF',
     fontSize: FONT_SIZE.sm,
     fontWeight: '600',
