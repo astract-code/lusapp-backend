@@ -12,6 +12,7 @@ import {
   ActivityIndicator,
   Animated,
   Dimensions,
+  ImageBackground,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -19,6 +20,8 @@ import { Ionicons } from '@expo/vector-icons';
 import { useAuth } from '../context/AuthContext';
 import { SPACING, BORDER_RADIUS, GRADIENTS } from '../constants/theme';
 import haptic from '../utils/haptics';
+
+const backgroundImage = require('../../assets/images/athletes_running_at_sunrise.png');
 
 const { width, height } = Dimensions.get('window');
 
@@ -143,10 +146,13 @@ export const OnboardingScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <LinearGradient
-        colors={['#0B0F1A', '#1E293B', '#0B0F1A']}
-        style={styles.backgroundGradient}
-      />
+      <ImageBackground
+        source={backgroundImage}
+        style={styles.backgroundImage}
+        resizeMode="cover"
+      >
+        <View style={styles.backgroundOverlay} />
+      </ImageBackground>
       
       <View style={styles.glowEffect} />
       <View style={styles.glowEffect2} />
@@ -356,12 +362,22 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#0B0F1A',
   },
-  backgroundGradient: {
+  backgroundImage: {
     position: 'absolute',
     top: 0,
     left: 0,
     right: 0,
     bottom: 0,
+    width: '100%',
+    height: '100%',
+  },
+  backgroundOverlay: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: 'rgba(11, 15, 26, 0.75)',
   },
   glowEffect: {
     position: 'absolute',
