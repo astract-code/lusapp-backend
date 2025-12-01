@@ -10,7 +10,9 @@ import {
   Platform,
   ActivityIndicator,
   SafeAreaView,
+  Alert,
 } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 import { useFocusEffect } from '@react-navigation/native';
 import { useTheme } from '../context/ThemeContext';
 import { useAuth } from '../context/AuthContext';
@@ -25,17 +27,31 @@ export const ChatScreen = ({ route, navigation }) => {
   const [inputText, setInputText] = useState('');
   const [loading, setLoading] = useState(true);
   const [sending, setSending] = useState(false);
+  const [otherUserOnline, setOtherUserOnline] = useState(false);
+  const [otherUserLastActive, setOtherUserLastActive] = useState(null);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [showSearch, setShowSearch] = useState(false);
+  const [searchResults, setSearchResults] = useState([]);
   const flatListRef = useRef(null);
   const isActiveRef = useRef(true);
   const latestUserIdRef = useRef(userId);
   const abortControllerRef = useRef(null);
 
   useEffect(() => {
-    navigation.setOptions({ title: userName });
+    navigation.setOptions({ 
+      title: userName,
+      headerRight: () => (
+        <TouchableOpacity 
+          onPress={() => setShowSearch(!showSearch)}
+          style={{ marginRight: 10 }}
+        >
+          <Ionicons name="search-outline" size={22} color={colors.primary} />
+        </TouchableOpacity>
+      ),
+    });
     latestUserIdRef.current = userId;
-  }, [userName, userId]);
+  }, [userName, userId, showSearch, colors.primary]);
 
-  // Focus-aware async polling loop
   useFocusEffect(
     React.useCallback(() => {
       isActiveRef.current = true;
@@ -44,15 +60,12 @@ export const ChatScreen = ({ route, navigation }) => {
       const poll = async () => {
         if (!isActiveRef.current) return;
         
-        // Capture current userId for this fetch
         const fetchUserId = latestUserIdRef.current;
         
-        // Cancel previous request if exists
         if (abortControllerRef.current) {
           abortControllerRef.current.abort();
         }
         
-        // Create new AbortController for this request
         abortControllerRef.current = new AbortController();
         
         try {
@@ -63,18 +76,22 @@ export const ChatScreen = ({ route, navigation }) => {
             signal: abortControllerRef.current.signal,
           });
 
-          // Only update state if still active and conversation hasn't changed
           if (response.ok && isActiveRef.current && latestUserIdRef.current === fetchUserId) {
             const data = await response.json();
             setMessages(data.messages || []);
+            
+            if (data.otherUserLastActive) {
+              const lastActive = new Date(data.otherUserLastActive);
+              const fiveMinutesAgo = new Date(Date.now() - 5 * 60 * 1000);
+              setOtherUserOnline(lastActive > fiveMinutesAgo);
+              setOtherUserLastActive(lastActive);
+            }
           }
         } catch (error) {
-          // Ignore abort errors
           if (error.name !== 'AbortError') {
             console.error('Error fetching messages:', error);
           }
         } finally {
-          // Always clear loading and schedule next poll if still active
           if (isActiveRef.current && latestUserIdRef.current === fetchUserId) {
             setLoading(false);
             setTimeout(poll, 3000);
@@ -82,10 +99,8 @@ export const ChatScreen = ({ route, navigation }) => {
         }
       };
       
-      // Start polling
       poll();
       
-      // Cleanup when screen loses focus or unmounts
       return () => {
         isActiveRef.current = false;
         if (abortControllerRef.current) {
@@ -95,6 +110,26 @@ export const ChatScreen = ({ route, navigation }) => {
       };
     }, [userId, token])
   );
+
+  const handleSearch = async () => {
+    if (!searchQuery.trim() || searchQuery.trim().length < 2) return;
+    
+    try {
+      const response = await fetch(
+        `${API_URL}/api/messages/conversations/${userId}/search?q=${encodeURIComponent(searchQuery)}`,
+        {
+          headers: { 'Authorization': `Bearer ${token}` },
+        }
+      );
+      
+      if (response.ok) {
+        const data = await response.json();
+        setSearchResults(data.messages || []);
+      }
+    } catch (error) {
+      console.error('Error searching messages:', error);
+    }
+  };
 
   const sendMessage = async () => {
     if (!inputText.trim() || sending) return;
@@ -133,16 +168,61 @@ export const ChatScreen = ({ route, navigation }) => {
     }
   };
 
+  const deleteMessage = async (messageId) => {
+    Alert.alert(
+      'Delete Message',
+      'Are you sure you want to delete this message?',
+      [
+        { text: 'Cancel', style: 'cancel' },
+        {
+          text: 'Delete',
+          style: 'destructive',
+          onPress: async () => {
+            try {
+              const response = await fetch(`${API_URL}/api/messages/messages/${messageId}`, {
+                method: 'DELETE',
+                headers: { 'Authorization': `Bearer ${token}` },
+              });
+              
+              if (response.ok) {
+                setMessages(prev => prev.filter(m => m.id !== messageId));
+              }
+            } catch (error) {
+              console.error('Error deleting message:', error);
+            }
+          },
+        },
+      ]
+    );
+  };
+
   const formatTime = (dateString) => {
     const date = new Date(dateString);
     return date.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
   };
 
-  const renderMessage = ({ item }) => {
+  const formatLastActive = (date) => {
+    if (!date) return '';
+    const now = new Date();
+    const diff = now - date;
+    
+    if (diff < 60000) return 'just now';
+    if (diff < 3600000) return `${Math.floor(diff / 60000)}m ago`;
+    if (diff < 86400000) return `${Math.floor(diff / 3600000)}h ago`;
+    return date.toLocaleDateString();
+  };
+
+  const renderMessage = ({ item, index }) => {
     const isMe = item.sender_id === currentUser.id;
+    const isLastMessage = index === messages.length - 1;
+    const showReadReceipt = isMe && isLastMessage && item.read;
     
     return (
-      <View style={[styles.messageContainer, isMe ? styles.myMessage : styles.theirMessage]}>
+      <TouchableOpacity 
+        style={[styles.messageContainer, isMe ? styles.myMessage : styles.theirMessage]}
+        onLongPress={() => isMe && deleteMessage(item.id)}
+        delayLongPress={500}
+      >
         <View style={[
           styles.messageBubble,
           { backgroundColor: isMe ? colors.primary : colors.card }
@@ -150,11 +230,18 @@ export const ChatScreen = ({ route, navigation }) => {
           <Text style={[styles.messageText, { color: isMe ? '#FFFFFF' : colors.text }]}>
             {item.content}
           </Text>
-          <Text style={[styles.messageTime, { color: isMe ? 'rgba(255,255,255,0.7)' : colors.textSecondary }]}>
-            {formatTime(item.created_at)}
-          </Text>
+          <View style={styles.messageFooter}>
+            <Text style={[styles.messageTime, { color: isMe ? 'rgba(255,255,255,0.7)' : colors.textSecondary }]}>
+              {formatTime(item.created_at)}
+            </Text>
+            {showReadReceipt && (
+              <View style={styles.readReceipt}>
+                <Ionicons name="checkmark-done-outline" size={14} color="rgba(255,255,255,0.7)" />
+              </View>
+            )}
+          </View>
         </View>
-      </View>
+      </TouchableOpacity>
     );
   };
 
@@ -170,6 +257,36 @@ export const ChatScreen = ({ route, navigation }) => {
 
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
+      <View style={[styles.statusBar, { backgroundColor: colors.card, borderBottomColor: colors.border }]}>
+        <View style={styles.statusContent}>
+          <View style={[styles.onlineIndicator, { backgroundColor: otherUserOnline ? '#4ADE80' : colors.textSecondary }]} />
+          <Text style={[styles.statusText, { color: colors.textSecondary }]}>
+            {otherUserOnline ? 'Online' : `Last seen ${formatLastActive(otherUserLastActive)}`}
+          </Text>
+        </View>
+      </View>
+
+      {showSearch && (
+        <View style={[styles.searchContainer, { backgroundColor: colors.card }]}>
+          <TextInput
+            style={[styles.searchInput, { backgroundColor: colors.background, color: colors.text }]}
+            placeholder="Search messages..."
+            placeholderTextColor={colors.textSecondary}
+            value={searchQuery}
+            onChangeText={setSearchQuery}
+            onSubmitEditing={handleSearch}
+            returnKeyType="search"
+          />
+          {searchResults.length > 0 && (
+            <View style={styles.searchResults}>
+              <Text style={[styles.searchResultsCount, { color: colors.textSecondary }]}>
+                {searchResults.length} results found
+              </Text>
+            </View>
+          )}
+        </View>
+      )}
+
       <KeyboardAvoidingView
         style={styles.keyboardView}
         behavior={Platform.OS === 'ios' ? 'padding' : 'padding'}
@@ -177,7 +294,7 @@ export const ChatScreen = ({ route, navigation }) => {
       >
         {messages.length === 0 ? (
           <View style={styles.emptyContainer}>
-            <Text style={styles.emptyIcon}>💬</Text>
+            <Ionicons name="chatbubbles-outline" size={64} color={colors.textSecondary} />
             <Text style={[styles.emptyText, { color: colors.textSecondary }]}>
               No messages yet
             </Text>
@@ -214,9 +331,11 @@ export const ChatScreen = ({ route, navigation }) => {
             onPress={sendMessage}
             disabled={!inputText.trim() || sending}
           >
-            <Text style={styles.sendButtonText}>
-              {sending ? '...' : '➤'}
-            </Text>
+            {sending ? (
+              <ActivityIndicator size="small" color="#FFFFFF" />
+            ) : (
+              <Ionicons name="send" size={18} color="#FFFFFF" />
+            )}
           </TouchableOpacity>
         </View>
       </KeyboardAvoidingView>
@@ -236,19 +355,50 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  statusBar: {
+    paddingVertical: SPACING.sm,
+    paddingHorizontal: SPACING.lg,
+    borderBottomWidth: 1,
+  },
+  statusContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  onlineIndicator: {
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+    marginRight: SPACING.xs,
+  },
+  statusText: {
+    fontSize: FONT_SIZE.sm,
+  },
+  searchContainer: {
+    padding: SPACING.md,
+  },
+  searchInput: {
+    borderRadius: BORDER_RADIUS.lg,
+    paddingHorizontal: SPACING.md,
+    paddingVertical: SPACING.sm,
+    fontSize: FONT_SIZE.md,
+  },
+  searchResults: {
+    marginTop: SPACING.sm,
+  },
+  searchResultsCount: {
+    fontSize: FONT_SIZE.sm,
+  },
   emptyContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: SPACING.xxl,
   },
-  emptyIcon: {
-    fontSize: 64,
-    marginBottom: SPACING.lg,
-  },
   emptyText: {
     fontSize: FONT_SIZE.lg,
     fontWeight: '600',
+    marginTop: SPACING.lg,
     marginBottom: SPACING.sm,
     textAlign: 'center',
   },
@@ -277,9 +427,16 @@ const styles = StyleSheet.create({
     fontSize: FONT_SIZE.md,
     marginBottom: SPACING.xs,
   },
+  messageFooter: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+  },
   messageTime: {
     fontSize: FONT_SIZE.xs,
-    alignSelf: 'flex-end',
+  },
+  readReceipt: {
+    marginLeft: SPACING.xs,
   },
   inputContainer: {
     flexDirection: 'row',
@@ -302,10 +459,5 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  sendButtonText: {
-    color: '#FFFFFF',
-    fontSize: FONT_SIZE.lg,
-    fontWeight: 'bold',
   },
 });

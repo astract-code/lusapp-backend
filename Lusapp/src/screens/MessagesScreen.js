@@ -1,5 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, FlatList, TouchableOpacity, Image, ActivityIndicator, SafeAreaView } from 'react-native';
+import { 
+  View, 
+  Text, 
+  StyleSheet, 
+  FlatList, 
+  TouchableOpacity, 
+  Image, 
+  ActivityIndicator, 
+  SafeAreaView,
+  Alert,
+  RefreshControl,
+} from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 import { useFocusEffect } from '@react-navigation/native';
 import { useTheme } from '../context/ThemeContext';
 import { useAuth } from '../context/AuthContext';
@@ -11,21 +23,26 @@ export const MessagesScreen = ({ navigation }) => {
   const { token } = useAuth();
   const [conversations, setConversations] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
+  const [showArchived, setShowArchived] = useState(false);
 
   useEffect(() => {
     fetchConversations();
-  }, []);
+  }, [showArchived]);
 
-  // Refresh conversations when screen comes into focus
   useFocusEffect(
     React.useCallback(() => {
       fetchConversations();
-    }, [])
+    }, [showArchived])
   );
 
   const fetchConversations = async () => {
     try {
-      const response = await fetch(`${API_URL}/api/messages/conversations`, {
+      const url = showArchived 
+        ? `${API_URL}/api/messages/conversations?includeArchived=true`
+        : `${API_URL}/api/messages/conversations`;
+        
+      const response = await fetch(url, {
         headers: {
           'Authorization': `Bearer ${token}`,
         },
@@ -39,7 +56,77 @@ export const MessagesScreen = ({ navigation }) => {
       console.error('Error fetching conversations:', error);
     } finally {
       setLoading(false);
+      setRefreshing(false);
     }
+  };
+
+  const onRefresh = () => {
+    setRefreshing(true);
+    fetchConversations();
+  };
+
+  const handleMute = async (conversationId, currentMuted) => {
+    try {
+      const response = await fetch(`${API_URL}/api/messages/conversations/${conversationId}/mute`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ muted: !currentMuted }),
+      });
+
+      if (response.ok) {
+        setConversations(prev => prev.map(c => 
+          c.id === conversationId ? { ...c, muted: !currentMuted } : c
+        ));
+      }
+    } catch (error) {
+      console.error('Error muting conversation:', error);
+    }
+  };
+
+  const handleArchive = async (conversationId, currentArchived) => {
+    try {
+      const response = await fetch(`${API_URL}/api/messages/conversations/${conversationId}/archive`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ archived: !currentArchived }),
+      });
+
+      if (response.ok) {
+        if (!showArchived && !currentArchived) {
+          setConversations(prev => prev.filter(c => c.id !== conversationId));
+        } else {
+          setConversations(prev => prev.map(c => 
+            c.id === conversationId ? { ...c, archived: !currentArchived } : c
+          ));
+        }
+      }
+    } catch (error) {
+      console.error('Error archiving conversation:', error);
+    }
+  };
+
+  const showConversationOptions = (item) => {
+    Alert.alert(
+      item.other_user_name,
+      'Choose an action',
+      [
+        {
+          text: item.muted ? 'Unmute' : 'Mute',
+          onPress: () => handleMute(item.id, item.muted),
+        },
+        {
+          text: item.archived ? 'Unarchive' : 'Archive',
+          onPress: () => handleArchive(item.id, item.archived),
+        },
+        { text: 'Cancel', style: 'cancel' },
+      ]
+    );
   };
 
   const formatTime = (dateString) => {
@@ -47,39 +134,59 @@ export const MessagesScreen = ({ navigation }) => {
     const now = new Date();
     const diff = now - date;
     
-    // Less than 24 hours
     if (diff < 86400000) {
       return date.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
     }
     
-    // Less than a week
     if (diff < 604800000) {
       return date.toLocaleDateString('en-US', { weekday: 'short' });
     }
     
-    // Older
     return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+  };
+
+  const isOnline = (lastActive) => {
+    if (!lastActive) return false;
+    const fiveMinutesAgo = new Date(Date.now() - 5 * 60 * 1000);
+    return new Date(lastActive) > fiveMinutesAgo;
   };
 
   const renderConversation = ({ item }) => (
     <TouchableOpacity
-      style={[styles.conversationItem, { backgroundColor: colors.card, borderBottomColor: colors.border }]}
+      style={[
+        styles.conversationItem, 
+        { backgroundColor: colors.card, borderBottomColor: colors.border },
+        item.archived && styles.archivedItem,
+      ]}
       onPress={() => navigation.navigate('Chat', { 
         userId: item.other_user_id, 
         userName: item.other_user_name,
         userAvatar: item.other_user_avatar
       })}
+      onLongPress={() => showConversationOptions(item)}
+      delayLongPress={500}
     >
       <View style={styles.avatarContainer}>
         {item.other_user_avatar ? (
           <Image source={{ uri: item.other_user_avatar }} style={styles.avatar} />
         ) : (
-          <View style={[styles.avatar, { backgroundColor: colors.border }]} />
+          <View style={[styles.avatar, { backgroundColor: colors.border }]}>
+            <Ionicons name="person-outline" size={24} color={colors.textSecondary} />
+          </View>
         )}
+        <View style={[
+          styles.onlineIndicator, 
+          { backgroundColor: isOnline(item.other_user_last_active) ? '#4ADE80' : 'transparent' }
+        ]} />
       </View>
       <View style={styles.conversationContent}>
         <View style={styles.conversationHeader}>
-          <Text style={[styles.userName, { color: colors.text }]}>{item.other_user_name}</Text>
+          <View style={styles.nameContainer}>
+            <Text style={[styles.userName, { color: colors.text }]}>{item.other_user_name}</Text>
+            {item.muted && (
+              <Ionicons name="notifications-off-outline" size={14} color={colors.textSecondary} style={styles.mutedIcon} />
+            )}
+          </View>
           <Text style={[styles.time, { color: colors.textSecondary }]}>
             {formatTime(item.last_message_at)}
           </Text>
@@ -121,16 +228,38 @@ export const MessagesScreen = ({ navigation }) => {
     <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
       <View style={styles.header}>
         <Text style={[styles.headerTitle, { color: colors.text }]}>Messages</Text>
+        <TouchableOpacity 
+          onPress={() => setShowArchived(!showArchived)}
+          style={styles.archiveToggle}
+        >
+          <Ionicons 
+            name={showArchived ? "archive" : "archive-outline"} 
+            size={22} 
+            color={colors.primary} 
+          />
+        </TouchableOpacity>
       </View>
+
+      {showArchived && (
+        <View style={[styles.archiveNotice, { backgroundColor: colors.card }]}>
+          <Ionicons name="archive-outline" size={16} color={colors.textSecondary} />
+          <Text style={[styles.archiveNoticeText, { color: colors.textSecondary }]}>
+            Showing archived conversations
+          </Text>
+        </View>
+      )}
       
       {conversations.length === 0 ? (
         <View style={styles.emptyContainer}>
-          <Text style={styles.emptyIcon}>💬</Text>
+          <Ionicons name="chatbubbles-outline" size={64} color={colors.textSecondary} />
           <Text style={[styles.emptyText, { color: colors.textSecondary }]}>
-            No messages yet
+            {showArchived ? 'No archived messages' : 'No messages yet'}
           </Text>
           <Text style={[styles.emptySubtext, { color: colors.textSecondary }]}>
-            Start a conversation by sending a message to another athlete
+            {showArchived 
+              ? 'Archived conversations will appear here'
+              : 'Start a conversation by sending a message to another athlete'
+            }
           </Text>
         </View>
       ) : (
@@ -139,8 +268,19 @@ export const MessagesScreen = ({ navigation }) => {
           renderItem={renderConversation}
           keyExtractor={(item) => item.id.toString()}
           contentContainerStyle={styles.listContent}
+          refreshControl={
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={onRefresh}
+              tintColor={colors.primary}
+            />
+          }
         />
       )}
+
+      <Text style={[styles.hint, { color: colors.textSecondary }]}>
+        Long press a conversation for more options
+      </Text>
     </SafeAreaView>
   );
 };
@@ -150,12 +290,31 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
     padding: SPACING.lg,
     paddingTop: SPACING.md,
   },
   headerTitle: {
     fontSize: FONT_SIZE.xxl,
     fontWeight: 'bold',
+  },
+  archiveToggle: {
+    padding: SPACING.sm,
+  },
+  archiveNotice: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: SPACING.sm,
+    marginHorizontal: SPACING.lg,
+    marginBottom: SPACING.sm,
+    borderRadius: BORDER_RADIUS.md,
+  },
+  archiveNoticeText: {
+    marginLeft: SPACING.xs,
+    fontSize: FONT_SIZE.sm,
   },
   loadingContainer: {
     flex: 1,
@@ -168,13 +327,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: SPACING.xxl,
   },
-  emptyIcon: {
-    fontSize: 64,
-    marginBottom: SPACING.lg,
-  },
   emptyText: {
     fontSize: FONT_SIZE.lg,
     fontWeight: '600',
+    marginTop: SPACING.lg,
     marginBottom: SPACING.sm,
     textAlign: 'center',
   },
@@ -190,13 +346,29 @@ const styles = StyleSheet.create({
     padding: SPACING.lg,
     borderBottomWidth: 1,
   },
+  archivedItem: {
+    opacity: 0.7,
+  },
   avatarContainer: {
     marginRight: SPACING.md,
+    position: 'relative',
   },
   avatar: {
     width: 56,
     height: 56,
     borderRadius: 28,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  onlineIndicator: {
+    position: 'absolute',
+    bottom: 2,
+    right: 2,
+    width: 14,
+    height: 14,
+    borderRadius: 7,
+    borderWidth: 2,
+    borderColor: '#FFFFFF',
   },
   conversationContent: {
     flex: 1,
@@ -208,9 +380,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: SPACING.xs,
   },
+  nameContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
   userName: {
     fontSize: FONT_SIZE.lg,
     fontWeight: '600',
+  },
+  mutedIcon: {
+    marginLeft: SPACING.xs,
   },
   time: {
     fontSize: FONT_SIZE.sm,
@@ -237,5 +416,10 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontSize: FONT_SIZE.xs,
     fontWeight: 'bold',
+  },
+  hint: {
+    textAlign: 'center',
+    fontSize: FONT_SIZE.xs,
+    paddingVertical: SPACING.sm,
   },
 });
