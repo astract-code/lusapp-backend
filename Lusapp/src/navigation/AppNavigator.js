@@ -273,17 +273,74 @@ const GroupsStack = () => {
       <Stack.Screen 
         name="GearListDetail" 
         component={GearListDetailScreen}
-        options={{ title: 'Gear List' }}
+        options={({ navigation }) => ({ 
+          title: 'Gear List',
+          headerBackTitleVisible: false,
+          headerLeft: () => (
+            <TouchableOpacity onPress={() => {
+              if (navigation.canGoBack()) {
+                navigation.goBack();
+              } else {
+                navigation.navigate('GroupsMain');
+              }
+            }}>
+              <Ionicons 
+                name="arrow-back" 
+                size={24} 
+                color={theme.primary}
+                style={{ marginLeft: 10 }}
+              />
+            </TouchableOpacity>
+          ),
+        })}
       />
       <Stack.Screen 
         name="UserProfile" 
         component={UserProfileScreen}
-        options={{ title: 'Profile' }}
+        options={({ navigation }) => ({ 
+          title: 'Profile',
+          headerBackTitleVisible: false,
+          headerLeft: () => (
+            <TouchableOpacity onPress={() => {
+              if (navigation.canGoBack()) {
+                navigation.goBack();
+              } else {
+                navigation.navigate('GroupsMain');
+              }
+            }}>
+              <Ionicons 
+                name="arrow-back" 
+                size={24} 
+                color={theme.primary}
+                style={{ marginLeft: 10 }}
+              />
+            </TouchableOpacity>
+          ),
+        })}
       />
       <Stack.Screen 
         name="Chat" 
         component={ChatScreen}
-        options={{ title: 'Chat' }}
+        options={({ navigation }) => ({ 
+          title: 'Chat',
+          headerBackTitleVisible: false,
+          headerLeft: () => (
+            <TouchableOpacity onPress={() => {
+              if (navigation.canGoBack()) {
+                navigation.goBack();
+              } else {
+                navigation.navigate('GroupsMain');
+              }
+            }}>
+              <Ionicons 
+                name="arrow-back" 
+                size={24} 
+                color={theme.primary}
+                style={{ marginLeft: 10 }}
+              />
+            </TouchableOpacity>
+          ),
+        })}
       />
     </Stack.Navigator>
   );
