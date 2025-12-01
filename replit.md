@@ -108,6 +108,29 @@ A new Groups system allows athletes to create and join sport-specific groups (pu
 
 All group data is stored in PostgreSQL with role-based access control ensuring privacy and security.
 
+### Messaging & Chat Features
+
+**Direct Messages (1-on-1):**
+- Online status indicators (green dot for recently active users)
+- Read receipts showing when messages are read
+- Search functionality with results display
+- Mute and archive conversations via swipe actions
+- Soft delete for messages (preserves for admin review)
+
+**Group Chat:**
+- Pinned messages (admin-only) displayed at top of chat
+- Announcement mode (admin-only) - only admins can post when enabled
+- Search with full results display (sender, content, timestamp)
+- Long-press to delete own messages
+- Online status indicators for group members
+
+**Admin Controls:**
+- `is_admin` flag in users table determines moderation rights
+- Admins can pin/unpin messages in group chats
+- Admins can delete any message (soft delete)
+- Admins can toggle announcement mode in groups
+- Non-admin message deletion limited to own messages
+
 ## External Dependencies
 
 ### Third-Party Libraries
