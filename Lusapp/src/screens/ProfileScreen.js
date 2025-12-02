@@ -256,10 +256,11 @@ export const ProfileScreen = ({ navigation }) => {
     });
     
     if (maxDistance === 0) return '-';
-    if (maxDistance >= 100) return `${maxDistance}km`;
-    if (maxDistance >= 42.195) return '42.2km';
-    if (maxDistance >= 21.0975) return '21.1km';
-    return `${maxDistance}km`;
+    if (maxDistance >= 1000) return `${Math.round(maxDistance / 1000)}k`;
+    if (maxDistance >= 100) return `${Math.round(maxDistance)}`;
+    if (maxDistance >= 42.195) return '42.2';
+    if (maxDistance >= 21.0975) return '21.1';
+    return `${maxDistance}`;
   };
 
   const onRefresh = async () => {
@@ -471,7 +472,7 @@ export const ProfileScreen = ({ navigation }) => {
             />
             <StatCard
               icon="target"
-              label="Best"
+              label="Best (km)"
               value={getBestDistance()}
               color="#FBBF24"
             />
