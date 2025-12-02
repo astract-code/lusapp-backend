@@ -24,14 +24,29 @@ import { SPACING, FONT_SIZE, BORDER_RADIUS, SPORTS } from '../constants/theme';
 import API_URL from '../config/api';
 import { getDisplayDistance } from '../utils/distanceHelper';
 
-const SPORT_ICONS = {
-  'run': 'walk-outline',
-  'bike': 'bicycle-outline',
-  'swim': 'water-outline',
-  'triathlon': 'medal-outline',
-  'fitness': 'barbell-outline',
-  'mountain': 'trail-sign-outline',
-  'default': 'trophy-outline',
+const getSportIcon = (race) => {
+  const category = (race.sport_category || '').toLowerCase();
+  const subtype = (race.sport_subtype || '').toLowerCase();
+  
+  if (category.includes('triathlon') || subtype.includes('ironman') || subtype.includes('aquathlon') || subtype.includes('duathlon')) {
+    return 'podium-outline';
+  }
+  if (category.includes('cycling') || subtype.includes('cycling') || subtype.includes('bike') || subtype.includes('criterium') || subtype.includes('fondo')) {
+    return 'bicycle-outline';
+  }
+  if (category.includes('swimming') || subtype.includes('swim') || subtype.includes('open water')) {
+    return 'water-outline';
+  }
+  if (category.includes('fitness') || subtype.includes('hyrox') || subtype.includes('crossfit') || subtype.includes('spartan') || subtype.includes('obstacle')) {
+    return 'barbell-outline';
+  }
+  if (subtype.includes('trail') || subtype.includes('ultra') || subtype.includes('mountain')) {
+    return 'trail-sign-outline';
+  }
+  if (category.includes('running') || subtype.includes('marathon') || subtype.includes('5k') || subtype.includes('10k') || subtype.includes('half')) {
+    return 'walk-outline';
+  }
+  return 'trophy-outline';
 };
 
 export const RaceDetailScreen = ({ route, navigation }) => {
@@ -303,12 +318,12 @@ export const RaceDetailScreen = ({ route, navigation }) => {
   return (
     <ScrollView style={[styles.container, { backgroundColor: colors.background }]}>
       <LinearGradient
-        colors={[colors.gradient1, colors.gradient2]}
+        colors={['#0B0F1A', '#1E293B']}
         style={styles.header}
       >
         <View style={styles.sportIconContainer}>
           <Ionicons 
-            name={SPORT_ICONS[sport.icon] || SPORT_ICONS['default']} 
+            name={getSportIcon(race)} 
             size={48} 
             color="#4ADE80" 
           />
