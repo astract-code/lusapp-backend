@@ -3,15 +3,15 @@ const STANDARD_DISTANCES = {
   // Running distances
   '5K': '5 km',
   '10K': '10 km',
-  'Half Marathon': '21.1 km (13.1 mi)',
-  'Marathon': '42.2 km (26.2 mi)',
+  'Half Marathon': '21.097 km (13.1 mi)',
+  'Marathon': '42.195 km (26.2 mi)',
   'Ultra Marathon': '50+ km',
   
   // Triathlon distances
   'Sprint': '750m swim, 20km bike, 5km run',
   'Olympic': '1.5km swim, 40km bike, 10km run',
-  'Half Ironman': '1.9km swim, 90km bike, 21.1km run',
-  'Ironman': '3.8km swim, 180km bike, 42.2km run',
+  'Half Ironman': '1.9km swim, 90km bike, 21.097km run',
+  'Ironman': '3.8km swim, 180km bike, 42.195km run',
   'Aquathlon': 'Swim + Run',
   'Duathlon': 'Run + Bike + Run',
   
