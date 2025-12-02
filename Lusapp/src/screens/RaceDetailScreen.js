@@ -14,6 +14,7 @@ import {
 } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
+import { Ionicons } from '@expo/vector-icons';
 import * as DocumentPicker from 'expo-document-picker';
 import { UserAvatar } from '../components/UserAvatar';
 import { useAuth } from '../context/AuthContext';
@@ -22,6 +23,16 @@ import { useTheme } from '../context/ThemeContext';
 import { SPACING, FONT_SIZE, BORDER_RADIUS, SPORTS } from '../constants/theme';
 import API_URL from '../config/api';
 import { getDisplayDistance } from '../utils/distanceHelper';
+
+const SPORT_ICONS = {
+  'run': 'walk-outline',
+  'bike': 'bicycle-outline',
+  'swim': 'water-outline',
+  'triathlon': 'medal-outline',
+  'fitness': 'barbell-outline',
+  'mountain': 'trail-sign-outline',
+  'default': 'trophy-outline',
+};
 
 export const RaceDetailScreen = ({ route, navigation }) => {
   const { raceId, openCompletionModal } = route.params;
@@ -295,7 +306,13 @@ export const RaceDetailScreen = ({ route, navigation }) => {
         colors={[colors.gradient1, colors.gradient2]}
         style={styles.header}
       >
-        <Text style={styles.sportIcon}>{sport.icon}</Text>
+        <View style={styles.sportIconContainer}>
+          <Ionicons 
+            name={SPORT_ICONS[sport.icon] || SPORT_ICONS['default']} 
+            size={48} 
+            color="#4ADE80" 
+          />
+        </View>
         <Text style={styles.title}>{race.name}</Text>
         <Text style={styles.sport}>{getSubtitle()}</Text>
       </LinearGradient>
@@ -554,6 +571,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: SPACING.lg,
     paddingTop: SPACING.xxl,
+  },
+  sportIconContainer: {
+    width: 80,
+    height: 80,
+    borderRadius: 40,
+    backgroundColor: 'rgba(74, 222, 128, 0.15)',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: SPACING.md,
   },
   sportIcon: {
     fontSize: 64,
