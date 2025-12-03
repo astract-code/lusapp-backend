@@ -54,15 +54,8 @@ router.get('/feed', verifyFirebaseToken, async (req, res) => {
     const limit = parseInt(req.query.limit) || 50;
     const offset = parseInt(req.query.offset) || 0;
     
-    const userResult = await pool.query(
-      'SELECT following FROM users WHERE id = $1',
-      [userId]
-    );
-    
-    const following = userResult.rows[0]?.following || [];
-    const userIds = [userId.toString(), ...following];
-    
-    // Fetch both follower posts AND public race_created posts
+    // Show ALL posts from all users - global activity feed
+    // This ensures the feed is never empty and users can discover new athletes
     const result = await pool.query(
       `SELECT p.id, p.user_id, p.type, p.race_id, p.timestamp, p.liked_by, p.comments,
               u.name as user_name, u.avatar as user_avatar,
@@ -70,10 +63,9 @@ router.get('/feed', verifyFirebaseToken, async (req, res) => {
        FROM posts p
        JOIN users u ON p.user_id = u.id
        LEFT JOIN races r ON p.race_id = r.id
-       WHERE (p.user_id::text = ANY($1) OR p.type = 'race_created')
        ORDER BY p.timestamp DESC
-       LIMIT $2 OFFSET $3`,
-      [userIds, limit, offset]
+       LIMIT $1 OFFSET $2`,
+      [limit, offset]
     );
     
     const posts = result.rows.map(post => ({
