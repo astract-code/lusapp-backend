@@ -227,11 +227,7 @@ export const GroupChatTab = ({ groupId }) => {
     const isMe = item.sender_id === currentUser.id;
 
     return (
-      <TouchableOpacity 
-        style={[styles.messageContainer, isMe ? styles.myMessage : styles.theirMessage]}
-        onLongPress={() => isMe && deleteMessage(item.id)}
-        delayLongPress={500}
-      >
+      <View style={[styles.messageRow, isMe ? styles.myMessageRow : styles.theirMessageRow]}>
         {!isMe && (
           <View style={styles.avatarContainer}>
             {item.sender_avatar ? (
@@ -243,32 +239,49 @@ export const GroupChatTab = ({ groupId }) => {
             )}
           </View>
         )}
-        <View style={styles.messageContent}>
-          {!isMe && (
-            <Text style={[styles.senderName, { color: colors.textSecondary }]}>
-              {item.sender_name}
-            </Text>
-          )}
-          <View
-            style={[
-              styles.messageBubble,
-              { backgroundColor: isMe ? colors.primary : colors.card }
-            ]}
-          >
-            <Text style={[styles.messageText, { color: isMe ? '#FFFFFF' : colors.text }]}>
-              {item.content}
-            </Text>
-            <Text
+        <TouchableOpacity 
+          style={[styles.messageContainer, isMe ? styles.myMessage : styles.theirMessage]}
+          onLongPress={() => isMe && deleteMessage(item.id)}
+          delayLongPress={500}
+        >
+          <View style={styles.messageContent}>
+            {!isMe && (
+              <Text style={[styles.senderName, { color: colors.textSecondary }]}>
+                {item.sender_name}
+              </Text>
+            )}
+            <View
               style={[
-                styles.messageTime,
-                { color: isMe ? 'rgba(255,255,255,0.7)' : colors.textSecondary }
+                styles.messageBubble,
+                { backgroundColor: isMe ? colors.primary : colors.card }
               ]}
             >
-              {formatTime(item.created_at)}
-            </Text>
+              <Text style={[styles.messageText, { color: isMe ? '#FFFFFF' : colors.text }]}>
+                {item.content}
+              </Text>
+              <Text
+                style={[
+                  styles.messageTime,
+                  { color: isMe ? 'rgba(255,255,255,0.7)' : colors.textSecondary }
+                ]}
+              >
+                {formatTime(item.created_at)}
+              </Text>
+            </View>
           </View>
-        </View>
-      </TouchableOpacity>
+        </TouchableOpacity>
+        {isMe && (
+          <View style={styles.avatarContainer}>
+            {currentUser.avatar ? (
+              <Image source={{ uri: currentUser.avatar }} style={styles.avatar} />
+            ) : (
+              <View style={[styles.avatar, { backgroundColor: colors.border }]}>
+                <Ionicons name="person-outline" size={16} color={colors.textSecondary} />
+              </View>
+            )}
+          </View>
+        )}
+      </View>
     );
   };
 
@@ -536,20 +549,28 @@ const styles = StyleSheet.create({
   messagesList: {
     padding: SPACING.lg,
   },
-  messageContainer: {
-    marginBottom: SPACING.md,
+  messageRow: {
     flexDirection: 'row',
-    maxWidth: '85%',
+    marginBottom: SPACING.md,
+    alignItems: 'flex-end',
+  },
+  myMessageRow: {
+    justifyContent: 'flex-end',
+  },
+  theirMessageRow: {
+    justifyContent: 'flex-start',
+  },
+  messageContainer: {
+    maxWidth: '70%',
   },
   myMessage: {
     alignSelf: 'flex-end',
-    flexDirection: 'row-reverse',
   },
   theirMessage: {
     alignSelf: 'flex-start',
   },
   avatarContainer: {
-    marginRight: SPACING.sm,
+    marginHorizontal: SPACING.xs,
   },
   avatar: {
     width: 32,

@@ -16,11 +16,12 @@ import { Ionicons } from '@expo/vector-icons';
 import { useFocusEffect } from '@react-navigation/native';
 import { useTheme } from '../context/ThemeContext';
 import { useAuth } from '../context/AuthContext';
+import { UserAvatar } from '../components/UserAvatar';
 import { SPACING, FONT_SIZE, BORDER_RADIUS } from '../constants/theme';
 import API_URL from '../config/api';
 
 export const ChatScreen = ({ route, navigation }) => {
-  const { userId, userName } = route.params;
+  const { userId, userName, userAvatar } = route.params;
   const { colors } = useTheme();
   const { user: currentUser, token } = useAuth();
   const [messages, setMessages] = useState([]);
@@ -29,6 +30,7 @@ export const ChatScreen = ({ route, navigation }) => {
   const [sending, setSending] = useState(false);
   const [otherUserOnline, setOtherUserOnline] = useState(false);
   const [otherUserLastActive, setOtherUserLastActive] = useState(null);
+  const [otherUserAvatar, setOtherUserAvatar] = useState(userAvatar || null);
   const [searchQuery, setSearchQuery] = useState('');
   const [showSearch, setShowSearch] = useState(false);
   const [searchResults, setSearchResults] = useState([]);
@@ -216,32 +218,45 @@ export const ChatScreen = ({ route, navigation }) => {
     const isMe = item.sender_id === currentUser.id;
     const isLastMessage = index === messages.length - 1;
     const showReadReceipt = isMe && isLastMessage && item.read;
+    const avatarUri = isMe ? currentUser?.avatar : (item.sender_avatar || otherUserAvatar);
     
     return (
-      <TouchableOpacity 
-        style={[styles.messageContainer, isMe ? styles.myMessage : styles.theirMessage]}
-        onLongPress={() => isMe && deleteMessage(item.id)}
-        delayLongPress={500}
-      >
-        <View style={[
-          styles.messageBubble,
-          { backgroundColor: isMe ? colors.primary : colors.card }
-        ]}>
-          <Text style={[styles.messageText, { color: isMe ? '#FFFFFF' : colors.text }]}>
-            {item.content}
-          </Text>
-          <View style={styles.messageFooter}>
-            <Text style={[styles.messageTime, { color: isMe ? 'rgba(255,255,255,0.7)' : colors.textSecondary }]}>
-              {formatTime(item.created_at)}
-            </Text>
-            {showReadReceipt && (
-              <View style={styles.readReceipt}>
-                <Ionicons name="checkmark-done-outline" size={14} color="rgba(255,255,255,0.7)" />
-              </View>
-            )}
+      <View style={[styles.messageRow, isMe ? styles.myMessageRow : styles.theirMessageRow]}>
+        {!isMe && (
+          <View style={styles.avatarContainer}>
+            <UserAvatar uri={avatarUri} size={32} />
           </View>
-        </View>
-      </TouchableOpacity>
+        )}
+        <TouchableOpacity 
+          style={[styles.messageContainer, isMe ? styles.myMessage : styles.theirMessage]}
+          onLongPress={() => isMe && deleteMessage(item.id)}
+          delayLongPress={500}
+        >
+          <View style={[
+            styles.messageBubble,
+            { backgroundColor: isMe ? colors.primary : colors.card }
+          ]}>
+            <Text style={[styles.messageText, { color: isMe ? '#FFFFFF' : colors.text }]}>
+              {item.content}
+            </Text>
+            <View style={styles.messageFooter}>
+              <Text style={[styles.messageTime, { color: isMe ? 'rgba(255,255,255,0.7)' : colors.textSecondary }]}>
+                {formatTime(item.created_at)}
+              </Text>
+              {showReadReceipt && (
+                <View style={styles.readReceipt}>
+                  <Ionicons name="checkmark-done-outline" size={14} color="rgba(255,255,255,0.7)" />
+                </View>
+              )}
+            </View>
+          </View>
+        </TouchableOpacity>
+        {isMe && (
+          <View style={styles.avatarContainer}>
+            <UserAvatar uri={currentUser?.avatar} size={32} />
+          </View>
+        )}
+      </View>
     );
   };
 
@@ -409,9 +424,22 @@ const styles = StyleSheet.create({
   messagesList: {
     padding: SPACING.lg,
   },
-  messageContainer: {
+  messageRow: {
+    flexDirection: 'row',
     marginBottom: SPACING.md,
-    maxWidth: '80%',
+    alignItems: 'flex-end',
+  },
+  myMessageRow: {
+    justifyContent: 'flex-end',
+  },
+  theirMessageRow: {
+    justifyContent: 'flex-start',
+  },
+  avatarContainer: {
+    marginHorizontal: SPACING.xs,
+  },
+  messageContainer: {
+    maxWidth: '70%',
   },
   myMessage: {
     alignSelf: 'flex-end',

@@ -60,7 +60,13 @@ export const DiscoverScreen = ({ navigation }) => {
   }, [newRace.continent]);
 
   const filteredRaces = useMemo(() => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    
     return races.filter((race) => {
+      const raceDate = new Date(race.date);
+      if (raceDate < today) return false;
+      
       if (selectedCategory || selectedSubtype) {
         const raceCategory = race.sport_category || normalizeLegacySport(race.sport).category;
         const raceSubtype = race.sport_subtype || normalizeLegacySport(race.sport).subtype;
