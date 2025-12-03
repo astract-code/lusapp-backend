@@ -14,10 +14,26 @@ export const PostCard = ({ post, onUserPress, onRacePress }) => {
   const { user: currentUser } = useAuth();
   const { getUserById, getRaceById, toggleLikePost, addComment } = useAppStore();
   
-  const postAuthor = getUserById(post.userId);
-  const race = getRaceById(post.raceId);
+  // Use data from post object (API) or fallback to store lookup
+  const postAuthor = post.userName ? {
+    id: post.userId,
+    name: post.userName,
+    avatar: post.userAvatar
+  } : getUserById(post.userId);
   
-  if (!postAuthor || !currentUser) return null;
+  const race = post.raceName ? {
+    id: post.raceId,
+    name: post.raceName,
+    city: post.city,
+    country: post.country,
+    date: post.date,
+    sportCategory: post.sportCategory,
+    sportSubtype: post.sportSubtype
+  } : getRaceById(post.raceId);
+  
+  // For new_race type, we don't need an author
+  if (post.type !== 'new_race' && !postAuthor) return null;
+  if (!currentUser) return null;
 
   const handleLike = () => {
     toggleLikePost(post.id, currentUser.id);
@@ -47,11 +63,21 @@ export const PostCard = ({ post, onUserPress, onRacePress }) => {
   return (
     <View style={[styles.container, { backgroundColor: colors.card }]}>
       <View style={styles.header}>
-        <UserAvatar uri={postAuthor.avatar} size={48} onPress={() => onUserPress(postAuthor.id)} />
+        {post.type === 'new_race' ? (
+          <View style={[styles.lusappIcon, { backgroundColor: colors.primary }]}>
+            <Text style={styles.lusappIconText}>L</Text>
+          </View>
+        ) : (
+          <UserAvatar uri={postAuthor?.avatar} size={48} onPress={() => postAuthor?.id && onUserPress(postAuthor.id)} />
+        )}
         <View style={styles.headerText}>
-          <TouchableOpacity onPress={() => onUserPress(postAuthor.id)}>
-            <Text style={[styles.userName, { color: colors.text }]}>{postAuthor.name}</Text>
-          </TouchableOpacity>
+          {post.type === 'new_race' ? (
+            <Text style={[styles.userName, { color: colors.text }]}>New Race Added</Text>
+          ) : (
+            <TouchableOpacity onPress={() => postAuthor?.id && onUserPress(postAuthor.id)}>
+              <Text style={[styles.userName, { color: colors.text }]}>{postAuthor?.name}</Text>
+            </TouchableOpacity>
+          )}
           <Text style={[styles.timestamp, { color: colors.textSecondary }]}>
             {formatTime(post.timestamp)}
           </Text>
@@ -59,7 +85,21 @@ export const PostCard = ({ post, onUserPress, onRacePress }) => {
       </View>
 
       <View style={styles.content}>
-        {post.type === 'signup' ? (
+        {post.type === 'new_race' ? (
+          <View>
+            <Text style={[styles.activityText, { color: colors.text }]}>
+              🏁 New race available:{' '}
+              <Text style={[styles.raceLink, { color: colors.primary }]} onPress={() => race && onRacePress(race.id)}>
+                {race?.name || post.raceName || 'a race'}
+              </Text>
+            </Text>
+            {race && (
+              <Text style={[styles.raceDetails, { color: colors.textSecondary }]}>
+                📍 {race.city}, {race.country} • 📅 {new Date(race.date).toLocaleDateString()}
+              </Text>
+            )}
+          </View>
+        ) : post.type === 'signup' ? (
           <Text style={[styles.activityText, { color: colors.text }]}>
             🎯 Signed up for{' '}
             <Text style={[styles.raceLink, { color: colors.primary }]} onPress={() => race && onRacePress(race.id)}>
@@ -179,6 +219,18 @@ const styles = StyleSheet.create({
   userName: {
     fontSize: FONT_SIZE.md,
     fontWeight: '600',
+  },
+  lusappIcon: {
+    width: 48,
+    height: 48,
+    borderRadius: 24,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  lusappIconText: {
+    color: '#FFFFFF',
+    fontSize: 24,
+    fontWeight: 'bold',
   },
   timestamp: {
     fontSize: FONT_SIZE.xs,

@@ -54,9 +54,8 @@ router.get('/feed', verifyFirebaseToken, async (req, res) => {
     const limit = parseInt(req.query.limit) || 50;
     const offset = parseInt(req.query.offset) || 0;
     
-    // Show ALL posts from all users - global activity feed
-    // This ensures the feed is never empty and users can discover new athletes
-    const result = await pool.query(
+    // Get all posts from all users
+    const postsResult = await pool.query(
       `SELECT p.id, p.user_id, p.type, p.race_id, p.timestamp, p.liked_by, p.comments,
               u.name as user_name, u.avatar as user_avatar,
               r.name as race_name, r.sport_category, r.sport_subtype, r.city, r.country, r.date, r.distance
@@ -68,7 +67,7 @@ router.get('/feed', verifyFirebaseToken, async (req, res) => {
       [limit, offset]
     );
     
-    const posts = result.rows.map(post => ({
+    const posts = postsResult.rows.map(post => ({
       id: post.id.toString(),
       userId: post.user_id.toString(),
       userName: post.user_name,
@@ -87,7 +86,42 @@ router.get('/feed', verifyFirebaseToken, async (req, res) => {
       comments: JSON.parse(post.comments || '[]')
     }));
     
-    res.json({ posts });
+    // Also get recently added races (approved ones from the last 30 days)
+    const racesResult = await pool.query(
+      `SELECT r.id, r.name, r.sport_category, r.sport_subtype, r.city, r.country, r.date, r.distance, r.created_at
+       FROM races r
+       WHERE r.status = 'approved' 
+       AND r.created_at > NOW() - INTERVAL '30 days'
+       ORDER BY r.created_at DESC
+       LIMIT 20`
+    );
+    
+    // Convert recent races to feed items with type 'new_race'
+    const recentRaces = racesResult.rows.map(race => ({
+      id: `race_${race.id}`,
+      userId: null,
+      userName: 'Lusapp',
+      userAvatar: null,
+      type: 'new_race',
+      raceId: race.id.toString(),
+      raceName: race.name,
+      sportCategory: race.sport_category,
+      sportSubtype: race.sport_subtype,
+      city: race.city,
+      country: race.country,
+      date: race.date,
+      distance: race.distance,
+      timestamp: race.created_at,
+      likedBy: [],
+      comments: []
+    }));
+    
+    // Combine posts and recent races, sort by timestamp, and limit
+    const combinedFeed = [...posts, ...recentRaces]
+      .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp))
+      .slice(0, limit);
+    
+    res.json({ posts: combinedFeed });
     
   } catch (error) {
     console.error('Get feed error:', error);
