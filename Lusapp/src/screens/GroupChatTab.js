@@ -224,7 +224,7 @@ export const GroupChatTab = ({ groupId }) => {
     if (!currentUser) {
       return null;
     }
-    const isMe = item.sender_id === currentUser.id;
+    const isMe = String(item.sender_id) === String(currentUser.id);
 
     return (
       <View style={[styles.messageRow, isMe ? styles.myMessageRow : styles.theirMessageRow]}>

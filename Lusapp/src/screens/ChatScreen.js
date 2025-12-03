@@ -215,7 +215,7 @@ export const ChatScreen = ({ route, navigation }) => {
   };
 
   const renderMessage = ({ item, index }) => {
-    const isMe = item.sender_id === currentUser.id;
+    const isMe = String(item.sender_id) === String(currentUser.id);
     const isLastMessage = index === messages.length - 1;
     const showReadReceipt = isMe && isLastMessage && item.read;
     const avatarUri = isMe ? currentUser?.avatar : (item.sender_avatar || otherUserAvatar);
