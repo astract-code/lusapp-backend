@@ -82,10 +82,6 @@ externalPort = 6800
 localPort = 44397
 externalPort = 6000
 
-[[ports]]
-localPort = 44715
-externalPort = 8000
-
 [nix]
 channel = "stable-25_05"
 packages = ["imagemagick"]
