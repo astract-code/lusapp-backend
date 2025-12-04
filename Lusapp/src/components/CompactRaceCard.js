@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { useTheme } from '../context/ThemeContext';
+import { useSettings } from '../context/SettingsContext';
 import { SPACING, FONT_SIZE, BORDER_RADIUS } from '../constants/theme';
 import { getDisplayDistance } from '../utils/distanceHelper';
 
@@ -19,6 +20,7 @@ const sportIcons = {
 
 export const CompactRaceCard = ({ race, onPress, isPastUncompleted, isCompleted, completionData, onMarkComplete }) => {
   const { colors } = useTheme();
+  const { useMetric } = useSettings();
 
   const sportIcon = sportIcons[race.sport_category] || sportIcons[race.sport] || '🏅';
   
@@ -42,7 +44,7 @@ export const CompactRaceCard = ({ race, onPress, isPastUncompleted, isCompleted,
           <Text style={styles.title} numberOfLines={1}>{race.name}</Text>
         </View>
         <View style={styles.distanceBadge}>
-          <Text style={styles.distanceText}>{getDisplayDistance(race)}</Text>
+          <Text style={styles.distanceText}>{getDisplayDistance(race, useMetric)}</Text>
         </View>
       </View>
 

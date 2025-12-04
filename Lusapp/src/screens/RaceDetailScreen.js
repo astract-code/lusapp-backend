@@ -20,6 +20,7 @@ import { UserAvatar } from '../components/UserAvatar';
 import { useAuth } from '../context/AuthContext';
 import { useAppStore } from '../context/AppContext';
 import { useTheme } from '../context/ThemeContext';
+import { useSettings } from '../context/SettingsContext';
 import { SPACING, FONT_SIZE, BORDER_RADIUS, SPORTS } from '../constants/theme';
 import API_URL from '../config/api';
 import { getDisplayDistance } from '../utils/distanceHelper';
@@ -52,6 +53,7 @@ const getSportIcon = (race) => {
 export const RaceDetailScreen = ({ route, navigation }) => {
   const { raceId, openCompletionModal } = route.params;
   const { colors } = useTheme();
+  const { useMetric } = useSettings();
   const { user, token, updateUser } = useAuth();
   const { getRaceById, registerForRace, unregisterFromRace, fetchRaces } = useAppStore();
   const [registeredUsers, setRegisteredUsers] = useState([]);
@@ -375,7 +377,7 @@ export const RaceDetailScreen = ({ route, navigation }) => {
           <Text style={styles.icon}>📏</Text>
           <View style={styles.infoText}>
             <Text style={[styles.label, { color: colors.textSecondary }]}>Distance</Text>
-            <Text style={[styles.value, { color: colors.text }]}>{getDisplayDistance(race)}</Text>
+            <Text style={[styles.value, { color: colors.text }]}>{getDisplayDistance(race, useMetric)}</Text>
           </View>
         </View>
 

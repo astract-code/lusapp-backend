@@ -15,6 +15,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { useAppStore } from '../context/AppContext';
 import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
+import { useSettings } from '../context/SettingsContext';
 import { SPACING, BORDER_RADIUS, GRADIENTS, SHADOWS } from '../constants/theme';
 import { API_BASE_URL } from '../config/api';
 import { getDisplayDistance } from '../utils/distanceHelper';
@@ -40,6 +41,7 @@ const getRaceColors = (race) => {
 const ModernRaceCard = ({ race, onPress, isPastUncompleted, isCompleted, completionData, onMarkComplete }) => {
   const scaleAnim = useRef(new Animated.Value(1)).current;
   const { colors, isDark } = useTheme();
+  const { useMetric } = useSettings();
   const raceColors = getRaceColors(race);
 
   const handlePressIn = () => {
@@ -106,7 +108,7 @@ const ModernRaceCard = ({ race, onPress, isPastUncompleted, isCompleted, complet
               </View>
               <View style={[styles.distanceBadge, { backgroundColor: raceColors.primary + '15' }]}>
                 <Text style={[styles.distanceText, { color: raceColors.primary }]}>
-                  {getDisplayDistance(race)}
+                  {getDisplayDistance(race, useMetric)}
                 </Text>
               </View>
             </View>

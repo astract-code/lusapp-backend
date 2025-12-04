@@ -2,10 +2,12 @@ import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { SPACING, BORDER_RADIUS, FONT_SIZE, SPORTS } from '../constants/theme';
 import { useTheme } from '../context/ThemeContext';
+import { useSettings } from '../context/SettingsContext';
 import { getDisplayDistance } from '../utils/distanceHelper';
 
 export const RaceCard = ({ race, onPress }) => {
   const { colors } = useTheme();
+  const { useMetric } = useSettings();
   const sport = SPORTS.find(s => s.id === race.sport || s.name === race.sport) || SPORTS[0];
   
   const formatDate = (dateString) => {
@@ -45,7 +47,7 @@ export const RaceCard = ({ race, onPress }) => {
           </View>
         </View>
         <View style={styles.distanceBadge}>
-          <Text style={styles.distanceText}>{getDisplayDistance(race)}</Text>
+          <Text style={styles.distanceText}>{getDisplayDistance(race, useMetric)}</Text>
         </View>
       </View>
 
