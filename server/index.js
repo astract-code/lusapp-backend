@@ -567,7 +567,8 @@ app.post('/api/races/csv-upload', noCors, csrfProtection, adminAuth, csvUpload.s
           imported, 
           skipped,
           total: results.length,
-          duplicates: duplicates.length > 0 ? duplicates.slice(0, 10) : undefined
+          duplicates: duplicates.length > 0 ? duplicates.slice(0, 50) : undefined,
+          totalDuplicates: duplicates.length
         });
       });
   } catch (error) {

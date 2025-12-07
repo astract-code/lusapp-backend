@@ -496,7 +496,33 @@
 
         const result = await response.json();
         if (response.ok) {
-          showMessage(`Successfully imported ${result.imported} out of ${result.total} races!`, 'success', 'upload-message');
+          // Build detailed message
+          let message = `<strong>Import Complete!</strong><br>`;
+          message += `✅ <strong>${result.imported}</strong> races added<br>`;
+          message += `⏭️ <strong>${result.skipped}</strong> skipped`;
+          
+          if (result.totalDuplicates && result.totalDuplicates > 0) {
+            message += ` (${result.totalDuplicates} duplicates)`;
+          }
+          
+          // Show duplicates list if any
+          if (result.duplicates && result.duplicates.length > 0) {
+            message += `<br><br><strong>Duplicate races (already in database):</strong><br>`;
+            message += `<div style="max-height: 200px; overflow-y: auto; background: #f5f5f5; padding: 10px; border-radius: 8px; margin-top: 10px; text-align: left;">`;
+            result.duplicates.forEach(dup => {
+              message += `• ${dup}<br>`;
+            });
+            if (result.totalDuplicates > result.duplicates.length) {
+              message += `<br><em>...and ${result.totalDuplicates - result.duplicates.length} more duplicates</em>`;
+            }
+            const otherSkipped = result.skipped - result.totalDuplicates;
+            if (otherSkipped > 0) {
+              message += `<br><em>${otherSkipped} rows skipped (invalid dates, empty rows, etc.)</em>`;
+            }
+            message += `</div>`;
+          }
+          
+          showMessage(message, 'success', 'upload-message');
           fileInput.value = '';
         } else {
           showMessage('Error uploading CSV: ' + result.error, 'error', 'upload-message');
