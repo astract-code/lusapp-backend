@@ -1,0 +1,290 @@
+name,sport,sport_category,sport_subtype,city,country,continent,date,start_time,distance,description,participants
+HYROX Paris Winter,Hyrox,Indoor Fitness Race,Pro,Paris,France,Europe,2026-01-11,08:00,Hyrox,Season opener in Paris Expo,12000
+HYROX Lyon,Hyrox,Indoor Fitness Race,Pro,Lyon,France,Europe,2026-01-25,08:00,Hyrox,Rhône-Alpes massive indoor event,9500
+HYROX Marseille,Hyrox,Indoor Fitness Race,Open,Marseille,France,Europe,2026-02-15,08:00,Hyrox,Port city Mediterranean vibes,8500
+HYROX Nice,Hyrox,Indoor Fitness Race,Pro,Nice,France,Europe,2026-03-01,08:00,Hyrox,Côte d’Azur glamour fitness race,9000
+HYROX Toulouse,Hyrox,Indoor Fitness Race,Open,Toulouse,France,Europe,2026-03-22,08:00,Hyrox,Pink City edition,8000
+HYROX Bordeaux,Hyrox,Indoor Fitness Race,Pro,Bordeaux,France,Europe,2026-04-12,08:00,Hyrox,Wine capital Hyrox,8800
+HYROX Lille,Hyrox,Indoor Fitness Race,Open,Lille,France,Europe,2026-05-03,08:00,Hyrox,Northern France powerhouse,7500
+HYROX Strasbourg,Hyrox,Indoor Fitness Race,Open,Strasbourg,France,Europe,2026-10-18,08:00,Hyrox,European capital edition,7000
+HYROX Paris Autumn,Hyrox,Indoor Fitness Race,Pro,Paris,France,Europe,2026-11-15,08:00,Hyrox,Second Paris event of the year,14000
+HYROX Nantes,Hyrox,Indoor Fitness Race,Open,Nantes,France,Europe,2026-12-06,08:00,Hyrox,Atlantic coast finale,7800
+Spartan Trifecta Weekend Valmorel,Spartan,Obstacle Race,Trifecta,Valmorel,France,Europe,2026-02-21,07:00,5K+10K+21K,Alpine winter Trifecta,11000
+Spartan Sprint Valmorel,Spartan,Obstacle Race,Sprint,Valmorel,France,Europe,2026-02-21,08:30,5K,Snow-covered mountain Sprint,8000
+Spartan Super Valmorel,Spartan,Obstacle Race,Super,Valmorel,France,Europe,2026-02-22,07:30,10K,Alpine Super with ice obstacles,7000
+Spartan Beast Valmorel,Spartan,Obstacle Race,Beast,Valmorel,France,Europe,2026-02-22,07:00,21K,Winter Beast in the Alps,6000
+Spartan Trifecta Weekend Morzine,Spartan,Obstacle Race,Trifecta,Morzine,France,Europe,2026-06-27,07:00,5K+10K+21K,Portes du Soleil summer Trifecta,13000
+Spartan Sprint Morzine,Spartan,Obstacle Race,Sprint,Morzine,France,Europe,2026-06-27,08:30,5K,Alpine summer Sprint,9000
+Spartan Super Morzine,Spartan,Obstacle Race,Super,Morzine,France,Europe,2026-06-28,07:30,10K,High-altitude Super,8000
+Spartan Beast Morzine,Spartan,Obstacle Race,Beast,Morzine,France,Europe,2026-06-28,07:00,21K,Brutal Alpine Beast,7000
+Spartan Ultra Chamonix,Spartan,Obstacle Race,Ultra,Chamonix,France,Europe,2026-07-12,05:30,50K,First French Spartan Ultra under Mont Blanc,3500
+Spartan Sprint Verbier (France side),Spartan,Obstacle Race,Sprint,Le Châble,France,Europe,2026-09-13,08:00,5K,Cross-border Alpine Sprint,6500
+Marathon du Mont-Blanc,Trail Running,Trail Marathon,42K,Chamonix,France,Europe,2026-06-29,07:00,42km,Iconic alpine marathon,2500
+UTMB®,Trail Running,Ultra Trail,171K,Chamonix,France,Europe,2026-08-25,18:00,171km,The world’s toughest ultra,2300
+CCC® (UTMB week),Trail Running,Ultra Trail,101K,Chamonix,France,Europe,2026-08-29,09:00,101km,Courmayeur-Champex-Chamonix,2300
+OCC (UTMB week),Trail Running,Trail Race,56K,Chamonix,France,Europe,2026-08-28,08:15,56km,Orsières-Champex-Chamonix,2100
+TDS® (UTMB week),Trail Running,Ultra Trail,145K,Chamonix,France,Europe,2026-08-26,00:00,145km,Sur les Traces des Ducs de Savoie,1800
+Marathon Nice-Cannes,Running,Road Running,Marathon,Nice,France,Europe,2026-11-02,08:30,42.2km,Flat Mediterranean coastal marathon,15000
+Paris Marathon,Running,Road Running,Marathon,Paris,France,Europe,2026-04-06,08:30,42.2km,Most beautiful city marathon in the world,55000
+Marathon de Bordeaux (night),Running,Road Running,Marathon,Bordeaux,France,Europe,2026-04-26,20:00,42.2km,Wine & lights night marathon,14000
+Lyon SaintéLyon,Trail Running,Night Ultra,78K,Lyon,France,Europe,2026-12-06,00:00,78km,Historic night race Lyon to Saint-Étienne,17000
+Semi-Marathon de Paris,Running,Road Running,Half Marathon,Paris,France,Europe,2026-03-02,10:00,21.1km,Fast spring half through Paris,45000
+20KM de Paris,Running,Road Running,20K,Paris,France,Europe,2026-10-12,10:00,20km,Autumn classic along the Seine,30000
+10KM de Lille,Running,Road Running,10K,Lille,France,Europe,2026-09-20,09:30,10km,Northern France mass race,25000
+La Marseillaise 10K,Running,Road Running,10K,Marseille,France,Europe,2026-05-18,09:00,10km,From Vieux-Port to Prado beaches,20000
+Triathlon Deauville Normandie,Triathlon,Olympic Distance,,Deauville,France,Europe,2026-06-15,09:00,Standard,Calvados classic coastal tri,3500
+Triathlon Nice (Ironman France),Triathlon,Full Ironman,,Nice,France,Europe,2026-06-22,06:30,Full Ironman,Iconic French Ironman on Promenade des Anglais,2800
+Ironman 70.3 Aix-en-Provence,Triathlon,Half Ironman,,Aix-en-Provence,France,Europe,2026-05-04,07:00,Half Ironman,Provence lavender fields 70.3,3200
+Ironman 70.3 Les Sables d’Olonne,Triathlon,Half Ironman,,Les Sables-d’Olonne,France,Europe,2026-06-08,07:30,Half Ironman,Vendée Atlantic coast 70.3,3000
+Ironman 70.3 Vichy,Triathlon,Half Ironman,,Vichy,France,Europe,2026-08-24,07:00,Half Ironman,Allier volcanic region 70.3,2800
+Triathlon Alpe d’Huez,Triathlon,Long Distance,,Alpe d’Huez,France,Europe,2026-07-30,09:00,L (1.2-80-22),Legendary 21-switchbacks bike climb,2200
+Triathlon Embrunman,Triathlon,Full Ironman,,Embrun,France,Europe,2026-08-15,06:00,Full Ironman,Toughest Ironman-distance in Europe,900
+Grand Raid de la Réunion (Diagonale des Fous),Trail Running,Ultra Trail,165K,Saint-Denis,France,Europe,2026-10-16,22:00,165km,World’s craziest ultra (overseas),6000
+Eco-Trail Paris,Trail Running,Trail Race,80K,Paris,France,Europe,2026-03-15,06:00,80km,Finish at Eiffel Tower,5000
+Trail des Templiers,Trail Running,Trail Race,100K,Millau,France,Europe,2026-10-25,05:00,100km,Legendary Larzac plateau race,2500
+Ultra-Trail du Mont-Blanc PTL®,Trail Running,Team Ultra,300K,Chamonix,France,Europe,2026-08-25,17:00,300km,Team non-stop ultra around Mont Blanc,300
+Spartan Sprint Paris,Spartan,Obstacle Race,Sprint,Paris,France,Europe,2026-11-08,08:30,5K,Urban Paris obstacles,8500
+HYROX Marseille Autumn,Hyrox,Indoor Fitness Race,Open,Marseille,France,Europe,2026-11-29,08:00,Hyrox,Winter preparation race,8000
+Marathon du Médoc,Running,Road Running,Marathon,Pauillac,France,Europe,2026-09-13,09:30,42.2km,Wine & oyster marathon party,8500
+Spartan Beast Andorra (France-accessible),Spartan,Obstacle Race,Beast,Encamp,Andorra,Europe,2026-09-20,07:00,21K,Pyrenees Beast,5500
+Triathlon Gérardmer XL,Triathlon,Long Distance,,Gérardmer,France,Europe,2026-09-07,08:00,L,Vosges mountain triathlon,1800
+Trail Verbier-St Bernard,Trail Running,Trail Race,110K,Verbier,France,Europe,2026-07-12,06:00,110km,Swiss-French border ultra,1800
+10K Strasbourg,Running,Road Running,10K,Strasbourg,France,Europe,2026-10-12,09:30,10km,European capital race,12000
+HYROX Bordeaux Winter,Hyrox,Indoor Fitness Race,Open,Bordeaux,France,Europe,2026-12-13,08:00,Hyrox,Wine city finale,7500
+Spartan Super Mégève,Spartan,Obstacle Race,Super,Mégève,France,Europe,2026-07-19,07:30,10K,Luxury Alpine Super,6000
+Triathlon Cannes International,Triathlon,Olympic Distance,,Cannes,France,Europe,2026-04-27,09:00,Standard,Film festival coast tri,3000
+Marathon de la Loire,Running,Road Running,Marathon,Saumur,France,Europe,2026-05-25,09:00,42.2km,Castles of the Loire marathon,7000
+Trail du Saint-Jacques,Trail Running,Trail Race,80K,Le Puy-en-Velay,France,Europe,2026-06-14,05:00,80km,Historic pilgrimage trail,3000
+Spartan Sprint Lyon,Spartan,Obstacle Race,Sprint,Lyon,France,Europe,2026-04-05,08:30,5K,Rhône city obstacles,7500
+HYROX Toulouse Spring,Hyrox,Indoor Fitness Race,Pro,Toulouse,France,Europe,2026-04-26,08:00,Hyrox,Pink City Pro division,8200
+Saintélyon Solo,Trail Running,Night Ultra,78K,Saint-Étienne,France,Europe,2026-12-07,00:00,78km,Historic winter night race,17000
+Ultra Marin Raid du Golfe,Trail Running,Ultra Trail,177K,Vannes,France,Europe,2026-06-28,18:00,177km,Brittany coastal ultra,1500
+Triathlon La Rochelle,Triathlon,Olympic Distance,,La Rochelle,France,Europe,2026-06-22,09:00,Standard,Atlantic fortress city,2500
+Marathon du Cognac,Running,Road Running,Marathon,Jarnac,France,Europe,2026-11-15,09:00,42.2km,Spirits-themed marathon,6000
+Trail Napoléon,Trail Running,Trail Race,52K,Ajaccio,France,Europe,2026-05-11,07:00,52km,Corsica imperial trail,1800
+HYROX Nice Winter,Hyrox,Indoor Fitness Race,Open,Nice,France,Europe,2026-12-20,08:00,Hyrox,Pre-NYE Côte d’Azur race,8000
+Spartan Trifecta Weekend La Bresse,Spartan,Obstacle Race,Trifecta,La Bresse,France,Europe,2026-09-27,07:00,5K+10K+21K,Vosges mountains Trifecta,10000
+10K de Toulouse,Running,Road Running,10K,Toulouse,France,Europe,2026-03-30,09:30,10km,Pink city fast race,11000
+Triathlon Half Pays d’Aix,Triathlon,Half Ironman,,Aix-en-Provence,France,Europe,2026-05-04,07:00,Half Ironman,Provence classic 70.3,3200
+Trail de la Côte d’Opale,Trail Running,Trail Race,62K,Wimereux,France,Europe,2026-09-14,07:00,62km,Cap Gris-Nez spectacular cliffs,3500
+Marathon des Alpes-Maritimes,Running,Road Running,Marathon,Nice,France,Europe,2026-11-02,08:30,42.2km,Nice to Cannes coastal,15000
+HYROX Paris Spring,Hyrox,Indoor Fitness Race,Pro,Paris,France,Europe,2026-05-17,08:00,Hyrox,Biggest European Hyrox,16000
+Spartan Beast Pyrenees,Spartan,Obstacle Race,Beast,Font-Romeu,France,Europe,2026-07-05,07:00,21K,High-altitude Pyrenees Beast,5800
+Triathlon Quiberon,Triathlon,Olympic Distance,,Quiberon,France,Europe,2026-07-20,09:00,Standard,Brittany peninsula tri,2000
+Ultra-Trail Côte d’Azur Mercantour,Trail Running,Ultra Trail,130K,Nice,France,Europe,2026-07-12,04:00,130km,From sea to high mountains,1200
+Semi-Marathon de Lille,Running,Road Running,Half Marathon,Lille,France,Europe,2026-09-06,09:00,21.1km,Northern France biggest half,20000
+HYROX Metz,Hyrox,Indoor Fitness Race,Open,Metz,France,Europe,2026-10-25,08:00,Hyrox,Lorraine edition,6500
+Spartan Sprint Marseille,Spartan,Obstacle Race,Sprint,Marseille,France,Europe,2026-05-24,08:30,5K,Calanques backdrop Sprint,7000
+Triathlon Chantilly Castle,Triathlon,Olympic Distance,,Chantilly,France,Europe,2026-09-21,09:00,Standard,Royal castle swim & run,2800
+Trail des Forts de Besançon,Trail Running,Trail Race,57K,Besançon,France,Europe,2026-05-11,07:00,57km,Citadel & forts trail,3000
+Marathon de Nantes,Running,Road Running,Marathon,Nantes,France,Europe,2026-04-27,09:00,42.2km,Atlantic city marathon,10000
+HYROX Lille Winter,Hyrox,Indoor Fitness Race,Pro,Lille,France,Europe,2026-12-14,08:00,Hyrox,End-of-year northern finale,9000
+Spartan Super Chamonix,Spartan,Obstacle Race,Super,Chamonix,France,Europe,2026-07-26,07:30,10K,Mont Blanc valley Super,6500
+Triathlon Half Les Sables Vendée,Triathlon,Half Ironman,,Les Sables-d’Olonne,France,Europe,2026-06-08,07:30,Half Ironman,Vendée Globe coast 70.3,3000
+Trail du Ventoux,Trail Running,Trail Race,46K,Bédoin,France,Europe,2026-03-23,08:00,46km,Giant of Provence climb,2500
+10K de Lyon,Running,Road Running,10K,Lyon,France,Europe,2026-10-05,09:30,10km,Rhône & Saône race,15000
+HYROX Strasbourg Winter,Hyrox,Indoor Fitness Race,Open,Strasbourg,France,Europe,2026-11-22,08:00,Hyrox,Christmas market vibes race,7200
+Spartan Sprint Nice,Spartan,Obstacle Race,Sprint,Nice,France,Europe,2026-03-29,08:30,5K,Promenade des Anglais Sprint,7500
+Triathlon Belfort,Triathlon,Olympic Distance,,Belfort,France,Europe,2026-06-29,09:00,Standard,Lion of Belfort tri,1800
+Ultra-Trail Harricana,Trail Running,Ultra Trail,125K,La Malbaie,France,Europe,2026-09-13,05:00,125km,Charlevoix mountains (overseas),1200
+Marathon Reims,Running,Road Running,Marathon,Reims,France,Europe,2026-10-19,09:00,42.2km,Champagne capital marathon,9000
+HYROX Rennes,Hyrox,Indoor Fitness Race,Open,Rennes,France,Europe,2026-10-11,08:00,Hyrox,Brittany capital edition,6800
+Spartan Beast Vercors,Spartan,Obstacle Race,Beast,Autrans,France,Europe,2026-06-14,07:00,21K,Vercors plateau Beast,5200
+Triathlon Half Côte de Beauté,Triathlon,Half Ironman,,Royan,France,Europe,2026-09-14,07:30,Half Ironman,Atlantic coast 70.3,2400
+Trail des Aiguilles Rouges,Trail Running,Trail Race,50K,Chamonix,France,Europe,2026-09-28,07:00,50km,Mont Blanc panoramic views,1800
+Semi-Marathon de Bordeaux,Running,Road Running,Half Marathon,Bordeaux,France,Europe,2026-04-26,20:30,21.1km,Night half through illuminated city,18000
+HYROX Montpellier,Hyrox,Indoor Fitness Race,Open,Montpellier,France,Europe,2026-05-24,08:00,Hyrox,Mediterranean student city race,7000
+Spartan Sprint Toulouse,Spartan,Obstacle Race,Sprint,Toulouse,France,Europe,2026-11-01,08:30,5K,Pink city obstacles,6800
+Triathlon International de Dunkerque,Triathlon,Olympic Distance,,Dunkerque,France,Europe,2026-05-25,09:00,Standard,North Sea coast tri,2200
+Trail de Haute Provence,Trail Running,Trail Race,80K,Forcalquier,France,Europe,2026-04-13,06:00,80km,Lavender fields ultra,1600
+Marathon du Beaujolais,Running,Road Running,Marathon,Villefranche-sur-Saône,France,Europe,2026-11-22,09:00,42.2km,Wine-themed festive marathon,8000
+HYROX Grenoble,Hyrox,Indoor Fitness Race,Open,Grenoble,France,Europe,2026-11-08,08:00,Hyrox,Alps gateway edition,7200
+Spartan Super Annecy,Spartan,Obstacle Race,Super,Annecy,France,Europe,2026-07-12,07:30,10K,Lake Annecy Super,7000
+Triathlon Half Aix-les-Bains,Triathlon,Half Ironman,,Aix-les-Bains,France,Europe,2026-06-15,07:30,Half Ironman,Lake Bourget 70.3,2600
+Trail du Colorado Provençal,Trail Running,Trail Race,43K,Rustrel,France,Europe,2026-10-19,08:00,43km,Ochre cliffs spectacular trail,2000
+10K de Marseille-Cassis,Running,Road Running,20K,Marseille,France,Europe,2026-10-26,09:00,20km,Iconic sea & cliffs race,20000
+HYROX Paris New Year,Hyrox,Indoor Fitness Race,Pro,Paris,France,Europe,2026-12-31,10:00,Hyrox,NYE special edition,18000
+Spartan Sprint Bordeaux,Spartan,Obstacle Race,Sprint,Bordeaux,France,Europe,2026-04-12,08:30,5K,Wine capital Sprint,7200
+Triathlon Calvi,Triathlon,Olympic Distance,,Calvi,France,Europe,2026-05-11,09:00,Standard,Corsica citadel tri,1700
+Ultra-Trail du Puy Mary,Trail Running,Ultra Trail,110K,Salers,France,Europe,2026-06-21,05:00,110km,Cantal volcanic ultra,1400
+Semi-Marathon de Nice,Running,Road Running,Half Marathon,Nice,France,Europe,2026-04-27,09:00,21.1km,Baie des Anges half,12000
+HYROX Clermont-Ferrand,Hyrox,Indoor Fitness Race,Open,Clermont-Ferrand,France,Europe,2026-03-15,08:00,Hyrox,Volcanic capital race,6500
+Spartan Beast Cévennes,Spartan,Obstacle Race,Beast,Saint-Jean-du-Gard,France,Europe,2026-10-18,07:00,21K,Wild Cévennes Beast,5000
+Triathlon Half Strasbourg,Triathlon,Half Ironman,,Strasbourg,France,Europe,2026-09-07,07:30,Half Ironman,European capital 70.3,2500
+Trail Cathare,Trail Running,Trail Race,100K,Carcassonne,France,Europe,2026-04-05,05:00,100km,Medieval fortress trail,1800
+Marathon de Toulouse,Running,Road Running,Marathon,Toulouse,France,Europe,2026-10-26,09:00,42.2km,Pink city flat marathon,13000
+HYROX Reims,Hyrox,Indoor Fitness Race,Open,Reims,France,Europe,2026-10-04,08:00,Hyrox,Champagne celebration race,6800
+Spartan Sprint Strasbourg,Spartan,Obstacle Race,Sprint,Strasbourg,France,Europe,2026-11-22,08:30,5K,European institutions Sprint,6500
+Triathlon Mont Saint-Michel,Triathlon,Olympic Distance,,Mont-Saint-Michel,France,Europe,2026-05-25,08:30,Standard,UNESCO wonder triathlon,3000
+Trail du Bout du Monde,Trail Running,Trail Race,56K,Pointe du Raz,France,Europe,2026-07-13,08:00,56km,Wild Brittany headland trail,2200
+10K de Cannes,Running,Road Running,10K,Cannes,France,Europe,2026-02-23,09:30,10km,Red carpet race,11000
+HYROX Brest,Hyrox,Indoor Fitness Race,Open,Brest,France,Europe,2026-09-27,08:00,Hyrox,Westernmost France edition,6000
+Spartan Super Val d’Isère,Spartan,Obstacle Race,Super,Val d’Isère,France,Europe,2026-07-05,07:30,10K,High-altitude luxury resort Super,5800
+Triathlon Half Nice,Triathlon,Half Ironman,,Nice,France,Europe,2026-09-21,07:00,Half Ironman,Promenade des Anglais 70.3,3400
+Trail de Vulcain,Trail Running,Trail Race,73K,Volvic,France,Europe,2026-03-02,06:00,73km,Volcanic chain trail,2000
+Semi-Marathon de Marseille,Running,Road Running,Half Marathon,Marseille,France,Europe,2026-03-23,09:00,21.1km,From Vieux-Port to Prado,15000
+HYROX Dijon,Hyrox,Indoor Fitness Race,Open,Dijon,France,Europe,2026-11-01,08:00,Hyrox,Mustard capital race,6200
+Spartan Sprint Avignon,Spartan,Obstacle Race,Sprint,Avignon,France,Europe,2026-05-10,08:30,5K,Pont d’Avignon Sprint,6800
+Triathlon Corsica,Triathlon,Olympic Distance,,Porto-Vecchio,France,Europe,2026-06-08,09:00,Standard,South Corsica paradise,1900
+Ultra-Trail des Païens,Trail Running,Ultra Trail,100K,Saint-Raphaël,France,Europe,2026-04-26,05:00,100km,Esterel red rocks ultra,1300
+Marathon du Clair de Lune,Running,Road Running,Marathon,Paris,France,Europe,2026-09-27,20:00,42.2km,Night Paris marathon (hypothetical revival),12000
+HYROX Annecy,Hyrox,Indoor Fitness Race,Open,Annecy,France,Europe,2026-07-19,08:00,Hyrox,Lake Annecy summer race,7500
+Spartan Beast Corsica,Spartan,Obstacle Race,Beast,Bastia,France,Europe,2026-05-18,07:00,21K,Wild Corsican Beast,4800
+Triathlon Half La Baule,Triathlon,Half Ironman,,La Baule,France,Europe,2026-09-14,07:30,Half Ironman,Chic Atlantic coast 70.3,2800
+Trail des Glaciers de la Vanoise,Trail Running,Trail Race,72K,Pralognan-la-Vanoise,France,Europe,2026-07-12,04:00,72km,High alpine glaciers trail,1600
+10K de Nice,Running,Road Running,10K,Nice,France,Europe,2026-04-13,09:30,10km,Promenade fast race,13000
+HYROX Caen,Hyrox,Indoor Fitness Race,Open,Caen,France,Europe,2026-03-29,08:00,Hyrox,Normandy D-Day edition,6500
+Spartan Sprint Metz,Spartan,Obstacle Race,Sprint,Metz,France,Europe,2026-10-11,08:30,5K,Lorraine fortress Sprint,6000
+Triathlon Saint-Tropez,Triathlon,Olympic Distance,,Saint-Tropez,France,Europe,2026-05-04,09:00,Standard,Glamour Côte d’Azur tri,2500
+Trail du Colorado de Rustrel,Trail Running,Trail Race,45K,Rustrel,France,Europe,2026-10-19,08:00,45km,Provençal Colorado trail,1900
+Semi-Marathon de Lyon,Running,Road Running,Half Marathon,Lyon,France,Europe,2026-10-05,09:00,21.1km,Rhône river half,18000
+HYROX Rouen,Hyrox,Indoor Fitness Race,Open,Rouen,France,Europe,2026-04-12,08:00,Hyrox,Normandy historic city race,6300
+Spartan Super Corsica,Spartan,Obstacle Race,Super,Calvi,France,Europe,2026-05-17,07:30,10K,Corsican mountain Super,5200
+Triathlon Half Evian,Triathlon,Half Ironman,,Evian-les-Bains,France,Europe,2026-06-29,07:30,Half Ironman,Lake Geneva 70.3,2700
+Trail de la Grande Odyssée,Trail Running,Trail Race,60K,Les Saisies,France,Europe,2026-01-18,08:00,60km,Winter alpine trail,1500
+Marathon de Montpellier,Running,Road Running,Marathon,Montpellier,France,Europe,2026-03-30,09:00,42.2km,Mediterranean fast marathon,11000
+HYROX Le Havre,Hyrox,Indoor Fitness Race,Open,Le Havre,France,Europe,2026-10-25,08:00,Hyrox,Port city edition,6100
+Spartan Sprint Rennes,Spartan,Obstacle Race,Sprint,Rennes,France,Europe,2026-06-21,08:30,5K,Brittany capital Sprint,6400
+Triathlon Biarritz,Triathlon,Olympic Distance,,Biarritz,France,Europe,2026-06-15,09:00,Standard,Basque coast surf tri,2300
+Ultra-Trail du Haut-Giffre,Trail Running,Ultra Trail,100K,Sixt-Fer-à-Cheval,France,Europe,2026-06-28,05:00,100km,Alpine circus ultra,1200
+10K de Bordeaux,Running,Road Running,10K,Bordeaux,France,Europe,2026-04-26,20:00,10km,Night city race,14000
+HYROX Angers,Hyrox,Indoor Fitness Race,Open,Angers,France,Europe,2026-05-10,08:00,Hyrox,Loire Valley edition,6000
+Spartan Beast Jura,Spartan,Obstacle Race,Beast,Lajoux,France,Europe,2026-09-13,07:00,21K,Jura mountains Beast,4800
+Triathlon Half Deauville,Triathlon,Half Ironman,,Deauville,France,Europe,2026-06-15,07:00,Half Ironman,Normandy luxury 70.3,3100
+Trail des Balcons d’Azur,Trail Running,Trail Race,55K,Mandelieu,France,Europe,2026-04-27,07:00,55km,Côte d’Azur panoramic trail,2000
+Semi-Marathon de Strasbourg,Running,Road Running,Half Marathon,Strasbourg,France,Europe,2026-10-12,09:00,21.1km,European quarter half,13000
+HYROX Perpignan,Hyrox,Indoor Fitness Race,Open,Perpignan,France,Europe,2026-11-15,08:00,Hyrox,Catalan finale,6200
+Spartan Sprint Dijon,Spartan,Obstacle Race,Sprint,Dijon,France,Europe,2026-03-22,08:30,5K,Mustard city Sprint,6000
+Triathlon Half Lorient,Triathlon,Half Ironman,,Lorient,France,Europe,2026-09-07,07:30,Half Ironman,Brittany naval 70.3,2400
+Trail du Mézenc,Trail Running,Trail Race,50K,Les Estables,France,Europe,2026-08-10,07:00,50km,Volcanic Massif Central trail,1600
+Marathon du Mont Ventoux,Running,Road Running,Marathon,Bédoin,France,Europe,2026-09-21,08:00,42.2km,Giant of Provence climb marathon,4000
+HYROX Avignon,Hyrox,Indoor Fitness Race,Open,Avignon,France,Europe,2026-04-05,08:00,Hyrox,Papal city race,6500
+Spartan Super Alsace,Spartan,Obstacle Race,Super,Ribeauvillé,France,Europe,2026-10-18,07:30,10K,Vineyard Super,5800
+Triathlon Saint-Jean-de-Monts,Triathlon,Olympic Distance,,Saint-Jean-de-Monts,France,Europe,2026-07-06,09:00,Standard,Vendée beach tri,2000
+Ultra-Trail de Corte,Trail Running,Ultra Trail,120K,Corte,France,Europe,2026-06-14,04:00,120km,Corsican mountains ultra,1100
+10K de Nancy,Running,Road Running,10K,Nancy,France,Europe,2026-05-18,09:30,10km,Place Stanislas race,10000
+HYROX Biarritz,Hyrox,Indoor Fitness Race,Open,Biarritz,France,Europe,2026-09-20,08:00,Hyrox,Basque surf city race,7000
+Spartan Sprint La Rochelle,Spartan,Obstacle Race,Sprint,La Rochelle,France,Europe,2026-06-07,08:30,5K,Atlantic fortress Sprint,6600
+Triathlon Half Quiberon,Triathlon,Half Ironman,,Quiberon,France,Europe,2026-07-20,07:30,Half Ironman,Brittany wild coast 70.3,2500
+Trail des Ecrins,Trail Running,Trail Race,57K,Vallouise,France,Europe,2026-08-24,06:00,57km,High alpine Ecrins trail,1700
+Semi-Marathon de Toulouse,Running,Road Running,Half Marathon,Toulouse,France,Europe,2026-03-30,09:00,21.1km,Pink city half,14000
+HYROX Toulon,Hyrox,Indoor Fitness Race,Open,Toulon,France,Europe,2026-11-29,08:00,Hyrox,Mediterranean navy city race,6300
+Spartan Beast Morvan,Spartan,Obstacle Race,Beast,Saulieu,France,Europe,2026-05-25,07:00,21K,Burgundy forest Beast,4900
+Triathlon Royan,Triathlon,Olympic Distance,,Royan,France,Europe,2026-09-14,09:00,Standard,Atlantic coast tri,2100
+Trail du Galibier-Thabor,Trail Running,Trail Race,60K,Valmeinier,France,Europe,2026-07-27,05:00,60km,High passes alpine trail,1500
+Marathon de Colmar,Running,Road Running,Marathon,Colmar,France,Europe,2026-09-28,09:00,42.2km,Alsace wine route marathon,7000
+HYROX Orléans,Hyrox,Indoor Fitness Race,Open,Orléans,France,Europe,2026-05-03,08:00,Hyrox,Joan of Arc city race,6100
+Spartan Sprint Nantes,Spartan,Obstacle Race,Sprint,Nantes,France,Europe,2026-11-08,08:30,5K,Atlantic city Sprint,6700
+Triathlon Half Annecy,Triathlon,Half Ironman,,Annecy,France,Europe,2026-06-08,07:00,Half Ironman,Lake Annecy 70.3,3300
+Trail du Queyras,Trail Running,Trail Race,50K,Ceillac,France,Europe,2026-07-13,07:00,50km,Alpine Queyras trail,1600
+10K de Metz,Running,Road Running,10K,Metz,France,Europe,2026-10-19,09:30,10km,Lorraine fast race,9000
+HYROX Limoges,Hyrox,Indoor Fitness Race,Open,Limoges,France,Europe,2026-03-22,08:00,Hyrox,Porcelain city race,5900
+Spartan Super Ardennes,Spartan,Obstacle Race,Super,Sedan,France,Europe,2026-09-27,07:30,10K,Forest of Ardennes Super,5500
+Triathlon Saint-Malo,Triathlon,Olympic Distance,,Saint-Malo,France,Europe,2026-06-22,09:00,Standard,Corsair city tri,2400
+Ultra-Trail de Normandie,Trail Running,Ultra Trail,100K,Rouen,France,Europe,2026-05-11,05:00,100km,Seine valley ultra,1300
+Semi-Marathon de Cannes,Running,Road Running,Half Marathon,Cannes,France,Europe,2026-02-23,09:00,21.1km,Film festival half,12000
+HYROX Nîmes,Hyrox,Indoor Fitness Race,Open,Nîmes,France,Europe,2026-10-18,08:00,Hyrox,Roman arena city race,6400
+Spartan Sprint Montpellier,Spartan,Obstacle Race,Sprint,Montpellier,France,Europe,2026-04-26,08:30,5K,Mediterranean student Sprint,6800
+Triathlon Half Gérardmer,Triathlon,Half Ironman,,Gérardmer,France,Europe,2026-09-07,07:30,Half Ironman,Vosges lake 70.3,2600
+Trail du Sancy,Trail Running,Trail Race,60K,Mont-Dore,France,Europe,2026-09-14,06:00,60km,Volcanic Massif Central trail,1800
+Marathon du Périgord,Running,Road Running,Marathon,Périgueux,France,Europe,2026-11-09,09:00,42.2km,Truffle & foie gras marathon,6000
+HYROX Poitiers,Hyrox,Indoor Fitness Race,Open,Poitiers,France,Europe,2026-12-06,08:00,Hyrox,Futuroscope nearby race,6000
+Spartan Beast Vosges,Spartan,Obstacle Race,Beast,Gérardmer,France,Europe,2026-07-19,07:00,21K,Vosges mountain Beast,5100
+Triathlon La Baule,Triathlon,Olympic Distance,,La Baule,France,Europe,2026-09-14,09:00,Standard,Chic Atlantic tri,2800
+Trail de l’Aubrac,Trail Running,Trail Race,55K,Nasbinals,France,Europe,2026-06-15,07:00,55km,High plateau Aubrac trail,1700
+10K de Toulon,Running,Road Running,10K,Toulon,France,Europe,2026-11-30,09:30,10km,Mediterranean navy race,8000
+HYROX Amiens,Hyrox,Indoor Fitness Race,Open,Amiens,France,Europe,2026-02-15,08:00,Hyrox,Gothic cathedral city race,6200
+Spartan Sprint Reims,Spartan,Obstacle Race,Sprint,Reims,France,Europe,2026-10-11,08:30,5K,Champagne Sprint,6500
+Triathlon Half Valence,Triathlon,Half Ironman,,Valence,France,Europe,2026-05-18,07:30,Half Ironman,Drôme Provençale 70.3,2400
+Trail du Cirque de Gavarnie,Trail Running,Trail Race,47K,Gavarnie,France,Europe,2026-07-20,07:00,47km,Pyrenees UNESCO cirque trail,1500
+Semi-Marathon de Metz,Running,Road Running,Half Marathon,Metz,France,Europe,2026-10-19,09:00,21.1km,Mirabelles half,11000
+HYROX Besançon,Hyrox,Indoor Fitness Race,Open,Besançon,France,Europe,2026-11-22,08:00,Hyrox,Citadel city race,6100
+Spartan Super Luberon,Spartan,Obstacle Race,Super,Apt,France,Europe,2026-04-13,07:30,10K,Provence hills Super,5700
+Triathlon Cap d’Agde,Triathlon,Olympic Distance,,Cap d’Agde,France,Europe,2026-05-25,09:00,Standard,Mediterranean resort tri,2200
+Ultra-Trail des Monts d’Arrée,Trail Running,Ultra Trail,100K,Huelgoat,France,Europe,2026-06-29,05:00,100km,Brittany wild ultra,1200
+Marathon de Vannes,Running,Road Running,Marathon,Vannes,France,Europe,2026-10-12,09:00,42.2km,Gulf of Morbihan marathon,8000
+HYROX Troyes,Hyrox,Indoor Fitness Race,Open,Troyes,France,Europe,2026-03-08,08:00,Hyrox,Champagne medieval city race,5900
+Spartan Sprint Angers,Spartan,Obstacle Race,Sprint,Angers,France,Europe,2026-11-15,08:30,5K,Loire castles Sprint,6200
+Triathlon Half Cannes,Triathlon,Half Ironman,,Cannes,France,Europe,2026-04-27,07:00,Half Ironman,Film festival 70.3,3000
+Trail du Pic Saint-Loup,Trail Running,Trail Race,45K,Saint-Mathieu-de-Tréviers,France,Europe,2026-03-23,08:00,45km,Languedoc iconic peak trail,1900
+10K de Rennes,Running,Road Running,10K,Rennes,France,Europe,2026-10-12,09:30,10km,Brittany capital race,13000
+HYROX Mulhouse,Hyrox,Indoor Fitness Race,Open,Mulhouse,France,Europe,2026-12-13,08:00,Hyrox,Alsace industrial finale,6000
+Spartan Beast Massif des Maures,Spartan,Obstacle Race,Beast,La Garde-Freinet,France,Europe,2026-05-11,07:00,21K,Provençal wild Beast,4900
+Triathlon Porto-Vecchio,Triathlon,Olympic Distance,,Porto-Vecchio,France,Europe,2026-06-08,09:00,Standard,South Corsica tri,2000
+Trail des Gorges du Verdon,Trail Running,Trail Race,60K,La Palud-sur-Verdon,France,Europe,2026-06-22,06:00,60km,Europe’s Grand Canyon trail,1800
+Semi-Marathon de Montpellier,Running,Road Running,Half Marathon,Montpellier,France,Europe,2026-03-30,09:00,21.1km,Mediterranean half,14000
+HYROX La Rochelle,Hyrox,Indoor Fitness Race,Open,La Rochelle,France,Europe,2026-09-27,08:00,Hyrox,Atlantic fortress race,6400
+Spartan Super Pyrenees Oriental,Spartan,Obstacle Race,Super,Font-Romeu,France,Europe,2026-07-05,07:30,10K,Catalan Pyrenees Super,5600
+Triathlon Half Saint-Jean-de-Luz,Triathlon,Half Ironman,,Saint-Jean-de-Luz,France,Europe,2026-06-29,07:30,Half Ironman,Basque coast 70.3,2500
+Trail du Moucherotte,Trail Running,Trail Race,42K,Lans-en-Vercors,France,Europe,2026-04-13,08:00,42km,Vercors classic trail,1700
+Marathon des Causses,Running,Road Running,Marathon,Millau,France,Europe,2026-10-19,09:00,42.2km,Viaduct & gorges marathon,6500
+HYROX Vannes,Hyrox,Indoor Fitness Race,Open,Vannes,France,Europe,2026-10-11,08:00,Hyrox,Brittany gulf race,6100
+Spartan Sprint Orléans,Spartan,Obstacle Race,Sprint,Orléans,France,Europe,2026-05-24,08:30,5K,Joan of Arc Sprint,6300
+Triathlon Arcachon,Triathlon,Olympic Distance,,Arcachon,France,Europe,2026-09-21,09:00,Standard,Bassin d’Arcachon tri,2300
+Ultra-Trail de la Côte Bleue,Trail Running,Ultra Trail,100K,Martigues,France,Europe,2026-04-26,05:00,100km,Mediterranean blue coast ultra,1200
+10K de La Rochelle,Running,Road Running,10K,La Rochelle,France,Europe,2026-11-02,09:30,10km,Atlantic port race,11000
+HYROX Calais,Hyrox,Indoor Fitness Race,Open,Calais,France,Europe,2026-02-22,08:00,Hyrox,Channel coast race,6000
+Spartan Beast Chartreuse,Spartan,Obstacle Race,Beast,Saint-Pierre-de-Chartreuse,France,Europe,2026-06-28,07:00,21K,Mysterious Chartreuse Beast,5000
+Triathlon Half Royan,Triathlon,Half Ironman,,Royan,France,Europe,2026-09-14,07:30,Half Ironman,Atlantic coast 70.3,2600
+Trail du Mont Olympe,Trail Running,Trail Race,50K,Briançon,France,Europe,2026-07-13,07:00,50km,Highest city in Europe trail,1600
+Semi-Marathon de Nancy,Running,Road Running,Half Marathon,Nancy,France,Europe,2026-05-18,09:00,21.1km,Place Stanislas half,12000
+HYROX Arras,Hyrox,Indoor Fitness Race,Open,Arras,France,Europe,2026-11-08,08:00,Hyrox,Flanders squares race,5900
+Spartan Super Mercantour,Spartan,Obstacle Race,Super,Saint-Martin-Vésubie,France,Europe,2026-07-19,07:30,10K,Alpine national park Super,5500
+Triathlon Bastia,Triathlon,Olympic Distance,,Bastia,France,Europe,2026-06-15,09:00,Standard,North Corsica tri,1800
+Trail du Grand Ballon,Trail Running,Trail Race,47K,Willers,France,Europe,2026-05-25,08:00,47km,Vosges highest peak trail,1800
+Marathon de Deauville,Running,Road Running,Marathon,Deauville,France,Europe,2026-11-02,09:00,42.2km,Normandy luxury marathon,7000
+HYROX Le Mans,Hyrox,Indoor Fitness Race,Open,Le Mans,France,Europe,2026-06-14,08:00,Hyrox,24h circuit city race,6400
+Spartan Sprint Limoges,Spartan,Obstacle Race,Sprint,Limoges,France,Europe,2026-10-25,08:30,5K,Porcelain Sprint,6000
+Triathlon Half Biarritz,Triathlon,Half Ironman,,Biarritz,France,Europe,2026-06-15,07:00,Half Ironman,Basque surf 70.3,2900
+Trail de la Vallée des Lacs,Trail Running,Trail Race,55K,Gérardmer,France,Europe,2026-08-10,07:00,55km,Vosges lakes trail,1700
+10K de Brest,Running,Road Running,10K,Brest,France,Europe,2026-10-19,09:30,10km,Westernmost race,9000
+HYROX Bayonne,Hyrox,Indoor Fitness Race,Open,Bayonne,France,Europe,2026-09-13,08:00,Hyrox,Basque festival city race,6200
+Spartan Beast Réunion,Spartan,Obstacle Race,Beast,Saint-Denis,France,Europe,2026-05-18,07:00,21K,Volcanic island Beast (overseas),4500
+Triathlon Half Lorient,Triathlon,Half Ironman,,Lorient,France,Europe,2026-09-07,07:30,Half Ironman,Brittany naval 70.3,2400
+Trail du Bélier,Trail Running,Trail Race,42K,La Clusaz,France,Europe,2026-08-24,08:00,42km,Aravis mountains trail,2000
+Semi-Marathon de Reims,Running,Road Running,Half Marathon,Reims,France,Europe,2026-10-19,09:00,21.1km,Champagne half,13000
+HYROX Chartres,Hyrox,Indoor Fitness Race,Open,Chartres,France,Europe,2026-04-26,08:00,Hyrox,Cathedral city race,6000
+Spartan Sprint Poitiers,Spartan,Obstacle Race,Sprint,Poitiers,France,Europe,2026-11-29,08:30,5K,Futuroscope Sprint,6100
+Triathlon Evian,Triathlon,Olympic Distance,,Evian-les-Bains,France,Europe,2026-06-29,09:00,Standard,Lake Geneva tri,2200
+Ultra-Trail du Mont Rose,Spartan,Obstacle Race,Ultra,Saint-Martin-de-Belleville,France,Europe,2026-07-12,05:00,50K,Spartan-style ultra (rare),3200
+Marathon du Golfe de Saint-Tropez,Running,Road Running,Marathon,Sainte-Maxime,France,Europe,2026-03-16,09:00,42.2km,Chic Riviera marathon,7500
+HYROX Saint-Étienne,Hyrox,Indoor Fitness Race,Open,Saint-Étienne,France,Europe,2026-12-07,08:00,Hyrox,Design city finale,6100
+Spartan Super Corsica,Spartan,Obstacle Race,Super,Porto-Vecchio,France,Europe,2026-05-17,07:30,10K,South Corsica Super,5100
+Triathlon Half Arcachon,Triathlon,Half Ironman,,Arcachon,France,Europe,2026-09-21,07:30,Half Ironman,Bassin d’Arcachon 70.3,2500
+Trail du Tour des Fiz,Trail Running,Trail Race,60K,Passy,France,Europe,2026-07-27,05:00,60km,Mont Blanc massif trail,1600
+10K de Dijon,Running,Road Running,10K,Dijon,France,Europe,2026-05-11,09:30,10km,Mustard capital race,10000
+HYROX Lorient,Hyrox,Indoor Fitness Race,Open,Lorient,France,Europe,2026-06-21,08:00,Hyrox,Brittany naval city race,6000
+Spartan Beast Provence,Spartan,Obstacle Race,Beast,Luberon,France,Europe,2026-04-27,07:00,21K,Lavender fields Beast,5000
+Triathlon Saint-Raphaël,Triathlon,Olympic Distance,,Saint-Raphaël,France,Europe,2026-05-04,09:00,Standard,Côte d’Azur tri,2100
+Trail des Reculées,Trail Running,Trail Race,50K,Baume-les-Messieurs,France,Europe,2026-04-13,08:00,50km,Jura waterfalls trail,1700
+Semi-Marathon de Toulon,Running,Road Running,Half Marathon,Toulon,France,Europe,2026-11-30,09:00,21.1km,Mediterranean half,10000
+HYROX Albi,Hyrox,Indoor Fitness Race,Open,Albi,France,Europe,2026-10-04,08:00,Hyrox,Red brick cathedral race,5900
+Spartan Sprint Bayonne,Spartan,Obstacle Race,Sprint,Bayonne,France,Europe,2026-09-13,08:30,5K,Basque festival Sprint,6300
+Triathlon Half Saint-Tropez,Triathlon,Half Ironman,,Saint-Tropez,France,Europe,2026-04-27,07:00,Half Ironman,Glamour 70.3,2800
+Trail du Val d’Allos,Trail Running,Trail Race,45K,Allos,France,Europe,2026-07-20,07:00,45km,Southern Alps trail,1500
+Marathon de Biarritz,Running,Road Running,Marathon,Biarritz,France,Europe,2026-06-15,09:00,42.2km,Basque surf marathon,8000
+HYROX Valenciennes,Hyrox,Indoor Fitness Race,Open,Valenciennes,France,Europe,2026-03-15,08:00,Hyrox,Northern coal city race,5800
+Spartan Super Jura,Spartan,Obstacle Race,Super,Les Rousses,France,Europe,2026-09-13,07:30,10K,Lake district Super,5500
+Triathlon Corte,Triathlon,Olympic Distance,,Corte,France,Europe,2026-06-14,09:00,Standard,Corsican mountain tri,1700
+Ultra-Trail de la Brèche,Trail Running,Ultra Trail,100K,Briançon,France,Europe,2026-07-13,04:00,100km,High passes ultra,1100
+10K de Nîmes,Running,Road Running,10K,Nîmes,France,Europe,2026-05-18,09:30,10km,Roman arena race,9500
+HYROX Pau,Hyrox,Indoor Fitness Race,Open,Pau,France,Europe,2026-11-01,08:00,Hyrox,Pyrenees gateway race,6200
+Spartan Beast Auvergne,Spartan,Obstacle Race,Beast,Puy de Dôme,France,Europe,2026-06-08,07:00,21K,Volcanic Beast,5100
+Triathlon Half La Rochelle,Triathlon,Half Ironman,,La Rochelle,France,Europe,2026-06-22,07:30,Half Ironman,Atlantic fortress 70.3,2700
+Trail des Bauges,Trail Running,Trail Race,52K,Le Châtelard,France,Europe,2026-09-07,07:00,52km,Savoie wild massif trail,1600
+Semi-Marathon de Biarritz,Running,Road Running,Half Marathon,Biarritz,France,Europe,2026-06-15,09:00,21.1km,Basque coast half,12000
+HYROX Carcassonne,Hyrox,Indoor Fitness Race,Open,Carcassonne,France,Europe,2026-04-12,08:00,Hyrox,Medieval fortress race,6400
+Spartan Sprint Alès,Spartan,Obstacle Race,Sprint,Alès,France,Europe,2026-10-18,08:30,5K,Cévennes Sprint,5900
+Triathlon Quimper,Triathlon,Olympic Distance,,Quimper,France,Europe,2026-07-13,09:00,Standard,Brittany Celtic tri,1900
+Trail du Lac d’Annecy,Trail Running,Trail Race,44K,Talloires,France,Europe,2026-05-25,08:00,44km,Lake Annecy trail,2000
+Marathon du Luberon,Running,Road Running,Marathon,Apt,France,Europe,2026-10-12,09:00,42.2km,Provence hills marathon,6000
+HYROX Tarbes,Hyrox,Indoor Fitness Race,Open,Tarbes,France,Europe,2026-09-20,08:00,Hyrox,Pyrenees foothills race,5800
+Spartan Super Réunion,Spartan,Obstacle Race,Super,Saint-Leu,France,Europe,2026-05-17,07:30,10K,Indian Ocean Super (overseas),4800
+Triathlon Half Corte,Triathlon,Half Ironman,,Corte,France,Europe,2026-06-14,07:30,Half Ironman,Corsican mountain 70.3,2200
+Trail du Montcalm,Trail Running,Trail Race,65K,Auzat,France,Europe,2026-08-17,05:00,65km,Pyrenees Ariégeois trail,1400
+10K de Pau,Running,Road Running,10K,Pau,France,Europe,2026-11-09,09:30,10km,Pyrenees panorama race,8500
+HYROX Béziers,Hyrox,Indoor Fitness Race,Open,Béziers,France,Europe,2026-11-29,08:00,Hyrox,Languedoc wine city race,6000
+Spartan Beast Mercantour,Spartan,Obstacle Race,Beast,Valdeblore,France,Europe,2026-07-19,07:00,21K,Alps-Maritimes Beast,4900
+Triathlon Lorient,Triathlon,Olympic Distance,,Lorient,France,Europe,2026-09-07,09:00,Standard,Brittany naval tri,2000
+Ultra-Trail du Vercors,Trail Running,Ultra Trail,85K,Villard-de-Lans,France,Europe,2026-09-07,05:00,85km,Vercors plateau ultra,1300
+Semi-Marathon de La Rochelle,Running,Road Running,Half Marathon,La Rochelle,France,Europe,2026-11-30,09:00,21.1km,Atlantic port half,13000
