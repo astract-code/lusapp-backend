@@ -101,9 +101,9 @@ export const getDisplayDistance = (race, useMetric = true) => {
   if (race.sport_subtype && STANDARD_DISTANCES_KM[race.sport_subtype]) {
     const dist = STANDARD_DISTANCES_KM[race.sport_subtype];
     
-    // For triathlons with descriptions, show the full breakdown
+    // For triathlons, show the label (e.g., "Half Ironman") not the detailed breakdown
     if (dist.description && TRIATHLON_DESCRIPTIONS[race.sport_subtype]) {
-      return getTriathlonDescription(race.sport_subtype, useMetric);
+      return dist.label;
     }
     
     // For distances with km value
