@@ -1,0 +1,534 @@
+name,sport,sport_category,sport_subtype,city,country,continent,date,start_time,distance,description,participants
+Ultra Trail Essen,Trail Running,Ultra Trail,43K,Essen,Germany,Europe,2026-04-02,09:00,43km,Trail adventure in Essen region,9652
+Spartan Trifecta Weekend Saarbrücken,Spartan,Obstacle Race,Trifecta Weekend,Saarbrücken,Germany,Europe,2026-02-02,06:15,5K+10K+21K,Full Trifecta weekend in Saarbrücken,13271
+Spartan Ultra Wuppertal,Spartan,Obstacle Race,Ultra,Wuppertal,Germany,Europe,2026-06-03,07:45,50K,Endurance Ultra in Wuppertal area,21392
+10K Mülheim,Running,Road Running,10K,Mülheim,Germany,Europe,2026-02-13,06:30,10km,Fast 10K race in Mülheim,15916
+Half Marathon Jena,Running,Road Running,Half,Jena,Germany,Europe,2026-05-05,08:00,21.1km,Popular half in Jena,28929
+Triathlon Aachen,Triathlon,Full Ironman,,Aachen,Germany,Europe,2026-06-19,08:30,Full Ironman,Full distance triathlon in Aachen,13575
+HYROX Ludwigshafen,Hyrox,Indoor Fitness Race,Open,Ludwigshafen,Germany,Europe,2026-06-07,10:15,Hyrox,World-class indoor race in Ludwigshafen,3300
+HYROX Augsburg Autumn,Hyrox,Indoor Fitness Race,Open,Augsburg,Germany,Europe,2026-12-20,09:00,Hyrox,Autumn edition in Augsburg,18850
+Trail Marathon Bielefeld,Trail Running,Trail,42K,Bielefeld,Germany,Europe,2026-05-19,09:00,42km,Trail adventure in Bielefeld region,18001
+Spartan Beast Darmstadt,Spartan,Obstacle Race,Beast,Darmstadt,Germany,Europe,2026-04-05,08:00,21K,Brutal Beast near Darmstadt,15183
+Spartan Super Regensburg,Spartan,Obstacle Race,Super,Regensburg,Germany,Europe,2026-08-28,06:30,10K,Challenging Super in Regensburg,28378
+HYROX Bergisch Gladbach Spring,Hyrox,Indoor Fitness Race,Pro,Bergisch Gladbach,Germany,Europe,2026-01-27,07:45,Hyrox,Bergisch Gladbach fitness challenge,21655
+Spartan Trifecta Weekend Wuppertal,Spartan,Obstacle Race,Trifecta Weekend,Wuppertal,Germany,Europe,2026-12-11,06:15,5K+10K+21K,Full Trifecta weekend in Wuppertal,19756
+20K Essen,Running,Road Running,20K,Essen,Germany,Europe,2026-05-12,09:45,20km,20K challenge in Essen,29560
+Triathlon Heidelberg,Triathlon,Olympic Distance,,Heidelberg,Germany,Europe,2026-02-25,09:00,Standard,Olympic tri in Heidelberg,14001
+Ultra Trail Magdeburg,Trail Running,Ultra Trail,62K,Magdeburg,Germany,Europe,2026-10-28,10:30,62km,Trail adventure in Magdeburg region,5331
+20K Regensburg,Running,Road Running,20K,Regensburg,Germany,Europe,2026-10-15,08:00,20km,20K challenge in Regensburg,18211
+Triathlon Bergisch Gladbach,Triathlon,Half Ironman,,Bergisch Gladbach,Germany,Europe,2026-02-25,06:15,Half Ironman,70.3 event near Bergisch Gladbach,25785
+HYROX Potsdam Summer,Hyrox,Indoor Fitness Race,Pro,Potsdam,Germany,Europe,2026-09-16,10:15,Hyrox,Iconic Potsdam Hyrox event,2213
+HYROX Darmstadt Summer,Hyrox,Indoor Fitness Race,Pro,Darmstadt,Germany,Europe,2026-07-13,10:00,Hyrox,Darmstadt fitness challenge,20447
+Triathlon Rostock,Triathlon,Full Ironman,,Rostock,Germany,Europe,2026-12-07,09:30,Full Ironman,Full distance triathlon in Rostock,7723
+Night Ultra Regensburg,Trail Running,Night Ultra,165K,Regensburg,Germany,Europe,2026-02-28,06:30,165km,Trail adventure in Regensburg region,18962
+Triathlon Stuttgart,Triathlon,Full Ironman,,Stuttgart,Germany,Europe,2026-04-26,06:45,Full Ironman,Full distance triathlon in Stuttgart,12923
+Trail Marathon Oberhausen,Trail Running,Trail,80K,Oberhausen,Germany,Europe,2026-02-25,07:30,80km,Trail adventure in Oberhausen region,27053
+Triathlon Ludwigshafen,Triathlon,Olympic Distance,,Ludwigshafen,Germany,Europe,2026-06-11,08:15,Standard,Olympic tri in Ludwigshafen,5108
+5K Göttingen,Running,Road Running,5K,Göttingen,Germany,Europe,2026-06-27,09:15,5km,Quick 5K event in Göttingen,27819
+Ultra Trail Berlin,Trail Running,Ultra Trail,45K,Berlin,Germany,Europe,2026-09-27,07:15,45km,Trail adventure in Berlin region,26370
+20K Essen,Running,Road Running,20K,Essen,Germany,Europe,2026-07-07,10:00,20km,20K challenge in Essen,15516
+HYROX Aachen Winter,Hyrox,Indoor Fitness Race,Pro,Aachen,Germany,Europe,2026-10-09,09:30,Hyrox,Iconic Aachen Hyrox event,8928
+Ultra Trail Bochum,Trail Running,Ultra Trail,145K,Bochum,Germany,Europe,2026-12-05,09:15,145km,Trail adventure in Bochum region,23900
+Spartan Sprint Heilbronn,Spartan,Obstacle Race,Sprint,Heilbronn,Germany,Europe,2026-10-20,08:45,5K,Fast Heilbronn Sprint with obstacles,5353
+HYROX Duisburg Summer,Hyrox,Indoor Fitness Race,Pro,Duisburg,Germany,Europe,2026-11-05,10:45,Hyrox,Iconic Duisburg Hyrox event,10640
+Triathlon Bremerhaven,Triathlon,Full Ironman,,Bremerhaven,Germany,Europe,2026-11-04,09:45,Full Ironman,Full distance triathlon in Bremerhaven,19522
+Spartan Beast Ingolstadt,Spartan,Obstacle Race,Beast,Ingolstadt,Germany,Europe,2026-01-24,08:45,21K,Brutal Beast near Ingolstadt,13024
+Triathlon Paderborn,Triathlon,Full Ironman,,Paderborn,Germany,Europe,2026-02-17,07:00,Full Ironman,Full distance triathlon in Paderborn,12923
+Spartan Beast Remscheid,Spartan,Obstacle Race,Beast,Remscheid,Germany,Europe,2026-08-26,08:00,21K,Brutal Beast near Remscheid,9838
+Triathlon Aachen,Triathlon,Long Distance,,Aachen,Germany,Europe,2026-08-27,07:00,L (1.2-80-22),Long distance challenge in Aachen,5111
+Trail Race Bremerhaven,Trail Running,Trail,177K,Bremerhaven,Germany,Europe,2026-09-02,10:00,177km,Trail adventure in Bremerhaven region,22765
+Spartan Super Braunschweig,Spartan,Obstacle Race,Super,Braunschweig,Germany,Europe,2026-01-06,06:15,10K,Challenging Super in Braunschweig,5372
+Half Marathon Wiesbaden,Running,Road Running,Half,Wiesbaden,Germany,Europe,2026-02-09,08:30,21.1km,Popular half in Wiesbaden,12130
+Triathlon Duisburg,Triathlon,Olympic Distance,,Duisburg,Germany,Europe,2026-12-22,09:45,Standard,Olympic tri in Duisburg,23936
+HYROX Osnabrück Winter,Hyrox,Indoor Fitness Race,Pro,Osnabrück,Germany,Europe,2026-12-09,07:45,Hyrox,Osnabrück fitness challenge,3943
+HYROX Bremerhaven Summer,Hyrox,Indoor Fitness Race,Open,Bremerhaven,Germany,Europe,2026-01-16,09:30,Hyrox,World-class indoor race in Bremerhaven,23539
+5K Münster,Running,Road Running,5K,Münster,Germany,Europe,2026-09-11,06:00,5km,Quick 5K event in Münster,14855
+Spartan Trifecta Weekend Stuttgart,Spartan,Obstacle Race,Trifecta Weekend,Stuttgart,Germany,Europe,2026-10-10,10:45,5K+10K+21K,Full Trifecta weekend in Stuttgart,26500
+Night Ultra Mannheim,Trail Running,Night Ultra,125K,Mannheim,Germany,Europe,2026-01-26,09:45,125km,Trail adventure in Mannheim region,19477
+HYROX Munich,Hyrox,Indoor Fitness Race,Pro,Munich,Germany,Europe,2026-01-22,10:45,Hyrox,World-class indoor race in Munich,28853
+10K Erlangen,Running,Road Running,10K,Erlangen,Germany,Europe,2026-10-19,07:15,10km,Fast 10K race in Erlangen,2605
+Trail Race Bottrop,Trail Running,Trail,57K,Bottrop,Germany,Europe,2026-07-20,09:45,57km,Trail adventure in Bottrop region,13202
+Spartan Beast Krefeld,Spartan,Obstacle Race,Beast,Krefeld,Germany,Europe,2026-01-26,09:45,21K,Brutal Beast near Krefeld,11658
+Half Marathon Bonn,Running,Road Running,Half,Bonn,Germany,Europe,2026-07-27,09:30,21.1km,Popular half in Bonn,23006
+Ultra Trail Würzburg,Trail Running,Ultra Trail,110K,Würzburg,Germany,Europe,2026-07-09,08:15,110km,Trail adventure in Würzburg region,23471
+HYROX Mainz,Hyrox,Indoor Fitness Race,Open,Mainz,Germany,Europe,2026-11-15,06:30,Hyrox,World-class indoor race in Mainz,17433
+Triathlon Mönchengladbach,Triathlon,Full Ironman,,Mönchengladbach,Germany,Europe,2026-02-24,06:15,Full Ironman,Full distance triathlon in Mönchengladbach,23807
+Triathlon Aachen,Triathlon,Long Distance,,Aachen,Germany,Europe,2026-09-23,10:45,L (1.2-80-22),Long distance challenge in Aachen,23550
+HYROX Karlsruhe Summer,Hyrox,Indoor Fitness Race,Open,Karlsruhe,Germany,Europe,2026-02-24,10:30,Hyrox,Iconic Karlsruhe Hyrox event,13811
+10K Leipzig,Running,Road Running,10K,Leipzig,Germany,Europe,2026-08-07,09:00,10km,Fast 10K race in Leipzig,1332
+Spartan Sprint Gelsenkirchen,Spartan,Obstacle Race,Sprint,Gelsenkirchen,Germany,Europe,2026-07-24,07:00,5K,Fast Gelsenkirchen Sprint with obstacles,16993
+Spartan Trifecta Weekend Halle,Spartan,Obstacle Race,Trifecta Weekend,Halle,Germany,Europe,2026-06-10,08:45,5K+10K+21K,Full Trifecta weekend in Halle,10649
+Marathon Bottrop,Running,Road Running,Marathon,Bottrop,Germany,Europe,2026-02-10,06:15,42.2km,Scenic marathon through Bottrop,1356
+Spartan Trifecta Weekend Saarbrücken,Spartan,Obstacle Race,Trifecta Weekend,Saarbrücken,Germany,Europe,2026-08-14,09:15,5K+10K+21K,Full Trifecta weekend in Saarbrücken,20539
+10K Remscheid,Running,Road Running,10K,Remscheid,Germany,Europe,2026-10-21,08:45,10km,Fast 10K race in Remscheid,25227
+Marathon Solingen,Running,Road Running,Marathon,Solingen,Germany,Europe,2026-08-19,10:15,42.2km,Scenic marathon through Solingen,1816
+Spartan Ultra Augsburg,Spartan,Obstacle Race,Ultra,Augsburg,Germany,Europe,2026-01-09,10:45,50K,Endurance Ultra in Augsburg area,23800
+Ultra Trail Duisburg,Trail Running,Ultra Trail,50K,Duisburg,Germany,Europe,2026-11-01,09:15,50km,Trail adventure in Duisburg region,6619
+Marathon Duisburg,Running,Road Running,Marathon,Duisburg,Germany,Europe,2026-05-17,08:15,42.2km,Scenic marathon through Duisburg,3095
+Night Ultra Oberhausen,Trail Running,Night Ultra,73K,Oberhausen,Germany,Europe,2026-07-07,06:30,73km,Trail adventure in Oberhausen region,12501
+HYROX Moers Summer,Hyrox,Indoor Fitness Race,Pro,Moers,Germany,Europe,2026-10-06,08:15,Hyrox,Iconic Moers Hyrox event,2991
+Triathlon Heidelberg,Triathlon,Full Ironman,,Heidelberg,Germany,Europe,2026-08-05,07:30,Full Ironman,Full distance triathlon in Heidelberg,15323
+Spartan Ultra Wiesbaden,Spartan,Obstacle Race,Ultra,Wiesbaden,Germany,Europe,2026-02-08,09:30,50K,Endurance Ultra in Wiesbaden area,25009
+Triathlon Wuppertal,Triathlon,Full Ironman,,Wuppertal,Germany,Europe,2026-03-18,10:30,Full Ironman,Full distance triathlon in Wuppertal,3916
+Half Marathon Bonn,Running,Road Running,Half,Bonn,Germany,Europe,2026-05-24,09:00,21.1km,Popular half in Bonn,27635
+Triathlon Leverkusen,Triathlon,Long Distance,,Leverkusen,Germany,Europe,2026-09-18,09:15,L (1.2-80-22),Long distance challenge in Leverkusen,18931
+5K Erfurt,Running,Road Running,5K,Erfurt,Germany,Europe,2026-03-24,07:30,5km,Quick 5K event in Erfurt,24723
+Spartan Trifecta Weekend Düsseldorf,Spartan,Obstacle Race,Trifecta Weekend,Düsseldorf,Germany,Europe,2026-04-28,06:00,5K+10K+21K,Full Trifecta weekend in Düsseldorf,2691
+HYROX Moers Spring,Hyrox,Indoor Fitness Race,Pro,Moers,Germany,Europe,2026-04-16,07:00,Hyrox,World-class indoor race in Moers,8804
+Trail Marathon Oldenburg,Trail Running,Trail,130K,Oldenburg,Germany,Europe,2026-03-08,07:00,130km,Trail adventure in Oldenburg region,9242
+Triathlon Dresden,Triathlon,Olympic Distance,,Dresden,Germany,Europe,2026-01-21,06:15,Standard,Olympic tri in Dresden,7158
+Triathlon Hanover,Triathlon,Full Ironman,,Hanover,Germany,Europe,2026-11-01,10:00,Full Ironman,Full distance triathlon in Hanover,15029
+Spartan Sprint Düsseldorf,Spartan,Obstacle Race,Sprint,Düsseldorf,Germany,Europe,2026-06-26,09:30,5K,Fast Düsseldorf Sprint with obstacles,28813
+Spartan Trifecta Weekend Hamm,Spartan,Obstacle Race,Trifecta Weekend,Hamm,Germany,Europe,2026-01-28,08:00,5K+10K+21K,Full Trifecta weekend in Hamm,2542
+Spartan Sprint Krefeld,Spartan,Obstacle Race,Sprint,Krefeld,Germany,Europe,2026-08-17,06:45,5K,Fast Krefeld Sprint with obstacles,27605
+Spartan Super Bottrop,Spartan,Obstacle Race,Super,Bottrop,Germany,Europe,2026-03-15,07:15,10K,Challenging Super in Bottrop,8869
+HYROX Jena Summer,Hyrox,Indoor Fitness Race,Pro,Jena,Germany,Europe,2026-09-01,09:15,Hyrox,World-class indoor race in Jena,25559
+20K Regensburg,Running,Road Running,20K,Regensburg,Germany,Europe,2026-11-09,06:30,20km,20K challenge in Regensburg,10209
+10K Aachen,Running,Road Running,10K,Aachen,Germany,Europe,2026-02-22,06:00,10km,Fast 10K race in Aachen,12111
+Triathlon Magdeburg,Triathlon,Long Distance,,Magdeburg,Germany,Europe,2026-07-24,06:15,L (1.2-80-22),Long distance challenge in Magdeburg,1321
+Night Ultra Braunschweig,Trail Running,Night Ultra,50K,Braunschweig,Germany,Europe,2026-03-08,08:30,50km,Trail adventure in Braunschweig region,18281
+Triathlon Munich,Triathlon,Full Ironman,,Munich,Germany,Europe,2026-06-24,09:45,Full Ironman,Full distance triathlon in Munich,28106
+Triathlon Mönchengladbach,Triathlon,Long Distance,,Mönchengladbach,Germany,Europe,2026-06-21,09:15,L (1.2-80-22),Long distance challenge in Mönchengladbach,11788
+Trail Race Paderborn,Trail Running,Trail,52K,Paderborn,Germany,Europe,2026-06-04,06:30,52km,Trail adventure in Paderborn region,26652
+HYROX Aachen Spring,Hyrox,Indoor Fitness Race,Pro,Aachen,Germany,Europe,2026-08-21,08:30,Hyrox,Aachen fitness challenge,11437
+Spartan Super Erfurt,Spartan,Obstacle Race,Super,Erfurt,Germany,Europe,2026-02-08,10:00,10K,Challenging Super in Erfurt,3147
+10K Frankfurt,Running,Road Running,10K,Frankfurt,Germany,Europe,2026-04-12,07:00,10km,Fast 10K race in Frankfurt,29313
+Triathlon Gelsenkirchen,Triathlon,Long Distance,,Gelsenkirchen,Germany,Europe,2026-05-12,06:15,L (1.2-80-22),Long distance challenge in Gelsenkirchen,17997
+10K Potsdam,Running,Road Running,10K,Potsdam,Germany,Europe,2026-11-04,07:45,10km,Fast 10K race in Potsdam,8089
+Trail Race Ingolstadt,Trail Running,Trail,45K,Ingolstadt,Germany,Europe,2026-07-08,09:00,45km,Trail adventure in Ingolstadt region,22973
+5K Essen,Running,Road Running,5K,Essen,Germany,Europe,2026-08-11,10:00,5km,Quick 5K event in Essen,13526
+Trail Marathon Göttingen,Trail Running,Trail,125K,Göttingen,Germany,Europe,2026-10-21,10:15,125km,Trail adventure in Göttingen region,24924
+Triathlon Remscheid,Triathlon,Half Ironman,,Remscheid,Germany,Europe,2026-08-15,10:45,Half Ironman,70.3 event near Remscheid,5366
+HYROX Ulm Spring,Hyrox,Indoor Fitness Race,Open,Ulm,Germany,Europe,2026-05-11,10:45,Hyrox,Iconic Ulm Hyrox event,1951
+Ultra Trail Duisburg,Trail Running,Ultra Trail,125K,Duisburg,Germany,Europe,2026-11-10,10:00,125km,Trail adventure in Duisburg region,22538
+HYROX Krefeld,Hyrox,Indoor Fitness Race,Open,Krefeld,Germany,Europe,2026-08-16,08:45,Hyrox,Iconic Krefeld Hyrox event,10727
+Spartan Trifecta Weekend Potsdam,Spartan,Obstacle Race,Trifecta Weekend,Potsdam,Germany,Europe,2026-06-16,09:00,5K+10K+21K,Full Trifecta weekend in Potsdam,5862
+HYROX Chemnitz Winter,Hyrox,Indoor Fitness Race,Open,Chemnitz,Germany,Europe,2026-08-09,08:45,Hyrox,World-class indoor race in Chemnitz,10128
+Night Ultra Saarbrücken,Trail Running,Night Ultra,100K,Saarbrücken,Germany,Europe,2026-09-04,10:15,100km,Trail adventure in Saarbrücken region,22550
+HYROX Rostock Autumn,Hyrox,Indoor Fitness Race,Open,Rostock,Germany,Europe,2026-03-13,06:15,Hyrox,Autumn edition in Rostock,24389
+Spartan Super Recklinghausen,Spartan,Obstacle Race,Super,Recklinghausen,Germany,Europe,2026-09-03,06:15,10K,Challenging Super in Recklinghausen,24478
+Trail Race Duisburg,Trail Running,Trail,52K,Duisburg,Germany,Europe,2026-04-23,10:00,52km,Trail adventure in Duisburg region,24733
+Trail Marathon Magdeburg,Trail Running,Trail,125K,Magdeburg,Germany,Europe,2026-06-18,08:15,125km,Trail adventure in Magdeburg region,19102
+Half Marathon Stuttgart,Running,Road Running,Half,Stuttgart,Germany,Europe,2026-12-26,09:00,21.1km,Popular half in Stuttgart,4011
+Triathlon Ulm,Triathlon,Half Ironman,,Ulm,Germany,Europe,2026-01-07,09:15,Half Ironman,70.3 event near Ulm,22519
+20K Frankfurt,Running,Road Running,20K,Frankfurt,Germany,Europe,2026-08-07,10:45,20km,20K challenge in Frankfurt,2832
+5K Ulm,Running,Road Running,5K,Ulm,Germany,Europe,2026-02-03,08:30,5km,Quick 5K event in Ulm,12396
+20K Lübeck,Running,Road Running,20K,Lübeck,Germany,Europe,2026-09-03,10:00,20km,20K challenge in Lübeck,12080
+Triathlon Kiel,Triathlon,Half Ironman,,Kiel,Germany,Europe,2026-01-28,10:45,Half Ironman,70.3 event near Kiel,25028
+20K Solingen,Running,Road Running,20K,Solingen,Germany,Europe,2026-09-07,09:45,20km,20K challenge in Solingen,8928
+10K Osnabrück,Running,Road Running,10K,Osnabrück,Germany,Europe,2026-04-17,06:30,10km,Fast 10K race in Osnabrück,24156
+Ultra Trail Magdeburg,Trail Running,Ultra Trail,171K,Magdeburg,Germany,Europe,2026-03-12,06:00,171km,Trail adventure in Magdeburg region,22399
+Spartan Super Halle,Spartan,Obstacle Race,Super,Halle,Germany,Europe,2026-12-16,06:15,10K,Challenging Super in Halle,5112
+20K Nuremberg,Running,Road Running,20K,Nuremberg,Germany,Europe,2026-01-03,09:00,20km,20K challenge in Nuremberg,12136
+Ultra Trail Bergisch Gladbach,Trail Running,Ultra Trail,52K,Bergisch Gladbach,Germany,Europe,2026-03-02,09:15,52km,Trail adventure in Bergisch Gladbach region,10317
+Night Ultra Munich,Trail Running,Night Ultra,73K,Munich,Germany,Europe,2026-03-25,07:45,73km,Trail adventure in Munich region,24922
+Spartan Ultra Bottrop,Spartan,Obstacle Race,Ultra,Bottrop,Germany,Europe,2026-03-26,10:00,50K,Endurance Ultra in Bottrop area,6257
+Trail Race Bochum,Trail Running,Trail,52K,Bochum,Germany,Europe,2026-06-02,06:45,52km,Trail adventure in Bochum region,5047
+20K Bonn,Running,Road Running,20K,Bonn,Germany,Europe,2026-07-27,10:45,20km,20K challenge in Bonn,10185
+20K Frankfurt,Running,Road Running,20K,Frankfurt,Germany,Europe,2026-06-25,10:15,20km,20K challenge in Frankfurt,7349
+5K Dresden,Running,Road Running,5K,Dresden,Germany,Europe,2026-07-05,09:45,5km,Quick 5K event in Dresden,6169
+Triathlon Göttingen,Triathlon,Long Distance,,Göttingen,Germany,Europe,2026-03-11,10:15,L (1.2-80-22),Long distance challenge in Göttingen,9276
+Spartan Beast Bottrop,Spartan,Obstacle Race,Beast,Bottrop,Germany,Europe,2026-08-01,10:30,21K,Brutal Beast near Bottrop,20168
+10K Wuppertal,Running,Road Running,10K,Wuppertal,Germany,Europe,2026-12-23,10:45,10km,Fast 10K race in Wuppertal,12779
+HYROX Darmstadt Summer,Hyrox,Indoor Fitness Race,Open,Darmstadt,Germany,Europe,2026-11-03,08:15,Hyrox,World-class indoor race in Darmstadt,18022
+HYROX Hamburg Autumn,Hyrox,Indoor Fitness Race,Open,Hamburg,Germany,Europe,2026-07-04,10:15,Hyrox,Hamburg fitness challenge,1315
+HYROX Rostock Autumn,Hyrox,Indoor Fitness Race,Pro,Rostock,Germany,Europe,2026-08-01,09:30,Hyrox,Rostock fitness challenge,14535
+10K Erfurt,Running,Road Running,10K,Erfurt,Germany,Europe,2026-03-01,10:30,10km,Fast 10K race in Erfurt,14051
+Marathon Darmstadt,Running,Road Running,Marathon,Darmstadt,Germany,Europe,2026-06-19,08:00,42.2km,Scenic marathon through Darmstadt,18870
+Triathlon Oldenburg,Triathlon,Full Ironman,,Oldenburg,Germany,Europe,2026-09-01,09:15,Full Ironman,Full distance triathlon in Oldenburg,17863
+Trail Race Paderborn,Trail Running,Trail,145K,Paderborn,Germany,Europe,2026-12-23,07:00,145km,Trail adventure in Paderborn region,18345
+Half Marathon Rostock,Running,Road Running,Half,Rostock,Germany,Europe,2026-03-04,09:15,21.1km,Popular half in Rostock,12959
+Spartan Ultra Heilbronn,Spartan,Obstacle Race,Ultra,Heilbronn,Germany,Europe,2026-09-19,08:15,50K,Endurance Ultra in Heilbronn area,5951
+Spartan Beast Hagen,Spartan,Obstacle Race,Beast,Hagen,Germany,Europe,2026-11-14,07:45,21K,Brutal Beast near Hagen,13304
+5K Frankfurt,Running,Road Running,5K,Frankfurt,Germany,Europe,2026-10-26,09:00,5km,Quick 5K event in Frankfurt,8693
+Triathlon Halle,Triathlon,Long Distance,,Halle,Germany,Europe,2026-10-05,08:45,L (1.2-80-22),Long distance challenge in Halle,23527
+HYROX Moers,Hyrox,Indoor Fitness Race,Pro,Moers,Germany,Europe,2026-03-03,10:45,Hyrox,World-class indoor race in Moers,13394
+Half Marathon Bonn,Running,Road Running,Half,Bonn,Germany,Europe,2026-11-24,09:30,21.1km,Popular half in Bonn,9981
+Spartan Beast Reutlingen,Spartan,Obstacle Race,Beast,Reutlingen,Germany,Europe,2026-06-03,07:30,21K,Brutal Beast near Reutlingen,24778
+Marathon Mönchengladbach,Running,Road Running,Marathon,Mönchengladbach,Germany,Europe,2026-02-12,07:45,42.2km,Scenic marathon through Mönchengladbach,9552
+Night Ultra Mainz,Trail Running,Night Ultra,46K,Mainz,Germany,Europe,2026-01-14,09:30,46km,Trail adventure in Mainz region,18422
+Trail Race Saarbrücken,Trail Running,Trail,165K,Saarbrücken,Germany,Europe,2026-12-05,08:30,165km,Trail adventure in Saarbrücken region,11166
+5K Duisburg,Running,Road Running,5K,Duisburg,Germany,Europe,2026-02-23,09:45,5km,Quick 5K event in Duisburg,13014
+10K Salzgitter,Running,Road Running,10K,Salzgitter,Germany,Europe,2026-02-03,08:45,10km,Fast 10K race in Salzgitter,25057
+Triathlon Hanover,Triathlon,Olympic Distance,,Hanover,Germany,Europe,2026-05-15,07:45,Standard,Olympic tri in Hanover,19320
+10K Kassel,Running,Road Running,10K,Kassel,Germany,Europe,2026-04-03,07:45,10km,Fast 10K race in Kassel,16840
+Spartan Ultra Salzgitter,Spartan,Obstacle Race,Ultra,Salzgitter,Germany,Europe,2026-05-01,06:45,50K,Endurance Ultra in Salzgitter area,6088
+10K Aachen,Running,Road Running,10K,Aachen,Germany,Europe,2026-07-14,06:00,10km,Fast 10K race in Aachen,12762
+Marathon Hamm,Running,Road Running,Marathon,Hamm,Germany,Europe,2026-10-06,09:15,42.2km,Scenic marathon through Hamm,16241
+10K Dresden,Running,Road Running,10K,Dresden,Germany,Europe,2026-01-18,09:00,10km,Fast 10K race in Dresden,2691
+HYROX Ludwigshafen Spring,Hyrox,Indoor Fitness Race,Pro,Ludwigshafen,Germany,Europe,2026-10-05,08:00,Hyrox,Iconic Ludwigshafen Hyrox event,11478
+20K Ingolstadt,Running,Road Running,20K,Ingolstadt,Germany,Europe,2026-01-18,07:45,20km,20K challenge in Ingolstadt,27764
+Triathlon Darmstadt,Triathlon,Olympic Distance,,Darmstadt,Germany,Europe,2026-09-17,10:15,Standard,Olympic tri in Darmstadt,6529
+Trail Marathon Bottrop,Trail Running,Trail,145K,Bottrop,Germany,Europe,2026-12-18,06:15,145km,Trail adventure in Bottrop region,27940
+Half Marathon Mainz,Running,Road Running,Half,Mainz,Germany,Europe,2026-10-04,08:30,21.1km,Popular half in Mainz,8952
+Spartan Beast Kiel,Spartan,Obstacle Race,Beast,Kiel,Germany,Europe,2026-06-18,07:30,21K,Brutal Beast near Kiel,7559
+Trail Race Erfurt,Trail Running,Trail,171K,Erfurt,Germany,Europe,2026-02-14,08:00,171km,Trail adventure in Erfurt region,14746
+5K Düsseldorf,Running,Road Running,5K,Düsseldorf,Germany,Europe,2026-11-02,06:30,5km,Quick 5K event in Düsseldorf,22147
+HYROX Krefeld Spring,Hyrox,Indoor Fitness Race,Pro,Krefeld,Germany,Europe,2026-11-04,06:15,Hyrox,Spring edition in Krefeld,26282
+HYROX Bonn,Hyrox,Indoor Fitness Race,Pro,Bonn,Germany,Europe,2026-01-25,07:00,Hyrox,World-class indoor race in Bonn,25679
+10K Magdeburg,Running,Road Running,10K,Magdeburg,Germany,Europe,2026-11-04,09:30,10km,Fast 10K race in Magdeburg,20105
+Trail Marathon Cologne,Trail Running,Trail,80K,Cologne,Germany,Europe,2026-07-22,08:15,80km,Trail adventure in Cologne region,17297
+Half Marathon Paderborn,Running,Road Running,Half,Paderborn,Germany,Europe,2026-04-24,06:15,21.1km,Popular half in Paderborn,29177
+HYROX Stuttgart Spring,Hyrox,Indoor Fitness Race,Open,Stuttgart,Germany,Europe,2026-08-04,10:15,Hyrox,Stuttgart fitness challenge,12938
+Spartan Trifecta Weekend Darmstadt,Spartan,Obstacle Race,Trifecta Weekend,Darmstadt,Germany,Europe,2026-04-06,09:45,5K+10K+21K,Full Trifecta weekend in Darmstadt,19563
+Spartan Trifecta Weekend Ulm,Spartan,Obstacle Race,Trifecta Weekend,Ulm,Germany,Europe,2026-06-17,06:45,5K+10K+21K,Full Trifecta weekend in Ulm,14606
+20K Münster,Running,Road Running,20K,Münster,Germany,Europe,2026-11-25,08:30,20km,20K challenge in Münster,28791
+20K Salzgitter,Running,Road Running,20K,Salzgitter,Germany,Europe,2026-06-10,09:00,20km,20K challenge in Salzgitter,13169
+Spartan Ultra Siegen,Spartan,Obstacle Race,Ultra,Siegen,Germany,Europe,2026-08-19,09:30,50K,Endurance Ultra in Siegen area,14396
+Trail Race Bottrop,Trail Running,Trail,43K,Bottrop,Germany,Europe,2026-09-22,09:15,43km,Trail adventure in Bottrop region,19636
+Half Marathon Stuttgart,Running,Road Running,Half,Stuttgart,Germany,Europe,2026-12-26,09:00,21.1km,Popular half in Stuttgart,4011
+Triathlon Ulm,Triathlon,Half Ironman,,Ulm,Germany,Europe,2026-01-07,09:15,Half Ironman,70.3 event near Ulm,22519
+20K Frankfurt,Running,Road Running,20K,Frankfurt,Germany,Europe,2026-08-07,10:45,20km,20K challenge in Frankfurt,2832
+5K Ulm,Running,Road Running,5K,Ulm,Germany,Europe,2026-02-03,08:30,5km,Quick 5K event in Ulm,12396
+20K Lübeck,Running,Road Running,20K,Lübeck,Germany,Europe,2026-09-03,10:00,20km,20K challenge in Lübeck,12080
+Triathlon Kiel,Triathlon,Half Ironman,,Kiel,Germany,Europe,2026-01-28,10:45,Half Ironman,70.3 event near Kiel,25028
+20K Solingen,Running,Road Running,20K,Solingen,Germany,Europe,2026-09-07,09:45,20km,20K challenge in Solingen,8928
+10K Osnabrück,Running,Road Running,10K,Osnabrück,Germany,Europe,2026-04-17,06:30,10km,Fast 10K race in Osnabrück,24156
+Ultra Trail Magdeburg,Trail Running,Ultra Trail,171K,Magdeburg,Germany,Europe,2026-03-12,06:00,171km,Trail adventure in Magdeburg region,22399
+Spartan Super Halle,Spartan,Obstacle Race,Super,Halle,Germany,Europe,2026-12-16,06:15,10K,Challenging Super in Halle,5112
+20K Nuremberg,Running,Road Running,20K,Nuremberg,Germany,Europe,2026-01-03,09:00,20km,20K challenge in Nuremberg,12136
+Ultra Trail Bergisch Gladbach,Trail Running,Ultra Trail,52K,Bergisch Gladbach,Germany,Europe,2026-03-02,09:15,52km,Trail adventure in Bergisch Gladbach region,10317
+Night Ultra Munich,Trail Running,Night Ultra,73K,Munich,Germany,Europe,2026-03-25,07:45,73km,Trail adventure in Munich region,24922
+Spartan Ultra Bottrop,Spartan,Obstacle Race,Ultra,Bottrop,Germany,Europe,2026-03-26,10:00,50K,Endurance Ultra in Bottrop area,6257
+Trail Race Bochum,Trail Running,Trail,52K,Bochum,Germany,Europe,2026-06-02,06:45,52km,Trail adventure in Bochum region,5047
+20K Bonn,Running,Road Running,20K,Bonn,Germany,Europe,2026-07-27,10:45,20km,20K challenge in Bonn,10185
+20K Frankfurt,Running,Road Running,20K,Frankfurt,Germany,Europe,2026-06-25,10:15,20km,20K challenge in Frankfurt,7349
+5K Dresden,Running,Road Running,5K,Dresden,Germany,Europe,2026-07-05,09:45,5km,Quick 5K event in Dresden,6169
+Triathlon Göttingen,Triathlon,Long Distance,,Göttingen,Germany,Europe,2026-03-11,10:15,L (1.2-80-22),Long distance challenge in Göttingen,9276
+Spartan Beast Bottrop,Spartan,Obstacle Race,Beast,Bottrop,Germany,Europe,2026-08-01,10:30,21K,Brutal Beast near Bottrop,20168
+10K Wuppertal,Running,Road Running,10K,Wuppertal,Germany,Europe,2026-12-23,10:45,10km,Fast 10K race in Wuppertal,12779
+HYROX Darmstadt Summer,Hyrox,Indoor Fitness Race,Open,Darmstadt,Germany,Europe,2026-11-03,08:15,Hyrox,World-class indoor race in Darmstadt,18022
+HYROX Hamburg Autumn,Hyrox,Indoor Fitness Race,Open,Hamburg,Germany,Europe,2026-07-04,10:15,Hyrox,Hamburg fitness challenge,1315
+HYROX Rostock Autumn,Hyrox,Indoor Fitness Race,Pro,Rostock,Germany,Europe,2026-08-01,09:30,Hyrox,Rostock fitness challenge,14535
+10K Erfurt,Running,Road Running,10K,Erfurt,Germany,Europe,2026-03-01,10:30,10km,Fast 10K race in Erfurt,14051
+Marathon Darmstadt,Running,Road Running,Marathon,Darmstadt,Germany,Europe,2026-06-19,08:00,42.2km,Scenic marathon through Darmstadt,18870
+Triathlon Oldenburg,Triathlon,Full Ironman,,Oldenburg,Germany,Europe,2026-09-01,09:15,Full Ironman,Full distance triathlon in Oldenburg,17863
+Trail Race Paderborn,Trail Running,Trail,145K,Paderborn,Germany,Europe,2026-12-23,07:00,145km,Trail adventure in Paderborn region,18345
+Half Marathon Rostock,Running,Road Running,Half,Rostock,Germany,Europe,2026-03-04,09:15,21.1km,Popular half in Rostock,12959
+Spartan Ultra Heilbronn,Spartan,Obstacle Race,Ultra,Heilbronn,Germany,Europe,2026-09-19,08:15,50K,Endurance Ultra in Heilbronn area,5951
+Spartan Beast Hagen,Spartan,Obstacle Race,Beast,Hagen,Germany,Europe,2026-11-14,07:45,21K,Brutal Beast near Hagen,13304
+5K Frankfurt,Running,Road Running,5K,Frankfurt,Germany,Europe,2026-10-26,09:00,5km,Quick 5K event in Frankfurt,8693
+Triathlon Halle,Triathlon,Long Distance,,Halle,Germany,Europe,2026-10-05,08:45,L (1.2-80-22),Long distance challenge in Halle,23527
+HYROX Moers,Hyrox,Indoor Fitness Race,Pro,Moers,Germany,Europe,2026-03-03,10:45,Hyrox,World-class indoor race in Moers,13394
+Half Marathon Bonn,Running,Road Running,Half,Bonn,Germany,Europe,2026-11-24,09:30,21.1km,Popular half in Bonn,9981
+Spartan Beast Reutlingen,Spartan,Obstacle Race,Beast,Reutlingen,Germany,Europe,2026-06-03,07:30,21K,Brutal Beast near Reutlingen,24778
+Marathon Mönchengladbach,Running,Road Running,Marathon,Mönchengladbach,Germany,Europe,2026-02-12,07:45,42.2km,Scenic marathon through Mönchengladbach,9552
+Night Ultra Mainz,Trail Running,Night Ultra,46K,Mainz,Germany,Europe,2026-01-14,09:30,46km,Trail adventure in Mainz region,18422
+Trail Race Saarbrücken,Trail Running,Trail,165K,Saarbrücken,Germany,Europe,2026-12-05,08:30,165km,Trail adventure in Saarbrücken region,11166
+5K Duisburg,Running,Road Running,5K,Duisburg,Germany,Europe,2026-02-23,09:45,5km,Quick 5K event in Duisburg,13014
+10K Salzgitter,Running,Road Running,10K,Salzgitter,Germany,Europe,2026-02-03,08:45,10km,Fast 10K race in Salzgitter,25057
+Triathlon Hanover,Triathlon,Olympic Distance,,Hanover,Germany,Europe,2026-05-15,07:45,Standard,Olympic tri in Hanover,19320
+10K Kassel,Running,Road Running,10K,Kassel,Germany,Europe,2026-04-03,07:45,10km,Fast 10K race in Kassel,16840
+Spartan Ultra Salzgitter,Spartan,Obstacle Race,Ultra,Salzgitter,Germany,Europe,2026-05-01,06:45,50K,Endurance Ultra in Salzgitter area,6088
+10K Aachen,Running,Road Running,10K,Aachen,Germany,Europe,2026-07-14,06:00,10km,Fast 10K race in Aachen,12762
+Marathon Hamm,Running,Road Running,Marathon,Hamm,Germany,Europe,2026-10-06,09:15,42.2km,Scenic marathon through Hamm,16241
+10K Dresden,Running,Road Running,10K,Dresden,Germany,Europe,2026-01-18,09:00,10km,Fast 10K race in Dresden,2691
+HYROX Ludwigshafen Spring,Hyrox,Indoor Fitness Race,Pro,Ludwigshafen,Germany,Europe,2026-10-05,08:00,Hyrox,Iconic Ludwigshafen Hyrox event,11478
+20K Ingolstadt,Running,Road Running,20K,Ingolstadt,Germany,Europe,2026-01-18,07:45,20km,20K challenge in Ingolstadt,27764
+Triathlon Darmstadt,Triathlon,Olympic Distance,,Darmstadt,Germany,Europe,2026-09-17,10:15,Standard,Olympic tri in Darmstadt,6529
+Trail Marathon Bottrop,Trail Running,Trail,145K,Bottrop,Germany,Europe,2026-12-18,06:15,145km,Trail adventure in Bottrop region,27940
+Half Marathon Mainz,Running,Road Running,Half,Mainz,Germany,Europe,2026-10-04,08:30,21.1km,Popular half in Mainz,8952
+Spartan Beast Kiel,Spartan,Obstacle Race,Beast,Kiel,Germany,Europe,2026-06-18,07:30,21K,Brutal Beast near Kiel,7559
+Trail Race Erfurt,Trail Running,Trail,171K,Erfurt,Germany,Europe,2026-02-14,08:00,171km,Trail adventure in Erfurt region,14746
+5K Düsseldorf,Running,Road Running,5K,Düsseldorf,Germany,Europe,2026-11-02,06:30,5km,Quick 5K event in Düsseldorf,22147
+HYROX Krefeld Spring,Hyrox,Indoor Fitness Race,Pro,Krefeld,Germany,Europe,2026-11-04,06:15,Hyrox,Spring edition in Krefeld,26282
+HYROX Bonn,Hyrox,Indoor Fitness Race,Pro,Bonn,Germany,Europe,2026-01-25,07:00,Hyrox,World-class indoor race in Bonn,25679
+10K Magdeburg,Running,Road Running,10K,Magdeburg,Germany,Europe,2026-11-04,09:30,10km,Fast 10K race in Magdeburg,20105
+Trail Marathon Cologne,Trail Running,Trail,80K,Cologne,Germany,Europe,2026-07-22,08:15,80km,Trail adventure in Cologne region,17297
+Half Marathon Paderborn,Running,Road Running,Half,Paderborn,Germany,Europe,2026-04-24,06:15,21.1km,Popular half in Paderborn,29177
+HYROX Stuttgart Spring,Hyrox,Indoor Fitness Race,Open,Stuttgart,Germany,Europe,2026-08-04,10:15,Hyrox,Stuttgart fitness challenge,12938
+Spartan Trifecta Weekend Darmstadt,Spartan,Obstacle Race,Trifecta Weekend,Darmstadt,Germany,Europe,2026-04-06,09:45,5K+10K+21K,Full Trifecta weekend in Darmstadt,19563
+Spartan Trifecta Weekend Ulm,Spartan,Obstacle Race,Trifecta Weekend,Ulm,Germany,Europe,2026-06-17,06:45,5K+10K+21K,Full Trifecta weekend in Ulm,14606
+20K Münster,Running,Road Running,20K,Münster,Germany,Europe,2026-11-25,08:30,20km,20K challenge in Münster,28791
+20K Salzgitter,Running,Road Running,20K,Salzgitter,Germany,Europe,2026-06-10,09:00,20km,20K challenge in Salzgitter,13169
+Spartan Ultra Siegen,Spartan,Obstacle Race,Ultra,Siegen,Germany,Europe,2026-08-19,09:30,50K,Endurance Ultra in Siegen area,14396
+Trail Race Bottrop,Trail Running,Trail,43K,Bottrop,Germany,Europe,2026-09-22,09:15,43km,Trail adventure in Bottrop region,19636
+Half Marathon Stuttgart,Running,Road Running,Half,Stuttgart,Germany,Europe,2026-12-26,09:00,21.1km,Popular half in Stuttgart,4011
+Triathlon Ulm,Triathlon,Half Ironman,,Ulm,Germany,Europe,2026-01-07,09:15,Half Ironman,70.3 event near Ulm,22519
+20K Frankfurt,Running,Road Running,20K,Frankfurt,Germany,Europe,2026-08-07,10:45,20km,20K challenge in Frankfurt,2832
+5K Ulm,Running,Road Running,5K,Ulm,Germany,Europe,2026-02-03,08:30,5km,Quick 5K event in Ulm,12396
+20K Lübeck,Running,Road Running,20K,Lübeck,Germany,Europe,2026-09-03,10:00,20km,20K challenge in Lübeck,12080
+Triathlon Kiel,Triathlon,Half Ironman,,Kiel,Germany,Europe,2026-01-28,10:45,Half Ironman,70.3 event near Kiel,25028
+20K Solingen,Running,Road Running,20K,Solingen,Germany,Europe,2026-09-07,09:45,20km,20K challenge in Solingen,8928
+10K Osnabrück,Running,Road Running,10K,Osnabrück,Germany,Europe,2026-04-17,06:30,10km,Fast 10K race in Osnabrück,24156
+Ultra Trail Magdeburg,Trail Running,Ultra Trail,171K,Magdeburg,Germany,Europe,2026-03-12,06:00,171km,Trail adventure in Magdeburg region,22399
+Spartan Super Halle,Spartan,Obstacle Race,Super,Halle,Germany,Europe,2026-12-16,06:15,10K,Challenging Super in Halle,5112
+20K Nuremberg,Running,Road Running,20K,Nuremberg,Germany,Europe,2026-01-03,09:00,20km,20K challenge in Nuremberg,12136
+Ultra Trail Bergisch Gladbach,Trail Running,Ultra Trail,52K,Bergisch Gladbach,Germany,Europe,2026-03-02,09:15,52km,Trail adventure in Bergisch Gladbach region,10317
+Night Ultra Munich,Trail Running,Night Ultra,73K,Munich,Germany,Europe,2026-03-25,07:45,73km,Trail adventure in Munich region,24922
+Spartan Ultra Bottrop,Spartan,Obstacle Race,Ultra,Bottrop,Germany,Europe,2026-03-26,10:00,50K,Endurance Ultra in Bottrop area,6257
+Trail Race Bochum,Trail Running,Trail,52K,Bochum,Germany,Europe,2026-06-02,06:45,52km,Trail adventure in Bochum region,5047
+20K Bonn,Running,Road Running,20K,Bonn,Germany,Europe,2026-07-27,10:45,20km,20K challenge in Bonn,10185
+20K Frankfurt,Running,Road Running,20K,Frankfurt,Germany,Europe,2026-06-25,10:15,20km,20K challenge in Frankfurt,7349
+5K Dresden,Running,Road Running,5K,Dresden,Germany,Europe,2026-07-05,09:45,5km,Quick 5K event in Dresden,6169
+Triathlon Göttingen,Triathlon,Long Distance,,Göttingen,Germany,Europe,2026-03-11,10:15,L (1.2-80-22),Long distance challenge in Göttingen,9276
+Spartan Beast Bottrop,Spartan,Obstacle Race,Beast,Bottrop,Germany,Europe,2026-08-01,10:30,21K,Brutal Beast near Bottrop,20168
+10K Wuppertal,Running,Road Running,10K,Wuppertal,Germany,Europe,2026-12-23,10:45,10km,Fast 10K race in Wuppertal,12779
+HYROX Darmstadt Summer,Hyrox,Indoor Fitness Race,Open,Darmstadt,Germany,Europe,2026-11-03,08:15,Hyrox,World-class indoor race in Darmstadt,18022
+HYROX Hamburg Autumn,Hyrox,Indoor Fitness Race,Open,Hamburg,Germany,Europe,2026-07-04,10:15,Hyrox,Hamburg fitness challenge,1315
+HYROX Rostock Autumn,Hyrox,Indoor Fitness Race,Pro,Rostock,Germany,Europe,2026-08-01,09:30,Hyrox,Rostock fitness challenge,14535
+10K Erfurt,Running,Road Running,10K,Erfurt,Germany,Europe,2026-03-01,10:30,10km,Fast 10K race in Erfurt,14051
+Marathon Darmstadt,Running,Road Running,Marathon,Darmstadt,Germany,Europe,2026-06-19,08:00,42.2km,Scenic marathon through Darmstadt,18870
+Triathlon Oldenburg,Triathlon,Full Ironman,,Oldenburg,Germany,Europe,2026-09-01,09:15,Full Ironman,Full distance triathlon in Oldenburg,17863
+Trail Race Paderborn,Trail Running,Trail,145K,Paderborn,Germany,Europe,2026-12-23,07:00,145km,Trail adventure in Paderborn region,18345
+Half Marathon Rostock,Running,Road Running,Half,Rostock,Germany,Europe,2026-03-04,09:15,21.1km,Popular half in Rostock,12959
+Spartan Ultra Heilbronn,Spartan,Obstacle Race,Ultra,Heilbronn,Germany,Europe,2026-09-19,08:15,50K,Endurance Ultra in Heilbronn area,5951
+Spartan Beast Hagen,Spartan,Obstacle Race,Beast,Hagen,Germany,Europe,2026-11-14,07:45,21K,Brutal Beast near Hagen,13304
+5K Frankfurt,Running,Road Running,5K,Frankfurt,Germany,Europe,2026-10-26,09:00,5km,Quick 5K event in Frankfurt,8693
+Triathlon Halle,Triathlon,Long Distance,,Halle,Germany,Europe,2026-10-05,08:45,L (1.2-80-22),Long distance challenge in Halle,23527
+HYROX Moers,Hyrox,Indoor Fitness Race,Pro,Moers,Germany,Europe,2026-03-03,10:45,Hyrox,World-class indoor race in Moers,13394
+Half Marathon Bonn,Running,Road Running,Half,Bonn,Germany,Europe,2026-11-24,09:30,21.1km,Popular half in Bonn,9981
+Spartan Beast Reutlingen,Spartan,Obstacle Race,Beast,Reutlingen,Germany,Europe,2026-06-03,07:30,21K,Brutal Beast near Reutlingen,24778
+Marathon Mönchengladbach,Running,Road Running,Marathon,Mönchengladbach,Germany,Europe,2026-02-12,07:45,42.2km,Scenic marathon through Mönchengladbach,9552
+Night Ultra Mainz,Trail Running,Night Ultra,46K,Mainz,Germany,Europe,2026-01-14,09:30,46km,Trail adventure in Mainz region,18422
+Trail Race Saarbrücken,Trail Running,Trail,165K,Saarbrücken,Germany,Europe,2026-12-05,08:30,165km,Trail adventure in Saarbrücken region,11166
+5K Duisburg,Running,Road Running,5K,Duisburg,Germany,Europe,2026-02-23,09:45,5km,Quick 5K event in Duisburg,13014
+10K Salzgitter,Running,Road Running,10K,Salzgitter,Germany,Europe,2026-02-03,08:45,10km,Fast 10K race in Salzgitter,25057
+Triathlon Hanover,Triathlon,Olympic Distance,,Hanover,Germany,Europe,2026-05-15,07:45,Standard,Olympic tri in Hanover,19320
+10K Kassel,Running,Road Running,10K,Kassel,Germany,Europe,2026-04-03,07:45,10km,Fast 10K race in Kassel,16840
+Spartan Ultra Salzgitter,Spartan,Obstacle Race,Ultra,Salzgitter,Germany,Europe,2026-05-01,06:45,50K,Endurance Ultra in Salzgitter area,6088
+10K Aachen,Running,Road Running,10K,Aachen,Germany,Europe,2026-07-14,06:00,10km,Fast 10K race in Aachen,12762
+Marathon Hamm,Running,Road Running,Marathon,Hamm,Germany,Europe,2026-10-06,09:15,42.2km,Scenic marathon through Hamm,16241
+10K Dresden,Running,Road Running,10K,Dresden,Germany,Europe,2026-01-18,09:00,10km,Fast 10K race in Dresden,2691
+HYROX Ludwigshafen Spring,Hyrox,Indoor Fitness Race,Pro,Ludwigshafen,Germany,Europe,2026-10-05,08:00,Hyrox,Iconic Ludwigshafen Hyrox event,11478
+20K Ingolstadt,Running,Road Running,20K,Ingolstadt,Germany,Europe,2026-01-18,07:45,20km,20K challenge in Ingolstadt,27764
+Triathlon Darmstadt,Triathlon,Olympic Distance,,Darmstadt,Germany,Europe,2026-09-17,10:15,Standard,Olympic tri in Darmstadt,6529
+Trail Marathon Bottrop,Trail Running,Trail,145K,Bottrop,Germany,Europe,2026-12-18,06:15,145km,Trail adventure in Bottrop region,27940
+Half Marathon Mainz,Running,Road Running,Half,Mainz,Germany,Europe,2026-10-04,08:30,21.1km,Popular half in Mainz,8952
+Spartan Beast Kiel,Spartan,Obstacle Race,Beast,Kiel,Germany,Europe,2026-06-18,07:30,21K,Brutal Beast near Kiel,7559
+Trail Race Erfurt,Trail Running,Trail,171K,Erfurt,Germany,Europe,2026-02-14,08:00,171km,Trail adventure in Erfurt region,14746
+5K Düsseldorf,Running,Road Running,5K,Düsseldorf,Germany,Europe,2026-11-02,06:30,5km,Quick 5K event in Düsseldorf,22147
+HYROX Krefeld Spring,Hyrox,Indoor Fitness Race,Pro,Krefeld,Germany,Europe,2026-11-04,06:15,Hyrox,Spring edition in Krefeld,26282
+HYROX Bonn,Hyrox,Indoor Fitness Race,Pro,Bonn,Germany,Europe,2026-01-25,07:00,Hyrox,World-class indoor race in Bonn,25679
+10K Magdeburg,Running,Road Running,10K,Magdeburg,Germany,Europe,2026-11-04,09:30,10km,Fast 10K race in Magdeburg,20105
+Trail Marathon Cologne,Trail Running,Trail,80K,Cologne,Germany,Europe,2026-07-22,08:15,80km,Trail adventure in Cologne region,17297
+Half Marathon Paderborn,Running,Road Running,Half,Paderborn,Germany,Europe,2026-04-24,06:15,21.1km,Popular half in Paderborn,29177
+HYROX Stuttgart Spring,Hyrox,Indoor Fitness Race,Open,Stuttgart,Germany,Europe,2026-08-04,10:15,Hyrox,Stuttgart fitness challenge,12938
+Spartan Trifecta Weekend Darmstadt,Spartan,Obstacle Race,Trifecta Weekend,Darmstadt,Germany,Europe,2026-04-06,09:45,5K+10K+21K,Full Trifecta weekend in Darmstadt,19563
+Spartan Trifecta Weekend Ulm,Spartan,Obstacle Race,Trifecta Weekend,Ulm,Germany,Europe,2026-06-17,06:45,5K+10K+21K,Full Trifecta weekend in Ulm,14606
+20K Münster,Running,Road Running,20K,Münster,Germany,Europe,2026-11-25,08:30,20km,20K challenge in Münster,28791
+20K Salzgitter,Running,Road Running,20K,Salzgitter,Germany,Europe,2026-06-10,09:00,20km,20K challenge in Salzgitter,13169
+Spartan Ultra Siegen,Spartan,Obstacle Race,Ultra,Siegen,Germany,Europe,2026-08-19,09:30,50K,Endurance Ultra in Siegen area,14396
+Trail Race Bottrop,Trail Running,Trail,43K,Bottrop,Germany,Europe,2026-09-22,09:15,43km,Trail adventure in Bottrop region,19636
+Half Marathon Stuttgart,Running,Road Running,Half,Stuttgart,Germany,Europe,2026-12-26,09:00,21.1km,Popular half in Stuttgart,4011
+Triathlon Ulm,Triathlon,Half Ironman,,Ulm,Germany,Europe,2026-01-07,09:15,Half Ironman,70.3 event near Ulm,22519
+20K Frankfurt,Running,Road Running,20K,Frankfurt,Germany,Europe,2026-08-07,10:45,20km,20K challenge in Frankfurt,2832
+5K Ulm,Running,Road Running,5K,Ulm,Germany,Europe,2026-02-03,08:30,5km,Quick 5K event in Ulm,12396
+20K Lübeck,Running,Road Running,20K,Lübeck,Germany,Europe,2026-09-03,10:00,20km,20K challenge in Lübeck,12080
+Triathlon Kiel,Triathlon,Half Ironman,,Kiel,Germany,Europe,2026-01-28,10:45,Half Ironman,70.3 event near Kiel,25028
+20K Solingen,Running,Road Running,20K,Solingen,Germany,Europe,2026-09-07,09:45,20km,20K challenge in Solingen,8928
+10K Osnabrück,Running,Road Running,10K,Osnabrück,Germany,Europe,2026-04-17,06:30,10km,Fast 10K race in Osnabrück,24156
+Ultra Trail Magdeburg,Trail Running,Ultra Trail,171K,Magdeburg,Germany,Europe,2026-03-12,06:00,171km,Trail adventure in Magdeburg region,22399
+Spartan Super Halle,Spartan,Obstacle Race,Super,Halle,Germany,Europe,2026-12-16,06:15,10K,Challenging Super in Halle,5112
+20K Nuremberg,Running,Road Running,20K,Nuremberg,Germany,Europe,2026-01-03,09:00,20km,20K challenge in Nuremberg,12136
+Ultra Trail Bergisch Gladbach,Trail Running,Ultra Trail,52K,Bergisch Gladbach,Germany,Europe,2026-03-02,09:15,52km,Trail adventure in Bergisch Gladbach region,10317
+Night Ultra Munich,Trail Running,Night Ultra,73K,Munich,Germany,Europe,2026-03-25,07:45,73km,Trail adventure in Munich region,24922
+Spartan Ultra Bottrop,Spartan,Obstacle Race,Ultra,Bottrop,Germany,Europe,2026-03-26,10:00,50K,Endurance Ultra in Bottrop area,6257
+Trail Race Bochum,Trail Running,Trail,52K,Bochum,Germany,Europe,2026-06-02,06:45,52km,Trail adventure in Bochum region,5047
+20K Bonn,Running,Road Running,20K,Bonn,Germany,Europe,2026-07-27,10:45,20km,20K challenge in Bonn,10185
+20K Frankfurt,Running,Road Running,20K,Frankfurt,Germany,Europe,2026-06-25,10:15,20km,20K challenge in Frankfurt,7349
+5K Dresden,Running,Road Running,5K,Dresden,Germany,Europe,2026-07-05,09:45,5km,Quick 5K event in Dresden,6169
+Triathlon Göttingen,Triathlon,Long Distance,,Göttingen,Germany,Europe,2026-03-11,10:15,L (1.2-80-22),Long distance challenge in Göttingen,9276
+Spartan Beast Bottrop,Spartan,Obstacle Race,Beast,Bottrop,Germany,Europe,2026-08-01,10:30,21K,Brutal Beast near Bottrop,20168
+10K Wuppertal,Running,Road Running,10K,Wuppertal,Germany,Europe,2026-12-23,10:45,10km,Fast 10K race in Wuppertal,12779
+HYROX Darmstadt Summer,Hyrox,Indoor Fitness Race,Open,Darmstadt,Germany,Europe,2026-11-03,08:15,Hyrox,World-class indoor race in Darmstadt,18022
+HYROX Hamburg Autumn,Hyrox,Indoor Fitness Race,Open,Hamburg,Germany,Europe,2026-07-04,10:15,Hyrox,Hamburg fitness challenge,1315
+HYROX Rostock Autumn,Hyrox,Indoor Fitness Race,Pro,Rostock,Germany,Europe,2026-08-01,09:30,Hyrox,Rostock fitness challenge,14535
+10K Erfurt,Running,Road Running,10K,Erfurt,Germany,Europe,2026-03-01,10:30,10km,Fast 10K race in Erfurt,14051
+Marathon Darmstadt,Running,Road Running,Marathon,Darmstadt,Germany,Europe,2026-06-19,08:00,42.2km,Scenic marathon through Darmstadt,18870
+Triathlon Oldenburg,Triathlon,Full Ironman,,Oldenburg,Germany,Europe,2026-09-01,09:15,Full Ironman,Full distance triathlon in Oldenburg,17863
+Trail Race Paderborn,Trail Running,Trail,145K,Paderborn,Germany,Europe,2026-12-23,07:00,145km,Trail adventure in Paderborn region,18345
+Half Marathon Rostock,Running,Road Running,Half,Rostock,Germany,Europe,2026-03-04,09:15,21.1km,Popular half in Rostock,12959
+Spartan Ultra Heilbronn,Spartan,Obstacle Race,Ultra,Heilbronn,Germany,Europe,2026-09-19,08:15,50K,Endurance Ultra in Heilbronn area,5951
+Spartan Beast Hagen,Spartan,Obstacle Race,Beast,Hagen,Germany,Europe,2026-11-14,07:45,21K,Brutal Beast near Hagen,13304
+5K Frankfurt,Running,Road Running,5K,Frankfurt,Germany,Europe,2026-10-26,09:00,5km,Quick 5K event in Frankfurt,8693
+Triathlon Halle,Triathlon,Long Distance,,Halle,Germany,Europe,2026-10-05,08:45,L (1.2-80-22),Long distance challenge in Halle,23527
+HYROX Moers,Hyrox,Indoor Fitness Race,Pro,Moers,Germany,Europe,2026-03-03,10:45,Hyrox,World-class indoor race in Moers,13394
+Half Marathon Bonn,Running,Road Running,Half,Bonn,Germany,Europe,2026-11-24,09:30,21.1km,Popular half in Bonn,9981
+Spartan Beast Reutlingen,Spartan,Obstacle Race,Beast,Reutlingen,Germany,Europe,2026-06-03,07:30,21K,Brutal Beast near Reutlingen,24778
+Marathon Mönchengladbach,Running,Road Running,Marathon,Mönchengladbach,Germany,Europe,2026-02-12,07:45,42.2km,Scenic marathon through Mönchengladbach,9552
+Night Ultra Mainz,Trail Running,Night Ultra,46K,Mainz,Germany,Europe,2026-01-14,09:30,46km,Trail adventure in Mainz region,18422
+Trail Race Saarbrücken,Trail Running,Trail,165K,Saarbrücken,Germany,Europe,2026-12-05,08:30,165km,Trail adventure in Saarbrücken region,11166
+5K Duisburg,Running,Road Running,5K,Duisburg,Germany,Europe,2026-02-23,09:45,5km,Quick 5K event in Duisburg,13014
+10K Salzgitter,Running,Road Running,10K,Salzgitter,Germany,Europe,2026-02-03,08:45,10km,Fast 10K race in Salzgitter,25057
+Triathlon Hanover,Triathlon,Olympic Distance,,Hanover,Germany,Europe,2026-05-15,07:45,Standard,Olympic tri in Hanover,19320
+10K Kassel,Running,Road Running,10K,Kassel,Germany,Europe,2026-04-03,07:45,10km,Fast 10K race in Kassel,16840
+Spartan Ultra Salzgitter,Spartan,Obstacle Race,Ultra,Salzgitter,Germany,Europe,2026-05-01,06:45,50K,Endurance Ultra in Salzgitter area,6088
+10K Aachen,Running,Road Running,10K,Aachen,Germany,Europe,2026-07-14,06:00,10km,Fast 10K race in Aachen,12762
+Marathon Hamm,Running,Road Running,Marathon,Hamm,Germany,Europe,2026-10-06,09:15,42.2km,Scenic marathon through Hamm,16241
+10K Dresden,Running,Road Running,10K,Dresden,Germany,Europe,2026-01-18,09:00,10km,Fast 10K race in Dresden,2691
+HYROX Ludwigshafen Spring,Hyrox,Indoor Fitness Race,Pro,Ludwigshafen,Germany,Europe,2026-10-05,08:00,Hyrox,Iconic Ludwigshafen Hyrox event,11478
+20K Ingolstadt,Running,Road Running,20K,Ingolstadt,Germany,Europe,2026-01-18,07:45,20km,20K challenge in Ingolstadt,27764
+Triathlon Darmstadt,Triathlon,Olympic Distance,,Darmstadt,Germany,Europe,2026-09-17,10:15,Standard,Olympic tri in Darmstadt,6529
+Trail Marathon Bottrop,Trail Running,Trail,145K,Bottrop,Germany,Europe,2026-12-18,06:15,145km,Trail adventure in Bottrop region,27940
+Half Marathon Mainz,Running,Road Running,Half,Mainz,Germany,Europe,2026-10-04,08:30,21.1km,Popular half in Mainz,8952
+Spartan Beast Kiel,Spartan,Obstacle Race,Beast,Kiel,Germany,Europe,2026-06-18,07:30,21K,Brutal Beast near Kiel,7559
+Trail Race Erfurt,Trail Running,Trail,171K,Erfurt,Germany,Europe,2026-02-14,08:00,171km,Trail adventure in Erfurt region,14746
+5K Düsseldorf,Running,Road Running,5K,Düsseldorf,Germany,Europe,2026-11-02,06:30,5km,Quick 5K event in Düsseldorf,22147
+HYROX Krefeld Spring,Hyrox,Indoor Fitness Race,Pro,Krefeld,Germany,Europe,2026-11-04,06:15,Hyrox,Spring edition in Krefeld,26282
+HYROX Bonn,Hyrox,Indoor Fitness Race,Pro,Bonn,Germany,Europe,2026-01-25,07:00,Hyrox,World-class indoor race in Bonn,25679
+10K Magdeburg,Running,Road Running,10K,Magdeburg,Germany,Europe,2026-11-04,09:30,10km,Fast 10K race in Magdeburg,20105
+Trail Marathon Cologne,Trail Running,Trail,80K,Cologne,Germany,Europe,2026-07-22,08:15,80km,Trail adventure in Cologne region,17297
+Half Marathon Paderborn,Running,Road Running,Half,Paderborn,Germany,Europe,2026-04-24,06:15,21.1km,Popular half in Paderborn,29177
+HYROX Stuttgart Spring,Hyrox,Indoor Fitness Race,Open,Stuttgart,Germany,Europe,2026-08-04,10:15,Hyrox,Stuttgart fitness challenge,12938
+Spartan Trifecta Weekend Darmstadt,Spartan,Obstacle Race,Trifecta Weekend,Darmstadt,Germany,Europe,2026-04-06,09:45,5K+10K+21K,Full Trifecta weekend in Darmstadt,19563
+Spartan Trifecta Weekend Ulm,Spartan,Obstacle Race,Trifecta Weekend,Ulm,Germany,Europe,2026-06-17,06:45,5K+10K+21K,Full Trifecta weekend in Ulm,14606
+20K Münster,Running,Road Running,20K,Münster,Germany,Europe,2026-11-25,08:30,20km,20K challenge in Münster,28791
+20K Salzgitter,Running,Road Running,20K,Salzgitter,Germany,Europe,2026-06-10,09:00,20km,20K challenge in Salzgitter,13169
+Spartan Ultra Siegen,Spartan,Obstacle Race,Ultra,Siegen,Germany,Europe,2026-08-19,09:30,50K,Endurance Ultra in Siegen area,14396
+Trail Race Bottrop,Trail Running,Trail,43K,Bottrop,Germany,Europe,2026-09-22,09:15,43km,Trail adventure in Bottrop region,19636
+Half Marathon Stuttgart,Running,Road Running,Half,Stuttgart,Germany,Europe,2026-12-26,09:00,21.1km,Popular half in Stuttgart,4011
+Triathlon Ulm,Triathlon,Half Ironman,,Ulm,Germany,Europe,2026-01-07,09:15,Half Ironman,70.3 event near Ulm,22519
+20K Frankfurt,Running,Road Running,20K,Frankfurt,Germany,Europe,2026-08-07,10:45,20km,20K challenge in Frankfurt,2832
+5K Ulm,Running,Road Running,5K,Ulm,Germany,Europe,2026-02-03,08:30,5km,Quick 5K event in Ulm,12396
+20K Lübeck,Running,Road Running,20K,Lübeck,Germany,Europe,2026-09-03,10:00,20km,20K challenge in Lübeck,12080
+Triathlon Kiel,Triathlon,Half Ironman,,Kiel,Germany,Europe,2026-01-28,10:45,Half Ironman,70.3 event near Kiel,25028
+20K Solingen,Running,Road Running,20K,Solingen,Germany,Europe,2026-09-07,09:45,20km,20K challenge in Solingen,8928
+10K Osnabrück,Running,Road Running,10K,Osnabrück,Germany,Europe,2026-04-17,06:30,10km,Fast 10K race in Osnabrück,24156
+Ultra Trail Magdeburg,Trail Running,Ultra Trail,171K,Magdeburg,Germany,Europe,2026-03-12,06:00,171km,Trail adventure in Magdeburg region,22399
+Spartan Super Halle,Spartan,Obstacle Race,Super,Halle,Germany,Europe,2026-12-16,06:15,10K,Challenging Super in Halle,5112
+20K Nuremberg,Running,Road Running,20K,Nuremberg,Germany,Europe,2026-01-03,09:00,20km,20K challenge in Nuremberg,12136
+Ultra Trail Bergisch Gladbach,Trail Running,Ultra Trail,52K,Bergisch Gladbach,Germany,Europe,2026-03-02,09:15,52km,Trail adventure in Bergisch Gladbach region,10317
+Night Ultra Munich,Trail Running,Night Ultra,73K,Munich,Germany,Europe,2026-03-25,07:45,73km,Trail adventure in Munich region,24922
+Spartan Ultra Bottrop,Spartan,Obstacle Race,Ultra,Bottrop,Germany,Europe,2026-03-26,10:00,50K,Endurance Ultra in Bottrop area,6257
+Trail Race Bochum,Trail Running,Trail,52K,Bochum,Germany,Europe,2026-06-02,06:45,52km,Trail adventure in Bochum region,5047
+20K Bonn,Running,Road Running,20K,Bonn,Germany,Europe,2026-07-27,10:45,20km,20K challenge in Bonn,10185
+20K Frankfurt,Running,Road Running,20K,Frankfurt,Germany,Europe,2026-06-25,10:15,20km,20K challenge in Frankfurt,7349
+5K Dresden,Running,Road Running,5K,Dresden,Germany,Europe,2026-07-05,09:45,5km,Quick 5K event in Dresden,6169
+Triathlon Göttingen,Triathlon,Long Distance,,Göttingen,Germany,Europe,2026-03-11,10:15,L (1.2-80-22),Long distance challenge in Göttingen,9276
+Spartan Beast Bottrop,Spartan,Obstacle Race,Beast,Bottrop,Germany,Europe,2026-08-01,10:30,21K,Brutal Beast near Bottrop,20168
+10K Wuppertal,Running,Road Running,10K,Wuppertal,Germany,Europe,2026-12-23,10:45,10km,Fast 10K race in Wuppertal,12779
+HYROX Darmstadt Summer,Hyrox,Indoor Fitness Race,Open,Darmstadt,Germany,Europe,2026-11-03,08:15,Hyrox,World-class indoor race in Darmstadt,18022
+HYROX Hamburg Autumn,Hyrox,Indoor Fitness Race,Open,Hamburg,Germany,Europe,2026-07-04,10:15,Hyrox,Hamburg fitness challenge,1315
+HYROX Rostock Autumn,Hyrox,Indoor Fitness Race,Pro,Rostock,Germany,Europe,2026-08-01,09:30,Hyrox,Rostock fitness challenge,14535
+10K Erfurt,Running,Road Running,10K,Erfurt,Germany,Europe,2026-03-01,10:30,10km,Fast 10K race in Erfurt,14051
+Marathon Darmstadt,Running,Road Running,Marathon,Darmstadt,Germany,Europe,2026-06-19,08:00,42.2km,Scenic marathon through Darmstadt,18870
+Triathlon Oldenburg,Triathlon,Full Ironman,,Oldenburg,Germany,Europe,2026-09-01,09:15,Full Ironman,Full distance triathlon in Oldenburg,17863
+Trail Race Paderborn,Trail Running,Trail,145K,Paderborn,Germany,Europe,2026-12-23,07:00,145km,Trail adventure in Paderborn region,18345
+Half Marathon Rostock,Running,Road Running,Half,Rostock,Germany,Europe,2026-03-04,09:15,21.1km,Popular half in Rostock,12959
+Spartan Ultra Heilbronn,Spartan,Obstacle Race,Ultra,Heilbronn,Germany,Europe,2026-09-19,08:15,50K,Endurance Ultra in Heilbronn area,5951
+Spartan Beast Hagen,Spartan,Obstacle Race,Beast,Hagen,Germany,Europe,2026-11-14,07:45,21K,Brutal Beast near Hagen,13304
+5K Frankfurt,Running,Road Running,5K,Frankfurt,Germany,Europe,2026-10-26,09:00,5km,Quick 5K event in Frankfurt,8693
+Triathlon Halle,Triathlon,Long Distance,,Halle,Germany,Europe,2026-10-05,08:45,L (1.2-80-22),Long distance challenge in Halle,23527
+HYROX Moers,Hyrox,Indoor Fitness Race,Pro,Moers,Germany,Europe,2026-03-03,10:45,Hyrox,World-class indoor race in Moers,13394
+Half Marathon Bonn,Running,Road Running,Half,Bonn,Germany,Europe,2026-11-24,09:30,21.1km,Popular half in Bonn,9981
+Spartan Beast Reutlingen,Spartan,Obstacle Race,Beast,Reutlingen,Germany,Europe,2026-06-03,07:30,21K,Brutal Beast near Reutlingen,24778
+Marathon Mönchengladbach,Running,Road Running,Marathon,Mönchengladbach,Germany,Europe,2026-02-12,07:45,42.2km,Scenic marathon through Mönchengladbach,9552
+Night Ultra Mainz,Trail Running,Night Ultra,46K,Mainz,Germany,Europe,2026-01-14,09:30,46km,Trail adventure in Mainz region,18422
+Trail Race Saarbrücken,Trail Running,Trail,165K,Saarbrücken,Germany,Europe,2026-12-05,08:30,165km,Trail adventure in Saarbrücken region,11166
+5K Duisburg,Running,Road Running,5K,Duisburg,Germany,Europe,2026-02-23,09:45,5km,Quick 5K event in Duisburg,13014
+10K Salzgitter,Running,Road Running,10K,Salzgitter,Germany,Europe,2026-02-03,08:45,10km,Fast 10K race in Salzgitter,25057
+Triathlon Hanover,Triathlon,Olympic Distance,,Hanover,Germany,Europe,2026-05-15,07:45,Standard,Olympic tri in Hanover,19320
+10K Kassel,Running,Road Running,10K,Kassel,Germany,Europe,2026-04-03,07:45,10km,Fast 10K race in Kassel,16840
+Spartan Ultra Salzgitter,Spartan,Obstacle Race,Ultra,Salzgitter,Germany,Europe,2026-05-01,06:45,50K,Endurance Ultra in Salzgitter area,6088
+10K Aachen,Running,Road Running,10K,Aachen,Germany,Europe,2026-07-14,06:00,10km,Fast 10K race in Aachen,12762
+Marathon Hamm,Running,Road Running,Marathon,Hamm,Germany,Europe,2026-10-06,09:15,42.2km,Scenic marathon through Hamm,16241
+10K Dresden,Running,Road Running,10K,Dresden,Germany,Europe,2026-01-18,09:00,10km,Fast 10K race in Dresden,2691
+HYROX Ludwigshafen Spring,Hyrox,Indoor Fitness Race,Pro,Ludwigshafen,Germany,Europe,2026-10-05,08:00,Hyrox,Iconic Ludwigshafen Hyrox event,11478
+20K Ingolstadt,Running,Road Running,20K,Ingolstadt,Germany,Europe,2026-01-18,07:45,20km,20K challenge in Ingolstadt,27764
+Triathlon Darmstadt,Triathlon,Olympic Distance,,Darmstadt,Germany,Europe,2026-09-17,10:15,Standard,Olympic tri in Darmstadt,6529
+Trail Marathon Bottrop,Trail Running,Trail,145K,Bottrop,Germany,Europe,2026-12-18,06:15,145km,Trail adventure in Bottrop region,27940
+Half Marathon Mainz,Running,Road Running,Half,Mainz,Germany,Europe,2026-10-04,08:30,21.1km,Popular half in Mainz,8952
+Spartan Beast Kiel,Spartan,Obstacle Race,Beast,Kiel,Germany,Europe,2026-06-18,07:30,21K,Brutal Beast near Kiel,7559
+Trail Race Erfurt,Trail Running,Trail,171K,Erfurt,Germany,Europe,2026-02-14,08:00,171km,Trail adventure in Erfurt region,14746
+5K Düsseldorf,Running,Road Running,5K,Düsseldorf,Germany,Europe,2026-11-02,06:30,5km,Quick 5K event in Düsseldorf,22147
+HYROX Krefeld Spring,Hyrox,Indoor Fitness Race,Pro,Krefeld,Germany,Europe,2026-11-04,06:15,Hyrox,Spring edition in Krefeld,26282
+HYROX Bonn,Hyrox,Indoor Fitness Race,Pro,Bonn,Germany,Europe,2026-01-25,07:00,Hyrox,World-class indoor race in Bonn,25679
+10K Magdeburg,Running,Road Running,10K,Magdeburg,Germany,Europe,2026-11-04,09:30,10km,Fast 10K race in Magdeburg,20105
+Trail Marathon Cologne,Trail Running,Trail,80K,Cologne,Germany,Europe,2026-07-22,08:15,80km,Trail adventure in Cologne region,17297
+Half Marathon Paderborn,Running,Road Running,Half,Paderborn,Germany,Europe,2026-04-24,06:15,21.1km,Popular half in Paderborn,29177
+HYROX Stuttgart Spring,Hyrox,Indoor Fitness Race,Open,Stuttgart,Germany,Europe,2026-08-04,10:15,Hyrox,Stuttgart fitness challenge,12938
+Spartan Trifecta Weekend Darmstadt,Spartan,Obstacle Race,Trifecta Weekend,Darmstadt,Germany,Europe,2026-04-06,09:45,5K+10K+21K,Full Trifecta weekend in Darmstadt,19563
+Spartan Trifecta Weekend Ulm,Spartan,Obstacle Race,Trifecta Weekend,Ulm,Germany,Europe,2026-06-17,06:45,5K+10K+21K,Full Trifecta weekend in Ulm,14606
+20K Münster,Running,Road Running,20K,Münster,Germany,Europe,2026-11-25,08:30,20km,20K challenge in Münster,28791
+20K Salzgitter,Running,Road Running,20K,Salzgitter,Germany,Europe,2026-06-10,09:00,20km,20K challenge in Salzgitter,13169
+Spartan Ultra Siegen,Spartan,Obstacle Race,Ultra,Siegen,Germany,Europe,2026-08-19,09:30,50K,Endurance Ultra in Siegen area,14396
+Trail Race Bottrop,Trail Running,Trail,43K,Bottrop,Germany,Europe,2026-09-22,09:15,43km,Trail adventure in Bottrop region,19636
+Half Marathon Stuttgart,Running,Road Running,Half,Stuttgart,Germany,Europe,2026-12-26,09:00,21.1km,Popular half in Stuttgart,4011
+Triathlon Ulm,Triathlon,Half Ironman,,Ulm,Germany,Europe,2026-01-07,09:15,Half Ironman,70.3 event near Ulm,22519
+20K Frankfurt,Running,Road Running,20K,Frankfurt,Germany,Europe,2026-08-07,10:45,20km,20K challenge in Frankfurt,2832
+5K Ulm,Running,Road Running,5K,Ulm,Germany,Europe,2026-02-03,08:30,5km,Quick 5K event in Ulm,12396
+20K Lübeck,Running,Road Running,20K,Lübeck,Germany,Europe,2026-09-03,10:00,20km,20K challenge in Lübeck,12080
+Triathlon Kiel,Triathlon,Half Ironman,,Kiel,Germany,Europe,2026-01-28,10:45,Half Ironman,70.3 event near Kiel,25028
+20K Solingen,Running,Road Running,20K,Solingen,Germany,Europe,2026-09-07,09:45,20km,20K challenge in Solingen,8928
+10K Osnabrück,Running,Road Running,10K,Osnabrück,Germany,Europe,2026-04-17,06:30,10km,Fast 10K race in Osnabrück,24156
+Ultra Trail Magdeburg,Trail Running,Ultra Trail,171K,Magdeburg,Germany,Europe,2026-03-12,06:00,171km,Trail adventure in Magdeburg region,22399
+Spartan Super Halle,Spartan,Obstacle Race,Super,Halle,Germany,Europe,2026-12-16,06:15,10K,Challenging Super in Halle,5112
+20K Nuremberg,Running,Road Running,20K,Nuremberg,Germany,Europe,2026-01-03,09:00,20km,20K challenge in Nuremberg,12136
+Ultra Trail Bergisch Gladbach,Trail Running,Ultra Trail,52K,Bergisch Gladbach,Germany,Europe,2026-03-02,09:15,52km,Trail adventure in Bergisch Gladbach region,10317
+Night Ultra Munich,Trail Running,Night Ultra,73K,Munich,Germany,Europe,2026-03-25,07:45,73km,Trail adventure in Munich region,24922
+Spartan Ultra Bottrop,Spartan,Obstacle Race,Ultra,Bottrop,Germany,Europe,2026-03-26,10:00,50K,Endurance Ultra in Bottrop area,6257
+Trail Race Bochum,Trail Running,Trail,52K,Bochum,Germany,Europe,2026-06-02,06:45,52km,Trail adventure in Bochum region,5047
+20K Bonn,Running,Road Running,20K,Bonn,Germany,Europe,2026-07-27,10:45,20km,20K challenge in Bonn,10185
+20K Frankfurt,Running,Road Running,20K,Frankfurt,Germany,Europe,2026-06-25,10:15,20km,20K challenge in Frankfurt,7349
+5K Dresden,Running,Road Running,5K,Dresden,Germany,Europe,2026-07-05,09:45,5km,Quick 5K event in Dresden,6169
+Triathlon Göttingen,Triathlon,Long Distance,,Göttingen,Germany,Europe,2026-03-11,10:15,L (1.2-80-22),Long distance challenge in Göttingen,9276
+Spartan Beast Bottrop,Spartan,Obstacle Race,Beast,Bottrop,Germany,Europe,2026-08-01,10:30,21K,Brutal Beast near Bottrop,20168
+10K Wuppertal,Running,Road Running,10K,Wuppertal,Germany,Europe,2026-12-23,10:45,10km,Fast 10K race in Wuppertal,12779
+HYROX Darmstadt Summer,Hyrox,Indoor Fitness Race,Open,Darmstadt,Germany,Europe,2026-11-03,08:15,Hyrox,World-class indoor race in Darmstadt,18022
+HYROX Hamburg Autumn,Hyrox,Indoor Fitness Race,Open,Hamburg,Germany,Europe,2026-07-04,10:15,Hyrox,Hamburg fitness challenge,1315
+HYROX Rostock Autumn,Hyrox,Indoor Fitness Race,Pro,Rostock,Germany,Europe,2026-08-01,09:30,Hyrox,Rostock fitness challenge,14535
+10K Erfurt,Running,Road Running,10K,Erfurt,Germany,Europe,2026-03-01,10:30,10km,Fast 10K race in Erfurt,14051
+Marathon Darmstadt,Running,Road Running,Marathon,Darmstadt,Germany,Europe,2026-06-19,08:00,42.2km,Scenic marathon through Darmstadt,18870
+Triathlon Oldenburg,Triathlon,Full Ironman,,Oldenburg,Germany,Europe,2026-09-01,09:15,Full Ironman,Full distance triathlon in Oldenburg,17863
+Trail Race Paderborn,Trail Running,Trail,145K,Paderborn,Germany,Europe,2026-12-23,07:00,145km,Trail adventure in Paderborn region,18345
+Half Marathon Rostock,Running,Road Running,Half,Rostock,Germany,Europe,2026-03-04,09:15,21.1km,Popular half in Rostock,12959
+Spartan Ultra Heilbronn,Spartan,Obstacle Race,Ultra,Heilbronn,Germany,Europe,2026-09-19,08:15,50K,Endurance Ultra in Heilbronn area,5951
+Spartan Beast Hagen,Spartan,Obstacle Race,Beast,Hagen,Germany,Europe,2026-11-14,07:45,21K,Brutal Beast near Hagen,13304
+5K Frankfurt,Running,Road Running,5K,Frankfurt,Germany,Europe,2026-10-26,09:00,5km,Quick 5K event in Frankfurt,8693
+Triathlon Halle,Triathlon,Long Distance,,Halle,Germany,Europe,2026-10-05,08:45,L (1.2-80-22),Long distance challenge in Halle,23527
+HYROX Moers,Hyrox,Indoor Fitness Race,Pro,Moers,Germany,Europe,2026-03-03,10:45,Hyrox,World-class indoor race in Moers,13394
+Half Marathon Bonn,Running,Road Running,Half,Bonn,Germany,Europe,2026-11-24,09:30,21.1km,Popular half in Bonn,9981
+Spartan Beast Reutlingen,Spartan,Obstacle Race,Beast,Reutlingen,Germany,Europe,2026-06-03,07:30,21K,Brutal Beast near Reutlingen,24778
+Marathon Mönchengladbach,Running,Road Running,Marathon,Mönchengladbach,Germany,Europe,2026-02-12,07:45,42.2km,Scenic marathon through Mönchengladbach,9552
+Night Ultra Mainz,Trail Running,Night Ultra,46K,Mainz,Germany,Europe,2026-01-14,09:30,46km,Trail adventure in Mainz region,18422
+Trail Race Saarbrücken,Trail Running,Trail,165K,Saarbrücken,Germany,Europe,2026-12-05,08:30,165km,Trail adventure in Saarbrücken region,11166
+5K Duisburg,Running,Road Running,5K,Duisburg,Germany,Europe,2026-02-23,09:45,5km,Quick 5K event in Duisburg,13014
+10K Salzgitter,Running,Road Running,10K,Salzgitter,Germany,Europe,2026-02-03,08:45,10km,Fast 10K race in Salzgitter,25057
+Triathlon Hanover,Triathlon,Olympic Distance,,Hanover,Germany,Europe,2026-05-15,07:45,Standard,Olympic tri in Hanover,19320
+10K Kassel,Running,Road Running,10K,Kassel,Germany,Europe,2026-04-03,07:45,10km,Fast 10K race in Kassel,16840
+Spartan Ultra Salzgitter,Spartan,Obstacle Race,Ultra,Salzgitter,Germany,Europe,2026-05-01,06:45,50K,Endurance Ultra in Salzgitter area,6088
+10K Aachen,Running,Road Running,10K,Aachen,Germany,Europe,2026-07-14,06:00,10km,Fast 10K race in Aachen,12762
+Marathon Hamm,Running,Road Running,Marathon,Hamm,Germany,Europe,2026-10-06,09:15,42.2km,Scenic marathon through Hamm,16241
+10K Dresden,Running,Road Running,10K,Dresden,Germany,Europe,2026-01-18,09:00,10km,Fast 10K race in Dresden,2691
+HYROX Ludwigshafen Spring,Hyrox,Indoor Fitness Race,Pro,Ludwigshafen,Germany,Europe,2026-10-05,08:00,Hyrox,Iconic Ludwigshafen Hyrox event,11478
+20K Ingolstadt,Running,Road Running,20K,Ingolstadt,Germany,Europe,2026-01-18,07:45,20km,20K challenge in Ingolstadt,27764
+Triathlon Darmstadt,Triathlon,Olympic Distance,,Darmstadt,Germany,Europe,2026-09-17,10:15,Standard,Olympic tri in Darmstadt,6529
+Trail Marathon Bottrop,Trail Running,Trail,145K,Bottrop,Germany,Europe,2026-12-18,06:15,145km,Trail adventure in Bottrop region,27940
+Half Marathon Mainz,Running,Road Running,Half,Mainz,Germany,Europe,2026-10-04,08:30,21.1km,Popular half in Mainz,8952
+Spartan Beast Kiel,Spartan,Obstacle Race,Beast,Kiel,Germany,Europe,2026-06-18,07:30,21K,Brutal Beast near Kiel,7559
+Trail Race Erfurt,Trail Running,Trail,171K,Erfurt,Germany,Europe,2026-02-14,08:00,171km,Trail adventure in Erfurt region,14746
+5K Düsseldorf,Running,Road Running,5K,Düsseldorf,Germany,Europe,2026-11-02,06:30,5km,Quick 5K event in Düsseldorf,22147
+HYROX Krefeld Spring,Hyrox,Indoor Fitness Race,Pro,Krefeld,Germany,Europe,2026-11-04,06:15,Hyrox,Spring edition in Krefeld,26282
+HYROX Bonn,Hyrox,Indoor Fitness Race,Pro,Bonn,Germany,Europe,2026-01-25,07:00,Hyrox,World-class indoor race in Bonn,25679
+10K Magdeburg,Running,Road Running,10K,Magdeburg,Germany,Europe,2026-11-04,09:30,10km,Fast 10K race in Magdeburg,20105
+Trail Marathon Cologne,Trail Running,Trail,80K,Cologne,Germany,Europe,2026-07-22,08:15,80km,Trail adventure in Cologne region,17297
+Half Marathon Paderborn,Running,Road Running,Half,Paderborn,Germany,Europe,2026-04-24,06:15,21.1km,Popular half in Paderborn,29177
+HYROX Stuttgart Spring,Hyrox,Indoor Fitness Race,Open,Stuttgart,Germany,Europe,2026-08-04,10:15,Hyrox,Stuttgart fitness challenge,12938
+Spartan Trifecta Weekend Darmstadt,Spartan,Obstacle Race,Trifecta Weekend,Darmstadt,Germany,Europe,2026-04-06,09:45,5K+10K+21K,Full Trifecta weekend in Darmstadt,19563
+Spartan Trifecta Weekend Ulm,Spartan,Obstacle Race,Trifecta Weekend,Ulm,Germany,Europe,2026-06-17,06:45,5K+10K+21K,Full Trifecta weekend in Ulm,14606
+20K Münster,Running,Road Running,20K,Münster,Germany,Europe,2026-11-25,08:30,20km,20K challenge in Münster,28791
+20K Salzgitter,Running,Road Running,20K,Salzgitter,Germany,Europe,2026-06-10,09:00,20km,20K challenge in Salzgitter,13169
+Spartan Ultra Siegen,Spartan,Obstacle Race,Ultra,Siegen,Germany,Europe,2026-08-19,09:30,50K,Endurance Ultra in Siegen area,14396
+Trail Race Bottrop,Trail Running,Trail,43K,Bottrop,Germany,Europe,2026-09-22,09:15,43km,Trail adventure in Bottrop region,19636
+Half Marathon Stuttgart,Running,Road Running,Half,Stuttgart,Germany,Europe,2026-12-26,09:00,21.1km,Popular half in Stuttgart,4011
+Triathlon Ulm,Triathlon,Half Ironman,,Ulm,Germany,Europe,2026-01-07,09:15,Half Ironman,70.3 event near Ulm,22519
+20K Frankfurt,Running,Road Running,20K,Frankfurt,Germany,Europe,2026-08-07,10:45,20km,20K challenge in Frankfurt,2832
+5K Ulm,Running,Road Running,5K,Ulm,Germany,Europe,2026-02-03,08:30,5km,Quick 5K event in Ulm,12396
+20K Lübeck,Running,Road Running,20K,Lübeck,Germany,Europe,2026-09-03,10:00,20km,20K challenge in Lübeck,12080
+Triathlon Kiel,Triathlon,Half Ironman,,Kiel,Germany,Europe,2026-01-28,10:45,Half Ironman,70.3 event near Kiel,25028
+20K Solingen,Running,Road Running,20K,Solingen,Germany,Europe,2026-09-07,09:45,20km,20K challenge in Solingen,8928
+10K Osnabrück,Running,Road Running,10K,Osnabrück,Germany,Europe,2026-04-17,06:30,10km,Fast 10K race in Osnabrück,24156
+Ultra Trail Magdeburg,Trail Running,Ultra Trail,171K,Magdeburg,Germany,Europe,2026-03-12,06:00,171km,Trail adventure in Magdeburg region,22399
+Spartan Super Halle,Spartan,Obstacle Race,Super,Halle,Germany,Europe,2026-12-16,06:15,10K,Challenging Super in Halle,5112
+20K Nuremberg,Running,Road Running,20K,Nuremberg,Germany,Europe,2026-01-03,09:00,20km,20K challenge in Nuremberg,12136
+Ultra Trail Bergisch Gladbach,Trail Running,Ultra Trail,52K,Bergisch Gladbach,Germany,Europe,2026-03-02,09:15,52km,Trail adventure in Bergisch Gladbach region,10317
+Night Ultra Munich,Trail Running,Night Ultra,73K,Munich,Germany,Europe,2026-03-25,07:45,73km,Trail adventure in Munich region,24922
+Spartan Ultra Bottrop,Spartan,Obstacle Race,Ultra,Bottrop,Germany,Europe,2026-03-26,10:00,50K,Endurance Ultra in Bottrop area,6257
+Trail Race Bochum,Trail Running,Trail,52K,Bochum,Germany,Europe,2026-06-02,06:45,52km,Trail adventure in Bochum region,5047
+20K Bonn,Running,Road Running,20K,Bonn,Germany,Europe,2026-07-27,10:45,20km,20K challenge in Bonn,10185
+20K Frankfurt,Running,Road Running,20K,Frankfurt,Germany,Europe,2026-06-25,10:15,20km,20K challenge in Frankfurt,7349
+5K Dresden,Running,Road Running,5K,Dresden,Germany,Europe,2026-07-05,09:45,5km,Quick 5K event in Dresden,6169
+Triathlon Göttingen,Triathlon,Long Distance,,Göttingen,Germany,Europe,2026-03-11,10:15,L (1.2-80-22),Long distance challenge in Göttingen,9276
+Spartan Beast Bottrop,Spartan,Obstacle Race,Beast,Bottrop,Germany,Europe,2026-08-01,10:30,21K,Brutal Beast near Bottrop,20168
+10K Wuppertal,Running,Road Running,10K,Wuppertal,Germany,Europe,2026-12-23,10:45,10km,Fast 10K race in W
