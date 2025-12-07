@@ -1,0 +1,149 @@
+```csv:disable-run
+name,sport,sport_category,sport_subtype,city,country,continent,date,start_time,distance,description,participants
+HYROX Madrid,Hyrox,Indoor Fitness Race,Pro,Madrid,Spain,Europe,2026-01-18,08:00,Hyrox,World-class indoor fitness race with functional stations,8000
+HYROX Barcelona,Hyrox,Indoor Fitness Race,Pro,Barcelona,Spain,Europe,2026-02-08,08:00,Hyrox,Iconic Barcelona edition with full stations,7500
+HYROX Valencia,Hyrox,Indoor Fitness Race,Open,Valencia,Spain,Europe,2026-03-15,08:00,Hyrox,Fast-growing Mediterranean Hyrox event,6500
+HYROX Bilbao,Hyrox,Indoor Fitness Race,Pro,Bilbao,Spain,Europe,2026-04-05,08:00,Hyrox,Basque Country massive turnout,7000
+HYROX Málaga,Hyrox,Indoor Fitness Race,Open,Málaga,Spain,Europe,2026-05-10,08:00,Hyrox,Costa del Sol sunshine fitness race,6000
+HYROX Sevilla,Hyrox,Indoor Fitness Race,Pro,Sevilla,Spain,Europe,2026-06-07,08:00,Hyrox,Andalusian heat and passion,6500
+HYROX Mallorca,Hyrox,Indoor Fitness Race,Open,Palma de Mallorca,Spain,Europe,2026-09-20,08:00,Hyrox,Island holiday Hyrox weekend,5500
+HYROX Alicante,Hyrox,Indoor Fitness Race,Open,Alicante,Spain,Europe,2026-10-11,08:00,Hyrox,Costa Blanca fitness festival,5000
+HYROX Madrid Autumn,Hyrox,Indoor Fitness Race,Pro,Madrid,Spain,Europe,2026-11-08,08:00,Hyrox,Second Madrid edition of the year,8500
+HYROX Barcelona Autumn,Hyrox,Indoor Fitness Race,Open,Barcelona,Spain,Europe,2026-12-06,08:00,Hyrox,End-of-year Barcelona finale,7000
+Spartan Trifecta Weekend Madrid,Spartan,Obstacle Race,Trifecta,Madrid,Spain,Europe,2026-03-22,07:00,5K+21K+Super,Full Trifecta weekend in central Spain,12000
+Spartan Sprint Madrid,Spartan,Obstacle Race,Sprint,Madrid,Spain,Europe,2026-03-22,08:00,5K,Fast urban-area Sprint,8000
+Spartan Super Madrid,Spartan,Obstacle Race,Super,Madrid,Spain,Europe,2026-03-23,07:30,10K,Super with epic obstacles,7000
+Spartan Beast Madrid,Spartan,Obstacle Race,Beast,Madrid,Spain,Europe,2026-03-23,07:00,21K,Full Beast to complete Trifecta,6000
+Spartan Trifecta Weekend Barcelona,Spartan,Obstacle Race,Trifecta,Barcelona,Spain,Europe,2026-04-26,07:00,5K+21K+Super,Coastal Trifecta near Barcelona,13000
+Spartan Sprint Barcelona,Spartan,Obstacle Race,Sprint,Barcelona,Spain,Europe,2026-04-26,08:30,5K,Beach-area Sprint,8500
+Spartan Super Barcelona,Spartan,Obstacle Race,Super,Barcelona,Spain,Europe,2026-04-27,07:30,10K,Super with sea views,7500
+Spartan Beast Barcelona,Spartan,Obstacle Race,Beast,Barcelona,Spain,Europe,2026-04-27,07:00,21K,Brutal Beast finale,6500
+Spartan Sprint Valencia,Spartan,Obstacle Race,Sprint,Valencia,Spain,Europe,2026-05-17,08:00,5K,City of Arts venue Sprint,7000
+Spartan Super Valencia,Spartan,Obstacle Race,Super,Valencia,Spain,Europe,2026-05-18,07:30,10K,Super in futuristic park,6000
+Spartan Beast Andalucía,Spartan,Obstacle Race,Beast,Málaga,Spain,Europe,2026-10-18,07:00,21K,Southern Spain mountains Beast,5500
+Spartan Sprint Mallorca,Spartan,Obstacle Race,Sprint,Palma de Mallorca,Spain,Europe,2026-06-14,08:00,5K,Island Sprint paradise,5000
+Spartan Ultra Mallorca,Spartan,Obstacle Race,Ultra,Palma de Mallorca,Spain,Europe,2026-06-15,06:00,50K,First Spanish Ultra event,3000
+Spartan Sprint Bilbao,Spartan,Obstacle Race,Sprint,Bilbao,Spain,Europe,2026-09-27,08:30,5K,Basque industrial Sprint,6000
+Spartan Super Sevilla,Spartan,Obstacle Race,Super,Sevilla,Spain,Europe,2026-11-08,07:30,10K,Super in Andalusian heat,5500
+Triatlón Sevilla,Triathlon,Olympic Distance,,Sevilla,Spain,Europe,2026-04-27,09:00,Standard,Guadalquivir river classic,2500
+Triatlón Valencia,Triathlon,Olympic Distance,,Valencia,Spain,Europe,2026-05-18,08:30,Standard,City of Arts swim and bike,3000
+Triatlón Barcelona,Triathlon,Olympic Distance,,Barcelona,Spain,Europe,2026-06-08,08:00,Standard,Nova Icaria beach start,3500
+Triatlón Madrid,Triathlon,Olympic Distance,,Madrid,Spain,Europe,2026-06-22,09:00,Standard,Casa de Campo classic,2800
+Triatlón Málaga,Triathlon,Olympic Distance,,Málaga,Spain,Europe,2026-09-14,08:30,Standard,Costa del Sol Mediterranean swim,2200
+Triatlón Bilbao,Triathlon,Olympic Distance,,Bilbao,Spain,Europe,2026-07-13,09:00,Standard,Nervión river and Guggenheim,2000
+Triatlón Alicante,Triathlon,Olympic Distance,,Alicante,Spain,Europe,2026-10-05,08:00,Standard,Postiguet beach start,1800
+Triatlón Palma de Mallorca,Triathlon,Olympic Distance,,Palma de Mallorca,Spain,Europe,2026-05-25,08:30,Standard,Bay of Palma crystal waters,2500
+Triatlón Zaragoza,Triathlon,Olympic Distance,,Zaragoza,Spain,Europe,2026-06-15,09:00,Standard,Ebro river triathlon,1600
+Triatlón San Sebastián,Triathlon,Olympic Distance,,San Sebastián,Spain,Europe,2026-09-07,08:00,Standard,La Concha bay elite race,2000
+Triatlón Ibiza,Triathlon,Olympic Distance,,Ibiza,Spain,Europe,2026-05-11,08:30,Standard,Island turquoise waters,2200
+Triatlón Tarragona,Triathlon,Olympic Distance,,Tarragona,Spain,Europe,2026-07-20,09:00,Standard,Roman city Mediterranean tri,1500
+Triatlón Cádiz,Triathlon,Olympic Distance,,Cádiz,Spain,Europe,2026-10-19,08:30,Standard,Atlantic coast historic city,1700
+Triatlón Vigo,Triathlon,Olympic Distance,,Vigo,Spain,Europe,2026-06-29,09:00,Standard,Rías Baixas swim,1400
+Triatlón Pontevedra,Triathlon,Olympic Distance,,Pontevedra,Spain,Europe,2026-08-24,08:00,Standard,Galician championship race,1800
+Triatlón Santander,Triathlon,Olympic Distance,,Santander,Spain,Europe,2026-07-06,09:00,Standard,Cantabrian coast run,1600
+Triatlón Gijón,Triathlon,Olympic Distance,,Gijón,Spain,Europe,2026-08-10,08:30,Standard,San Lorenzo beach start,1500
+Triatlón A Coruña,Triathlon,Olympic Distance,,A Coruña,Spain,Europe,2026-09-21,08:00,Standard,Tower of Hercules backdrop,1700
+Triatlón Granada,Triathlon,Olympic Distance,,Granada,Spain,Europe,2026-05-04,09:00,Standard,Sierra Nevada mountain swim,1300
+Triatlón Marbella,Triathlon,Olympic Distance,,Marbella,Spain,Europe,2026-04-13,08:30,Standard,Luxury Costa del Sol tri,2000
+Triatlón Benidorm,Triathlon,Olympic Distance,,Benidorm,Spain,Europe,2026-11-02,08:00,Standard,Skyscraper city triathlon,1800
+Triatlón Castellón,Triathlon,Olympic Distance,,Castellón,Spain,Europe,2026-10-12,09:00,Standard,Costa Azahar race,1400
+Triatlón Elche,Triathlon,Olympic Distance,,Elche,Spain,Europe,2026-09-28,08:30,Standard,Palm grove finish,1500
+Triatlón Vitoria-Gasteiz,Triathlon,Half Ironman,,Vitoria-Gasteiz,Spain,Europe,2026-07-13,07:30,Half Ironman,Basque Country classic 70.3,3000
+Triatlón Pamplona-Iruña,Triathlon,Olympic Distance,,Pamplona,Spain,Europe,2026-06-22,09:00,Standard,Running of the bulls city tri,1600
+Triatlón Logroño,Triathlon,Olympic Distance,,Logroño,Spain,Europe,2026-09-14,09:00,Standard,La Rioja wine region tri,1300
+Triatlón Salamanca,Triathlon,Olympic Distance,,Salamanca,Spain,Europe,2026-05-25,09:00,Standard,Golden city university tri,1400
+Triatlón Valladolid,Triathlon,Olympic Distance,,Valladolid,Spain,Europe,2026-06-08,09:00,Standard,Castilla y León classic,1200
+Triatlón León,Triathlon,Olympic Distance,,León,Spain,Europe,2026-07-20,09:00,Standard,Cathedral city tri,1100
+Triatlón Burgos,Triathlon,Olympic Distance,,Burgos,Spain,Europe,2026-09-07,09:00,Standard,Gothic cathedral start,1000
+Triatlón Segovia,Triathlon,Olympic Distance,,Segovia,Spain,Europe,2026-05-18,09:00,Standard,Aqueduct and Alcázar tri,1300
+Triatlón Ávila,Triathlon,Olympic Distance,,Ávila,Spain,Europe,2026-06-15,09:00,Standard,Medieval walls triathlon,1100
+Triatlón Cuenca,Triathlon,Olympic Distance,,Cuenca,Spain,Europe,2026-07-06,09:00,Standard,Hanging houses tri,1000
+Triatlón Teruel,Triathlon,Olympic Distance,,Teruel,Spain,Europe,2026-09-21,09:00,Standard,Mudejar city tri,900
+Triatlón Huesca,Triathlon,Olympic Distance,,Huesca,Spain,Europe,2026-06-29,09:00,Standard,Pyrenees gateway tri,950
+Triatlón Lleida,Triathlon,Olympic Distance,,Lleida,Spain,Europe,2026-05-11,09:00,Standard,Segria plains tri,1000
+Triatlón Girona,Triathlon,Olympic Distance,,Girona,Spain,Europe,2026-10-05,08:30,Standard,Medieval city and river tri,1400
+Triatlón Almería,Triathlon,Olympic Distance,,Almería,Spain,Europe,2026-04-27,08:30,Standard,Desert and sea tri,1200
+Triatlón Huelva,Triathlon,Olympic Distance,,Huelva,Spain,Europe,2026-11-09,08:30,Standard,Columbus departure port tri,1100
+Triatlón Badajoz,Triathlon,Olympic Distance,,Badajoz,Spain,Europe,2026-05-25,09:00,Standard,Portuguese border tri,1000
+Triatlón Cáceres,Triathlon,Olympic Distance,,Cáceres,Spain,Europe,2026-06-22,09:00,Standard,UNESCO old town tri,950
+Triatlón Ourense,Triathlon,Olympic Distance,,Ourense,Spain,Europe,2026-07-13,09:00,Standard,Thermal springs city tri,900
+Triatlón Lugo,Triathlon,Olympic Distance,,Lugo,Spain,Europe,2026-09-14,09:00,Standard,Roman walls triathlon,850
+Triatlón Donostia,Spartan,Obstacle Race,Sprint,San Sebastián,Spain,Europe,2026-05-11,08:00,5K,Basque beach Sprint,7000
+Triatlón Zaragoza Half,Triathlon,Half Ironman,,Zaragoza,Spain,Europe,2026-09-28,07:30,Half Ironman,Ebro river 70.3,2200
+Maratón Valencia Trinidad Alfonso,Running,Road Running,Marathon,Valencia,Spain,Europe,2026-12-07,09:00,42.2km,Fastest Spanish marathon flat course,33000
+Maratón Sevilla,Running,Road Running,Marathon,Sevilla,Spain,Europe,2026-02-23,09:00,42.2km,Flat historic city marathon,15000
+Maratón Barcelona,Running,Road Running,Marathon,Barcelona,Spain,Europe,2026-03-09,08:30,42.2km,Gaudí and beach marathon,20000
+Maratón Madrid,Running,Road Running,Marathon,Madrid,Spain,Europe,2026-04-27,09:00,42.2km,Hilly royal palace marathon,16000
+Maratón Málaga,Running,Road Running,Marathon,Málaga,Spain,Europe,2026-12-14,09:00,42.2km,Coastal winter marathon,12000
+Maratón Bilbao,Running,Road Running,Marathon,Bilbao,Spain,Europe,2026-10-19,09:00,42.2km,Guggenheim night finish,10000
+Maratón Palma de Mallorca,Running,Road Running,Marathon,Palma de Mallorca,Spain,Europe,2026-10-12,09:00,42.2km,Cathedral and bay marathon,9000
+Media Maratón Valencia,Running,Road Running,Half Marathon,Valencia,Spain,Europe,2026-10-26,09:00,21.1km,World’s fastest half course,25000
+Media Maratón Barcelona,Running,Road Running,Half Marathon,Barcelona,Spain,Europe,2026-02-09,08:45,21.1km,Sagrada Familia half,22000
+Media Maratón Madrid,Running,Road Running,Half Marathon,Madrid,Spain,Europe,2026-03-30,09:00,21.1km,Retiro Park half marathon,18000
+Media Maratón Sevilla,Running,Road Running,Half Marathon,Sevilla,Spain,Europe,2026-01-26,09:00,21.1km,Flat Andalusian half,15000
+Media Maratón Granada,Running,Road Running,Half Marathon,Granada,Spain,Europe,2026-04-13,09:00,21.1km,Alhambra views half,8000
+Media Maratón Málaga,Running,Road Running,Half Marathon,Málaga,Spain,Europe,2026-03-16,09:00,21.1km,Costa del Sol half,12000
+Media Maratón Bilbao,Running,Road Running,Half Marathon,Bilbao,Spain,Europe,2026-04-06,09:00,21.1km,Guggenheim half marathon,9000
+Media Maratón Palma de Mallorca,Running,Road Running,Half Marathon,Palma de Mallorca,Spain,Europe,2026-03-23,09:00,21.1km,Bay of Palma half,8000
+Behobia-San Sebastián,Running,Road Running,20K,San Sebastián,Spain,Europe,2026-11-09,09:00,20km,Iconic point-to-point race,30000
+Cursa dels Nassos 5K,Running,Road Running,5K,Barcelona,Spain,Europe,2026-12-31,17:00,5km,Fast NYE 5K elite field,15000
+San Silvestre Vallecana 10K,Running,Road Running,10K,Madrid,Spain,Europe,2026-12-31,17:30,10km,World-famous New Year’s Eve 10K,40000
+Cursa El Corte Inglés 10K,Running,Road Running,10K,Barcelona,Spain,Europe,2026-05-11,09:30,10km,Massive popular city race,60000
+Jean Bouin 10K,Running,Road Running,10K,Barcelona,Spain,Europe,2026-11-30,09:00,10km,Historic Barcelona race,12000
+10K Valencia Ibercaja,Running,Road Running,10K,Valencia,Spain,Europe,2026-01-12,09:00,10km,Fastest 10K in Spain,15000
+10K Ibiza,Running,Road Running,10K,Ibiza,Spain,Europe,2026-04-27,19:00,10km,Sunset island race,8000
+10K Madrid Corre por Ucrania,Running,Road Running,10K,Madrid,Spain,Europe,2026-02-23,09:30,10km,Charity city race,10000
+10K Bilbao Night,Running,Road Running,10K,Bilbao,Spain,Europe,2026-10-11,20:00,10km,Illuminated Guggenheim run,9000
+10K Sevilla,Running,Road Running,10K,Sevilla,Spain,Europe,2026-01-26,09:30,10km,Andalusian classic,12000
+10K Málaga,Running,Road Running,10K,Málaga,Spain,Europe,2026-03-16,09:30,10km,Costa del Sol race,10000
+10K Zaragoza,Running,Road Running,10K,Zaragoza,Spain,Europe,2026-05-18,09:00,10km,Ebro river race,8000
+10K Alicante,Running,Road Running,10K,Alicante,Spain,Europe,2026-04-13,09:30,10km,Costa Blanca race,7000
+10K Palma de Mallorca,Running,Road Running,10K,Palma de Mallorca,Spain,Europe,2026-11-02,09:00,10km,Bay of Palma race,8500
+10K Granada,Running,Road Running,10K,Granada,Spain,Europe,2026-10-19,09:30,10km,Alhambra night race,7500
+10K San Sebastián,Running,Road Running,10K,San Sebastián,Spain,Europe,2026-11-16,09:00,10km,La Concha bay race,9000
+5K Madrid,Running,Road Running,5K,Madrid,Spain,Europe,2026-06-15,09:30,5km,Fast city centre 5K,8000
+5K Barcelona,Running,Road Running,5K,Barcelona,Spain,Europe,2026-07-13,09:00,5km,Beachfront 5K,7000
+5K Valencia,Running,Road Running,5K,Valencia,Spain,Europe,2026-08-10,09:30,5km,Turia Gardens 5K,6500
+5K Sevilla,Running,Road Running,5K,Sevilla,Spain,Europe,2026-09-07,09:00,5km,Historic centre 5K,6000
+5K Málaga,Running,Road Running,5K,Málaga,Spain,Europe,2026-10-05,09:30,5km,Coastal 5K,5500
+HYROX Granada,Hyrox,Indoor Fitness Race,Open,Granada,Spain,Europe,2026-11-22,08:00,Hyrox,Alhambra city edition,5000
+Spartan Sprint Andalucía,Spartan,Obstacle Race,Sprint,Málaga,Spain,Europe,2026-11-15,08:00,5K,Southern Spain Sprint,6500
+Spartan Super Mallorca,Spartan,Obstacle Race,Super,Palma de Mallorca,Spain,Europe,2026-06-15,07:30,10K,Island Super,5500
+Triatlón Half Vitoria-Gasteiz,Triathlon,Half Ironman,,Vitoria-Gasteiz,Spain,Europe,2026-07-13,07:30,Half Ironman,Long-distance Basque classic,3000
+Triatlón Half Barcelona,Triathlon,Half Ironman,,Barcelona,Spain,Europe,2026-05-18,07:00,Half Ironman,Full Mediterranean 70.3,3500
+Triatlón Half Mallorca,Triathlon,Half Ironman,,Alcúdia,Spain,Europe,2026-05-10,07:30,Half Ironman,Iconic Balearic 70.3,3200
+Triatlón Half Lanzarote,Triathlon,Half Ironman,,Club La Santa,Spain,Europe,2026-10-18,07:30,Half Ironman,Volcanic tough 70.3,2500
+Triatlón Half Marbella,Triathlon,Half Ironman,,Marbella,Spain,Europe,2026-04-27,07:30,Half Ironman,Costa del Sol luxury 70.3,2800
+Triatlón Half Bilbao,Triathlon,Half Ironman,,Bilbao,Spain,Europe,2026-06-08,07:30,Half Ironman,Basque Country 70.3,2600
+Triatlón Half Tarragona,Triathlon,Half Ironman,,Tarragona,Spain,Europe,2026-09-28,07:30,Half Ironman,Roman heritage 70.3,2200
+Triatlón Half Calella,Triathlon,Half Ironman,,Calella,Spain,Europe,2026-10-05,07:00,Half Ironman,Barcelona 70.3 classic,3500
+Triatlón Half Elche,Triathlon,Half Ironman,,Elche,Spain,Europe,2026-04-13,07:30,Half Ironman,Palm grove 70.3,2000
+Triatlón Half Zaragoza,Triathlon,Half Ironman,,Zaragoza,Spain,Europe,2026-09-14,07:30,Half Ironman,Ebro river 70.3,2100
+Spartan Beast Pyrenees,Spartan,Obstacle Race,Beast,Encamp,Andorra,Europe,2026-09-20,07:00,21K,High mountain Beast,5000
+Spartan Sprint Andorra,Spartan,Obstacle Race,Sprint,Encamp,Andorra,Europe,2026-09-21,08:30,5K,Pyrenees Sprint,6000
+HYROX Bilbao,Hyrox,Indoor Fitness Race,Open,Bilbao,Spain,Europe,2026-10-25,08:00,Hyrox,Basque edition,6000
+HYROX Sevilla,Hyrox,Indoor Fitness Race,Open,Sevilla,Spain,Europe,2026-11-29,08:00,Hyrox,Andalusian finale,5500
+Spartan Sprint Granada,Spartan,Obstacle Race,Sprint,Granada,Spain,Europe,2026-05-18,08:00,5K,Alhambra backdrop Sprint,5500
+Spartan Super Granada,Spartan,Obstacle Race,Super,Granada,Spain,Europe,2026-05-19,07:30,10K,Sierra Nevada Super,5000
+Triatlón Full Ironman Vitoria-Gasteiz,Triathlon,Full Ironman,,Vitoria-Gasteiz,Spain,Europe,2026-07-13,07:00,Full Ironman,Spanish full-distance classic,2800
+Triatlón Full Ironman Calella-Barcelona,Triathlon,Full Ironman,,Calella,Spain,Europe,2026-10-05,07:00,Full Ironman,Mediterranean full Ironman,3200
+Triatlón Full Ironman Lanzarote,Triathlon,Full Ironman,,Club La Santa,Spain,Europe,2026-05-17,07:00,Full Ironman,Toughest Ironman in Europe,2500
+Maratón Ibiza,Running,Road Running,Marathon,Ibiza,Spain,Europe,2026-04-26,09:00,42.2km,Island party marathon,8000
+Maratón San Sebastián,Running,Road Running,Marathon,San Sebastián,Spain,Europe,2026-11-30,09:00,42.2km,La Concha bay marathon,10000
+Maratón Zaragoza,Running,Road Running,Marathon,Zaragoza,Spain,Europe,2026-04-13,09:00,42.2km,Ebro river marathon,9000
+Maratón Logroño,Running,Road Running,Marathon,Logroño,Spain,Europe,2026-10-05,09:00,42.2km,La Rioja wine marathon,7000
+Maratón Vitoria-Gasteiz,Running,Road Running,Marathon,Vitoria-Gasteiz,Spain,Europe,2026-11-16,09:00,42.2km,Basque capital marathon,8000
+Media Maratón Ibiza,Running,Road Running,Half Marathon,Ibiza,Spain,Europe,2026-04-26,17:00,21.1km,Sunset island half,7000
+Media Maratón San Sebastián,Running,Road Running,Half Marathon,San Sebastián,Spain,Europe,2026-11-30,09:00,21.1km,Basque coast half,9000
+Media Maratón Zaragoza,Running,Road Running,Half Marathon,Zaragoza,Spain,Europe,2026-04-13,09:00,21.1km,Ebro half marathon,8000
+Media Maratón Logroño,Running,Road Running,Half Marathon,Logroño,Spain,Europe,2026-10-05,09:00,21.1km,Wine region half,6500
+Media Maratón Vitoria-Gasteiz,Running,Road Running,Half Marathon,Vitoria-Gasteiz,Spain,Europe,2026-11-16,09:00,21.1km,Basque half marathon,7500
+10K Ibiza Sunset,Running,Road Running,10K,Ibiza,Spain,Europe,2026-10-18,19:00,10km,Famous sunset run,9000
+10K San Sebastián,Running,Road Running,10K,San Sebastián,Spain,Europe,2026-11-16,09:30,10km,La Concha bay 10K,8000
+10K Zaragoza,Running,Road Running,10K,Zaragoza,Spain,Europe,2026-04-13,10:00,10km,Ebro river 10K,7000
+10K Logroño,Running,Road Running,10K,Logroño,Spain,Europe,2026-10-05,10:30,10km,Wine capital 10K,6000
+10K Vitoria-Gasteiz,Running,Road Running,10K,Vitoria-Gasteiz,Spain,Europe,2026-11-16,10:00,10km,Basque green city 10K,6500
+HYROX Ibiza,Hyrox,Indoor Fitness Race,Open,Ibiza,Spain,Europe,2026-05-03,08:00,Hyrox,Island party weekend Hyrox,5500
+Spartan Sprint Ibiza,Spartan,Obstacle Race,Sprint,Ibiza,Spain,Europe,2026-05-04,08:00,5K,Island obstacle party,6000
+Spartan Super Ibiza,Spartan,Obstacle Race,Super,Ibiza,Spain,Europe,2026-05-05,07:30,10K,Island Super,5000
+Triatlón Ibiza Half,Triathlon,Half Ironman,,Ibiza,Spain,Europe,2026-05-04,07:30,Half Ironman,Crystal waters 70.3,2800
