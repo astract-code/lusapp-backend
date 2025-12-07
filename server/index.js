@@ -127,6 +127,34 @@ const upload = multer({
   }
 });
 
+const csvStorage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    const uploadDir = path.join(__dirname, 'uploads');
+    if (!fs.existsSync(uploadDir)) {
+      fs.mkdirSync(uploadDir, { recursive: true });
+    }
+    cb(null, uploadDir);
+  },
+  filename: (req, file, cb) => {
+    cb(null, `csv-${Date.now()}-${file.originalname}`);
+  }
+});
+const csvUpload = multer({
+  storage: csvStorage,
+  limits: { fileSize: 10 * 1024 * 1024 },
+  fileFilter: (req, file, cb) => {
+    const isCsv = file.mimetype === 'text/csv' || 
+                  file.mimetype === 'application/csv' ||
+                  file.mimetype === 'application/vnd.ms-excel' ||
+                  file.originalname.toLowerCase().endsWith('.csv');
+    if (isCsv) {
+      return cb(null, true);
+    } else {
+      cb(new Error('Only CSV files are allowed'));
+    }
+  }
+});
+
 // Serve static files (CSV templates) publicly - NO AUTH
 app.use('/static', express.static(path.join(__dirname, 'static')));
 
@@ -455,7 +483,7 @@ app.post('/api/races/:id/reject', noCors, csrfProtection, adminAuth, async (req,
   }
 });
 
-app.post('/api/races/csv-upload', noCors, csrfProtection, adminAuth, upload.single('csvFile'), async (req, res) => {
+app.post('/api/races/csv-upload', noCors, csrfProtection, adminAuth, csvUpload.single('csvFile'), async (req, res) => {
   try {
     const results = [];
     const filePath = req.file.path;
@@ -482,6 +510,14 @@ app.post('/api/races/csv-upload', noCors, csrfProtection, adminAuth, upload.sing
             const distance = row.distance;
             const description = row.description || '';
             const participants = parseInt(row.participants) || 0;
+
+            // Validate date format (YYYY-MM-DD)
+            const datePattern = /^\d{4}-\d{2}-\d{2}$/;
+            if (!date || !datePattern.test(date)) {
+              console.warn(`Skipping row with invalid date format: "${name}" - date: "${date}"`);
+              skipped++;
+              continue;
+            }
 
             if (name && date) {
               // Check for duplicates before inserting
