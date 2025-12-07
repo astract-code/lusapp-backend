@@ -487,8 +487,19 @@ app.post('/api/races/csv-upload', noCors, csrfProtection, adminAuth, csvUpload.s
   try {
     const results = [];
     const filePath = req.file.path;
+    
+    // Read and clean file content (remove BOM and markdown code blocks)
+    let fileContent = fs.readFileSync(filePath, 'utf8');
+    // Remove BOM if present
+    fileContent = fileContent.replace(/^\uFEFF/, '');
+    // Remove markdown code block markers
+    fileContent = fileContent.replace(/^```[^\n]*\n?/gm, '');
+    fileContent = fileContent.replace(/```$/gm, '');
+    // Write cleaned content back
+    const cleanedPath = filePath + '.cleaned';
+    fs.writeFileSync(cleanedPath, fileContent.trim());
 
-    fs.createReadStream(filePath)
+    fs.createReadStream(cleanedPath)
       .pipe(csv())
       .on('data', (data) => results.push(data))
       .on('end', async () => {
@@ -520,17 +531,10 @@ app.post('/api/races/csv-upload', noCors, csrfProtection, adminAuth, csvUpload.s
             }
 
             if (name && date) {
-              // Check for duplicates before inserting
-              // Use IS NOT DISTINCT FROM for NULL-safe comparison
+              // Check for duplicates - simplified: just check name + date
               const duplicateCheck = await pool.query(
-                `SELECT * FROM races 
-                 WHERE LOWER(name) = LOWER($1) 
-                 AND date = $2 
-                 AND (
-                   (sport_category IS NOT DISTINCT FROM $3 AND sport_subtype IS NOT DISTINCT FROM $4)
-                   OR (sport_category IS NULL AND sport_subtype IS NULL AND sport IS NOT DISTINCT FROM $5)
-                 )`,
-                [name, date, sport_category || null, sport_subtype || null, sport || null]
+                `SELECT id FROM races WHERE LOWER(name) = LOWER($1) AND date = $2`,
+                [name, date]
               );
               
               if (duplicateCheck.rows.length > 0) {
@@ -544,6 +548,9 @@ app.post('/api/races/csv-upload', noCors, csrfProtection, adminAuth, csvUpload.s
                 [name, sport, sport_category, sport_subtype, city, country, continent, date, start_time, distance, description, participants, 'approved']
               );
               imported++;
+            } else {
+              console.warn(`Skipping row with missing name or date: "${name}" - date: "${date}"`);
+              skipped++;
             }
           } catch (error) {
             console.error('Error importing row:', error);
@@ -551,13 +558,16 @@ app.post('/api/races/csv-upload', noCors, csrfProtection, adminAuth, csvUpload.s
           }
         }
 
+        // Clean up temp files
         fs.unlinkSync(filePath);
+        if (fs.existsSync(cleanedPath)) fs.unlinkSync(cleanedPath);
+        
         res.json({ 
           success: true, 
           imported, 
           skipped,
           total: results.length,
-          duplicates: duplicates.length > 0 ? duplicates : undefined
+          duplicates: duplicates.length > 0 ? duplicates.slice(0, 10) : undefined
         });
       });
   } catch (error) {
