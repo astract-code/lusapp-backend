@@ -1,0 +1,330 @@
+name,sport,sport_category,sport_subtype,city,country,continent,date,start_time,distance,description,participants
+HYROX Hamburg,Hyrox,Indoor Fitness Race,Pro,Hamburg,Germany,Europe,2026-10-02,08:00,Hyrox,Intersport HYROX Hamburg Major with Elite 15 competition,20000
+HYROX Stuttgart,Hyrox,Indoor Fitness Race,Pro,Stuttgart,Germany,Europe,2026-10-31,08:00,Hyrox,South German city HYROX attracting top athletes,15000
+HYROX Frankfurt,Hyrox,Indoor Fitness Race,Pro,Frankfurt,Germany,Europe,2026-12-12,08:00,Hyrox,Messe Frankfurt staple with passionate field,18000
+HYROX Cologne,Hyrox,Indoor Fitness Race,Pro,Cologne,Germany,Europe,2026-04-16,08:00,Hyrox,All Inclusive Fitness HYROX at FIBO trade show,25000
+HYROX Berlin Tempelhof,Hyrox,Indoor Fitness Race,Pro,Berlin,Germany,Europe,2026-06-30,08:00,Hyrox,Grand finale at iconic Tempelhof Airport,30000
+Spartan Trifecta Weekend Kulmbach,Spartan,Obstacle Race,Trifecta,Kulmbach,Germany,Europe,2026-06-12,07:00,5K+10K+21K,Spartan Weekend with Sprint Super Beast and Kids,12000
+Spartan Sprint Kulmbach,Spartan,Obstacle Race,Sprint,Kulmbach,Germany,Europe,2026-06-12,08:30,5K,Classic Spartan Sprint 5K with 20 obstacles,8000
+Spartan Super Kulmbach,Spartan,Obstacle Race,Super,Kulmbach,Germany,Europe,2026-06-13,07:30,10K,Spartan Super 10K with 25 obstacles,7000
+Spartan Beast Kulmbach,Spartan,Obstacle Race,Beast,Kulmbach,Germany,Europe,2026-06-14,07:00,21K,Spartan Beast half marathon with 30 obstacles,6000
+Spartan Kids Race Kulmbach,Spartan,Obstacle Race,Kids,Kulmbach,Germany,Europe,2026-06-12,10:00,1K-3K,Spartan Kids Race for ages 4-15 with age-appropriate obstacles,2000
+Spartan Trifecta Weekend Munich,Spartan,Obstacle Race,Trifecta,Munich,Germany,Europe,2026-04-17,07:00,5K+10K+21K,Spartan Munich Trifecta in Olympic Park stadium,13000
+Spartan Sprint Munich,Spartan,Obstacle Race,Sprint,Munich,Germany,Europe,2026-04-17,08:30,5K,Urban nature Sprint in historic Olympic Park,9000
+Spartan Super Munich,Spartan,Obstacle Race,Super,Munich,Germany,Europe,2026-04-18,07:30,10K,Spartan Super with stadium atmosphere,8000
+Spartan Hurricane Heat Munich,Spartan,Obstacle Race,HH,Munich,Germany,Europe,2026-04-17,06:00,4H,Spartan Hurricane Heat 4-hour team challenge,500
+Spartan Kids Race Munich,Spartan,Obstacle Race,Kids,Munich,Germany,Europe,2026-04-17,10:00,1K-3K,Kids obstacles in Olympic Park,2500
+Spartan Trifecta Weekend Zell am See-Kaprun,Spartan,Obstacle Race,Trifecta,Zell am See-Kaprun,Germany,Europe,2026-09-11,07:00,5K+10K+21K,Spartan Trifecta and Ultra Weekend in Austrian Alps border,11000
+Spartan Sprint Zell am See-Kaprun,Spartan,Obstacle Race,Sprint,Zell am See-Kaprun,Germany,Europe,2026-09-11,08:30,5K,Alpine Sprint 5K with 20 obstacles,7500
+Spartan Super Zell am See-Kaprun,Spartan,Obstacle Race,Super,Zell am See-Kaprun,Germany,Europe,2026-09-12,07:30,10K,Super 10K with 25 obstacles in mountains,6500
+Spartan Beast Zell am See-Kaprun,Spartan,Obstacle Race,Beast,Zell am See-Kaprun,Germany,Europe,2026-09-13,07:00,21K,Beast 21K with 30 obstacles,5500
+Spartan Ultra Zell am See-Kaprun,Spartan,Obstacle Race,Ultra,Zell am See-Kaprun,Germany,Europe,2026-09-13,05:30,50K,Spartan Ultra 50K with 60 obstacles,3000
+Spartan Kids Race Zell am See-Kaprun,Spartan,Obstacle Race,Kids,Zell am See-Kaprun,Germany,Europe,2026-09-11,10:00,1K-3K,Alpine Kids Race for young Spartans,1500
+Berlin Marathon,Running,Road Running,Marathon,Berlin,Germany,Europe,2026-09-27,09:15,42.2km,World Major Marathon with fast flat course,55000
+Hamburg Marathon,Running,Road Running,Marathon,Hamburg,Germany,Europe,2026-04-26,09:30,42.2km,Flat fast marathon along the Elbe River,22000
+Frankfurt Marathon,Running,Road Running,Marathon,Frankfurt,Germany,Europe,2026-10-25,10:00,42.2km,Skyscraper finish in Festhalle hall,16000
+Cologne Marathon,Running,Road Running,Marathon,Cologne,Germany,Europe,2026-10-04,09:00,42.2km,Rhine River and cathedral scenic route,15000
+Munich Marathon,Running,Road Running,Marathon,Munich,Germany,Europe,2026-10-11,10:00,42.2km,Bavarian marathon through Olympic Park,13000
+Rhein-Ruhr Marathon,Running,Road Running,Marathon,Duisburg,Germany,Europe,2026-06-14,09:00,42.2km,Ruhr area industrial heritage route,9000
+Mainova Frankfurt Half Marathon,Running,Road Running,Half Marathon,Frankfurt,Germany,Europe,2026-03-15,09:30,21.1km,Skyscraper city half marathon,18000
+Generali Munich Half Marathon,Running,Road Running,Half Marathon,Munich,Germany,Europe,2026-10-11,09:30,21.1km,English Garden and Olympic Park half,22000
+Rhein-Energie Bonn Marathon,Running,Road Running,Marathon,Bonn,Germany,Europe,2026-04-05,09:00,42.2km,Beethoven city along Rhine,12000
+Spreewald Marathon,Running,Road Running,Marathon,Lübbenau,Germany,Europe,2026-04-26,09:30,42.2km,Flat canals and forests in Spreewald,8000
+Saaletal Marathon,Running,Road Running,Marathon,Jena,Germany,Europe,2026-04-19,09:00,42.2km,Saale river valley scenic marathon,8500
+Oberelbe Marathon,Running,Road Running,Marathon,Dresden,Germany,Europe,2026-10-25,09:30,42.2km,Elbe valley through historic Dresden,11000
+Zugspitz Ultra-Trail,Trail Running,Ultra Trail,108K,Garmisch-Partenkirchen,Germany,Europe,2026-05-30,06:00,108km,Germany's biggest trail event UTMB qualifier,5000
+Zugspitz Trail Run 50K,Trail Running,Trail Race,50K,Garmisch-Partenkirchen,Germany,Europe,2026-05-31,08:00,50km,Alpine trail around Zugspitze mountain,2500
+Zugspitz Trail Run 28K,Trail Running,Trail Race,28K,Garmisch-Partenkirchen,Germany,Europe,2026-05-31,09:00,28km,Shorter alpine trail option,2000
+Zugspitz Trail Run 16K,Trail Running,Trail Race,16K,Garmisch-Partenkirchen,Germany,Europe,2026-05-31,10:00,16km,Beginner-friendly Zugspitze trail,1500
+Rennsteiglauf Supermarathon,Trail Running,Trail Race,73K,Neuhaus,Germany,Europe,2026-05-16,06:00,73km,Thuringian Forest classic trail marathon,8500
+Brocken Challenge,Trail Running,Ultra Trail,84K,Göttingen,Germany,Europe,2026-02-07,08:00,84km,Winter ultra to Harz highest peak,2200
+Harz Crossing Brocken Ultra,Trail Running,Ultra Trail,51K,Wernigerode,Germany,Europe,2026-10-10,07:00,51km,Harz mountain crossing ultra,3200
+Kölnpfad Ultra,Trail Running,Ultra Trail,171K,Cologne,Germany,Europe,2026-08-22,18:00,171km,Non-stop Cologne circle UTMB qualifier,900
+Berlin Wall 100 Mile,Trail Running,Ultra Trail,161K,Berlin,Germany,Europe,2026-08-15,06:00,161km,Historic Wall route ultra trail,1200
+Black Forest Ultra Trail,Trail Running,Ultra Trail,110K,Bernau,Germany,Europe,2026-09-05,05:00,110km,Black Forest high-altitude ultra,1400
+Eifel Trail 70K,Trail Running,Trail Race,70K,Nettersheim,Germany,Europe,2026-06-13,07:00,70km,Volcanic Eifel trail adventure,2200
+Rhine Valley Ultra,Trail Running,Ultra Trail,100K,Oberwesel,Germany,Europe,2026-07-11,06:00,100km,Loreley to Bingen Rhine trail,1800
+Fichtelberg Ultra,Trail Running,Ultra Trail,100K,Oberwiesenthal,Germany,Europe,2026-07-25,05:00,100km,Highest town in Germany ultra,1200
+Rhön Ultra Trail,Trail Running,Ultra Trail,85K,Bischofsheim,Germany,Europe,2026-06-27,06:00,85km,Volcanic Rhön mountains ultra,1500
+Mosel Trail 66K,Trail Running,Trail Race,66K,Traben-Trarbach,Germany,Europe,2026-05-09,07:30,66km,Wine and river valley trail,2500
+Weserbergland Trail 100K,Trail Running,Ultra Trail,100K,Hameln,Germany,Europe,2026-08-15,05:00,100km,Fairy-tale forest Weser ultra,1300
+Edersee Ultra Trail,Trail Running,Ultra Trail,110K,Waldeck,Germany,Europe,2026-07-04,05:00,110km,Lake and forest Hessen ultra,1200
+Hunsrück Trail 100K,Trail Running,Ultra Trail,100K,Hermeskeil,Germany,Europe,2026-07-18,05:00,100km,Hunsrück highlands ultra,1100
+Kyffhäuser Berglauf Ultra,Trail Running,Ultra Trail,100K,Bad Frankenhausen,Germany,Europe,2026-04-11,06:00,100km,Thuringian mountain ultra,1200
+Spessart Trail 80K,Trail Running,Trail Race,80K,Heigenbrücken,Germany,Europe,2026-09-26,06:00,80km,Spessart forest trail adventure,1800
+Lüneburg Heath Trail 80K,Trail Running,Trail Race,80K,Schneverdingen,Germany,Europe,2026-09-05,06:30,80km,Heathland and forests trail,2000
+Wartburg Trail 100K,Trail Running,Ultra Trail,100K,Eisenach,Germany,Europe,2026-05-30,05:00,100km,Thuringian forest ultra with castle,1000
+Albsteig Trail 70K,Trail Running,Trail Race,70K,Albstadt,Germany,Europe,2026-09-19,07:00,70km,Swabian Jura high plateau trail,1900
+Odenwald Trail Marathon,Trail Running,Trail Marathon,42K,Mossautal,Germany,Europe,2026-06-13,08:00,42km,Deep forest Odenwald marathon,2200
+Brocken Marathon,Trail Running,Trail Marathon,42K,Wernigerode,Germany,Europe,2026-10-10,09:00,42km,Steep climb to Brocken summit,2800
+Spreewald Trail 50K,Trail Running,Trail Race,50K,Burg,Germany,Europe,2026-09-19,08:00,50km,Canals and forests Spreewald trail,2800
+Teufelsberg Trail 50K,Trail Running,Trail Race,50K,Berlin,Germany,Europe,2026-04-18,08:00,50km,Urban trail through abandoned spy station,3000
+Säntis Alpine Marathon,Trail Running,Trail Marathon,42K,Schwägalp,Germany,Europe,2026-08-22,07:00,42km,Cross-border Alpine marathon,2500
+Pfälzer Berglauf Ultra,Trail Running,Ultra Trail,100K,Donnersberg,Germany,Europe,2026-09-12,05:00,100km,Palatinate forest ultra,1100
+Thüringer Wald Ultra,Trail Running,Ultra Trail,100K,Ilmenau,Germany,Europe,2026-06-20,05:00,100km,Rennsteig region ultra,1400
+Weserbergland 100 Mile,Trail Running,Ultra Trail,161K,Hameln,Germany,Europe,2026-08-15,06:00,161km,Fairy-tale forest 100-miler,700
+Spreewald Ultra 100 Mile,Trail Running,Ultra Trail,161K,Burg,Germany,Europe,2026-09-19,06:00,161km,Spreewald canals ultra,800
+Lüneburg Heath 100K,Trail Running,Ultra Trail,100K,Schneverdingen,Germany,Europe,2026-09-05,05:00,100km,Heathland ultra adventure,1100
+Kölnpfad 100K,Trail Running,Ultra Trail,100K,Cologne,Germany,Europe,2026-05-23,06:00,100km,One-day Cologne circle trail,2500
+IRONMAN Frankfurt European Championship,Triathlon,Full Ironman,,Frankfurt,Germany,Europe,2026-06-28,06:30,Full Ironman,Toughest Ironman swim on Main River European Champs,3000
+IRONMAN Hamburg,Triathlon,Full Ironman,,Hamburg,Germany,Europe,2026-07-26,06:45,Full Ironman,Fast city Ironman with Alster swim,2800
+IRONMAN 70.3 Kraichgau,Triathlon,Half Ironman,,Kraichgau,Germany,Europe,2026-05-31,07:00,Half Ironman,Land of 1000 hills German 70.3 classic,3200
+IRONMAN 70.3 Duisburg,Triathlon,Half Ironman,,Duisburg,Germany,Europe,2026-08-16,07:30,Half Ironman,Ruhr area 70.3 with lake swim,3000
+Challenge Roth,Triathlon,Full Ironman,,Roth,Germany,Europe,2026-07-05,06:30,Full Ironman,Fastest long-distance triathlon in the world,3400
+IRONMAN 70.3 Leipzig,Triathlon,Half Ironman,,Leipzig,Germany,Europe,2026-08-23,07:30,Half Ironman,New Eastern Germany 70.3 in cultural heart,2500
+Triathlon Ingolstadt,Triathlon,Long Distance,,Ingolstadt,Germany,Europe,2026-08-09,08:00,L (1.9-90-21),Bavarian middle-distance classic on Danube,2200
+Allgäu Triathlon,Triathlon,Long Distance,,Immenstadt,Germany,Europe,2026-08-23,08:30,L,Alpine scenery middle-distance triathlon,1800
+Challenge Berlin,Triathlon,Full Ironman,,Berlin,Germany,Europe,2026-09-13,06:45,Full Ironman,Urban full-distance triathlon in capital,2500
+Köln Triathlon Olympic,Triathlon,Olympic Distance,,Cologne,Germany,Europe,2026-09-06,09:00,Standard,Rhine river and cathedral Olympic tri,4500
+Triathlon Kulmbach,Triathlon,Half Ironman,,Kulmbach,Germany,Europe,2026-07-19,07:30,Half Ironman,Franconian Switzerland 70.3,2900
+Triathlon Erding,Triathlon,Half Ironman,,Erding,Germany,Europe,2026-06-14,07:30,Half Ironman,Bavarian 70.3 with thermal bath finish,3100
+Triathlon Regensburg,Triathlon,Half Ironman,,Regensburg,Germany,Europe,2026-06-14,07:30,Half Ironman,Danube and UNESCO old town 70.3,3100
+Triathlon Heidelberg,Triathlon,Olympic Distance,,Heidelberg,Germany,Europe,2026-06-21,09:00,Standard,Neckar river and castle views Olympic,3500
+Triathlon München Allianz,Triathlon,Olympic Distance,,Munich,Germany,Europe,2026-07-19,09:00,Standard,Olympic Park urban triathlon,4200
+Triathlon Hamburg Wasser,Triathlon,Olympic Distance,,Hamburg,Germany,Europe,2026-07-12,09:30,Standard,Alster and Elbe Olympic tri,5000
+Triathlon Berlin,Triathlon,Olympic Distance,,Berlin,Germany,Europe,2026-06-14,09:00,Standard,Wannsee lake Olympic distance,4800
+Triathlon Potsdam,Triathlon,Olympic Distance,,Potsdam,Germany,Europe,2026-06-28,09:00,Standard,Palaces and lakes Olympic tri,3600
+Triathlon Rügen,Triathlon,Olympic Distance,,Binz,Germany,Europe,2026-09-06,09:00,Standard,Baltic Sea island Olympic tri,3000
+Triathlon Sylt,Triathlon,Olympic Distance,,Westerland,Germany,Europe,2026-07-05,09:00,Standard,North Sea island Olympic triathlon,3200
+Triathlon Glücksburg,Triathlon,Olympic Distance,,Glücksburg,Germany,Europe,2026-07-26,09:00,Standard,Baltic Sea castle Olympic triathlon,3100
+Triathlon Vierwaldstättersee,Triathlon,Olympic Distance,,Konstanz,Germany,Europe,2026-08-02,09:00,Standard,Lake Constance Olympic tri,3400
+Triathlon Ammersee,Triathlon,Half Ironman,,Herrsching,Germany,Europe,2026-07-12,07:30,Half Ironman,Bavarian lake 70.3,2900
+Triathlon Chiemsee,Triathlon,Long Distance,,Prien,Germany,Europe,2026-08-09,08:00,L,Bavarian Sea middle distance tri,2000
+Triathlon Füssen Forggensee,Triathlon,Long Distance,,Füssen,Germany,Europe,2026-08-02,08:00,L,Alpine lake and Neuschwanstein views,1700
+Triathlon Schliersee,Triathlon,Long Distance,,Schliersee,Germany,Europe,2026-08-16,08:00,L,Bavarian Alps middle distance tri,1800
+Triathlon Walchsee,Triathlon,Half Ironman,,Walchsee,Germany,Europe,2026-06-28,07:30,Half Ironman,Tyrol lake 70.3 cross-border,3000
+Triathlon Ostsee Man Lübeck,Triathlon,Full Ironman,,Timmendorfer Strand,Germany,Europe,2026-08-30,06:45,Full Ironman,Baltic Sea full distance tri,2600
+Triathlon Rothsee,Triathlon,Half Ironman,,Hilpoltstein,Germany,Europe,2026-06-21,07:30,Half Ironman,Franconian lake district 70.3,2800
+Triathlon Kraichgau Long,Triathlon,Long Distance,,Kraichgau,Germany,Europe,2026-05-31,07:00,L,Land of 1000 hills middle distance,2000
+Triathlon München Long,Triathlon,Long Distance,,Feldmoching,Germany,Europe,2026-08-02,08:00,L,Bavarian middle-distance classic,1900
+Triathlon Ingolstadt Long,Triathlon,Long Distance,,Ingolstadt,Germany,Europe,2026-08-09,07:30,L,Danube middle-distance tri,2100
+Triathlon Heidelberg Long,Triathlon,Long Distance,,Heidelberg,Germany,Europe,2026-06-21,08:00,L,Neckar river middle distance,1900
+Triathlon Chiemsee Olympic,Triathlon,Olympic Distance,,Chieming,Germany,Europe,2026-07-19,09:00,Standard,Bavarian Sea Olympic tri,3500
+Triathlon Ammersee Olympic,Triathlon,Olympic Distance,,Herrsching,Germany,Europe,2026-07-12,09:00,Standard,Bavarian lake Olympic tri,3400
+Triathlon Rothsee Olympic,Triathlon,Olympic Distance,,Hilpoltstein,Germany,Europe,2026-06-21,09:00,Standard,Franconian lake Olympic tri,3600
+Triathlon Kraichgau Olympic,Triathlon,Olympic Distance,,Kraichgau,Germany,Europe,2026-05-31,09:00,Standard,Hilly Olympic distance race,3500
+XTERRA Germany,Triathlon,Off-Road Triathlon,,Zittau,Germany,Europe,2026-08-14,08:00,Short Long,XTERRA European Championship off-road tri,1500
+XTERRA Germany Short,Triathlon,Off-Road Triathlon,Short,Zittau,Germany,Europe,2026-08-15,09:00,Short,Short off-road triathlon at XTERRA Europe,1000
+XTERRA Germany Long,Triathlon,Off-Road Triathlon,Long,Zittau,Germany,Europe,2026-08-16,08:00,Long,Long off-road triathlon championship,800
+Generali Berlin Half Marathon,Running,Road Running,Half Marathon,Berlin,Germany,Europe,2026-03-29,10:00,21.1km,World's largest half marathon, season opener for runners and walkers,35000
+Wartenberger Easter Run Half Marathon,Running,Road Running,Half Marathon,Berlin,Germany,Europe,2026-04-05,10:00,21.1km,Traditional Easter half with landscape routes and kids run,5000
+ADAC Hannover Marathon,Running,Road Running,Marathon,Hannover,Germany,Europe,2026-04-12,09:00,42.2km,Fast and flat marathon in Lower Saxony capital,15000
+Hamburg Marathon,Running,Road Running,Marathon,Hamburg,Germany,Europe,2026-04-26,09:30,42.2km,Flat fast marathon along the Elbe River with maritime history,22000
+Spreewald Marathon,Running,Road Running,Marathon,Lübbenau,Germany,Europe,2026-04-26,09:30,42.2km,Scenic flat marathon through canals and forests in biosphere reserve,8000
+Rhein-Energie Bonn Marathon,Running,Road Running,Marathon,Bonn,Germany,Europe,2026-04-05,09:00,42.2km,Beethoven's city marathon along the Rhine,12000
+Saaletal Marathon,Running,Road Running,Marathon,Jena,Germany,Europe,2026-04-19,09:00,42.2km,Scenic Saale river valley marathon in Thuringia,8500
+Mainova Frankfurt Half Marathon,Running,Road Running,Half Marathon,Frankfurt,Germany,Europe,2026-03-15,09:30,21.1km,Skyscraper-lined half through financial district,18000
+Run München Half Marathon,Running,Road Running,Half Marathon,Munich,Germany,Europe,2026-07-05,09:00,21.1km,Popular summer half through Olympic Park and Werksviertel,20000
+Generali Munich Half Marathon,Running,Road Running,Half Marathon,Munich,Germany,Europe,2026-10-11,09:30,21.1km,Autumn half through English Garden and Olympic Park,22000
+Munich Marathon,Running,Road Running,Marathon,Munich,Germany,Europe,2026-10-11,10:00,42.2km,Bavarian classic with one-lap course and Olympic Park finish,13000
+Cologne Marathon,Running,Road Running,Marathon,Cologne,Germany,Europe,2026-10-04,09:00,42.2km,Rhine River and Gothic cathedral scenic marathon,15000
+Frankfurt Marathon,Running,Road Running,Marathon,Frankfurt,Germany,Europe,2026-10-25,10:00,42.2km,Fast course with skyscraper finish in historic Festhalle,16000
+Oberelbe Marathon Dresden,Running,Road Running,Marathon,Dresden,Germany,Europe,2026-10-25,09:30,42.2km,Elbe valley marathon through baroque historic center,11000
+BMW Berlin Marathon,Running,Road Running,Marathon,Berlin,Germany,Europe,2026-09-27,09:15,42.2km,World Major with record-breaking flat course through landmarks,55000
+Generali 5K Berlin,Running,Road Running,5K,Berlin,Germany,Europe,2026-09-26,10:00,5km,Last 5km of Berlin Marathon route, fun and festive,25000
+Rennsteiglauf Supermarathon,Trail Running,Trail Race,73K,Schmiedefeld am Rennsteig,Germany,Europe,2026-05-09,06:00,73km,Classic Thuringian Forest trail race, UTMB qualifier,8500
+Zugspitz Ultra-Trail,Trail Running,Ultra Trail,108K,Garmisch-Partenkirchen,Germany,Europe,2026-05-30,06:00,108km,Germany's largest trail event around Zugspitze, UTMB qualifier,5000
+Zugspitz Trail Run 50K,Trail Running,Trail Race,50K,Garmisch-Partenkirchen,Germany,Europe,2026-05-31,08:00,50km,Alpine trail race in Bavarian Alps,2500
+Zugspitz Trail Run 28K,Trail Running,Trail Race,28K,Garmisch-Partenkirchen,Germany,Europe,2026-05-31,09:00,28km,Shorter alpine trail option with mountain views,2000
+Zugspitz Trail Run 16K,Trail Running,Trail Race,16K,Garmisch-Partenkirchen,Germany,Europe,2026-05-31,10:00,16km,Beginner-friendly Zugspitze trail run,1500
+Brocken Challenge,Trail Running,Ultra Trail,84K,Bad Harzburg,Germany,Europe,2026-02-07,08:00,84km,Winter ultra to highest peak in northern Germany, Harz Mountains,2200
+Harz Crossing Brocken Ultra,Trail Running,Ultra Trail,51K,Wernigerode,Germany,Europe,2026-10-10,07:00,51km,Harz mountain crossing with Brocken summit finish,3200
+Kölnpfad Ultra 171K,Trail Running,Ultra Trail,171K,Cologne,Germany,Europe,2026-08-22,18:00,171km,Non-stop circular ultra around Cologne, UTMB qualifier,900
+Kölnpfad 100K,Trail Running,Ultra Trail,100K,Cologne,Germany,Europe,2026-05-23,06:00,100km,Day version of Kölnpfad circular trail,2500
+Berlin Wall 100 Mile,Trail Running,Ultra Trail,161K,Berlin,Germany,Europe,2026-08-15,06:00,161km,Historic ultra along former Berlin Wall route,1200
+Black Forest Ultra Trail,Trail Running,Ultra Trail,110K,Bernau im Schwarzwald,Germany,Europe,2026-09-05,05:00,110km,High-altitude ultra in Black Forest,1400
+Eifel Trail 70K,Trail Running,Trail Race,70K,Nettersheim,Germany,Europe,2026-06-13,07:00,70km,Volcanic Eifel region trail adventure,2200
+Rhine Valley Ultra 100K,Trail Running,Ultra Trail,100K,Oberwesel,Germany,Europe,2026-07-11,06:00,100km,Loreley to Bingen along Rhine gorges,1800
+Fichtelberg Ultra 100K,Trail Running,Ultra Trail,100K,Oberwiesenthal,Germany,Europe,2026-07-25,05:00,100km,Ultra from Germany's highest town, Ore Mountains,1200
+Rhön Ultra Trail 85K,Trail Running,Ultra Trail,85K,Bischofsheim,Germany,Europe,2026-06-27,06:00,85km,Volcanic Rhön Mountains ultra trail,1500
+Mosel Trail 66K,Trail Running,Trail Race,66K,Traben-Trarbach,Germany,Europe,2026-05-09,07:30,66km,Moselle wine valley and river trail,2500
+Weserbergland Trail 100K,Trail Running,Ultra Trail,100K,Hameln,Germany,Europe,2026-08-15,05:00,100km,Fairy-tale Weser River valley ultra,1300
+Edersee Ultra Trail 110K,Trail Running,Ultra Trail,110K,Waldeck,Germany,Europe,2026-07-04,05:00,110km,Lake Edersee and forest ultra in Hessen,1200
+Hunsrück Trail 100K,Trail Running,Ultra Trail,100K,Hermeskeil,Germany,Europe,2026-07-18,05:00,100km,Hunsrück highlands slate mining ultra,1100
+Kyffhäuser Berglauf Ultra 100K,Trail Running,Ultra Trail,100K,Bad Frankenhausen,Germany,Europe,2026-04-11,06:00,100km,Thuringian Kyffhäuser mountain ultra,1200
+Spessart Trail 80K,Trail Running,Trail Race,80K,Heigenbrücken,Germany,Europe,2026-09-26,06:00,80km,Spessart ancient forest trail adventure,1800
+Lüneburg Heath Trail 80K,Trail Running,Trail Race,80K,Schneverdingen,Germany,Europe,2026-09-05,06:30,80km,Lüneburg Heath heathland and forest trail,2000
+Wartburg Trail 100K,Trail Running,Ultra Trail,100K,Eisenach,Germany,Europe,2026-05-30,05:00,100km,Thuringian forest ultra to Wartburg Castle,1000
+Albsteig Trail 70K,Trail Running,Trail Race,70K,Albstadt,Germany,Europe,2026-09-19,07:00,70km,Swabian Jura high plateau limestone trail,1900
+Odenwald Trail Marathon,Trail Running,Trail Marathon,42K,Mossautal,Germany,Europe,2026-06-13,08:00,42km,Deep Odenwald forest marathon trail,2200
+Brocken Marathon,Trail Running,Trail Marathon,42K,Wernigerode,Germany,Europe,2026-10-10,09:00,42km,Steep Harz climb to Brocken summit marathon,2800
+Spreewald Trail 50K,Trail Running,Trail Race,50K,Burg,Germany,Europe,2026-09-19,08:00,50km,Spreewald biosphere canals and forests trail,2800
+Teufelsberg Trail 50K,Trail Running,Trail Race,50K,Berlin,Germany,Europe,2026-04-18,08:00,50km,Urban Berlin trail through Teufelsberg abandoned radar station,3000
+Säntis Alpine Marathon,Trail Running,Trail Marathon,42K,Schwägalp,Germany,Europe,2026-08-22,07:00,42km,Cross-border Alpine marathon to Säntis peak,2500
+Pfälzer Berglauf Ultra 100K,Trail Running,Ultra Trail,100K,Donnersbergkreis,Germany,Europe,2026-09-12,05:00,100km,Palatinate Forest Donnersberg ultra,1100
+Thüringer Wald Ultra 100K,Trail Running,Ultra Trail,100K,Ilmenau,Germany,Europe,2026-06-20,05:00,100km,Rennsteig Thuringian Forest ultra,1400
+Weserbergland 100 Mile,Trail Running,Ultra Trail,161K,Hameln,Germany,Europe,2026-08-15,06:00,161km,Fairy-tale Weser River 100-mile ultra,700
+Spreewald Ultra 100 Mile,Trail Running,Ultra Trail,161K,Burg,Germany,Europe,2026-09-19,06:00,161km,Spreewald biosphere 100-mile canal ultra,800
+Lüneburg Heath 100K,Trail Running,Ultra Trail,100K,Schneverdingen,Germany,Europe,2026-09-05,05:00,100km,Lüneburg Heath ultra through heathlands,1100
+HYROX Valencia,Hyrox,Fitness,Hyrox,Valencia,Spain,Europe,2025-10-17,08:00,8km,HYROX fitness race combining running and workouts,1500
+HYROX Madrid,Hyrox,Fitness,Hyrox,Madrid,Spain,Europe,2025-11-27,08:00,8km,HYROX fitness race combining running and workouts,1500
+HYROX Bilbao,Hyrox,Fitness,Hyrox,Bilbao,Spain,Europe,2026-02-07,08:00,8km,HYROX fitness race combining running and workouts,1200
+HYROX Malaga,Hyrox,Fitness,Hyrox,Malaga,Spain,Europe,2026-04-16,08:00,8km,HYROX fitness race combining running and workouts,1400
+HYROX Barcelona,Hyrox,Fitness,Hyrox,Barcelona,Spain,Europe,2026-05-14,08:00,8km,HYROX fitness race combining running and workouts,2000
+HYROX Palma de Mallorca,Hyrox,Fitness,Hyrox,Palma de Mallorca,Spain,Europe,2026-10-21,08:00,8km,HYROX fitness race combining running and workouts,1300
+DEKA TORREMOLINOS (MÁLAGA),Spartan,Obstacle,DEKA,Torremolinos,Spain,Europe,2026-02-28,09:00,10km,Spartan DEKA obstacle race,500
+DEKA IBIZA,Spartan,Obstacle,DEKA,Sant Agustí des Vedrà,Spain,Europe,2026-03-14,09:00,10km,Spartan DEKA obstacle race,600
+DEKA BARCELONA 2026 PRIMAVERA,Spartan,Obstacle,DEKA,Barcelona,Spain,Europe,2026-03-28,09:00,10km,Spartan DEKA obstacle race,700
+DEKA TOLEDO - UNIVERSIDAD DE CASTILLA LA MANCHA 2026,Spartan,Obstacle,DEKA,Toledo,Spain,Europe,2026-04-11,09:00,10km,Spartan DEKA obstacle race,400
+DEKA VALENCIA 2026,Spartan,Obstacle,DEKA,Valencia,Spain,Europe,2026-04-18,09:00,10km,Spartan DEKA obstacle race,800
+Madrid Spartan Weekend 2026,Spartan,Obstacle,Sprint,San Agustín del Guadalix,Spain,Europe,2026-05-09,08:00,5km,Spartan Sprint obstacle race,1000
+DEKA SEVILLA 2026,Spartan,Obstacle,DEKA,Sevilla,Spain,Europe,2026-05-16,09:00,10km,Spartan DEKA obstacle race,500
+DEKA MADRID 2026,Spartan,Obstacle,DEKA,Madrid,Spain,Europe,2026-07-18,09:00,10km,Spartan DEKA obstacle race,900
+DEKA BARCELONA 2026 OTOÑO,Spartan,Obstacle,DEKA,Barcelona,Spain,Europe,2026-09-26,09:00,10km,Spartan DEKA obstacle race,700
+Santa Susanna-Barcelona Spartan Weekend 2026,Spartan,Obstacle,Super,Santa Susanna,Spain,Europe,2026-10-17,08:00,10km,Spartan Super obstacle race,1200
+DEKA GUADALAJARA 2026,Spartan,Obstacle,DEKA,Guadalajara,Spain,Europe,2026-10-24,09:00,10km,Spartan DEKA obstacle race,400
+DEKA TENERIFE 2026,Spartan,Obstacle,DEKA,Tenerife,Spain,Europe,2026-11-21,09:00,10km,Spartan DEKA obstacle race,600
+Spartan Mallorca,Spartan,Obstacle,Trifecta,Palma de Mallorca,Spain,Europe,2025-03-15,08:00,5/10/21km,Trifecta weekend Spartan in Mallorca,2000
+Spartan Madrid,Spartan,Obstacle,Super,Madrid,Spain,Europe,2025-05-10,08:00,10km,Spartan Super in Madrid,1500
+Spartan Barcelona,Spartan,Obstacle,Super,Barcelona,Spain,Europe,2025-10-18,08:00,10km,Spartan Super in Barcelona,1800
+Spartan Tenerife,Spartan,Obstacle,Beast,Tenerife,Spain,Europe,2025-11-22,07:00,21km,Spartan Beast in Tenerife,1000
+Valencia Marathon,Running,Road,Marathon,Valencia,Spain,Europe,2025-12-07,08:15,42.195km,"World Marathon Majors Qualifiers, Boston Qualifying Races",15000
+Malaga Marathon (Generali Maratón Málaga),Running,Road,Half Marathon,Málaga,Spain,Europe,2025-12-14,08:30,21.0975km,Half marathon in Malaga,8000
+Santa Pola International Half Marathon 10k,Running,Road,10k,Santa Pola,Spain,Europe,2026-01-18,09:00,10km,10k race in Santa Pola,2000
+Santa Pola International Half Marathon,Running,Road,Half Marathon,Santa Pola,Spain,Europe,2026-01-18,09:00,21.0975km,Half marathon in Santa Pola,5000
+Ultra Mediterrania 4km,Trail Running,Trail,Short,Alcoy,Spain,Europe,2026-01-25,09:00,4km,Short trail in Ultra Mediterrania,300
+Ultra Mediterrania 11km,Trail Running,Trail,Short,Alcoy,Spain,Europe,2026-01-25,09:00,11km,Short trail in Ultra Mediterrania,400
+Ultra Mediterrania 16km,Trail Running,Trail,Short,Alcoy,Spain,Europe,2026-01-25,09:00,16km,Short trail in Ultra Mediterrania,500
+Ultra Mediterrania 25km,Trail Running,Trail,Medium,Alcoy,Spain,Europe,2026-01-25,08:30,25km,Medium trail in Ultra Mediterrania,600
+Ultra Mediterrania 55km,Trail Running,Trail,Long,Alcoy,Spain,Europe,2026-01-25,07:00,55km,Long trail in Ultra Mediterrania,400
+Ultra Mediterrania 84km,Trail Running,Trail,Ultra,Alcoy,Spain,Europe,2026-01-25,06:00,84km,Ultra trail in Ultra Mediterrania,200
+Ultra Mediterrania 90km,Trail Running,Trail,Ultra,Alcoy,Spain,Europe,2026-01-25,06:00,90km,Ultra trail in Ultra Mediterrania,150
+Ultra Mediterrania 162km,Trail Running,Trail,Ultra,Alcoy,Spain,Europe,2026-01-25,05:00,162km,Ultra trail in Ultra Mediterrania,100
+Marathon Alicante,Running,Road,Marathon,Alicante,Spain,Europe,2025-11-30,08:30,42.195km,Marathon in Alicante,7000
+Bagà Trail 5km,Trail Running,Trail,Short,Bagà,Spain,Europe,2025-10-03,08:00,5km,Trail running in Bagà 5km,300
+Bagà Trail 21km,Trail Running,Trail,Half,Bagà,Spain,Europe,2025-10-03,08:00,21km,Trail running in Bagà 21km,500
+Bagà Trail 42km,Trail Running,Trail,Marathon,Bagà,Spain,Europe,2025-10-03,07:30,42km,Trail running in Bagà 42km,400
+Bagà Trail 100km,Trail Running,Trail,Ultra,Bagà,Spain,Europe,2025-10-03,06:00,100km,Trail running in Bagà 100km,200
+Sant Francesc Xavier Triathlon,Triathlon,Multi,Olympic,Sant Francesc Xavier,Spain,Europe,2025-10-04,08:00,1.5/40/10,Triathlon in Sant Francesc Xavier,800
+Palma Trail 10km,Trail Running,Trail,Short,Palma,Spain,Europe,2025-08-08,09:00,10km,Trail in Palma 10km,400
+Palma Trail 16km,Trail Running,Trail,Short,Palma,Spain,Europe,2025-08-08,09:00,16km,Trail in Palma 16km,300
+Formigales Trail,Trail Running,Trail,Various,Formigales,Spain,Europe,2025-08-30,08:00,20km,Trail in Formigales,500
+Riaño Trail,Trail Running,Trail,Various,Riaño,Spain,Europe,2025-06-27,07:00,50km,Trail in Riaño,600
+Madrid Trail 42km,Trail Running,Trail,Marathon,Madrid,Spain,Europe,2025-09-20,08:00,42km,Trail in Madrid 42km,700
+Madrid Trail 65km,Trail Running,Trail,Long,Madrid,Spain,Europe,2025-09-20,07:00,65km,Trail in Madrid 65km,400
+Madrid Trail 100km,Trail Running,Trail,Ultra,Madrid,Spain,Europe,2025-09-20,06:00,100km,Trail in Madrid 100km,200
+Navacerrada Trail 11km,Trail Running,Trail,Short,Navacerrada,Spain,Europe,2025-10-10,09:00,11km,Trail in Navacerrada 11km,300
+Navacerrada Trail 61km,Trail Running,Trail,Long,Navacerrada,Spain,Europe,2025-10-10,07:30,61km,Trail in Navacerrada 61km,400
+Navacerrada Trail 104km,Trail Running,Trail,Ultra,Navacerrada,Spain,Europe,2025-10-10,06:00,104km,Trail in Navacerrada 104km,150
+Calella Triathlon,Triathlon,Multi,Ironman,Calella,Spain,Europe,2025-10-05,07:00,3.8/180/42.2,Ironman distance triathlon in Calella,1500
+L'Ampolla Triathlon,Triathlon,Multi,Ironman,L'Ampolla,Spain,Europe,2025-10-11,07:00,3.8/180/42.2,Ironman distance triathlon in L'Ampolla,1200
+Barcelona Marathon,Running,Road,Marathon,Barcelona,Spain,Europe,2025-03-09,08:30,42.195km,Zurich Barcelona Marathon,16000
+Sevilla Marathon,Running,Road,Marathon,Sevilla,Spain,Europe,2025-02-23,08:30,42.195km,Marathon in Sevilla,12000
+San Sebastián Marathon,Running,Road,Marathon,San Sebastián,Spain,Europe,2025-11-09,08:30,42.195km,Marathon in San Sebastián,6000
+Madrid Marathon,Running,Road,Marathon,Madrid,Spain,Europe,2025-04-27,08:30,42.195km,Marathon in Madrid,14000
+Bilbao Marathon,Running,Road,Marathon,Bilbao,Spain,Europe,2025-10-12,08:30,42.195km,Marathon in Bilbao,5000
+UTMB World Series Val d'Aran,Trail Running,Trail,Ultra,Vielha,Spain,Europe,2025-07-18,06:00,105km,UTMB World Series in Val d'Aran,2000
+Zegama-Aizkorri,Trail Running,Trail,Marathon,Zegama,Spain,Europe,2025-05-25,08:00,42km,Iconic trail in Zegama,4000
+Cavalls del Vent,Trail Running,Trail,Ultra,La Molina,Spain,Europe,2025-07-12,06:00,168km,Ultra trail in Pyrenees,800
+Challenge Salou,Triathlon,Multi,Middle,Salou,Spain,Europe,2025-10-26,08:00,1.9/90/21.1,Challenge Family triathlon in Salou,1500
+XTERRA European Championship,Triathlon,Multi,Offroad,Gozón,Spain,Europe,2025-09-14,08:00,1.5/32/10,XTERRA offroad tri in Spain,1000
+TUI Palma Marathon,Running,Road,Marathon,Palma,Spain,Europe,2026-10-18,08:00,42.195km,Marathon in Palma,8000
+GENERALI Málaga Marathon,Running,Road,Marathon,Málaga,Spain,Europe,2025-12-13,08:30,42.195km,Marathon in Malaga,10000
+IRONMAN 70.3 Marbella,Triathlon,Multi,Half Ironman,Marbella,Spain,Europe,2025-10-19,07:00,1.9/90/21.1,IRONMAN 70.3 World Championship in Marbella,2500
+World Triathlon Multisport Championships Pontevedra,Triathlon,Multi,Various,Pontevedra,Spain,Europe,2025-05-30,08:00,Various,World Championships multisport in Pontevedra,3000
+Spain T100 Triathlon,Triathlon,Multi,Long,Oropesa del Mar,Spain,Europe,2025-09-20,07:00,2/80/18,T100 Triathlon pro race in Spain,1000
+Maratón de Almagro,Running,Road,Marathon,Almagro,Spain,Europe,2026-01-25,09:00,42.195km,Marathon in Almagro with half and 10K options,3000
+TotalEnergies Maratón de Murcia Costa Cálida,Running,Road,Marathon,Murcia,Spain,Europe,2026-02-01,08:30,42.195km,Marathon in Murcia with half and 10K,8000
+Maratón de Don Benito,Running,Road,Marathon,Don Benito,Spain,Europe,2026-02-08,08:45,42.195km,Marathon in Don Benito with half option,4000
+Maratón de Sevilla,Running,Road,Marathon,Sevilla,Spain,Europe,2026-02-15,08:30,42.195km,Marathon in Sevilla,12000
+Maratón de Castellón,Running,Road,Marathon,Castellón,Spain,Europe,2026-02-22,08:30,42.195km,Marathon in Castellón with 10K,7000
+Mitja Marató de Granollers,Running,Road,Half Marathon,Granollers,Spain,Europe,2026-01-18,09:00,21.0975km,Half marathon in Granollers,5000
+Media Maratón de Castellón,Running,Road,Half Marathon,Castellón,Spain,Europe,2026-01-25,09:00,21.0975km,Half marathon in Castellón,6000
+Media Maratón de Sevilla,Running,Road,Half Marathon,Sevilla,Spain,Europe,2026-01-25,09:15,21.0975km,Half marathon in Sevilla,10000
+Media Maratón de Terrassa,Running,Road,Half Marathon,Terrassa,Spain,Europe,2026-02-01,09:00,21.0975km,Half marathon in Terrassa,4000
+Media Maratón de Barcelona,Running,Road,Half Marathon,Barcelona,Spain,Europe,2026-02-15,09:00,21.0975km,Half marathon in Barcelona,12000
+Media Maratón de Alicante,Running,Road,Half Marathon,Alicante,Spain,Europe,2026-02-22,09:00,21.0975km,Half marathon in Alicante,5000
+10K Valencia,Running,Road,10k,Valencia,Spain,Europe,2026-01-11,08:30,10km,Popular 10K race in Valencia,8000
+Zurich Rock 'n' Roll Running Series Madrid 10K,Running,Road,10k,Madrid,Spain,Europe,2026-03-15,09:00,10km,Music-themed 10K in Madrid,10000
+Maratón de Valencia,Running,Road,Marathon,Valencia,Spain,Europe,2026-12-06,08:15,42.195km,Fast marathon in Valencia with qualifiers,15000
+Maratón de San Sebastián,Running,Road,Marathon,San Sebastián,Spain,Europe,2026-11-08,08:30,42.195km,Scenic marathon in San Sebastián,6000
+Maratón de Bilbao,Running,Road,Marathon,Bilbao,Spain,Europe,2026-10-11,08:30,42.195km,Urban marathon in Bilbao,5000
+Media Maratón de Madrid,Running,Road,Half Marathon,Madrid,Spain,Europe,2026-03-22,09:00,21.0975km,Half marathon in Madrid,14000
+Maratón de Jerez de la Frontera,Running,Road,Marathon,Jerez de la Frontera,Spain,Europe,2026-04-12,08:45,42.195km,Sherry Marathon in Jerez with multiple distances,4000
+Maratón de Zaragoza,Running,Road,Marathon,Zaragoza,Spain,Europe,2026-04-19,08:30,42.195km,Marathon in Zaragoza with half and 10K,6000
+Maratón Costa Brava,Running,Road,Marathon,Lloret de Mar,Spain,Europe,2026-04-26,08:30,42.195km,Coastal marathon in Costa Brava,3000
+Maratón de Madrid,Running,Road,Marathon,Madrid,Spain,Europe,2026-04-26,08:30,42.195km,Marathon in Madrid with half and 10K,14000
+Maratón de Barcelona,Running,Road,Marathon,Barcelona,Spain,Europe,2026-03-15,08:30,42.195km,Zurich Barcelona Marathon,16000
+Carrera Popular de Paracuellos de Jarama Night Run,Running,Road,10k,Paracuellos de Jarama,Spain,Europe,2026-06-06,21:00,10km,Night run popular race in Paracuellos,2000
+Carrera de Navidad de Soto del Real,Running,Road,10k,Soto del Real,Spain,Europe,2026-12-20,10:00,10km,Christmas popular race in Soto del Real,1500
+Carrera Popular Corre por el Niño,Running,Road,10k,Madrid,Spain,Europe,2026-10-20,10:00,10km,Charity popular race in Madrid with 5K option,3000
+Marathon de Paris,Running,Road Running,Marathon,Paris,France,Europe,2026-04-12,08:30,42.2km,Schneider Electric Marathon de Paris – World Major contender, flat and iconic,70000
+Semi-Marathon de Paris,Running,Road Running,Half Marathon,Paris,France,Europe,2026-03-08,10:00,21.1km,Harmonie Mutuelle Semi de Paris through the heart of the capital,35000
+10 km de Paris Centre,Running,Road Running,10K,Paris,France,Europe,2026-06-14,09:00,10km,Fast scenic 10K organised by Paris Running Club,12000
+EcoTrail Paris 80K,Trail Running,Trail Race,80K,Paris,France,Europe,2026-03-21,06:00,80km,Urban-nature trail finishing under the Eiffel Tower,4000
+EcoTrail Paris 45K,Trail Running,Trail Race,45K,Paris,France,Europe,2026-03-21,08:00,45km,Mid-distance EcoTrail with Versailles and Seine views,5000
+EcoTrail Paris 30K,Trail Running,Trail Race,30K,Paris,France,Europe,2026-03-21,09:30,30km,Popular distance with Eiffel Tower finish,6000
+EcoTrail Paris 15K,Trail Running,Trail Race,15K,Paris,France,Europe,2026-03-21,11:00,15km,Beginner-friendly EcoTrail Paris,4500
+HYROX Paris,Hyrox,Indoor Fitness Race,Pro,Paris,France,Europe,2026-01-24,08:00,Hyrox,HYROX Paris La Défense Arena – biggest indoor fitness race in France,18000
+HYROX Lyon,Hyrox,Indoor Fitness Race,Pro,Lyon,France,Europe,2026-03-07,08:00,Hyrox,Major French HYROX in the Rhône-Alpes region,12000
+HYROX Marseille,Hyrox,Indoor Fitness Race,Pro,Marseille,France,Europe,2026-04-25,08:00,Hyrox,HYROX Mediterranean edition at Palais des Sports,10000
+HYROX Nice,Hyrox,Indoor Fitness Race,Pro,Nice,France,Europe,2026-11-14,08:00,Hyrox,HYROX Côte d’Azur in late season,9000
+Spartan Trifecta Weekend Morzine-Avoriaz,Spartan,Obstacle Race,Trifecta,Morzine,France,Europe,2026-07-03,07:00,5K+10K+21K,Alpine Trifecta weekend in the Portes du Soleil,8000
+Spartan Beast Morzine,Spartan,Obstacle Race,Beast,Morzine,France,Europe,2026-07-05,07:30,21K,High-altitude Beast with lake and mountain obstacles,4500
+Spartan Super Morzine,Spartan,Obstacle Race,Super,Morzine,France,Europe,2026-07-04,08:00,10K,Technical Super in the French Alps,5000
+Spartan Sprint Morzine,Spartan,Obstacle Race,Sprint,Morzine,France,Europe,2026-07-04,10:30,5K,Fast alpine Sprint,4000
+Spartan Valmorel Winter,Spartan,Obstacle Race,Trifecta,Valmorel,France,Europe,2026-01-31,08:00,5K+10K+21K,Winter Trifecta weekend in Savoie with snow obstacles,3500
+IRONMAN Nice,Triathlon,Full Ironman,,Nice,France,Europe,2026-06-21,06:30,Full Ironman,Iconic French Ironman with Mediterranean swim and Alpine bike,2900
+IRONMAN 70.3 Aix-en-Provence,Triathlon,Half Ironman,,Aix-en-Provence,France,Europe,2026-05-17,07:00,Half Ironman,Provence hills and Montagne Sainte-Victoire,2800
+IRONMAN 70.3 Les Sables d’Olonne-Vendée,Triathlon,Half Ironman,,Les Sables-d’Olonne,France,Europe,2026-06-14,07:15,Half Ironman,Atlantic coast 70.3 with strong French field,3200
+IRONMAN Vichy,Triathlon,Full Ironman,,Vichy,France,Europe,2026-08-23,06:45,Full Ironman,Fast continental full-distance Ironman,2500
+Triathlon de Deauville Normandie,Triathlon,Long Distance,,Deauville,France,Europe,2026-06-20,08:00,L (1.9-90-21),Iconic Normandy middle-distance with D-Day beaches,3000
+Triathlon International de Belfort,Triathlon,Olympic Distance,,Belfort,France,Europe,2026-06-28,09:00,Standard,Historic Olympic distance in eastern France,2500
+AlpsMan Xtrem Triathlon,Triathlon,Long Distance,,Annecy,France,Europe,2026-06-06,05:30,L,Extreme Alpine triathlon with Lake Annecy swim,800
+Embrunman,Triathlon,Full Ironman,,Embrun,France,Europe,2026-08-15,05:00,Full Ironman,Legendary “hardest Iron-distance in the world” in the Hautes-Alpes,750
+Alpe d’Huez Triathlon Long,Triathlon,Long Distance,,Alpe d’Huez,France,Europe,2026-07-30,08:30,L,Iconic 21-hairpin bike climb triathlon,2200
+Triathlon EDF Alpe d’Huez Olympic,Triathlon,Olympic Distance,,Alpe d’Huez,France,Europe,2026-07-29,09:00,Standard,Short distance with legendary climb,3000
+UTMB®,Trail Running,Ultra Trail,171K,Chamonix,France,Europe,2026-08-31,18:00,171km,The world’s most famous ultra-trail around Mont Blanc,2300
+CCC® (UTMB),Trail Running,Ultra Trail,101K,Chamonix,France,Europe,2026-08-29,09:00,101km,Courmayeur-Champex-Chamonix – UTMB week classic,2100
+OCC (UTMB),Trail Running,Trail Race,56K,Orsières,Switzerland (finish Chamonix),Europe,2026-08-28,08:15,56km,Orsières-Champex-Chamonix,2500
+TDS® (UTMB),Trail Running,Ultra Trail,145K,Courmayeur,Italy (finish Chamonix),Europe,2026-08-26,00:00,145km,Sur les Traces des Ducs de Savoie,1700
+Marathon du Mont-Blanc 42K,Trail Running,Trail Marathon,42K,Chamonix,France,Europe,2026-06-28,07:00,42km,Classic Mont-Blanc marathon with Aiguille views,2500
+90K du Mont-Blanc,Trail Running,Ultra Trail,90K,Chamonix,France,Europe,2026-06-26,04:00,90km,Long-distance Mont-Blanc race,1200
+Grand Trail des Ecrins 57K,Trail Running,Ultra Trail,57K,Vallouise,France,Europe,2026-07-18,05:00,57km,High-alpine trail in the Ecrins National Park,1400
+Ultra-Trail Côte d’Azur Mercantour 125K,Trail Running,Ultra Trail,125K,Saint-Martin-Vésubie,France,Europe,2026-07-31,05:00,125km,Mediterranean to high Alps ultra,1100
+Trail du Ventoux 46K,Trail Running,Trail Race,46K,Bédoin,France,Europe,2026-03-15,07:30,46km,Iconic climb of Mont Ventoux from Bédoin side,2800
+La 6000D,Trail Running,Trail Race,67K,La Plagne,France,Europe,2026-07-25,05:30,67km,“La course des Géants” with glacier finish,2200
+Ultra Marin Raid du Golfe 177K,Trail Running,Ultra Trail,177K,Vannes,France,Europe,2026-06-26,18:00,177km,Non-stop around Gulf of Morbihan,900
+SaintéLyon,Trail Running,Ultra Trail,82K,Saint-Étienne to Lyon,France,Europe,2026-12-05,00:00,82km,Oldest and biggest night ultra in Europe,17000
+Trail de la Côte d’Opale 62K,Trail Running,Ultra Trail,62K,Wissant,France,Europe,2026-09-13,06:00,62km,Cap Blanc-Nez and Cap Gris-Nez cliffs,3000
+Templiers Festival – Endurance Trail 100K,Trail Running,Ultra Trail,100K,Millau,France,Europe,2026-10-23,04:00,100km,Grand Trail des Templiers 100K in Aveyron gorges,2500
+Templiers – Grand Temple 80K,Trail Running,Ultra Trail,80K,Millau,France,Europe,2026-10-25,05:30,80km,Flagship Templiers race,3500
+Marathon des Gorges de l’Ardèche,Running,Road Running,Marathon,Saint-Marcel-d’Ardèche,France,Europe,2026-11-01,09:00,42.2km,Scenic canyon marathon with Pont d’Arc finish,6000
+Marathon de Marseille,Running,Road Running,Marathon,Marseille,France,Europe,2026-03-22,08:00,42.2km,Mediterranean marathon along the coast,12000
+Marathon Nice-Cannes,Running,Road Running,Marathon,Nice,France,Europe,2026-11-08,08:00,42.2km,Seafront marathon on the French Riviera,11000
+Marathon du Médoc,Running,Road Running,Marathon,Pauillac,France,Europe,2026-09-12,09:30,42.2km,Wine & food stops through Bordeaux châteaux,8500
+Semi-Marathon de Lille,Running,Road Running,Half Marathon,Lille,France,Europe,2026-09-05,09:30,21.1km,Fast northern France half marathon,15000
+10 km de Valenciennes,Running,Road Running,10K,Valenciennes,France,Europe,2026-10-18,10:00,10km,Popular fast 10K in Hauts-de-France,8000
+Foulées de Vincennes,Running,Road Running,10K,Paris,France,Europe,2026-12-27,10:00,10km,Traditional end-of-year 10K in Bois de Vincennes,12000
+Spartan Race Valmorel,Spartan,Obstacle Race,Super,Valmorel,France,Europe,2026-01-31,09:00,10K,Winter Super with snow and ice obstacles,3000
+HYROX Bordeaux,Hyrox,Indoor Fitness Race,Pro,Bordeaux,France,Europe,2026-05-16,08:00,Hyrox,New major HYROX location in southwest France,11000
+Triathlon de Gérardmer,Triathlon,Long Distance,,Gérardmer,France,Europe,2026-09-06,08:00,L,Vosges mountain middle-distance classic,1800
+Triathlon Audencia La Baule,Triathlon,Olympic Distance,,La Baule,France,Europe,2026-09-20,09:30,Standard,Big Atlantic coast Olympic triathlon,4500
+Challenge Mogán-Gran Canaria,Triathlon,Half Ironman,,Gran Canaria (French field heavy),Europe,2026-04-25,08:00,Half Ironman,Many French athletes – listed for completeness,2800
+Inferno Half Marathon,Running,Trail Running,Half Marathon,Mürren (finish Lauterbrunnen),Switzerland (French-heavy),Europe,2026-07-18,09:00,21.1km,Steepest half in Europe – huge French participation,1200
+Marathon du Beaujolais,Running,Road Running,Marathon,Villefranche-sur-Saône,France,Europe,2026-11-21,09:00,42.2km,Wine-themed marathon with tastings,9000
+Trail du Saint-Jacques 72K,Trail Running,Ultra Trail,72K,Saugs-le-Puy,France,Europe,2026-06-13,05:00,72km,Historic Camino trail race,2200
+Diagonale des Fous (Grand Raid Réunion),Trail Running,Ultra Trail,165K,Saint-Pierre,La Réunion,France (Overseas),2026-10-15,22:00,165km,World’s toughest ultra – French overseas department,2600
+Ultra Trail du Mont Blanc PTL®,Trail Running,Ultra Trail,300K,Chamonix,France,Europe,2026-08-24,18:00,300km,Team non-stop circumnavigation of Mont Blanc,300
+Marathon de Toulouse,Running,Road Running,Marathon,Toulouse,France,Europe,2026-10-25,09:00,42.2km,Pink City marathon with space museum finish,13000
+Spartan Andorra Trifecta Weekend,Spartan,Obstacle Race,Trifecta,Encamp,Andorra (French-heavy),Europe,2026-06-27,07:00,5K+10K+21K,High-altitude Pyrenees Trifecta,6000
+Triathlon International de Dunkerque,Triathlon,Olympic Distance,,Dunkerque,France,Europe,2026-05-24,09:00,Standard,North Sea Olympic distance classic,3200
+Trail Nivolet-Revard 52K,Trail Running,Trail Race,52K,Voglans,France,Europe,2026-05-03,07:00,52km,Lac du Bourget and Bauges views,2500
+Trail des Forts de Besançon 57K,Trail Running,Ultra Trail,57K,Besançon,France,Europe,2026-05-10,06:30,57km,Vauban citadel and forest trail,2800
+Maxi-Race Annecy 94K,Trail Running,Ultra Trail,94K,Annecy,France,Europe,2026-05-30,04:00,94km,Lake Annecy round-trip ultra,2000
+Marathon de Nantes,Running,Road Running,Marathon,Nantes,France,Europe,2026-04-26,09:00,42.2km,Fast Loire-Atlantic marathon,12000
+20 km de Paris,Running,Road Running,20K,Paris,France,Europe,2026-10-11,10:00,20km,Iconic autumn 20 km race from Pont d’Iéna,30000
+Corrida de Houilles 10K,Running,Road Running,10K,Houilles,France,Europe,2026-12-27,15:00,10km,Fast end-of-year 10K – “French Houston”,9000
+Triathlon de Calais,Triathlon,Olympic Distance,,Calais,France,Europe,2026-06-14,09:30,Standard,Channel coast Olympic tri,2800
+Spartan Stadion Paris – Stade de France,Spartan,Obstacle Race,Stadion,Saint-Denis,France,Europe,2026-04-18,09:00,5K,Stadion race inside the national stadium,7000
+HYROX Toulouse,Hyrox,Indoor Fitness Race,Pro,Toulouse,France,Europe,2026-10-10,08:00,Hyrox,Occitanie HYROX debut,9500
+Trail des Aiguilles Rouges 50K,Trail Running,Trail Race,50K,Chamonix,France,Europe,2026-09-20,06:30,50km,High route opposite Mont Blanc,1400
+Ultra-Trail Harricana du Canada – French-heavy participation,Trail Running,Ultra Trail,125K,Charlevoix,Canada,2026-09-12,05:00,125km,Many French elite runners – listed for visibility,900
+Marathon International du Clair de Lune,Running,Road Running,Marathon,Saint-Malo,France,Europe,2026-06-20,21:00,42.2km,Night marathon along the Emerald Coast,7000
+Triathlon des Roses – Paris,Triathlon,Olympic Distance,,Paris (Issy-les-Moulineaux),France,Europe,2026-09-27,09:00,Standard,Women-focused Olympic triathlon,3500
+Spartan Winter Valmorel Beast,Spartan,Obstacle Race,Beast,Valmorel,France,Europe,2026-02-01,08:00,21K,Winter Beast in full snow conditions,2800
+Trail Verbier-St Bernard 110K,Trail Running,Ultra Trail,110K,Verbier,Switzerland (French-heavy),Europe,2026-07-11,05:00,110km,Large French participation,1600
+Marathon du Cognac,Running,Road Running,Marathon,Jarnac,France,Europe,2026-11-14,09:30,42.2km,Spirits-themed marathon with tastings,6500
+Triathlon Nature de Verdon,Triathlon,Long Distance,,Castellane,France,Europe,2026-07-19,08:00,L,Gorges du Verdon middle-distance,1400
+Trail du Colorado Provençal,Trail Running,Trail Race,42K,Rustrel,France,Europe,2026-10-18,08:30,42km,Ochre canyon trail marathon,2200
+Spartan Super La Plagne,Spartan,Obstacle Race,Super,La Plagne,France,Europe,2026-12-13,09:00,10K,Winter Super in Paradiski ski area,3200
