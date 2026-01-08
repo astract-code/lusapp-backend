@@ -11,6 +11,7 @@ import {
   TextInput,
   Platform,
   Linking,
+  Image,
 } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -201,18 +202,36 @@ export const RaceDetailScreen = ({ route, navigation }) => {
   const handlePickCertificate = async () => {
     try {
       const result = await DocumentPicker.getDocumentAsync({
-        type: 'application/pdf',
+        type: ['application/pdf', 'image/jpeg', 'image/png', 'image/jpg'],
         copyToCacheDirectory: true,
       });
 
       if (!result.canceled && result.assets && result.assets[0]) {
         setCertificate(result.assets[0]);
-        Alert.alert('Success', 'Certificate selected');
+        const fileType = result.assets[0].mimeType?.includes('image') ? 'image' : 'PDF';
+        Alert.alert('Success', `Certificate ${fileType} selected`);
       }
     } catch (error) {
       console.error('Error picking certificate:', error);
       Alert.alert('Error', 'Failed to pick certificate');
     }
+  };
+
+  const getCertificateMimeType = (file) => {
+    if (file.mimeType) return file.mimeType;
+    const name = file.name?.toLowerCase() || '';
+    if (name.endsWith('.pdf')) return 'application/pdf';
+    if (name.endsWith('.jpg') || name.endsWith('.jpeg')) return 'image/jpeg';
+    if (name.endsWith('.png')) return 'image/png';
+    return 'application/octet-stream';
+  };
+
+  const getCertificateFileName = (file) => {
+    if (file.name) return file.name;
+    const mimeType = getCertificateMimeType(file);
+    if (mimeType.includes('pdf')) return 'certificate.pdf';
+    if (mimeType.includes('png')) return 'certificate.png';
+    return 'certificate.jpg';
   };
 
   const handleMarkComplete = () => {
@@ -229,17 +248,20 @@ export const RaceDetailScreen = ({ route, navigation }) => {
       if (notes) formData.append('notes', notes);
       
       if (certificate) {
+        const mimeType = getCertificateMimeType(certificate);
+        const fileName = getCertificateFileName(certificate);
+        
         if (Platform.OS === 'web') {
           // On web, fetch the file and create a Blob
           const response = await fetch(certificate.uri);
           const blob = await response.blob();
-          formData.append('certificate', blob, certificate.name || 'certificate.pdf');
+          formData.append('certificate', blob, fileName);
         } else {
           // On native, use the React Native file format
           formData.append('certificate', {
             uri: certificate.uri,
-            type: 'application/pdf',
-            name: certificate.name || 'certificate.pdf',
+            type: mimeType,
+            name: fileName,
           });
         }
       }
@@ -453,12 +475,39 @@ export const RaceDetailScreen = ({ route, navigation }) => {
             </View>
           )}
           {completion.certificate_url && (
-            <TouchableOpacity
-              style={[styles.certificateButton, { backgroundColor: colors.primary }]}
-              onPress={() => Linking.openURL(completion.certificate_url)}
-            >
-              <Text style={styles.certificateButtonText}>View Certificate PDF</Text>
-            </TouchableOpacity>
+            (() => {
+              const url = completion.certificate_url;
+              const isImage = url.match(/\.(jpg|jpeg|png|gif|webp)$/i) || 
+                             url.includes('/image/upload/') || 
+                             url.includes('f_auto') ||
+                             (url.includes('cloudinary') && !url.includes('/raw/'));
+              const isPdf = url.match(/\.pdf$/i) || url.includes('/raw/upload/');
+              
+              if (isImage && !isPdf) {
+                return (
+                  <TouchableOpacity onPress={() => Linking.openURL(url)}>
+                    <Image 
+                      source={{ uri: url }} 
+                      style={styles.certificateImage}
+                      resizeMode="contain"
+                    />
+                    <Text style={[styles.certificateImageLabel, { color: colors.textSecondary }]}>
+                      Tap to view full size
+                    </Text>
+                  </TouchableOpacity>
+                );
+              }
+              return (
+                <TouchableOpacity
+                  style={[styles.certificateButton, { backgroundColor: colors.primary }]}
+                  onPress={() => Linking.openURL(url)}
+                >
+                  <Text style={styles.certificateButtonText}>
+                    {isPdf ? 'View Certificate PDF' : 'View Certificate'}
+                  </Text>
+                </TouchableOpacity>
+              );
+            })()
           )}
         </View>
       )}
@@ -549,7 +598,7 @@ export const RaceDetailScreen = ({ route, navigation }) => {
               onPress={handlePickCertificate}
             >
               <Text style={[styles.pickCertificateText, { color: colors.primary }]}>
-                {certificate ? '✓ Certificate Selected' : '📄 Upload Certificate PDF (optional)'}
+                {certificate ? '✓ Certificate Selected' : '📄 Upload Certificate (PDF or Image)'}
               </Text>
             </TouchableOpacity>
 
@@ -739,6 +788,17 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontSize: FONT_SIZE.sm,
     fontWeight: '600',
+  },
+  certificateImage: {
+    width: '100%',
+    height: 200,
+    marginTop: SPACING.md,
+    borderRadius: BORDER_RADIUS.md,
+  },
+  certificateImageLabel: {
+    fontSize: FONT_SIZE.xs,
+    textAlign: 'center',
+    marginTop: SPACING.xs,
   },
   editButton: {
     paddingHorizontal: SPACING.md,

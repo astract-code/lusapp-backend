@@ -812,7 +812,6 @@ app.post('/api/races/:raceId/complete', verifyFirebaseToken, upload.single('cert
     let certificateUrl = null;
     
     if (req.file) {
-      console.log(`[RACE COMPLETE] Uploading certificate PDF to Cloudinary...`);
       const cloudinary = require('cloudinary').v2;
       
       cloudinary.config({
@@ -821,15 +820,32 @@ app.post('/api/races/:raceId/complete', verifyFirebaseToken, upload.single('cert
         api_secret: process.env.CLOUDINARY_API_SECRET
       });
       
+      // Detect file type from mimetype
+      const mimeType = req.file.mimetype || '';
+      const isImage = mimeType.startsWith('image/');
+      const isPdf = mimeType === 'application/pdf';
+      
+      console.log(`[RACE COMPLETE] Uploading certificate to Cloudinary... Type: ${mimeType}, isImage: ${isImage}, isPdf: ${isPdf}`);
+      
+      // Configure upload options based on file type
+      const uploadOptions = {
+        folder: 'lusapp/certificates',
+        access_mode: 'public',
+        type: 'upload'
+      };
+      
+      if (isImage) {
+        uploadOptions.resource_type = 'image';
+      } else {
+        uploadOptions.resource_type = 'raw';
+        if (isPdf) {
+          uploadOptions.format = 'pdf';
+        }
+      }
+      
       const uploadResult = await new Promise((resolve, reject) => {
         const uploadStream = cloudinary.uploader.upload_stream(
-          {
-            folder: 'lusapp/certificates',
-            resource_type: 'raw',
-            format: 'pdf',
-            access_mode: 'public',
-            type: 'upload'
-          },
+          uploadOptions,
           (error, result) => {
             if (error) reject(error);
             else resolve(result);
