@@ -249,14 +249,12 @@ const styles = StyleSheet.create({
     fontSize: FONT_SIZE.md,
     color: '#FFFFFF',
     marginTop: SPACING.xs,
-    opacity: 0.9,
   },
   bio: {
     fontSize: FONT_SIZE.sm,
     color: '#FFFFFF',
     marginTop: SPACING.sm,
     textAlign: 'center',
-    opacity: 0.9,
   },
   followInfo: {
     flexDirection: 'row',
@@ -274,7 +272,6 @@ const styles = StyleSheet.create({
   followLabel: {
     fontSize: FONT_SIZE.sm,
     color: '#FFFFFF',
-    opacity: 0.9,
     marginTop: SPACING.xs,
   },
   actionButtons: {
