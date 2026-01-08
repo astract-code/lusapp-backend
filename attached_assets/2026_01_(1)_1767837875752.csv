@@ -1,0 +1,1075 @@
+```csv:disable-run
+name,sport,sport_category,sport_subtype,city,country,continent,date,start_time,distance,description,participants
+Boston Marathon,Running,Road Running,Marathon,Boston,USA,North America,2026-04-20,09:00,42.2km,Oldest annual marathon and World Marathon Major with qualifying standards,30000
+TCS London Marathon,Running,Road Running,Marathon,London,UK,Europe,2026-04-26,09:30,42.2km,Iconic World Marathon Major with massive charity fundraising,50000
+BMW Berlin Marathon,Running,Road Running,Marathon,Berlin,Germany,Europe,2026-09-27,09:15,42.2km,Fast flat course famous for world records World Marathon Major,45000
+TCS New York City Marathon,Running,Road Running,Marathon,New York,USA,North America,2026-11-01,09:00,42.2km,Largest marathon through five boroughs World Marathon Major,55000
+Tokyo Marathon,Running,Road Running,Marathon,Tokyo,Japan,Asia,2026-03-01,09:10,42.2km,Modern urban World Marathon Major with elite field,38000
+Bank of America Chicago Marathon,Running,Road Running,Marathon,Chicago,USA,North America,2026-10-11,07:30,42.2km,Flat fast World Marathon Major course,45000
+Sydney Marathon,Running,Road Running,Marathon,Sydney,Australia,Oceania,2026-09-20,07:00,42.2km,Scenic harbor bridge views World Marathon Major,20000
+Cape Town Marathon,Running,Road Running,Marathon,Cape Town,South Africa,Africa,2026-05-24,06:30,42.2km,Potential new World Marathon Major with Table Mountain backdrop,15000
+Paris Marathon,Running,Road Running,Marathon,Paris,France,Europe,2026-04-12,08:45,42.2km,Romantic route past Eiffel Tower and Arc de Triomphe,50000
+Rome Marathon,Running,Road Running,Marathon,Rome,Italy,Europe,2026-03-22,08:30,42.2km,Ancient landmarks including Coliseum finish,15000
+Los Angeles Marathon,Running,Road Running,Marathon,Los Angeles,USA,North America,2026-03-15,07:00,42.2km,Stadium to Sea route with Hollywood views,20000
+Marine Corps Marathon,Running,Road Running,Marathon,Arlington,USA,North America,2026-10-25,07:55,42.2km,Patriotic race honoring US military,30000
+Houston Marathon,Running,Road Running,Marathon,Houston,USA,North America,2026-01-18,07:00,42.2km,Flat course ideal for Boston qualifiers,12000
+Rotterdam Marathon,Running,Road Running,Marathon,Rotterdam,Netherlands,Europe,2026-04-12,09:30,42.2km,Fast modern architecture route,15000
+Vienna City Marathon,Running,Road Running,Marathon,Vienna,Austria,Europe,2026-04-19,09:00,42.2km,Classical music and baroque landmarks,10000
+Valencia Marathon,Running,Road Running,Marathon,Valencia,Spain,Europe,2026-12-06,08:00,42.2km,Flat coastal PB hunter,30000
+Amsterdam Marathon,Running,Road Running,Marathon,Amsterdam,Netherlands,Europe,2026-10-18,09:30,42.2km,Canals and historic sites,20000
+Barcelona Marathon,Running,Road Running,Marathon,Barcelona,Spain,Europe,2026-03-08,08:30,42.2km,Gaudi architecture and Mediterranean vibes,18000
+Dublin Marathon,Running,Road Running,Marathon,Dublin,Ireland,Europe,2026-10-25,08:45,42.2km,Lively streets with Irish hospitality,20000
+Seoul Marathon,Running,Road Running,Marathon,Seoul,South Korea,Asia,2026-03-15,09:00,42.2km,Han River and palace views,25000
+Singapore Marathon,Running,Road Running,Marathon,Singapore,Singapore,Asia,2026-12-06,03:30,42.2km,Night race past Marina Bay Sands,50000
+Hong Kong Marathon,Running,Road Running,Marathon,Hong Kong,Hong Kong,Asia,2026-02-08,06:30,42.2km,Harbor tunnels and skyline,70000
+Mumbai Marathon,Running,Road Running,Marathon,Mumbai,India,Asia,2026-01-18,05:30,42.2km,Sea Link bridge coastal run,50000
+Shanghai Marathon,Running,Road Running,Marathon,Shanghai,China,Asia,2026-11-29,07:00,42.2km,Bund and skyline views,30000
+Toronto Waterfront Marathon,Running,Road Running,Marathon,Toronto,Canada,North America,2026-10-18,09:00,42.2km,Lake Ontario flat course,15000
+Ottawa Marathon,Running,Road Running,Marathon,Ottawa,Canada,North America,2026-05-24,09:00,42.2km,Canals and parliament hills,10000
+Vancouver Marathon,Running,Road Running,Marathon,Vancouver,Canada,North America,2026-05-03,08:30,42.2km,Seawall and Stanley Park,12000
+Melbourne Marathon,Running,Road Running,Marathon,Melbourne,Australia,Oceania,2026-10-11,07:00,42.2km,MCG finish iconic Australian race,8000
+Gold Coast Marathon,Running,Road Running,Marathon,Gold Coast,Australia,Oceania,2026-07-05,07:20,42.2km,Flat beachfront fast course,10000
+Buenos Aires Marathon,Running,Road Running,Marathon,Buenos Aires,Argentina,South America,2026-10-04,07:00,42.2km,South American championships flat urban,15000
+Rio de Janeiro Marathon,Running,Road Running,Marathon,Rio de Janeiro,Brazil,South America,2026-06-07,07:00,42.2km,Beaches and Christ the Redeemer views,20000
+Santiago Marathon,Running,Road Running,Marathon,Santiago,Chile,South America,2026-04-05,08:00,42.2km,Andes backdrop urban loop,12000
+Mexico City Marathon,Running,Road Running,Marathon,Mexico City,Mexico,North America,2026-08-30,07:00,42.2km,High altitude historic center,25000
+Lima Marathon,Running,Road Running,Marathon,Lima,Peru,South America,2026-05-17,07:30,42.2km,Pacific coast historic districts,8000
+Dubai Marathon,Running,Road Running,Marathon,Dubai,UAE,Asia,2026-01-11,06:30,42.2km,Flat luxury skyline route,30000
+Beijing Marathon,Running,Road Running,Marathon,Beijing,China,Asia,2026-10-25,07:30,42.2km,Tiananmen Square to Olympic Park,30000
+Athens Classic Marathon,Running,Road Running,Marathon,Athens,Greece,Europe,2026-11-08,09:00,42.2km,Original historic route from Marathon,20000
+Prague Marathon,Running,Road Running,Marathon,Prague,Czech Republic,Europe,2026-05-03,09:00,42.2km,Charles Bridge fairy tale course,10000
+Stockholm Marathon,Running,Road Running,Marathon,Stockholm,Sweden,Europe,2026-06-06,12:00,42.2km,Archipelago views summer race,12000
+Hamburg Marathon,Running,Road Running,Marathon,Hamburg,Germany,Europe,2026-04-26,09:30,42.2km,Port city harbor flat fast,15000
+Munich Marathon,Running,Road Running,Marathon,Munich,Germany,Europe,2026-10-11,10:00,42.2km,Bavarian beer gardens English Garden,12000
+Copenhagen Marathon,Running,Road Running,Marathon,Copenhagen,Denmark,Europe,2026-05-17,09:30,42.2km,Green harbor parks route,12000
+Edinburgh Marathon,Running,Road Running,Marathon,Edinburgh,UK,Europe,2026-05-24,10:00,42.2km,Coastal Scottish castle finish,15000
+Zurich Marathon,Running,Road Running,Marathon,Zurich,Switzerland,Europe,2026-04-26,08:30,42.2km,Lake Zurich alpine views,8000
+Madrid Marathon,Running,Road Running,Marathon,Madrid,Spain,Europe,2026-04-26,09:00,42.2km,Royal Palace sunny loop,12000
+Budapest Marathon,Running,Road Running,Marathon,Budapest,Hungary,Europe,2026-10-11,09:00,42.2km,Danube bridges thermal baths,10000
+Warsaw Marathon,Running,Road Running,Marathon,Warsaw,Poland,Europe,2026-09-27,09:00,42.2km,Vistula River modern city,10000
+Lisbon Marathon,Running,Road Running,Marathon,Lisbon,Portugal,Europe,2026-10-04,08:30,42.2km,Tagus River seven hills,10000
+Manchester Marathon,Running,Road Running,Marathon,Manchester,UK,Europe,2026-04-12,09:00,42.2km,Flat industrial heritage fast,28000
+Frankfurt Marathon,Running,Road Running,Marathon,Frankfurt,Germany,Europe,2026-10-25,10:00,42.2km,Main River skyline indoor finish,12000
+Detroit Free Press Marathon,Running,Road Running,Marathon,Detroit,USA,North America,2026-10-18,07:00,42.2km,International crossing to Canada,20000
+Philadelphia Marathon,Running,Road Running,Marathon,Philadelphia,USA,North America,2026-11-22,07:00,42.2km,Historic sites Liberty Bell,15000
+Honolulu Marathon,Running,Road Running,Marathon,Honolulu,USA,North America,2026-12-13,05:00,42.2km,Tropical island fireworks start,25000
+Miami Marathon,Running,Road Running,Marathon,Miami,USA,North America,2026-02-01,06:00,42.2km,Ocean Drive beach views,18000
+Atlanta Marathon,Running,Road Running,Marathon,Atlanta,USA,North America,2026-03-01,07:00,42.2km,Olympic Centennial Park,12000
+Nashville Marathon,Running,Road Running,Marathon,Nashville,USA,North America,2026-04-25,07:00,42.2km,Music City live bands,10000
+Cincinnati Flying Pig Marathon,Running,Road Running,Marathon,Cincinnati,USA,North America,2026-05-03,06:30,42.2km,Pig themed Ohio River,12000
+Cleveland Marathon,Running,Road Running,Marathon,Cleveland,USA,North America,2026-05-17,07:00,42.2km,Rock Hall Lake Erie,8000
+Indianapolis Monumental Marathon,Running,Road Running,Marathon,Indianapolis,USA,North America,2026-11-07,08:00,42.2km,Flat fast downtown,10000
+Richmond Marathon,Running,Road Running,Marathon,Richmond,USA,North America,2026-11-14,08:00,42.2km,America's friendliest river views,12000
+Dallas Marathon,Running,Road Running,Marathon,Dallas,USA,North America,2026-12-13,08:30,42.2km,Urban skyline holiday lights,10000
+Sacramento CIM Marathon,Running,Road Running,Marathon,Sacramento,USA,North America,2026-12-06,07:00,42.2km,Point to point Boston qualifier,10000
+Phoenix Marathon,Running,Road Running,Marathon,Mesa,USA,North America,2026-02-28,06:30,42.2km,Desert downhill fast,8000
+San Diego Marathon,Running,Road Running,Marathon,San Diego,USA,North America,2026-05-31,06:15,42.2km,Coastal music filled Rock n Roll,25000
+Seattle Marathon,Running,Road Running,Marathon,Seattle,USA,North America,2026-11-29,08:15,42.2km,Hilly Space Needle views,8000
+Portland Marathon,Running,Road Running,Marathon,Portland,USA,North America,2026-10-04,07:00,42.2km,Willamette River bridges,8000
+Twin Cities Marathon,Running,Road Running,Marathon,Minneapolis,USA,North America,2026-10-04,08:00,42.2km,Lakes scenic most beautiful,10000
+St George Marathon,Running,Road Running,Marathon,St George,USA,North America,2026-10-03,06:45,42.2km,Downhill desert qualifier,7000
+Baltimore Marathon,Running,Road Running,Marathon,Baltimore,USA,North America,2026-10-17,08:00,42.2km,Inner Harbor crabby vibes,8000
+Columbus Marathon,Running,Road Running,Marathon,Columbus,USA,North America,2026-10-18,07:30,42.2km,Flat Ohio State campus,10000
+Hartford Marathon,Running,Road Running,Marathon,Hartford,USA,North America,2026-10-10,08:00,42.2km,Connecticut River fall foliage,6000
+Kansas City Marathon,Running,Road Running,Marathon,Kansas City,USA,North America,2026-10-17,07:00,42.2km,BBQ fountains jazz,5000
+Louisville Marathon,Running,Road Running,Marathon,Louisville,USA,North America,2026-04-25,07:00,42.2km,Kentucky Derby horse country,6000
+Grand Rapids Marathon,Running,Road Running,Marathon,Grand Rapids,USA,North America,2026-10-18,08:00,42.2km,Michigan fall colors river,4000
+Des Moines Marathon,Running,Road Running,Marathon,Des Moines,USA,North America,2026-10-18,08:00,42.2km,Iowa capitol flat,5000
+Huntsville Rocket City Marathon,Running,Road Running,Marathon,Huntsville,USA,North America,2026-12-12,07:00,42.2km,Space Center NASA themed,4000
+Tucson Marathon,Running,Road Running,Marathon,Oracle,USA,North America,2026-12-12,07:00,42.2km,Desert downhill fast,3000
+Jacksonville Marathon,Running,Road Running,Marathon,Jacksonville,USA,North America,2026-12-13,07:00,42.2km,Beach river flat,4000
+Las Vegas Marathon,Running,Road Running,Marathon,Las Vegas,USA,North America,2026-11-08,16:30,42.2km,Night Strip lights Rock n Roll,20000
+Osaka Marathon,Running,Road Running,Marathon,Osaka,Japan,Asia,2026-02-28,09:05,42.2km,Castle urban energy,30000
+Kyoto Marathon,Running,Road Running,Marathon,Kyoto,Japan,Asia,2026-02-15,09:00,42.2km,Temples cherry blossoms,16000
+Nagoya Marathon,Running,Road Running,Marathon,Nagoya,Japan,Asia,2026-03-08,09:10,42.2km,Women's marathon elite,15000
+Sapporo Marathon,Running,Road Running,Marathon,Sapporo,Japan,Asia,2026-08-30,08:30,42.2km,Summer festival half focus,8000
+Taipei Marathon,Running,Road Running,Marathon,Taipei,Taiwan,Asia,2026-12-20,06:30,42.2km,Taipei 101 night views,15000
+Bangkok Marathon,Running,Road Running,Marathon,Bangkok,Thailand,Asia,2026-11-22,04:00,42.2km,Grand Palace temples,15000
+Kuala Lumpur Marathon,Running,Road Running,Marathon,Kuala Lumpur,Malaysia,Asia,2026-10-11,04:30,42.2km,Petronas Towers urban,20000
+Manila Marathon,Running,Road Running,Marathon,Manila,Philippines,Asia,2026-10-04,04:00,42.2km,Bay historic Intramuros,10000
+Jakarta Marathon,Running,Road Running,Marathon,Jakarta,Indonesia,Asia,2026-10-25,04:30,42.2km,Monas landmark tropical,12000
+Hanoi Marathon,Running,Road Running,Marathon,Hanoi,Vietnam,Asia,2026-11-01,05:00,42.2km,Hoan Kiem Lake heritage,8000
+Phnom Penh Marathon,Running,Road Running,Marathon,Phnom Penh,Cambodia,Asia,2026-08-23,05:00,42.2km,Royal Palace Mekong,6000
+Nairobi Marathon,Running,Road Running,Marathon,Nairobi,Kenya,Africa,2026-10-25,07:00,42.2km,High altitude safari city,10000
+Cairo Marathon,Running,Road Running,Marathon,Cairo,Egypt,Africa,2026-01-16,07:30,42.2km,Pyramids Nile views,8000
+Lagos Marathon,Running,Road Running,Marathon,Lagos,Nigeria,Africa,2026-02-07,06:30,42.2km,African largest city energy,30000
+Marrakech Marathon,Running,Road Running,Marathon,Marrakech,Morocco,Africa,2026-01-25,08:00,42.2km,Medina palms exotic,10000
+Addis Ababa Marathon,Running,Road Running,Marathon,Addis Ababa,Ethiopia,Africa,2026-01-11,07:00,42.2km,High altitude elite fields,5000
+Istanbul Marathon,Running,Road Running,Marathon,Istanbul,Turkey,Asia,2026-11-01,09:00,42.2km,Intercontinental Bosphorus bridge,15000
+Beirut Marathon,Running,Road Running,Marathon,Beirut,Lebanon,Asia,2026-11-08,07:00,42.2km,Mediterranean Corniche,8000
+Tel Aviv Marathon,Running,Road Running,Marathon,Tel Aviv,Israel,Asia,2026-02-27,07:00,42.2km,Beachfront Bauhaus vibes,15000
+Montreal Marathon,Running,Road Running,Marathon,Montreal,Canada,North America,2026-09-27,08:00,42.2km,St Lawrence River bilingual,10000
+Calgary Marathon,Running,Road Running,Marathon,Calgary,Canada,North America,2026-05-31,07:00,42.2km,Rockies Stampede energy,8000
+Halifax Marathon,Running,Road Running,Marathon,Halifax,Canada,North America,2026-07-19,07:00,42.2km,Atlantic coastal scenic,4000
+Quebec City Marathon,Running,Road Running,Marathon,Quebec City,Canada,North America,2026-08-23,08:00,42.2km,Old Quebec historic walls,6000
+Brisbane Marathon,Running,Road Running,Marathon,Brisbane,Australia,Oceania,2026-08-02,06:30,42.2km,River city flat fast,8000
+Perth Marathon,Running,Road Running,Marathon,Perth,Australia,Oceania,2026-06-07,07:00,42.2km,Swan River Indian Ocean,6000
+Auckland Marathon,Running,Road Running,Marathon,Auckland,New Zealand,Oceania,2026-11-01,06:30,42.2km,Harbour Bridge volcanic,10000
+Wellington Marathon,Running,Road Running,Marathon,Wellington,New Zealand,Oceania,2026-06-21,08:00,42.2km,Windy harbor hills,4000
+Christchurch Marathon,Running,Road Running,Marathon,Christchurch,New Zealand,Oceania,2026-06-07,08:00,42.2km,Garden city flat parks,5000
+Great North Run Half Marathon,Running,Road Running,Half Marathon,Newcastle,UK,Europe,2026-09-13,10:00,21.1km,World's largest half from city to sea,60000
+Royal Parks Half Marathon,Running,Road Running,Half Marathon,London,UK,Europe,2026-10-11,09:00,21.1km,Hyde Park royal landmarks,16000
+Berlin Half Marathon,Running,Road Running,Half Marathon,Berlin,Germany,Europe,2026-04-05,10:00,21.1km,Brandenburg Gate fast urban,35000
+Paris Half Marathon,Running,Road Running,Half Marathon,Paris,France,Europe,2026-03-08,09:00,21.1km,Seine River iconic sights,40000
+Prague Half Marathon,Running,Road Running,Half Marathon,Prague,Czech Republic,Europe,2026-04-04,10:00,21.1km,Vltava bridges castle views,15000
+Copenhagen Half Marathon,Running,Road Running,Half Marathon,Copenhagen,Denmark,Europe,2026-09-13,11:00,21.1km,Little Mermaid harbor flat,25000
+Valencia Half Marathon,Running,Road Running,Half Marathon,Valencia,Spain,Europe,2026-10-25,09:00,21.1km,City of Arts fast PB,25000
+Lisbon Half Marathon,Running,Road Running,Half Marathon,Lisbon,Portugal,Europe,2026-03-22,10:30,21.1km,25 de Abril Bridge views,35000
+Barcelona Half Marathon,Running,Road Running,Half Marathon,Barcelona,Spain,Europe,2026-02-08,08:45,21.1km,Sagrada Familia beachfront,25000
+Cardiff Half Marathon,Running,Road Running,Half Marathon,Cardiff,UK,Europe,2026-10-04,10:00,21.1km,Bay stadium flat fast,27000
+Airbnb Brooklyn Half Marathon,Running,Road Running,Half Marathon,New York,USA,North America,2026-05-16,07:00,21.1km,Prospect Park to Coney Island,25000
+United Airlines NYC Half Marathon,Running,Road Running,Half Marathon,New York,USA,North America,2026-03-15,07:30,21.1km,Brooklyn to Central Park urban,25000
+Bank of America Chicago Half Marathon,Running,Road Running,Half Marathon,Chicago,USA,North America,2026-09-27,07:00,21.1km,Lakefront fast scenic,20000
+Rock n Roll San Diego Half Marathon,Running,Road Running,Half Marathon,San Diego,USA,North America,2026-05-31,06:45,21.1km,Coastal music bands,15000
+Austin Half Marathon,Running,Road Running,Half Marathon,Austin,USA,North America,2026-02-15,07:00,21.1km,Hilly Texas capital live music,10000
+Houston Half Marathon,Running,Road Running,Half Marathon,Houston,USA,North America,2026-01-18,07:00,21.1km,Downtown energy flat,12000
+Philadelphia Half Marathon,Running,Road Running,Half Marathon,Philadelphia,USA,North America,2026-11-22,07:00,21.1km,Art Museum historic sites,15000
+Nashville Rock n Roll Half Marathon,Running,Road Running,Half Marathon,Nashville,USA,North America,2026-04-25,07:30,21.1km,Music City bands,20000
+Indianapolis Half Marathon,Running,Road Running,Half Marathon,Indianapolis,USA,North America,2026-05-02,07:30,21.1km,Speedway motor themed,15000
+Vancouver Half Marathon,Running,Road Running,Half Marathon,Vancouver,Canada,North America,2026-05-03,08:30,21.1km,Stanley Park seawall,12000
+Ottawa Half Marathon,Running,Road Running,Half Marathon,Ottawa,Canada,North America,2026-05-24,09:00,21.1km,Canals parliament scenic,15000
+Toronto Half Marathon,Running,Road Running,Half Marathon,Toronto,Canada,North America,2026-10-18,08:30,21.1km,Lake Ontario CN Tower,12000
+Melbourne Half Marathon,Running,Road Running,Half Marathon,Melbourne,Australia,Oceania,2026-10-11,08:00,21.1km,MCG cricket ground finish,20000
+Sydney Half Marathon,Running,Road Running,Half Marathon,Sydney,Australia,Oceania,2026-05-17,07:00,21.1km,Harbour Bridge Opera House,25000
+Gold Coast Half Marathon,Running,Road Running,Half Marathon,Gold Coast,Australia,Oceania,2026-07-05,06:00,21.1km,Beach surfers paradise flat,15000
+Buenos Aires Half Marathon,Running,Road Running,Half Marathon,Buenos Aires,Argentina,South America,2026-08-30,07:30,21.1km,Tango city vibrant,30000
+Rio de Janeiro Half Marathon,Running,Road Running,Half Marathon,Rio de Janeiro,Brazil,South America,2026-08-16,07:00,21.1km,Copacabana beach iconic,20000
+Santiago Half Marathon,Running,Road Running,Half Marathon,Santiago,Chile,South America,2026-04-05,08:00,21.1km,Andes urban parks,25000
+Bogota Half Marathon,Running,Road Running,Half Marathon,Bogota,Colombia,South America,2026-08-02,09:30,21.1km,High altitude world largest,45000
+Mexico City Half Marathon,Running,Road Running,Half Marathon,Mexico City,Mexico,North America,2026-07-26,07:00,21.1km,Zocalo historic altitude,20000
+Lima Half Marathon,Running,Road Running,Half Marathon,Lima,Peru,South America,2026-05-24,07:30,21.1km,Pacific coast Miraflores,15000
+Dubai Half Marathon,Running,Road Running,Half Marathon,Dubai,UAE,Asia,2026-02-21,07:00,21.1km,Burj Khalifa luxury skyline,10000
+Beijing Half Marathon,Running,Road Running,Half Marathon,Beijing,China,Asia,2026-04-19,07:30,21.1km,Forbidden City Tiananmen,20000
+Shanghai Half Marathon,Running,Road Running,Half Marathon,Shanghai,China,Asia,2026-04-19,07:00,21.1km,Bund Pudong modern,15000
+Seoul Half Marathon,Running,Road Running,Half Marathon,Seoul,South Korea,Asia,2026-03-15,08:00,21.1km,Han River palaces,20000
+Tokyo Half Marathon,Running,Road Running,Half Marathon,Tokyo,Japan,Asia,2026-09-13,09:00,21.1km,Imperial Palace urban,25000
+Osaka Half Marathon,Running,Road Running,Half Marathon,Osaka,Japan,Asia,2026-02-28,09:15,21.1km,Castle foodie city,20000
+Singapore Half Marathon,Running,Road Running,Half Marathon,Singapore,Singapore,Asia,2026-08-30,05:00,21.1km,Gardens by Bay night,15000
+Hong Kong Half Marathon,Running,Road Running,Half Marathon,Hong Kong,Hong Kong,Asia,2026-02-08,06:00,21.1km,Victoria Harbour bridges,30000
+Mumbai Half Marathon,Running,Road Running,Half Marathon,Mumbai,India,Asia,2026-01-18,05:45,21.1km,Marine Drive Bollywood,20000
+Delhi Half Marathon,Running,Road Running,Half Marathon,New Delhi,India,Asia,2026-10-18,06:30,21.1km,India Gate historic,35000
+Bangkok Half Marathon,Running,Road Running,Half Marathon,Bangkok,Thailand,Asia,2026-11-22,04:30,21.1km,Temples royal palace,15000
+Kuala Lumpur Half Marathon,Running,Road Running,Half Marathon,Kuala Lumpur,Malaysia,Asia,2026-06-28,05:30,21.1km,Petronas Towers KLCC,15000
+Atlanta Half Marathon,Running,Road Running,Half Marathon,Atlanta,USA,North America,2026-02-26,07:00,21.1km,Centennial Park Peachtree,12000
+Miami Half Marathon,Running,Road Running,Half Marathon,Miami,USA,North America,2026-02-01,06:15,21.1km,South Beach ocean drive,18000
+New Orleans Half Marathon,Running,Road Running,Half Marathon,New Orleans,USA,North America,2026-02-08,07:00,21.1km,Jazz French Quarter,15000
+Naples Half Marathon,Running,Road Running,Half Marathon,Naples,USA,North America,2026-01-25,07:00,21.1km,Gulf Coast paradise,8000
+Phoenix Half Marathon,Running,Road Running,Half Marathon,Phoenix,USA,North America,2026-02-28,07:00,21.1km,Desert cactus scenic,10000
+Las Vegas Half Marathon,Running,Road Running,Half Marathon,Las Vegas,USA,North America,2026-11-08,16:30,21.1km,Strip lights night Rock n Roll,25000
+San Francisco Half Marathon,Running,Road Running,Half Marathon,San Francisco,USA,North America,2026-07-26,06:00,21.1km,Golden Gate Bridge hilly,15000
+Seattle Half Marathon,Running,Road Running,Half Marathon,Seattle,USA,North America,2026-11-29,07:30,21.1km,Space Needle waterfront,10000
+Portland Half Marathon,Running,Road Running,Half Marathon,Portland,USA,North America,2026-05-17,07:00,21.1km,Bridges food carts,12000
+Denver Half Marathon,Running,Road Running,Half Marathon,Denver,USA,North America,2026-10-18,07:30,21.1km,Rockies mile high parks,8000
+Boston Half Marathon,Running,Road Running,Half Marathon,Boston,USA,North America,2026-11-08,08:00,21.1km,Charles River BAA event,8000
+Detroit Half Marathon,Running,Road Running,Half Marathon,Detroit,USA,North America,2026-10-18,07:30,21.1km,International Canada tunnel,12000
+Minneapolis Half Marathon,Running,Road Running,Half Marathon,Minneapolis,USA,North America,2026-06-07,07:00,21.1km,Lakes chain scenic,10000
+Baltimore Half Marathon,Running,Road Running,Half Marathon,Baltimore,USA,North America,2026-10-17,08:00,21.1km,Inner Harbor Under Armour,10000
+Pittsburgh Half Marathon,Running,Road Running,Half Marathon,Pittsburgh,USA,North America,2026-05-03,07:00,21.1km,Bridges rivers steel city,12000
+Cincinnati Half Marathon,Running,Road Running,Half Marathon,Cincinnati,USA,North America,2026-05-03,06:30,21.1km,Flying Pig Ohio River,15000
+Cleveland Half Marathon,Running,Road Running,Half Marathon,Cleveland,USA,North America,2026-05-17,07:00,21.1km,Rock Hall Lake Erie,10000
+Columbus Half Marathon,Running,Road Running,Half Marathon,Columbus,USA,North America,2026-10-18,07:30,21.1km,Ohio State downtown,12000
+Indianapolis Half Marathon,Running,Road Running,Half Marathon,Indianapolis,USA,North America,2026-11-07,07:30,21.1km,Monumental motor speedway,12000
+Kansas City Half Marathon,Running,Road Running,Half Marathon,Kansas City,USA,North America,2026-10-17,07:30,21.1km,Fountains BBQ jazz,8000
+Milwaukee Half Marathon,Running,Road Running,Half Marathon,Milwaukee,USA,North America,2026-09-27,07:00,21.1km,Lake Michigan beer city,6000
+St Louis Half Marathon,Running,Road Running,Half Marathon,St Louis,USA,North America,2026-04-05,07:00,21.1km,Arch Gateway scenic,8000
+Charlotte Half Marathon,Running,Road Running,Half Marathon,Charlotte,USA,North America,2026-12-13,07:30,21.1km,NASCAR banking queen city,6000
+Orlando Half Marathon,Running,Road Running,Half Marathon,Orlando,USA,North America,2026-12-06,06:00,21.1km,Theme parks lakes,8000
+Tampa Half Marathon,Running,Road Running,Half Marathon,Tampa,USA,North America,2026-02-22,06:30,21.1km,Gasparilla pirate bayside,10000
+Dallas Half Marathon,Running,Road Running,Half Marathon,Dallas,USA,North America,2026-12-13,08:00,21.1km,Reunion Tower urban,10000
+Honolulu Half Marathon,Running,Road Running,Half Marathon,Honolulu,USA,North America,2026-12-13,05:00,21.1km,Hawaii tropical Waikiki,10000
+Calgary Half Marathon,Running,Road Running,Half Marathon,Calgary,Canada,North America,2026-05-31,07:00,21.1km,Rockies foothills Stampede,8000
+Montreal Half Marathon,Running,Road Running,Half Marathon,Montreal,Canada,North America,2026-04-26,09:00,21.1km,Old Port St Lawrence,12000
+Edinburgh Half Marathon,Running,Road Running,Half Marathon,Edinburgh,UK,Europe,2026-05-24,08:00,21.1km,Scottish castle coastal,10000
+Manchester Half Marathon,Running,Road Running,Half Marathon,Manchester,UK,Europe,2026-05-17,09:00,21.1km,Old Trafford flat fast,15000
+Brighton Half Marathon,Running,Road Running,Half Marathon,Brighton,UK,Europe,2026-02-22,09:00,21.1km,Seafront pier vibrant,12000
+Bath Half Marathon,Running,Road Running,Half Marathon,Bath,UK,Europe,2026-03-15,11:00,21.1km,Roman baths Georgian,10000
+Reading Half Marathon,Running,Road Running,Half Marathon,Reading,UK,Europe,2026-03-29,10:00,21.1km,Thames Valley flat,12000
+Liverpool Half Marathon,Running,Road Running,Half Marathon,Liverpool,UK,Europe,2026-05-10,09:00,21.1km,Beatles Mersey waterfront,8000
+Glasgow Half Marathon,Running,Road Running,Half Marathon,Glasgow,UK,Europe,2026-10-04,09:00,21.1km,Great Scottish Run Kelpies,10000
+Bristol Half Marathon,Running,Road Running,Half Marathon,Bristol,UK,Europe,2026-09-20,09:30,21.1km,Harborside Clifton bridge,12000
+Yorkshire Half Marathon,Running,Road Running,Half Marathon,York,UK,Europe,2026-04-05,09:30,21.1km,Historic walls Minster,8000
+Rome Half Marathon,Running,Road Running,Half Marathon,Rome,Italy,Europe,2026-03-22,09:00,21.1km,Ancient sites Coliseum loop,10000
+Milan Half Marathon,Running,Road Running,Half Marathon,Milan,Italy,Europe,2026-04-05,09:00,21.1km,Duomo fashion district,8000
+Naples Half Marathon,Running,Road Running,Half Marathon,Naples,Italy,Europe,2026-02-22,09:00,21.1km,Vesuvius bay views,6000
+Florence Half Marathon,Running,Road Running,Half Marathon,Florence,Italy,Europe,2026-03-29,09:00,21.1km,Renaissance Ponte Vecchio,7000
+Venice Half Marathon,Running,Road Running,Half Marathon,Venice,Italy,Europe,2026-10-25,09:00,21.1km,Canals St Mark's,5000
+Madrid Half Marathon,Running,Road Running,Half Marathon,Madrid,Spain,Europe,2026-03-29,09:00,21.1km,Retiro Park Puerta del Sol,20000
+Seville Half Marathon,Running,Road Running,Half Marathon,Seville,Spain,Europe,2026-01-25,09:00,21.1km,Alcazar flamenco flat,12000
+Malaga Half Marathon,Running,Road Running,Half Marathon,Malaga,Spain,Europe,2026-03-15,09:00,21.1km,Costa del Sol Picasso,10000
+Porto Half Marathon,Running,Road Running,Half Marathon,Porto,Portugal,Europe,2026-09-13,09:00,21.1km,Duoro River wine cellars,8000
+Athens Half Marathon,Running,Road Running,Half Marathon,Athens,Greece,Europe,2026-03-22,09:00,21.1km,Acropolis Plaka ancient,12000
+Vienna Half Marathon,Running,Road Running,Half Marathon,Vienna,Austria,Europe,2026-04-19,09:00,21.1km,Ringstrasse classical,10000
+Stockholm Half Marathon,Running,Road Running,Half Marathon,Stockholm,Sweden,Europe,2026-09-12,15:00,21.1km,Archipelago island bridges,12000
+Hamburg Half Marathon,Running,Road Running,Half Marathon,Hamburg,Germany,Europe,2026-06-28,09:00,21.1km,Elbe port Reeperbahn,10000
+Munich Half Marathon,Running,Road Running,Half Marathon,Munich,Germany,Europe,2026-10-11,10:00,21.1km,Oktoberfest English Garden,8000
+Frankfurt Half Marathon,Running,Road Running,Half Marathon,Frankfurt,Germany,Europe,2026-03-15,10:00,21.1km,Main River skyline,6000
+Cologne Half Marathon,Running,Road Running,Half Marathon,Cologne,Germany,Europe,2026-10-04,09:00,21.1km,Rhine cathedral gothic,8000
+Amsterdam Half Marathon,Running,Road Running,Half Marathon,Amsterdam,Netherlands,Europe,2026-10-18,13:30,21.1km,Canals Rijksmuseum,15000
+Rotterdam Half Marathon,Running,Road Running,Half Marathon,Rotterdam,Netherlands,Europe,2026-04-12,11:00,21.1km,Erasmus Bridge modern,10000
+Brussels Half Marathon,Running,Road Running,Half Marathon,Brussels,Belgium,Europe,2026-09-27,10:00,21.1km,Grand Place EU quarter,8000
+Antwerp Half Marathon,Running,Road Running,Half Marathon,Antwerp,Belgium,Europe,2026-08-30,09:00,21.1km,Port diamond district,6000
+Oslo Half Marathon,Running,Road Running,Half Marathon,Oslo,Norway,Europe,2026-09-12,16:00,21.1km,Fjord opera house,10000
+Helsinki Half Marathon,Running,Road Running,Half Marathon,Helsinki,Finland,Europe,2026-05-30,18:30,21.1km,Baltic sea parks,8000
+Zurich Half Marathon,Running,Road Running,Half Marathon,Zurich,Switzerland,Europe,2026-09-13,08:00,21.1km,Lake promenade alpine,6000
+Geneva Half Marathon,Running,Road Running,Half Marathon,Geneva,Switzerland,Europe,2026-05-10,09:00,21.1km,Jet d’Eau UN lake,8000
+Ljubljana Half Marathon,Running,Road Running,Half Marathon,Ljubljana,Slovenia,Europe,2026-10-25,10:00,21.1km,Dragon bridge river,10000
+Budapest Half Marathon,Running,Road Running,Half Marathon,Budapest,Hungary,Europe,2026-09-13,09:00,21.1km,Danube parliament,8000
+Warsaw Half Marathon,Running,Road Running,Half Marathon,Warsaw,Poland,Europe,2026-03-29,10:00,21.1km,Vistula old town,12000
+Krakow Half Marathon,Running,Road Running,Half Marathon,Krakow,Poland,Europe,2026-04-26,10:00,21.1km,Wawel castle medieval,8000
+Istanbul Half Marathon,Running,Road Running,Half Marathon,Istanbul,Turkey,Asia,2026-04-26,09:00,21.1km,Bosphorus intercontinental,12000
+Escape from Alcatraz Triathlon,Triathlon,Olympic Distance,,San Francisco,USA,North America,2026-06-07,07:30,Standard,Iconic bay swim prison escape bike run,2000
+Chicago Triathlon,Triathlon,Olympic Distance,,Chicago,USA,North America,2026-08-23,07:00,Standard,Lake Michigan downtown skyline,5000
+New York City Triathlon,Triathlon,Olympic Distance,,New York,USA,North America,2026-07-19,06:00,Standard,Hudson River Central Park,4000
+Los Angeles Triathlon,Triathlon,Olympic Distance,,Los Angeles,USA,North America,2026-09-27,07:00,Standard,Venice Beach downtown,1500
+Philadelphia Triathlon,Triathlon,Olympic Distance,,Philadelphia,USA,North America,2026-06-21,07:00,Standard,Schuylkill River historic,3000
+Boston Triathlon,Triathlon,Olympic Distance,,Boston,USA,North America,2026-08-09,07:00,Standard,Harbor South Boston,2000
+Miami Triathlon,Triathlon,Olympic Distance,,Miami,USA,North America,2026-04-05,06:30,Standard,Bay Biscayne causeway,1500
+San Diego Triathlon,Triathlon,Olympic Distance,,San Diego,USA,North America,2026-07-12,06:30,Standard,Mission Bay coastal,2000
+Austin Triathlon,Triathlon,Olympic Distance,,Austin,USA,North America,2026-05-25,07:00,Standard,Lady Bird Lake downtown,1200
+Seattle Triathlon,Triathlon,Olympic Distance,,Seattle,USA,North America,2026-07-19,07:00,Standard,Lake Washington Seward Park,1000
+Portland Triathlon,Triathlon,Olympic Distance,,Portland,USA,North America,2026-07-26,07:30,Standard,Willamette River blue lake,800
+Denver Triathlon,Triathlon,Olympic Distance,,Denver,USA,North America,2026-06-14,07:00,Standard,Sloans Lake parks,1000
+Minneapolis Triathlon,Triathlon,Olympic Distance,,Minneapolis,USA,North America,2026-07-12,07:00,Standard,Lake Nokomis chain lakes,1200
+St Louis Triathlon,Triathlon,Olympic Distance,,St Louis,USA,North America,2026-05-17,07:00,Standard,Creve Coeur Lake,800
+Atlanta Triathlon,Triathlon,Olympic Distance,,Atlanta,USA,North America,2026-06-07,07:30,Standard,Lake Lanier,1000
+Dallas Triathlon,Triathlon,Olympic Distance,,Dallas,USA,North America,2026-08-16,07:00,Standard,White Rock Lake,900
+Houston Triathlon,Triathlon,Olympic Distance,,Houston,USA,North America,2026-04-26,07:00,Standard,Clear Lake NASA,800
+Nashville Triathlon,Triathlon,Olympic Distance,,Nashville,USA,North America,2026-07-19,07:00,Standard,Percy Priest Lake music,700
+Orlando Triathlon,Triathlon,Olympic Distance,,Orlando,USA,North America,2026-03-29,07:00,Standard,Lake Minneola Clermont,1000
+Tampa Bay Triathlon,Triathlon,Olympic Distance,,Tampa,USA,North America,2026-09-13,07:00,Standard,Clearwater bay,800
+Phoenix Triathlon,Triathlon,Olympic Distance,,Phoenix,USA,North America,2026-03-15,06:30,Standard,Tempe Town Lake desert,900
+Las Vegas Triathlon,Triathlon,Olympic Distance,,Las Vegas,USA,North America,2026-10-25,07:00,Standard,Lake Mead desert,800
+San Francisco Triathlon,Triathlon,Olympic Distance,,San Francisco,USA,North America,2026-07-12,07:30,Standard,Alcatraz optional bay,1500
+Cleveland Triathlon,Triathlon,Olympic Distance,,Cleveland,USA,North America,2026-07-26,07:00,Standard,Lake Erie Edgewater,700
+Detroit Triathlon,Triathlon,Olympic Distance,,Detroit,USA,North America,2026-06-21,07:00,Standard,Belle Isle international,600
+Kansas City Triathlon,Triathlon,Olympic Distance,,Kansas City,USA,North America,2026-05-17,07:30,Standard,Longview Lake,600
+Milwaukee Triathlon,Triathlon,Olympic Distance,,Milwaukee,USA,North America,2026-08-09,07:00,Standard,Lake Michigan veterans park,700
+London Triathlon,Triathlon,Olympic Distance,,London,UK,Europe,2026-07-25,07:00,Standard,Excel docklands Thames,4000
+Paris Triathlon,Triathlon,Olympic Distance,,Paris,France,Europe,2026-07-05,08:00,Standard,Seine Eiffel Tower,3000
+Berlin Triathlon,Triathlon,Olympic Distance,,Berlin,Germany,Europe,2026-06-14,08:30,Standard,Wannsee lake Brandenburg,2500
+Hamburg Triathlon,Triathlon,Olympic Distance,,Hamburg,Germany,Europe,2026-07-12,08:00,Standard,Alster lake world's largest,5000
+Munich Triathlon,Triathlon,Olympic Distance,,Munich,Germany,Europe,2026-06-07,08:30,Standard,Olympic park English Garden,1500
+Frankfurt Triathlon,Triathlon,Olympic Distance,,Frankfurt,Germany,Europe,2026-07-05,08:00,Standard,Main River Langen,2000
+Amsterdam Triathlon,Triathlon,Olympic Distance,,Amsterdam,Netherlands,Europe,2026-08-23,09:00,Standard,Canals new Amsterdam,1500
+Rotterdam Triathlon,Triathlon,Olympic Distance,,Rotterdam,Netherlands,Europe,2026-06-21,09:00,Standard,Modern port Kralingse Plas,1000
+Copenhagen Triathlon,Triathlon,Olympic Distance,,Copenhagen,Denmark,Europe,2026-08-09,08:30,Standard,Amager harbor Little Mermaid,2000
+Stockholm Triathlon,Triathlon,Olympic Distance,,Stockholm,Sweden,Europe,2026-07-19,09:00,Standard,Archipelago royal palace,2500
+Oslo Triathlon,Triathlon,Olympic Distance,,Oslo,Norway,Europe,2026-08-16,09:00,Standard,Fjord opera house,2000
+Helsinki Triathlon,Triathlon,Olympic Distance,,Helsinki,Finland,Europe,2026-08-09,10:00,Standard,Baltic sea parks,1500
+Prague Triathlon,Triathlon,Olympic Distance,,Prague,Czech Republic,Europe,2026-07-26,09:00,Standard,Vltava Charles Bridge,1500
+Vienna Triathlon,Triathlon,Olympic Distance,,Vienna,Austria,Europe,2026-05-25,08:30,Standard,Danube old donut,2000
+Zurich Triathlon,Triathlon,Olympic Distance,,Zurich,Switzerland,Europe,2026-07-12,08:00,Standard,Lake Zurich alpine,1500
+Geneva Triathlon,Triathlon,Olympic Distance,,Geneva,Switzerland,Europe,2026-07-19,08:30,Standard,Lake Geneva Jet d'Eau,1200
+Madrid Triathlon,Triathlon,Olympic Distance,,Madrid,Spain,Europe,2026-06-21,09:00,Standard,Casa de Campo Retiro,1000
+Barcelona Triathlon,Triathlon,Olympic Distance,,Barcelona,Spain,Europe,2026-10-04,08:00,Standard,Mediterranean Nova Icaria,2000
+Lisbon Triathlon,Triathlon,Olympic Distance,,Lisbon,Portugal,Europe,2026-05-17,08:30,Standard,Tagus river Belem,1500
+Rome Triathlon,Triathlon,Olympic Distance,,Rome,Italy,Europe,2026-06-07,08:00,Standard,EUR lake ancient,1000
+Milan Triathlon,Triathlon,Olympic Distance,,Milan,Italy,Europe,2026-07-05,08:30,Standard,Idroscalo lake fashion,1200
+Venice Triathlon,Triathlon,Olympic Distance,,Venice,Italy,Europe,2026-05-25,09:00,Standard,Lagoon Lido island,800
+Athens Triathlon,Triathlon,Olympic Distance,,Athens,Greece,Europe,2026-04-26,08:00,Standard,Vouliagmeni bay Acropolis,1000
+Budapest Triathlon,Triathlon,Olympic Distance,,Budapest,Hungary,Europe,2026-08-16,09:00,Standard,Danube Margaret Island,1500
+Warsaw Triathlon,Triathlon,Olympic Distance,,Warsaw,Poland,Europe,2026-06-14,09:00,Standard,Vistula Zegrze lake,800
+Istanbul Triathlon,Triathlon,Olympic Distance,,Istanbul,Turkey,Asia,2026-08-23,07:30,Standard,Bosphorus intercontinental,1000
+Dubai Triathlon,Triathlon,Olympic Distance,,Dubai,UAE,Asia,2026-03-07,06:30,Standard,Palm Jumeirah luxury,800
+Tokyo Triathlon,Triathlon,Olympic Distance,,Tokyo,Japan,Asia,2026-05-24,07:00,Standard,Odaiba bay rainbow bridge,2000
+Osaka Triathlon,Triathlon,Olympic Distance,,Osaka,Japan,Asia,2026-06-21,07:30,Standard,Castle bay area,1000
+Yokohama Triathlon,Triathlon,Olympic Distance,,Yokohama,Japan,Asia,2026-09-13,07:00,Standard,Minato Mirai harbor,1500
+Singapore Triathlon,Triathlon,Olympic Distance,,Singapore,Singapore,Asia,2026-08-30,06:30,Standard,East Coast Park gardens,1200
+Seoul Triathlon,Triathlon,Olympic Distance,,Seoul,South Korea,Asia,2026-06-07,07:00,Standard,Han River Banpo,1000
+Bangkok Triathlon,Triathlon,Olympic Distance,,Bangkok,Thailand,Asia,2026-09-27,06:00,Standard,Chao Phraya royal,800
+Kuala Lumpur Triathlon,Triathlon,Olympic Distance,,Kuala Lumpur,Malaysia,Asia,2026-07-26,06:30,Standard,Petronas lake gardens,700
+Sydney Triathlon,Triathlon,Olympic Distance,,Sydney,Australia,Oceania,2026-03-22,07:00,Standard,Harbour Opera House,1500
+Melbourne Triathlon,Triathlon,Olympic Distance,,Melbourne,Australia,Oceania,2026-02-15,07:30,Standard,St Kilda beach,1200
+Brisbane Triathlon,Triathlon,Olympic Distance,,Brisbane,Australia,Oceania,2026-08-23,06:30,Standard,River Story Bridge,800
+Auckland Triathlon,Triathlon,Olympic Distance,,Auckland,New Zealand,Oceania,2026-01-25,07:00,Standard,Vi duct harbor,1000
+Wellington Triathlon,Triathlon,Olympic Distance,,Wellington,New Zealand,Oceania,2026-02-22,07:30,Standard,Harbour oriental bay,700
+Toronto Triathlon,Triathlon,Olympic Distance,,Toronto,Canada,North America,2026-07-19,07:00,Standard,Ontario Place islands,1500
+Vancouver Triathlon,Triathlon,Olympic Distance,,Vancouver,Canada,North America,2026-06-28,07:30,Standard,Stanley Park English Bay,1200
+Montreal Triathlon,Triathlon,Olympic Distance,,Montreal,Canada,North America,2026-08-23,08:00,Standard,Old Port circuit Gilles Villeneuve,1000
+Ottawa Triathlon,Triathlon,Olympic Distance,,Ottawa,Canada,North America,2026-07-12,08:00,Standard,Rideau Canal Dow's Lake,800
+Calgary Triathlon,Triathlon,Olympic Distance,,Calgary,Canada,North America,2026-06-21,07:30,Standard,Glenmore Reservoir,700
+Buenos Aires Triathlon,Triathlon,Olympic Distance,,Buenos Aires,Argentina,South America,2026-03-08,08:00,Standard,Rio de la Plata Palermo,1000
+Rio de Janeiro Triathlon,Triathlon,Olympic Distance,,Rio de Janeiro,Brazil,South America,2026-07-26,07:30,Standard,Copacabana beach,1200
+Santiago Triathlon,Triathlon,Olympic Distance,,Santiago,Chile,South America,2026-04-26,08:30,Standard,Andes Mapocho river,800
+Mexico City Triathlon,Triathlon,Olympic Distance,,Mexico City,Mexico,North America,2026-09-13,07:00,Standard,Chapultepec park altitude,900
+Bogota Triathlon,Triathlon,Olympic Distance,,Bogota,Colombia,South America,2026-08-02,08:00,Standard,High altitude Simón Bolívar Park,700
+Lima Triathlon,Triathlon,Olympic Distance,,Lima,Peru,South America,2026-05-24,07:30,Standard,Pacific Costa Verde,600
+Cape Town Triathlon,Triathlon,Olympic Distance,,Cape Town,South Africa,Africa,2026-02-15,07:00,Standard,Table Mountain V&A waterfront,1500
+Johannesburg Triathlon,Triathlon,Olympic Distance,,Johannesburg,South Africa,Africa,2026-03-22,07:00,Standard,Cradle of Humankind,800
+Nairobi Triathlon,Triathlon,Olympic Distance,,Nairobi,Kenya,Africa,2026-06-14,07:30,Standard,Safari city Uhuru Park,600
+Marrakech Triathlon,Triathlon,Olympic Distance,,Marrakech,Morocco,Africa,2026-04-26,08:00,Standard,Medina palms desert,700
+Cairo Triathlon,Triathlon,Olympic Distance,,Cairo,Egypt,Africa,2026-05-17,07:00,Standard,Nile pyramids backdrop,500
+IRONMAN California,Triathlon,Half Ironman,,Sacramento,USA,North America,2026-10-25,06:30,Half Ironman,American River fast bike,2500
+IRONMAN 70.3 Oregon,Triathlon,Half Ironman,,Salem,USA,North America,2026-07-19,06:30,Half Ironman,Willamette Valley scenic,2000
+IRONMAN 70.3 Eagleman,Triathlon,Half Ironman,,Cambridge,USA,North America,2026-06-14,06:45,Half Ironman,Choptank River flat fast,2200
+IRONMAN 70.3 Steelhead,Triathlon,Half Ironman,,Benton Harbor,USA,North America,2026-06-28,06:30,Half Ironman,Lake Michigan beaches,2000
+IRONMAN 70.3 Ohio,Triathlon,Half Ironman,,Delaware,USA,North America,2026-07-26,07:00,Half Ironman,Alum Creek rolling hills,1800
+IRONMAN 70.3 Musselman,Triathlon,Half Ironman,,Geneva,USA,North America,2026-07-12,06:30,Half Ironman,Seneca Lake Finger Lakes,1500
+IRONMAN 70.3 Happy Valley,Triathlon,Half Ironman,,State College,USA,North America,2026-07-05,06:30,Half Ironman,Penn State rolling Pennsylvania,2000
+IRONMAN 70.3 Boise,Triathlon,Half Ironman,,Boise,USA,North America,2026-06-07,06:30,Half Ironman,New Pro Series Lucky Peak Reservoir,1800
+IRONMAN 70.3 Mont-Tremblant,Triathlon,Half Ironman,,Mont-Tremblant,Canada,North America,2026-06-21,06:30,Half Ironman,Laurentian mountains village,2500
+IRONMAN 70.3 Victoria,Triathlon,Half Ironman,,Victoria,Canada,North America,2026-05-25,06:30,Half Ironman,Vancouver Island parliament,1500
+IRONMAN 70.3 Gulf Coast,Triathlon,Half Ironman,,Panama City Beach,USA,North America,2026-05-10,06:15,Half Ironman,Gulf of Mexico white sand,2000
+IRONMAN 70.3 Chattanooga,Triathlon,Half Ironman,,Chattanooga,USA,North America,2026-05-17,06:30,Half Ironman,Tennessee River downtown,2200
+IRONMAN 70.3 St George,Triathlon,Half Ironman,,St George,USA,North America,2026-05-03,06:30,Half Ironman,North American Champs red rocks,2500
+IRONMAN 70.3 Morro Bay,Triathlon,Half Ironman,,Morro Bay,USA,North America,2026-04-26,06:45,Half Ironman,Central California coast,1800
+IRONMAN 70.3 Oceanside,Triathlon,Half Ironman,,Oceanside,USA,North America,2026-04-05,06:30,Half Ironman,Southern California surf,2500
+IRONMAN 70.3 Texas,Triathlon,Half Ironman,,Galveston,USA,North America,2026-04-13,06:30,Half Ironman,Gulf Coast flat fast,2200
+IRONMAN 70.3 Florida,Triathlon,Half Ironman,,Haines City,USA,North America,2026-05-04,06:30,Half Ironman,Central Florida lakes,2000
+IRONMAN 70.3 North Carolina,Triathlon,Half Ironman,,Wilmington,USA,North America,2026-10-18,07:00,Half Ironman,Atlantic coast battleship,1800
+IRONMAN 70.3 Atlantic City,Triathlon,Half Ironman,,Atlantic City,USA,North America,2026-09-13,06:30,Half Ironman,Boardwalk casinos ocean,1500
+IRONMAN 70.3 New York,Triathlon,Half Ironman,,Jones Beach,USA,North America,2026-09-20,06:30,Half Ironman,Long Island ocean,1200
+IRONMAN 70.3 Maine,Triathlon,Half Ironman,,Augusta,USA,North America,2026-08-23,06:30,Half Ironman,New England Kennebec River,2000
+IRONMAN 70.3 Western Massachusetts,Triathlon,Half Ironman,,Springfield,USA,North America,2026-06-14,06:30,Half Ironman,Berkshires Connecticut River,1800
+IRONMAN 70.3 Pennsylvania,Triathlon,Half Ironman,,Lancaster,USA,North America,2026-07-12,06:30,Half Ironman,Amish country rolling farms,1500
+IRONMAN 70.3 Memphis,Triathlon,Half Ironman,,Memphis,USA,North America,2026-10-04,06:30,Half Ironman,Mississippi River blues,1200
+IRONMAN 70.3 Waco,Triathlon,Half Ironman,,Waco,USA,North America,2026-10-25,06:45,Half Ironman,Brazos River Texas flat,1800
+IRONMAN 70.3 Indian Wells,Triathlon,Half Ironman,,La Quinta,USA,North America,2026-12-07,06:30,Half Ironman,Desert palm springs,2000
+IRONMAN 70.3 Arizona,Triathlon,Half Ironman,,Tempe,USA,North America,2026-10-18,06:30,Half Ironman,Fall desert Tempe Town Lake,1800
+IRONMAN 70.3 Boulder,Triathlon,Half Ironman,,Boulder,USA,North America,2026-06-14,06:30,Half Ironman,Rockies reservoir flatiron,2200
+IRONMAN 70.3 Coeur d'Alene,Triathlon,Half Ironman,,Coeur d'Alene,USA,North America,2026-06-28,06:30,Half Ironman,Idaho lake scenic,1800
+IRONMAN 70.3 Hawaii,Triathlon,Half Ironman,,Hawaii Island,USA,North America,2026-05-31,06:00,Half Ironman,Big Island lava fields,1500
+IRONMAN 70.3 Alaska,Triathlon,Half Ironman,,Anchorage,USA,North America,2026-08-09,07:00,Half Ironman,Chugach mountains cold water,1000
+IRONMAN 70.3 Calgary,Triathlon,Half Ironman,,Calgary,Canada,North America,2026-07-26,06:30,Half Ironman,Rockies Glenmore Reservoir,1500
+IRONMAN 70.3 Edmonton,Triathlon,Half Ironman,,Edmonton,Canada,North America,2026-07-19,06:30,Half Ironman,Alberta prairies,1200
+IRONMAN 70.3 Nice,Triathlon,Half Ironman,,Nice,France,Europe,2026-09-12,07:00,Half Ironman,World Champs Promenade des Anglais,4000
+IRONMAN 70.3 Aix-en-Provence,Triathlon,Half Ironman,,Aix-en-Provence,France,Europe,2026-05-17,07:30,Half Ironman,Lavender fields Montagne Sainte-Victoire,2000
+IRONMAN 70.3 Les Sables d'Olonne,Triathlon,Half Ironman,,Les Sables d'Olonne,France,Europe,2026-06-28,07:30,Half Ironman,Atlantic coast Vendee flat,2500
+IRONMAN 70.3 Vichy,Triathlon,Half Ironman,,Vichy,France,Europe,2026-08-23,07:30,Half Ironman,Allier River spas,1800
+IRONMAN 70.3 Swansea,Triathlon,Half Ironman,,Swansea,UK,Europe,2026-07-12,07:00,Half Ironman,Wales Gower coast,2000
+IRONMAN 70.3 Edinburgh,Triathlon,Half Ironman,,Edinburgh,UK,Europe,2026-06-28,07:30,Half Ironman,Scottish castle Forth bridges,1500
+IRONMAN 70.3 Elsinore,Triathlon,Half Ironman,,Elsinore,Denmark,Europe,2026-06-21,07:00,Half Ironman,Pro Series Hamlet castle Kronborg,2200
+IRONMAN 70.3 Luxembourg,Triathlon,Half Ironman,,Remich,Luxembourg,Europe,2026-06-14,08:00,Half Ironman,Moselle River vineyards,1800
+IRONMAN 70.3 Zell am See,Triathlon,Half Ironman,,Zell am See,Austria,Europe,2026-08-30,07:30,Half Ironman,Alps lake mountains,2000
+IRONMAN 70.3 Tallinn,Triathlon,Half Ironman,,Tallinn,Estonia,Europe,2026-08-09,07:30,Half Ironman,Baltic medieval old town,1800
+IRONMAN 70.3 Turku,Triathlon,Half Ironman,,Turku,Finland,Europe,2026-07-12,08:00,Half Ironman,Archipelago islands,1500
+IRONMAN 70.3 Jonkoping,Triathlon,Half Ironman,,Jonkoping,Sweden,Europe,2026-07-05,07:30,Half Ironman,Lake Vattern scenic,2000
+IRONMAN 70.3 Kraichgau,Triathlon,Half Ironman,,Kraichgau,Germany,Europe,2026-05-31,08:00,Half Ironman,Wine region rolling hills,2200
+IRONMAN 70.3 Duisburg,Triathlon,Half Ironman,,Duisburg,Germany,Europe,2026-08-16,07:30,Half Ironman,Ruhr flat industrial,1800
+IRONMAN 70.3 Mallorca,Triathlon,Half Ironman,,Alcudia,Spain,Europe,2026-05-10,07:30,Half Ironman,Mediterranean bay cliffs,3000
+IRONMAN 70.3 Marbella,Triathlon,Half Ironman,,Marbella,Spain,Europe,2026-04-26,07:30,Half Ironman,Costa del Sol beaches,2500
+IRONMAN 70.3 Lanzarote,Triathlon,Half Ironman,,Lanzarote,Spain,Europe,2026-10-18,07:30,Half Ironman,Volcanic Canary Islands,1500
+IRONMAN 70.3 Venice Jesolo,Triathlon,Half Ironman,,Jesolo,Italy,Europe,2026-05-04,08:30,Half Ironman,Adriatic lagoon Venice,2000
+IRONMAN 70.3 Pescara,Triathlon,Half Ironman,,Pescara,Italy,Europe,2026-06-14,08:00,Half Ironman,Abruzzo coast flat,1800
+IRONMAN 70.3 Switzerland,Triathlon,Half Ironman,,Rapperswil,Switzerland,Europe,2026-06-07,07:00,Half Ironman,Zurich Lake alpine,2200
+IRONMAN 70.3 Warsaw,Triathlon,Half Ironman,,Warsaw,Poland,Europe,2026-06-07,08:30,Half Ironman,Vistula old town,2000
+IRONMAN 70.3 Haugesund,Triathlon,Half Ironman,,Haugesund,Norway,Europe,2026-07-05,07:30,Half Ironman,Fjords Viking,1500
+IRONMAN 70.3 Dublin,Triathlon,Half Ironman,,Dublin,Ireland,Europe,2026-08-23,07:30,Half Ironman,Phoenix Park Guinness,1800
+IRONMAN 70.3 Greece,Triathlon,Half Ironman,,Costa Navarino,Greece,Europe,2026-04-26,08:00,Half Ironman,Peloponnese Voidokilia beach,1500
+IRONMAN 70.3 Turkey,Triathlon,Half Ironman,,Antalya,Turkey,Asia,2026-10-25,07:30,Half Ironman,Mediterranean Taurus mountains,1800
+IRONMAN 70.3 Bahrain,Triathlon,Half Ironman,,Manama,Bahrain,Asia,2026-12-06,06:30,Half Ironman,Formula 1 circuit desert,1500
+IRONMAN 70.3 Western Sydney,Triathlon,Half Ironman,,Sydney,Australia,Oceania,2026-03-22,06:30,Half Ironman,Penrith lakes Blue Mountains,1800
+IRONMAN 70.3 Geelong,Triathlon,Half Ironman,,Geelong,Australia,Oceania,2026-02-15,06:30,Half Ironman,Great Ocean Road coast,1500
+IRONMAN 70.3 Tasmania,Triathlon,Half Ironman,,Hobart,Australia,Oceania,2026-02-08,06:30,Half Ironman,Derwent River historic,1200
+IRONMAN 70.3 New Zealand,Triathlon,Half Ironman,,Taupo,New Zealand,Oceania,2026-12-13,06:30,Half Ironman,Lake Taupo geothermal,1500
+IRONMAN 70.3 Philippines,Triathlon,Half Ironman,,Cebu,Philippines,Asia,2026-08-09,05:30,Half Ironman,Tropical islands Subic legacy,1800
+IRONMAN 70.3 Vietnam,Triathlon,Half Ironman,,Da Nang,Vietnam,Asia,2026-05-10,06:00,Half Ironman,Marble Mountains beach,2000
+IRONMAN 70.3 Desaru Coast,Triathlon,Half Ironman,,Desaru,Malaysia,Asia,2026-05-24,06:30,Half Ironman,Coastal jungle,1500
+IRONMAN 70.3 Japan,Triathlon,Half Ironman,,Tokoname,Japan,Asia,2026-06-21,06:30,Half Ironman,Central Japan airport,1200
+IRONMAN 70.3 Korea,Triathlon,Half Ironman,,Gyeongju,South Korea,Asia,2026-09-13,07:00,Half Ironman,Ancient Silla kingdom,1000
+IRONMAN 70.3 Shanghai,Triathlon,Half Ironman,,Shanghai,China,Asia,2026-10-18,07:00,Half Ironman,Chongming Island eco,1500
+IRONMAN 70.3 Xiamen,Triathlon,Half Ironman,,Xiamen,China,Asia,2026-11-08,07:00,Half Ironman,Gulangyu island coastal,1800
+IRONMAN 70.3 Goa,Triathlon,Half Ironman,,Goa,India,Asia,2026-11-01,06:00,Half Ironman,Arabian Sea beaches,1200
+IRONMAN 70.3 South Africa,Triathlon,Half Ironman,,East London,South Africa,Africa,2026-01-25,06:00,Half Ironman,Buffalo City Indian Ocean,2000
+IRONMAN 70.3 Durban,Triathlon,Half Ironman,,Durban,South Africa,Africa,2026-06-07,06:00,Half Ironman,Warm Indian Ocean uShaka,1800
+IRONMAN 70.3 Morocco,Triathlon,Half Ironman,,Tangier,Morocco,Africa,2026-10-25,08:00,Half Ironman,Mediterranean Strait Gibraltar,1500
+IRONMAN 70.3 Oman,Triathlon,Half Ironman,,Muscat,Oman,Asia,2026-02-14,06:30,Half Ironman,Arabian Sea desert forts,1800
+IRONMAN 70.3 Dubai,Triathlon,Half Ironman,,Dubai,UAE,Asia,2026-01-24,06:30,Half Ironman,Jumeirah beach Burj Al Arab,2000
+IRONMAN 70.3 Punta del Este,Triathlon,Half Ironman,,Punta del Este,Uruguay,South America,2026-11-29,06:30,Half Ironman,Atlantic beaches luxury,1200
+IRONMAN 70.3 Cartagena,Triathlon,Half Ironman,,Cartagena,Colombia,South America,2026-12-07,06:00,Half Ironman,Caribbean walled city,1500
+IRONMAN 70.3 Brazil Fortaleza,Triathlon,Half Ironman,,Fortaleza,Brazil,South America,2026-11-08,05:30,Half Ironman,Northeast beaches,1200
+IRONMAN 70.3 Pucon,Triathlon,Half Ironman,,Pucon,Chile,South America,2026-01-11,07:00,Half Ironman,Villarrica volcano lake,2000
+IRONMAN 70.3 Bariloche,Triathlon,Half Ironman,,Bariloche,Argentina,South America,2026-03-15,07:00,Half Ironman,Patagonia Andes lakes,1500
+IRONMAN 70.3 Costa Rica,Triathlon,Half Ironman,,Playa del Coco,Costa Rica,North America,2026-06-21,06:30,Half Ironman,Pacific jungle,1200
+IRONMAN 70.3 Monterrey,Triathlon,Half Ironman,,Monterrey,Mexico,North America,2026-05-17,06:30,Half Ironman,Cumbres mountains,1500
+IRONMAN 70.3 Acapulco,Triathlon,Half Ironman,,Acapulco,Mexico,North America,2026-03-29,06:30,Half Ironman,Pacific bay cliffs,1200
+IRONMAN World Championship Men,Triathlon,Full Ironman,,Kailua-Kona,USA,North America,2026-10-10,06:25,Full Ironman,Iconic Big Island lava fields men,2500
+IRONMAN World Championship Women,Triathlon,Full Ironman,,Nice,France,Europe,2026-09-20,07:00,Full Ironman,Promenade des Anglais women rotation,2500
+IRONMAN California,Triathlon,Full Ironman,,Sacramento,USA,North America,2026-10-25,06:30,Full Ironman,American River Capitol,2500
+IRONMAN Florida,Triathlon,Full Ironman,,Panama City Beach,USA,North America,2026-11-01,06:30,Full Ironman,Gulf Coast flat fast,2500
+IRONMAN Arizona,Triathlon,Full Ironman,,Tempe,USA,North America,2026-11-22,06:50,Full Ironman,Desert Tempe Town Lake,2800
+IRONMAN Cozumel,Triathlon,Full Ironman,,Cozumel,Mexico,North America,2026-11-22,06:30,Full Ironman,Caribbean crystal waters,2500
+IRONMAN Western Australia,Triathlon,Full Ironman,,Busselton,Australia,Oceania,2026-12-07,06:00,Full Ironman,Indian Ocean jetty,1800
+IRONMAN New Zealand,Triathlon,Full Ironman,,Taupo,New Zealand,Oceania,2026-03-07,06:30,Full Ironman,Pro Series Lake Taupo oldest,1500
+IRONMAN South Africa,Triathlon,Full Ironman,,Nelson Mandela Bay,South Africa,Africa,2026-04-05,06:30,Full Ironman,African Champs Indian Ocean,2000
+IRONMAN Texas,Triathlon,Full Ironman,,The Woodlands,USA,North America,2026-04-26,06:30,Full Ironman,Americas Champs flat humid,2800
+IRONMAN Lanzarote,Triathlon,Full Ironman,,Lanzarote,Spain,Europe,2026-05-17,07:00,Full Ironman,Volcanic Canary toughest,1800
+IRONMAN Brazil,Triathlon,Full Ironman,,Florianopolis,Brazil,South America,2026-05-25,06:30,Full Ironman,Atlantic beaches,2000
+IRONMAN Hamburg,Triathlon,Full Ironman,,Hamburg,Germany,Europe,2026-07-26,06:30,Full Ironman,European Champs Elbe Alster,2500
+IRONMAN Tallinn,Triathlon,Full Ironman,,Tallinn,Estonia,Europe,2026-08-09,06:30,Full Ironman,Baltic medieval,1500
+IRONMAN Kalmar,Triathlon,Full Ironman,,Kalmar,Sweden,Europe,2026-08-16,06:30,Full Ironman,Pro Series Oland bridge,2200
+IRONMAN Copenhagen,Triathlon,Full Ironman,,Copenhagen,Denmark,Europe,2026-08-16,07:00,Full Ironman,Amager harbor flat,2800
+IRONMAN Canada,Triathlon,Full Ironman,,Penticton,Canada,North America,2026-08-23,06:00,Full Ironman,Okanagan Valley wine,2000
+IRONMAN Vichy,Triathlon,Full Ironman,,Vichy,France,Europe,2026-08-23,07:00,Full Ironman,Allier River full distance,1800
+IRONMAN Frankfurt,Triathlon,Full Ironman,,Frankfurt,Germany,Europe,2026-06-28,06:30,Full Ironman,European Champs Main River,2500
+IRONMAN Lake Placid,Triathlon,Full Ironman,,Lake Placid,USA,North America,2026-07-26,06:30,Full Ironman,Adirondacks Olympic village,2500
+IRONMAN Mont-Tremblant,Triathlon,Full Ironman,,Mont-Tremblant,Canada,North America,2026-08-16,06:20,Full Ironman,Laurentians village hills,2500
+IRONMAN Maryland,Triathlon,Full Ironman,,Cambridge,USA,North America,2026-09-20,06:45,Full Ironman,Choptank River flat,2000
+IRONMAN Chattanooga,Triathlon,Full Ironman,,Chattanooga,USA,North America,2026-09-27,06:30,Full Ironman,Tennessee River downtown,2200
+IRONMAN Louisville,Triathlon,Full Ironman,,Louisville,USA,North America,2026-10-11,07:30,Full Ironman,Kentucky Ohio River,2000
+IRONMAN Barcelona,Triathlon,Full Ironman,,Calella,Spain,Europe,2026-10-04,07:30,Full Ironman,Mediterranean fast flat,3000
+IRONMAN Italy Emilia Romagna,Triathlon,Full Ironman,,Cervia,Italy,Europe,2026-09-20,07:30,Full Ironman,Adriatic salt pans,2500
+IRONMAN Malaysia,Triathlon,Full Ironman,,Langkawi,Malaysia,Asia,2026-10-18,06:30,Full Ironman,Tropical islands rainforest,1500
+IRONMAN Wales,Triathlon,Full Ironman,,Tenby,UK,Europe,2026-09-13,07:00,Full Ironman,Pembrokeshire coast tough,2000
+IRONMAN Cairns,Triathlon,Full Ironman,,Cairns,Australia,Oceania,2026-06-14,07:20,Full Ironman,Asia Pacific Champs Great Barrier Reef,1800
+IRONMAN Germany Kraichgau,Triathlon,Full Ironman,,Kraichgau,Germany,Europe,2026-06-21,06:30,Full Ironman,Wine region transition to full,1800
+IRONMAN France Nice,Triathlon,Full Ironman,,Nice,France,Europe,2026-06-28,06:30,Full Ironman,Iconic Cote d'Azur hills,2800
+IRONMAN Austria,Triathlon,Full Ironman,,Klagenfurt,Austria,Europe,2026-06-21,07:00,Full Ironman,Carinthia lakes Alps,2800
+IRONMAN UK,Triathlon,Full Ironman,,Bolton,UK,Europe,2026-07-05,06:00,Full Ironman,Lancashire Pennines tough,2000
+IRONMAN Switzerland,Triathlon,Full Ironman,,Thun,Switzerland,Europe,2026-07-12,06:45,Full Ironman,Lake Thun Interlaken,1800
+IRONMAN Finland,Triathlon,Full Ironman,,Lahti,Finland,Europe,2026-08-16,06:30,Full Ironman,Lakes Vesijarvi,2000
+IRONMAN Ireland Cork,Triathlon,Full Ironman,,Youghal,Ireland,Europe,2026-08-09,06:30,Full Ironman,Ring of Kerry coast,2000
+IRONMAN Kazakhstan,Triathlon,Full Ironman,,Astana,Kazakhstan,Asia,2026-07-05,06:00,Full Ironman,Steppe capital,1200
+IRONMAN Philippines,Triathlon,Full Ironman,,Subic Bay,Philippines,Asia,2026-06-07,05:00,Full Ironman,Tropical bay jungle,1500
+IRONMAN Japan,Triathlon,Full Ironman,,Hokkaido,Japan,Asia,2026-08-23,06:00,Full Ironman,Northern island cool,1200
+IRONMAN Korea,Triathlon,Full Ironman,,Gyeongju,South Korea,Asia,2026-06-14,06:30,Full Ironman,Ancient temples,1500
+IRONMAN Vinfast Vietnam,Triathlon,Full Ironman,,Da Nang,Vietnam,Asia,2026-05-10,05:30,Full Ironman,Coastal new full distance,1500
+IRONMAN Jacksonville,Triathlon,Full Ironman,,Jacksonville,USA,North America,2026-10-18,06:30,Full Ironman,New Atlantic coast Florida,2200
+IRONMAN Tours Loire Valley,Triathlon,Full Ironman,,Tours,France,Europe,2026-09-06,07:00,Full Ironman,New full Chateaux Loire River,1800
+IRONMAN Portugal Cascais,Triathlon,Full Ironman,,Cascais,Portugal,Europe,2026-10-18,07:00,Full Ironman,Atlantic coast Lisbon nearby,2000
+IRONMAN Argentina,Triathlon,Full Ironman,,Mar del Plata,Argentina,South America,2026-12-07,06:00,Full Ironman,South American Champs Atlantic,1800
+IRONMAN Chile,Triathlon,Full Ironman,,Puerto Varas,Chile,South America,2026-11-22,06:30,Full Ironman,Lakes district Patagonia,1500
+IRONMAN Israel,Triathlon,Full Ironman,,Tiberias,Israel,Asia,2026-11-08,06:30,Full Ironman,Sea of Galilee Middle East,1200
+IRONMAN India Goa,Triathlon,Full Ironman,,Goa,India,Asia,2026-10-25,06:00,Full Ironman,Arabian Sea beaches,1200
+IRONMAN Australia,Triathlon,Full Ironman,,Port Macquarie,Australia,Oceania,2026-05-03,06:45,Full Ironman,Coastal NSW,1800
+IRONMAN 70.3 World Championship,Triathlon,Half Ironman,,Nice,France,Europe,2026-09-12,07:00,Half Ironman,World Championship Cote d'Azur,5000
+Jurasteig Nonstop Ultratrail 170 km -JUNUT-,Running,Trail Running,Ultra,Dietfurt an der Altmühl,Germany,Europe,2026-04-10,07:00,170km,Trail ultra run in Dietfurt an der Altmühl,500
+Jurasteig Nonstop Ultratrail 239 km -JUNUT-,Running,Trail Running,Ultra,Dietfurt an der Altmühl,Germany,Europe,2026-04-10,07:00,239km,Trail ultra run in Dietfurt an der Altmühl,500
+Alpine Challenge 100 miles 100km & 60km,Running,Trail Running,Ultra,Falls Creek,Australia,Oceania,2026-04-11,07:00,100mi,Trail ultra run in Falls Creek,500
+3° Ultra Desafio Bertioga,Running,Trail Running,Ultra,Bertioga,Brazil,South America,2026-04-11,07:00,55km,Trail ultra run in Bertioga,500
+3° KTR Campos do Jordão,Running,Trail Running,Ultra,Campos do Jordao,Brazil,South America,2026-04-11,07:00,50km,Trail ultra run in Campos do Jordao,500
+13th Istria 100 by UTMB - 69K,Running,Trail Running,Ultra,Buzet,Croatia,Europe,2026-04-11,07:00,69.6km,Trail ultra run in Buzet,500
+14th Istria 100 by UTMB - 110K,Running,Trail Running,Ultra,Buzet,Croatia,Europe,2026-04-11,07:00,111.4km,Trail ultra run in Buzet,500
+Ultra Sierra Nevada - Trail 60 Km,Running,Trail Running,Ultra,Granada,Spain,Europe,2026-04-11,07:00,60km,Trail ultra run in Granada,500
+Rose of the Shires Ultra 54,Running,Trail Running,Ultra,Brixworth,Great Britain,Europe,2026-04-11,07:00,54mi,Trail ultra run in Brixworth,500
+2. Halener Ultra,Running,Trail Running,Trail,Lotte,Germany,Europe,2026-04-11,07:00,47km,Trail run in Lotte,500
+Trasna Na Blianta 24h,Running,Trail Running,Ultra,Leixlip,Ireland,Europe,2026-04-11,07:00,24h,Trail ultra run in Leixlip,500
+VI^ Ultramarathon Festival Venice 24h,Running,Trail Running,Ultra,Venezia,Italy,Europe,2026-04-11,07:00,24h,Trail ultra run in Venezia,500
+VI^ Ultramarathon Festival Venice 6h,Running,Trail Running,Ultra,Venezia,Italy,Europe,2026-04-11,07:00,6h,Trail ultra run in Venezia,500
+VI^ Ultramarathon Festival Venice 12h,Running,Trail Running,Ultra,Venezia,Italy,Europe,2026-04-11,07:00,12h,Trail ultra run in Venezia,500
+10th Borneo Ultra Trail Marathon BUTM - 50 km,Running,Trail Running,Ultra,Pekan Tamparuli,Malaysia,Asia,2026-04-11,07:00,50km,Trail ultra run in Pekan Tamparuli,500
+10th Borneo Ultra Trail Marathon BUTM - 100 Km,Running,Trail Running,Ultra,Pekan Kiulu,Malaysia,Asia,2026-04-11,07:00,106km,Trail ultra run in Pekan Kiulu,500
+Dagens Dobbel,Running,Trail Running,Ultra,Holmestrand,Norway,Europe,2026-04-11,07:00,52km,Trail ultra run in Holmestrand,500
+7th Kenton 100 Miler,Running,Trail Running,Ultra,Kenton-on-Sea,South Africa,Africa,2026-04-11,07:00,100mi,Trail ultra run in Kenton-on-Sea,500
+7th Kenton 100 Km,Running,Trail Running,Ultra,Kenton-on-Sea,South Africa,Africa,2026-04-11,07:00,100km,Trail ultra run in Kenton-on-Sea,500
+7th Kenton 30 Miler,Running,Trail Running,Trail,Kenton-on-Sea,South Africa,Africa,2026-04-11,07:00,30mi,Trail run in Kenton-on-Sea,500
+7th WTF Backyard Ultra,Running,Trail Running,Ultra,Lindås,Sweden,Europe,2026-04-11,07:00,17h,Trail ultra run in Lindås,500
+Viadal Ultra 6h,Running,Trail Running,Ultra,Förslöv,Sweden,Europe,2026-04-11,07:00,6h,Trail ultra run in Förslöv,500
+Viadal Ultra 12h,Running,Trail Running,Ultra,Förslöv,Sweden,Europe,2026-04-11,07:00,12h,Trail ultra run in Förslöv,500
+16th New River Trail 100 km,Running,Trail Running,Ultra,Fries,USA,North America,2026-04-11,07:00,100km,Trail ultra run in Fries,500
+14th J.W. Corbett 50 Km Trail Race,Running,Trail Running,Ultra,Loxahatchee,USA,North America,2026-04-11,07:00,50km,Trail ultra run in Loxahatchee,500
+14th J.W. Corbett 50 Mile Trail Race,Running,Trail Running,Ultra,Loxahatchee,USA,North America,2026-04-11,07:00,50mi,Trail ultra run in Loxahatchee,500
+23rd Desert Rats Trail Running Festival 50 Km,Running,Trail Running,Ultra,Fruita,USA,North America,2026-04-11,07:00,48km,Trail ultra run in Fruita,500
+23rd Desert Rats Trail Running Festival 100 Km,Running,Trail Running,Ultra,Fruita,USA,North America,2026-04-11,07:00,100km,Trail ultra run in Fruita,500
+Trail Sainte Victoire - Les Crêtes,Running,Trail Running,Ultra,Rousset,France,Europe,2026-04-12,07:00,61km,Trail ultra run in Rousset,500
+14. Bilstein BiMa 57 Ultra-Trail,Running,Trail Running,Ultra,Witzenhausen,Germany,Europe,2026-04-12,07:00,57km,Trail ultra run in Witzenhausen,500
+17. Vértesi Terep Ultramaraton,Running,Trail Running,Ultra,Szar,Hungary,Europe,2026-04-12,07:00,50km,Trail ultra run in Szar,500
+3rd BNAC Marathon,Running,Trail Running,Trail,Benoni,South Africa,Africa,2026-04-12,07:00,48km,Trail run in Benoni,500
+10th National Taipei University 14H Ultra Marathon,Running,Trail Running,Ultra,Sanxia District,Taiwan,Asia,2026-04-12,07:00,14h,Trail ultra run in Sanxia District,500
+10th National Taipei University 8H Ultra Marathon,Running,Trail Running,Ultra,Sanxia District,Taiwan,Asia,2026-04-12,07:00,8h,Trail ultra run in Sanxia District,500
+10th National Taipei University 6H Ultra Marathon - AM,Running,Trail Running,Ultra,Sanxia District,Taiwan,Asia,2026-04-12,07:00,6h,Trail ultra run in Sanxia District,500
+2nd Taipei Ultra Trail 50km,Running,Trail Running,Ultra,Neihu District,Taiwan,Asia,2026-04-12,07:00,50km,Trail ultra run in Neihu District,500
+15th Double Top 200 Mile,Running,Trail Running,Ultra,Chatsworth,USA,North America,2026-04-15,07:00,200mi,Trail ultra run in Chatsworth,500
+15th Double Top 72 Hour Run,Running,Trail Running,Ultra,Chatsworth,USA,North America,2026-04-16,07:00,72h,Trail ultra run in Chatsworth,500
+Hexenstieg-Ultramarathon 100mi,Running,Trail Running,Ultra,Osterode/Harz,Germany,Europe,2026-04-17,07:00,100mi,Trail ultra run in Osterode/Harz,500
+Hexenstieg-Ultramarathon 100km,Running,Trail Running,Ultra,Osterode/Harz,Germany,Europe,2026-04-17,07:00,100km,Trail ultra run in Osterode/Harz,500
+6th Big Bear's Backyard Ultra,Running,Trail Running,Ultra,Zilina,Slovakia,Europe,2026-04-17,07:00,35h,Trail ultra run in Zilina,500
+Backyard Ultra Esztergom,Running,Trail Running,Ultra,Esztergom,Hungary,Europe,2026-04-24,07:00,42h,Trail ultra run in Esztergom,500
+8th Devon Coast To Coast Ultra 112mi,Running,Trail Running,Ultra,Wembury,Great Britain,Europe,2026-04-18,07:00,180km,Trail ultra run in Wembury,500
+4th Devon Coast To Coast Ultra 100km,Running,Trail Running,Ultra,Chagford,Great Britain,Europe,2026-04-18,07:00,100km,Trail ultra run in Chagford,500
+3rd Devon Coast To Coast Ultra 75km,Running,Trail Running,Ultra,Wembury,Great Britain,Europe,2026-04-18,07:00,75km,Trail ultra run in Wembury,500
+Chester Ultra 100,Running,Trail Running,Ultra,Ellesmere Port,Great Britain,Europe,2026-04-18,07:00,100mi,Trail ultra run in Ellesmere Port,500
+8th Chiltern Ridge Classic 50K,Running,Trail Running,Ultra,Berkhamsted,Great Britain,Europe,2026-04-18,07:00,50km,Trail ultra run in Berkhamsted,500
+5. 24 h Lauf Freudenstadt,Running,Trail Running,Ultra,Freudenstadt-Grüntal,Germany,Europe,2026-04-18,07:00,24h,Trail ultra run in Freudenstadt-Grüntal,500
+5. 12 h Lauf Freudenstadt,Running,Trail Running,Ultra,Freudenstadt-Grüntal,Germany,Europe,2026-04-18,07:00,12h,Trail ultra run in Freudenstadt-Grüntal,500
+3. Rureifel-Trail,Running,Trail Running,Ultra,Hürtgenwald,Germany,Europe,2026-04-18,07:00,77km,Trail ultra run in Hürtgenwald,500
+5. High Atlas Ultra Trail,Running,Trail Running,Ultra,Imlil,Morocco,Africa,2026-04-18,07:00,120km,Trail ultra run in Imlil,500
+5. High Atlas Ultra Trail,Running,Trail Running,Ultra,Imlil,Morocco,Africa,2026-04-18,07:00,80km,Trail ultra run in Imlil,500
+5. High Atlas Ultra Trail,Running,Trail Running,Ultra,Imlil,Morocco,Africa,2026-04-18,07:00,63km,Trail ultra run in Imlil,500
+4th Tshwane North Ultra,Running,Trail Running,Ultra,Pretoria,South Africa,Africa,2026-04-18,07:00,50km,Trail ultra run in Pretoria,500
+6. Ultra Trail du Mont-Terrible,Running,Trail Running,Ultra,Fontenais,Switzerland,Europe,2026-04-18,07:00,106km,Trail ultra run in Fontenais,500
+Tyresö Extreme Challenge (TEC) - 50 miles,Running,Trail Running,Ultra,Tyresö,Sweden,Europe,2026-04-18,07:00,50mi,Trail ultra run in Tyresö,500
+18 Tyresö Extreme Challenge (TEC) - 100 miles,Running,Trail Running,Ultra,Tyresö,Sweden,Europe,2026-04-18,07:00,100mi,Trail ultra run in Tyresö,500
+9th 800 Heroes - ShueiJinJiou 100Km,Running,Trail Running,Ultra,Ruifang District,Taiwan,Asia,2026-04-18,07:00,101km,Trail ultra run in Ruifang District,500
+9th 800 Heroes - ShueiJinJiou 50Km,Running,Trail Running,Ultra,Ruifang District,Taiwan,Asia,2026-04-18,07:00,49.7km,Trail ultra run in Ruifang District,500
+11th Whiskey Basin 60 km Trail Run,Running,Trail Running,Ultra,Prescott,USA,North America,2026-04-18,07:00,60km,Trail ultra run in Prescott,500
+11th Whiskey Basin 91 km Trail Run,Running,Trail Running,Ultra,Prescott,USA,North America,2026-04-18,07:00,91km,Trail ultra run in Prescott,500
+9th English's Ridge Rumble 50 Km,Running,Trail Running,Ultra,Fayetteville,USA,North America,2026-04-18,07:00,50km,Trail ultra run in Fayetteville,500
+15th Double Top 50 km,Running,Trail Running,Ultra,Chatsworth,USA,North America,2026-04-18,07:00,50km,Trail ultra run in Chatsworth,500
+15th Double Top 100 km,Running,Trail Running,Ultra,Chatsworth,USA,North America,2026-04-18,07:00,100km,Trail ultra run in Chatsworth,500
+9th Rock/Creek Stillhouse 100 km Race,Running,Trail Running,Ultra,Soddy-Daisy,USA,North America,2026-04-18,07:00,100km,Trail ultra run in Soddy-Daisy,500
+9th Shore2Shore Trail Race,Running,Trail Running,Ultra,East Islip,USA,North America,2026-04-18,07:00,50km,Trail ultra run in East Islip,500
+4th Run to Remember,Running,Trail Running,Ultra,Sykesville,USA,North America,2026-04-18,07:00,50km,Trail ultra run in Sykesville,500
+31st Maroondah Dam Trail Run,Running,Trail Running,Ultra,Healesville,Australia,Oceania,2026-04-19,07:00,50km,Trail ultra run in Healesville,500
+Leenderbos Ultra,Running,Trail Running,Ultra,Leende,Netherlands,Europe,2026-04-25,07:00,60km,Trail ultra run in Leende,500
+Ultra Trail Mont Blanc UTMB,Running,Trail Running,Ultra,Chamonix,France,Europe,2026-08-24,17:00,171km,The world’s most famous 100-mile trail race around Mont Blanc,2300
+Transgrancanaria 128K,Running,Trail Running,Ultra,Gran Canaria,Spain,Europe,2026-02-20,23:00,128km,Iconic Canary Islands ultra across Gran Canaria,1200
+Lavaredo Ultra Trail 120K,Running,Trail Running,Ultra,Cortina d’Ampezzo,Italy,Europe,2026-06-26,23:00,120km,Dolomites UNESCO night start,1000
+Eiger Ultra Trail 101K,Running,Trail Running,Ultra,Grindelwald,Switzerland,Europe,2026-07-18,04:00,101km,Iconic Eiger north face views,800
+Hardrock 100,Running,Trail Running,Ultra,Silverton,USA,North America,2026-07-10,06:00,100mi,Legendary Colorado high-altitude 100-miler,145
+Western States 100,Running,Trail Running,Ultra,Squaw Valley,USA,North America,2026-06-27,05:00,100mi,The original 100-mile trail race in California,369
+Leadville Trail 100,Running,Trail Running,Ultra,Leadville,USA,North America,2026-08-15,04:00,100mi,High-altitude classic in the Rockies,700
+Ultra-Trail Harricana 125K,Running,Trail Running,Ultra,La Malbaie,Canada,North America,2026-09-12,04:00,125km,Quebec wilderness ultra,600
+Ultra Trail Cape Town 100K,Running,Trail Running,Ultra,Cape Town,South Africa,Africa,2026-11-28,05:00,100km,Table Mountain and Twelve Apostles,800
+Ultra Trail Australia 100K,Running,Trail Running,Ultra,Katoomba,Australia,Oceania,2026-05-14,06:30,100km,Blue Mountains World Heritage ultra,1200
+Tarawera Ultramarathon 102K,Running,Trail Running,Ultra,Rotorua,New Zealand,Oceania,2026-02-14,04:00,102km,Volcanic trails and lakes of Rotorua,1000
+Great Manchester Run 10K,Running,Road Running,10K,Manchester,UK,Europe,2026-05-17,09:00,10km,Europe’s biggest 10K with city centre course,35000
+Vitality London 10.000,Running,Road Running,10K,London,UK,Europe,2026-05-25,10:00,10km,Iconic route past Big Ben and Buckingham Palace,18000
+Bupa Great Birmingham Run 10K,Running,Road Running,10K,Birmingham,UK,Europe,2026-05-03,09:30,10km,Flat fast city centre 10K,12000
+AJ Bell Great Scottish Run 10K,Running,Road Running,10K,Glasgow,UK,Europe,2026-10-04,09:00,10km,Glasgow Green to George Square,15000
+Cardiff Bay 10K,Running,Road Running,10K,Cardiff,UK,Europe,2026-03-29,10:00,10km,Flat waterfront course around Cardiff Bay,10000
+Lisbon 10K Cidade de Lisboa,Running,Road Running,10K,Lisbon,Portugal,Europe,2026-09-20,09:30,10km,Fast course along Tagus River,12000
+EDP Lisbon 10K,Running,Road Running,10K,Lisbon,Portugal,Europe,2026-03-22,10:00,10km,25 de Abril Bridge route,15000
+San Silvestre Vallecana 10K,Running,Road Running,10K,Madrid,Spain,Europe,2026-12-31,17:30,10km,World-famous New Year’s Eve 10K,40000
+Cursa dels Nassos 5K,Running,Road Running,5K,Barcelona,Spain,Europe,2026-12-31,17:00,5km,Fast NYE 5K with elite field,15000
+Birell Prague Grand Prix 10K,Running,Road Running,10K,Prague,Czech Republic,Europe,2026-09-06,19:00,10km,Evening race through illuminated old town,12000
+Spar Budapest 10K,Running,Road Running,10K,Budapest,Hungary,Europe,2026-09-13,09:00,10km,Danube bridges and parliament views,10000
+Vienna City 10K,Running,Road Running,10K,Vienna,Austria,Europe,2026-04-19,10:30,10km,Ringstrasse and Prater loop,12000
+Generali München 10K,Running,Road Running,10K,Munich,Germany,Europe,2026-10-11,11:00,10km,English Garden and Olympic Park,8000
+Berlin Vital 10K,Running,Road Running,10K,Berlin,Germany,Europe,2026-04-05,11:30,10km,Brandenburg Gate finish,15000
+Copenhagen 10K,Running,Road Running,10K,Copenhagen,Denmark,Europe,2026-09-13,12:00,10km,Harbor and Little Mermaid route,12000
+Oslo 10K,Running,Road Running,10K,Oslo,Norway,Europe,2026-09-12,17:00,10km,Fjord and opera house,10000
+Helsinki City Run 10K,Running,Road Running,10K,Helsinki,Finland,Europe,2026-05-30,18:00,10km,Baltic seafront evening race,14000
+Stockholm 10K,Running,Road Running,10K,Stockholm,Sweden,Europe,2026-09-12,16:00,10km,Archipelago island views,10000
+Zurich 10K Ciudad de Zurich,Running,Road Running,10K,Zurich,Switzerland,Europe,2026-09-13,09:00,10km,Lake promenade fast course,8000
+Geneva Harmony 10K,Running,Road Running,10K,Geneva,Switzerland,Europe,2026-05-10,10:00,10km,Jet d’Eau and UN lakefront,9000
+Brussels 10K,Running,Road Running,10K,Brussels,Belgium,Europe,2026-09-27,11:00,10km,Grand Place and Atomium loop,12000
+Amsterdam Dam tot Dam 10K,Running,Road Running,10K,Amsterdam,Netherlands,Europe,2026-09-20,10:30,10km,From city centre to Zaandam,15000
+Rome Appia Run 10K,Running,Road Running,10K,Rome,Italy,Europe,2026-04-05,09:00,10km,Ancient Appian Way cobbles,8000
+Milano City 10K,Running,Road Running,10K,Milan,Italy,Europe,2026-04-05,10:00,10km,Duomo and fashion district,10000
+Napoli City 10K,Running,Road Running,10K,Naples,Italy,Europe,2026-02-22,09:30,10km,Lungomare bay views,9000
+Paris Centre 10K,Running,Road Running,10K,Paris,France,Europe,2026-10-11,09:00,10km,Seine and Louvre fast loop,12000
+Nice 10K Prom Classic,Running,Road Running,10K,Nice,France,Europe,2026-01-11,09:00,10km,Promenade des Anglais seafront,11000
+Warsaw 10K,Running,Road Running,10K,Warsaw,Poland,Europe,2026-09-27,10:00,10km,Vistula river old town,10000
+Krakow 10K,Running,Road Running,10K,Krakow,Poland,Europe,2026-04-26,11:00,10km,Wawel castle medieval streets,8000
+Athens 10K,Running,Road Running,10K,Athens,Greece,Europe,2026-11-08,10:00,10km,Acropolis and Plaka route,9000
+Great Bristol Run 10K,Running,Road Running,10K,Bristol,UK,Europe,2026-05-10,09:00,10km,Harbour and Clifton Suspension Bridge,13000
+Run Hackney 10K,Running,Road Running,10K,London,UK,Europe,2026-06-07,09:00,10km,East London parks and streets,8000
+Edinburgh Men’s 10K,Running,Road Running,10K,Edinburgh,UK,Europe,2026-05-24,10:00,10km,Men-only race through Scottish capital,6000
+Leeds Abbey Dash 10K,Running,Road Running,10K,Leeds,UK,Europe,2026-11-08,09:30,10km,Flat course past Kirkstall Abbey,12000
+Nottingham Robin Hood 10K,Running,Road Running,10K,Nottingham,UK,Europe,2026-09-27,09:00,10km,Historic Sherwood Forest edges,8000
+Sheffield 10K,Running,Road Running,10K,Sheffield,UK,Europe,2026-06-14,10:00,10km,Peak District gateway urban run,7000
+Liverpool Rock n Roll 10K,Running,Road Running,10K,Liverpool,UK,Europe,2026-05-10,09:15,10km,Music-themed waterfront course,9000
+Dublin 10K,Running,Road Running,10K,Dublin,Ireland,Europe,2026-09-13,10:00,10km,Liffey quays and Phoenix Park,15000
+Cork City 10K,Running,Road Running,10K,Cork,Ireland,Europe,2026-06-07,11:00,10km,Rebel City hilly streets,8000
+Belfast City 10K,Running,Road Running,10K,Belfast,UK,Europe,2026-10-11,09:30,10km,Titanic Quarter and waterfront,10000
+Rotterdam 10K,Running,Road Running,10K,Rotterdam,Netherlands,Europe,2026-04-12,11:30,10km,Modern architecture Erasmus Bridge,12000
+Utrecht 10K,Running,Road Running,10K,Utrecht,Netherlands,Europe,2026-09-20,10:00,10km,Canals and Dom Tower historic,9000
+Haarlem 10K,Running,Road Running,10K,Haarlem,Netherlands,Europe,2026-05-17,09:45,10km,Old town windmills loop,7000
+Antwerp 10 Miles & 10K,Running,Road Running,10K,Antwerp,Belgium,Europe,2026-05-17,10:15,10km,Flemish diamond port views,14000
+Ghent 10K,Running,Road Running,10K,Ghent,Belgium,Europe,2026-09-27,11:00,10km,Medieval canals and belfry,8000
+Bruges 10K,Running,Road Running,10K,Bruges,Belgium,Europe,2026-06-14,10:30,10km,Fairy-tale chocolate city,6000
+Copenhagen Run for Life 10K,Running,Road Running,10K,Copenhagen,Denmark,Europe,2026-08-09,12:00,10km,Charity race through Tivoli Gardens,10000
+Aarhus 10K,Running,Road Running,10K,Aarhus,Denmark,Europe,2026-07-26,11:30,10km,Denmark's second city harbor,7000
+Odense 10K,Running,Road Running,10K,Odense,Denmark,Europe,2026-09-13,10:00,10km,Hans Christian Andersen birthplace,5000
+Helsinki Midnight Run 10K,Running,Road Running,10K,Helsinki,Finland,Europe,2026-06-21,22:00,10km,Summer solstice midnight sun race,8000
+Tampere 10K,Running,Road Running,10K,Tampere,Finland,Europe,2026-08-16,11:00,10km,Lakes and rapids industrial heritage,6000
+Turku 10K,Running,Road Running,10K,Turku,Finland,Europe,2026-07-12,10:30,10km,Aura River archipelago,7000
+Oslo Maraton 10K,Running,Road Running,10K,Oslo,Norway,Europe,2026-09-12,16:30,10km,Fjord capital summer evening,9000
+Bergen 10K,Running,Road Running,10K,Bergen,Norway,Europe,2026-06-07,11:00,10km,Fjords and Bryggen wharf,8000
+Trondheim 10K,Running,Road Running,10K,Trondheim,Norway,Europe,2026-08-23,10:00,10km,Nidaros Cathedral historic,5000
+Stockholm City 10K,Running,Road Running,10K,Stockholm,Sweden,Europe,2026-09-12,15:30,10km,Royal Palace and Gamla Stan,11000
+Gothenburg 10K,Running,Road Running,10K,Gothenburg,Sweden,Europe,2026-05-30,11:00,10km,West coast harbor and parks,9000
+Malmö 10K,Running,Road Running,10K,Malmö,Sweden,Europe,2026-09-13,10:15,10km,Öresund Bridge gateway to Denmark,7000
+Uppsala 10K,Running,Road Running,10K,Uppsala,Sweden,Europe,2026-07-19,11:30,10km,University town cathedral run,6000
+Lund 10K,Running,Road Running,10K,Lund,Sweden,Europe,2026-08-09,10:00,10km,Medieval university cobblestones,5000
+Frankfurt 10K,Running,Road Running,10K,Frankfurt,Germany,Europe,2026-10-25,11:45,10km,Main River skyline finance hub,10000
+Cologne Night 10K,Running,Road Running,10K,Cologne,Germany,Europe,2026-09-13,20:00,10km,Night race past cathedral illuminated,12000
+Stuttgart 10K,Running,Road Running,10K,Stuttgart,Germany,Europe,2026-10-11,11:00,10km,Swabian hills and Mercedes museum,8000
+Düsseldorf 10K,Running,Road Running,10K,Düsseldorf,Germany,Europe,2026-05-17,10:30,10km,Rhine promenade fashion city,9000
+Hamburg 10K,Running,Road Running,10K,Hamburg,Germany,Europe,2026-04-26,11:15,10km,Elbe harbor and Speicherstadt,10000
+Munich 10K,Running,Road Running,10K,Munich,Germany,Europe,2026-10-11,12:00,10km,Oktoberfest vibes English Garden,7000
+Berlin Night Run 10K,Running,Road Running,10K,Berlin,Germany,Europe,2026-08-09,21:00,10km,Midnight through Tiergarten landmarks,15000
+Hannover 10K,Running,Road Running,10K,Hannover,Germany,Europe,2026-06-14,11:00,10km,Herrenhäuser Gardens baroque,6000
+Dresden 10K,Running,Road Running,10K,Dresden,Germany,Europe,2026-09-27,10:45,10km,Elbe valley baroque splendor,8000
+Leipzig 10K,Running,Road Running,10K,Leipzig,Germany,Europe,2026-07-12,11:30,10km,Bach city music quarter,7000
+Nuremberg 10K,Running,Road Running,10K,Nuremberg,Germany,Europe,2026-05-03,10:00,10km,Imperial castle medieval walls,9000
+Paris Run 10K,Running,Road Running,10K,Paris,France,Europe,2026-07-14,09:00,10km,Bastille Day special Champs-Élysées,20000
+Lyon 10K,Running,Road Running,10K,Lyon,France,Europe,2026-10-05,10:30,10km,Rhône confluence gastronomic capital,10000
+Marseille 10K,Running,Road Running,10K,Marseille,France,Europe,2026-01-18,11:00,10km,Mediterranean old port calanques,9000
+Toulouse 10K,Running,Road Running,10K,Toulouse,France,Europe,2026-11-08,10:15,10km,Pink city Garonne River,8000
+Bordeaux 10K,Running,Road Running,10K,Bordeaux,France,Europe,2026-09-20,11:45,10km,Wine capital Place de la Bourse,7000
+Strasbourg 10K,Running,Road Running,10K,Strasbourg,France,Europe,2026-11-09,10:00,10km,European Parliament half-timbered houses,6000
+Montpellier 10K,Running,Road Running,10K,Montpellier,France,Europe,2026-03-15,11:30,10km,Sunny Languedoc beaches nearby,5000
+Lille 10K,Running,Road Running,10K,Lille,France,Europe,2026-09-13,10:45,10km,Flemish architecture Grand Place,8000
+Rome Run for Rome 10K,Running,Road Running,10K,Rome,Italy,Europe,2026-04-05,10:00,10km,Coliseum to Vatican loop,12000
+Florence Run 10K,Running,Road Running,10K,Florence,Italy,Europe,2026-11-30,11:15,10km,Renaissance Uffizi Ponte Vecchio,9000
+Venice Marathon 10K,Running,Road Running,10K,Venice,Italy,Europe,2026-10-26,10:30,10km,Canals and Rialto Bridge,7000
+Milan 10K,Running,Road Running,10K,Milan,Italy,Europe,2026-04-06,11:00,10km,Fashion week Sforza Castle,8000
+Turin 10K,Running,Road Running,10K,Turin,Italy,Europe,2026-04-20,10:45,10km,Alpine foothills royal palaces,6000
+Bologna 10K,Running,Road Running,10K,Bologna,Italy,Europe,2026-12-07,11:30,10km,Porticos and leaning towers,5000
+Padua 10K,Running,Road Running,10K,Padua,Italy,Europe,2026-04-13,10:00,10km,Prato della Valle Scrovegni Chapel,7000
+Verona 10K,Running,Road Running,10K,Verona,Italy,Europe,2026-10-19,11:15,10km,Arena and Juliet's balcony,8000
+Genoa 10K,Running,Road Running,10K,Genoa,Italy,Europe,2026-09-27,10:30,10km,Ligurian sea port aqueduct,6000
+Barcelona 10K,Running,Road Running,10K,Barcelona,Spain,Europe,2026-03-09,11:00,10km,Gaudí Sagrada Familia Montjuïc,15000
+Valencia 10K,Running,Road Running,10K,Valencia,Spain,Europe,2026-12-07,10:45,10km,Turia Gardens coastal flat,12000
+Seville 10K,Running,Road Running,10K,Seville,Spain,Europe,2026-02-23,11:30,10km,Alcázar flamenco Andalusian,9000
+Malaga 10K,Running,Road Running,10K,Malaga,Spain,Europe,2026-12-14,10:00,10km,Costa del Sol Picasso beaches,8000
+Bilbao 10K,Running,Road Running,10K,Bilbao,Spain,Europe,2026-11-09,11:15,10km,Guggenheim Nervión River Basque,7000
+San Sebastián 10K,Running,Road Running,10K,San Sebastián,Spain,Europe,2026-11-02,10:30,10km,Bay of La Concha pintxos,6000
+Granada 10K,Running,Road Running,10K,Granada,Spain,Europe,2026-03-23,11:00,10km,Alhambra Sierra Nevada views,5000
+Madrid 10K,Running,Road Running,10K,Madrid,Spain,Europe,2026-04-27,10:45,10km,Retiro Park Royal Palace sunny,10000
+Porto 10K,Running,Road Running,10K,Porto,Portugal,Europe,2026-11-02,11:30,10km,Duero River port wine cellars,9000
+Coimbra 10K,Running,Road Running,10K,Coimbra,Portugal,Europe,2026-04-13,10:00,10km,University hill Mondego River,7000
+Lisbon 10K,Running,Road Running,10K,Lisbon,Portugal,Europe,2026-10-12,11:15,10km,Seven hills Tagus estuary,8000
+Faro 10K,Running,Road Running,10K,Faro,Portugal,Europe,2026-05-17,10:30,10km,Algarve beaches Ria Formosa,6000
+Athens Marathon 10K,Running,Road Running,10K,Athens,Greece,Europe,2026-11-08,11:00,10km,Ancient stadium Plaka neighborhood,9000
+Thessaloniki 10K,Running,Road Running,10K,Thessaloniki,Greece,Europe,2026-10-25,10:45,10km,White Tower Thermaic Gulf,7000
+Heraklion 10K,Running,Road Running,10K,Heraklion,Greece,Europe,2026-06-07,11:30,10km,Crete Knossos palace seaside,5000
+Patras 10K,Running,Road Running,10K,Patras,Greece,Europe,2026-03-15,10:00,10km,Peloponnese bridge gulf views,6000
+Ljubljana City Run 10K,Running,Road Running,10K,Ljubljana,Slovenia,Europe,2026-10-26,11:15,10km,Ljubljanica River dragon bridge,8000
+Maribor 10K,Running,Road Running,10K,Maribor,Slovenia,Europe,2026-05-03,10:30,10km,Drava River wine region,5000
+Zagreb 10K,Running,Road Running,10K,Zagreb,Croatia,Europe,2026-04-26,11:00,10km,Upper town St Mark's Church,7000
+Split 10K,Running,Road Running,10K,Split,Croatia,Europe,2026-09-27,10:45,10km,Diocletian's Palace Adriatic coast,6000
+Dubrovnik 10K,Running,Road Running,10K,Dubrovnik,Croatia,Europe,2026-07-12,11:30,10km,Walls and Game of Thrones sea,5000
+Sarajevo 10K,Running,Road Running,10K,Sarajevo,Bosnia and Herzegovina,Europe,2026-04-12,10:00,10km,Baščaršija old bridge history,4000
+Belgrade 10K,Running,Road Running,10K,Belgrade,Serbia,Europe,2026-04-19,11:15,10km,Sava confluence Kalemegdan fortress,8000
+Bucharest 10K,Running,Road Running,10K,Bucharest,Romania,Europe,2026-05-17,10:30,10km,Parliament Palace old town,7000
+Cluj-Napoca 10K,Running,Road Running,10K,Cluj-Napoca,Romania,Europe,2026-09-13,11:00,10km,Transylvania university vibrant,5000
+Timișoara 10K,Running,Road Running,10K,Timișoara,Romania,Europe,2026-06-07,10:45,10km,Banat revolution square parks,6000
+Sofia 10K,Running,Road Running,10K,Sofia,Bulgaria,Europe,2026-05-24,11:30,10km,Vitosha Mountain Alexander Nevsky,7000
+Plovdiv 10K,Running,Road Running,10K,Plovdiv,Bulgaria,Europe,2026-09-20,10:00,10km,Thracian ancient theater hills,5000
+Varna 10K,Running,Road Running,10K,Varna,Bulgaria,Europe,2026-07-19,11:15,10km,Black Sea resort golden sands,6000
+Bratislava 10K,Running,Road Running,10K,Bratislava,Slovakia,Europe,2026-04-05,10:30,10km,Danube Bratislava Castle,8000
+Košice 10K,Running,Road Running,10K,Košice,Slovakia,Europe,2026-10-04,11:00,10km,Eastern Slovakia historic center,5000
+Uppsala 10K,Running,Road Running,10K,Uppsala,Sweden,Europe,2026-07-19,11:30,10km,University town cathedral run,6000
+Linköping 10K,Running,Road Running,10K,Linköping,Sweden,Europe,2026-08-23,10:00,10km,Swedish Air Force museum flat course,5500
+Örebro 10K,Running,Road Running,10K,Örebro,Sweden,Europe,2026-06-14,11:15,10km,Castle and lake loop,5000
+Västerås 10K,Running,Road Running,10K,Västerås,Sweden,Europe,2026-09-06,10:30,10km,Lake Mälaren waterfront,4500
+Norrköping 10K,Running,Road Running,10K,Norrköping,Sweden,Europe,2026-05-17,10:45,10km,Industrial landscape river run,4800
+Jönköping 10K,Running,Road Running,10K,Jönköping,Sweden,Europe,2026-07-12,11:00,10km,Lake Vättern scenic,5200
+Karlstad 10K,Running,Road Running,10K,Karlstad,Sweden,Europe,2026-08-09,10:15,10km,Klarälven river delta,4600
+Halmstad 10K,Running,Road Running,10K,Halmstad,Sweden,Europe,2026-06-21,11:30,10km,Tylösand beach finish,6000
+Kristianstad 10K,Running,Road Running,10K,Kristianstad,Sweden,Europe,2026-09-20,10:00,10km,Wetlands nature reserve loop,4200
+Luleå 10K,Running,Road Running,10K,Luleå,Sweden,Europe,2026-07-26,22:00,10km,Midnight sun race,4000
+Bergen City 10K,Running,Road Running,10K,Bergen,Norway,Europe,2026-05-24,11:30,10km,Bryggen UNESCO start,8500
+Stavanger 10K,Running,Road Running,10K,Stavanger,Norway,Europe,2026-08-16,10:00,10km,Oil city harbor run,7200
+Trondheim Night Run 10K,Running,Road Running,10K,Trondheim,Norway,Europe,2026-06-21,23:00,10km,Midnight sun edition,6800
+Kristiansand 10K,Running,Road Running,10K,Kristiansand,Norway,Europe,2026-07-05,10:45,10km,Southern Norway beaches,5500
+Tromsø Midnight Sun 10K,Running,Road Running,10K,Tromsø,Norway,Europe,2026-06-20,23:59,10km,Arctic midnight sun,6000
+Drammen 10K,Running,Road Running,10K,Drammen,Norway,Europe,2026-09-13,11:00,10km,River city parks,5000
+Fredrikstad 10K,Running,Road Running,10K,Fredrikstad,Norway,Europe,2026-05-31,10:30,10km,Old fortified town,4800
+Aalborg 10K,Running,Road Running,10K,Aalborg,Denmark,Europe,2026-05-17,11:15,10km,Limfjord waterfront,6500
+Esbjerg 10K,Running,Road Running,10K,Esbjerg,Denmark,Europe,2026-08-23,10:00,10km,Wadden Sea coast,5200
+Horsens 10K,Running,Road Running,10K,Horsens,Denmark,Europe,2026-06-07,11:30,10km,Prison museum finish,4700
+Reykjavik 10K,Running,Road Running,10K,Reykjavik,Iceland,Europe,2026-08-22,20:00,10km,Midnight sun capital run,9000
+Akureyri 10K,Running,Road Running,10K,Akureyri,Iceland,Europe,2026-06-21,23:00,10km,North Iceland midnight sun,3500
+Tallinn 10K,Running,Road Running,10K,Tallinn,Estonia,Europe,2026-09-14,10:00,10km,Medieval old town UNESCO,11000
+Tartu 10K,Running,Road Running,10K,Tartu,Estonia,Europe,2026-05-24,11:30,10km,University city river run,6000
+Riga 10K,Running,Road Running,10K,Riga,Latvia,Europe,2026-05-18,10:00,10km,Art Nouveau capital run,13000
+Vilnius 10K,Running,Road Running,10K,Vilnius,Lithuania,Europe,2026-09-08,11:00,10km,Old town baroque run,10000
+Kaunas 10K,Running,Road Running,10K,Kaunas,Lithuania,Europe,2026-06-02,10:30,10km,Confluence of rivers,7500
+Klaipėda 10K,Running,Road Running,10K,Klaipėda,Lithuania,Europe,2026-07-28,11:15,10km,Baltic Sea port run,5500
+Helsinki 10K Autumn,Running,Road Running,10K,Helsinki,Finland,Europe,2026-09-28,12:00,10km,Fall colors edition,12000
+Turku 10K Autumn,Running,Road Running,10K,Turku,Finland,Europe,2026-09-14,11:00,10km,Archipelago autumn run,6500
+Porto Night Run 10K,Running,Road Running,10K,Porto,Portugal,Europe,2026-09-21,21:00,10km,Illuminated Duero bridges,14000
+Funchal 10K,Running,Road Running,10K,Funchal,Madeira,Portugal,Europe,2026-01-26,10:00,10km,Atlantic island run,8000
+Braga 10K,Running,Road Running,10K,Braga,Portugal,Europe,2026-11-10,10:30,10km,Roman city baroque stairs,6000
+Aveiro 10K,Running,Road Running,10K,Aveiro,Portugal,Europe,2026-07-14,11:00,10km,Venice of Portugal canals,5500
+Granada 10K Night,Running,Road Running,10K,Granada,Spain,Europe,2026-06-15,22:00,10km,Alhambra illuminated run,7000
+Valencia Night 10K,Running,Road Running,10K,Valencia,Spain,Europe,2026-07-13,21:30,10km,City of Arts lights,11000
+Salamanca 10K,Running,Road Running,10K,Salamanca,Spain,Europe,2026-10-20,11:00,10km,Golden city university run,6500
+Santiago de Compostela 10K,Running,Road Running,10K,Santiago de Compostela,Spain,Europe,2026-07-25,10:00,10km,Cathedral finish pilgrimage city,8000
+Toledo 10K,Running,Road Running,10K,Toledo,Spain,Europe,2026-05-11,10:30,10km,Imperial city Tagus river,6000
+Córdoba 10K,Running,Road Running,10K,Córdoba,Spain,Europe,2026-04-27,11:15,10km,Mezquita cathedral run,5500
+Palma de Mallorca 10K,Running,Road Running,10K,Palma de Mallorca,Spain,Europe,2026-11-10,10:00,10km,Cathedral and bay run,9000
+Ibiza 10K,Running,Road Running,10K,Ibiza,Spain,Europe,2026-05-04,19:00,10km,Sunset island run,7000
+Tenerife 10K,Running,Road Running,10K,Santa Cruz de Tenerife,Spain,Europe,2026-02-09,10:30,10km,Atlantic coast carnival city,7500
+Ljubljana 10K Night,Running,Road Running,10K,Ljubljana,Slovenia,Europe,2026-10-26,19:00,10km,Illuminated bridges run,9000
+Bratislava City 10K,Running,Road Running,10K,Bratislava,Slovakia,Europe,2026-04-06,11:00,10km,Danube castle hill run,8500
+Košice Peace 10K,Running,Road Running,10K,Košice,Slovakia,Europe,2026-10-05,10:30,10km,Oldest European marathon city,7000
+Prague 10K Night,Running,Road Running,10K,Prague,Czech Republic,Europe,2026-06-15,21:00,10km,Charles Bridge lights run,13000
+Brno 10K,Running,Road Running,10K,Brno,Czech Republic,Europe,2026-09-21,10:00,10km,Moravian capital run,8000
+Ostrava 10K,Running,Road Running,10K,Ostrava,Czech Republic,Europe,2026-06-08,11:15,10km,Industrial city parks,6000
+Budapest Night Run 10K,Running,Road Running,10K,Budapest,Hungary,Europe,2026-08-31,20:00,10km,Chain Bridge illuminated,12000
+Debrecen 10K,Running,Road Running,10K,Debrecen,Hungary,Europe,2026-05-25,10:30,10km,Great Reformed Church run,5500
+Szeged 10K,Running,Road Running,10K,Szeged,Hungary,Europe,2026-07-07,11:00,10km,Tisza river sunshine city,5000
+Warsaw Night 10K,Running,Road Running,10K,Warsaw,Poland,Europe,2026-08-17,21:00,10km,Old town lights run,14000
+Gdańsk 10K,Running,Road Running,10K,Gdańsk,Poland,Europe,2026-08-11,10:00,10km,Baltic coast shipyard run,10000
+Wrocław 10K,Running,Road Running,10K,Wrocław,Poland,Europe,2026-09-15,11:30,10km,Oder bridges city run,9500
+Poznań 10K,Running,Road Running,10K,Poznań,Poland,Europe,2026-06-09,10:45,10km,Old Market Square run,9000
+Łódź 10K,Running,Road Running,10K,Łódź,Poland,Europe,2026-05-19,11:00,10km,Manufaktura factory district,7500
+Kraków Night Run 10K,Running,Road Running,10K,Kraków,Poland,Europe,2026-08-24,20:30,10km,Wawel castle illuminated,11000
+Szczecin 10K,Running,Road Running,10K,Szczecin,Poland,Europe,2026-07-14,10:15,10km,Oder river port city,6500
+Bucharest Night 10K,Running,Road Running,10K,Bucharest,Romania,Europe,2026-09-07,20:00,10km,Parliament Palace lights,12000
+Cluj-Napoca 10K,Running,Road Running,10K,Cluj-Napoca,Romania,Europe,2026-05-18,10:30,10km,Transylvanian capital run,8000
+Timișoara Victory 10K,Running,Road Running,10K,Timișoara,Romania,Europe,2026-12-01,11:00,10km,Revolution city run,6000
+Iași 10K,Running,Road Running,10K,Iași,Romania,Europe,2026-10-13,10:00,10km,Culture capital Moldova region,5500
+Constanța 10K,Running,Road Running,10K,Constanța,Romania,Europe,2026-08-04,10:45,10km,Black Sea coast run,7000
+Sofia 10K Night,Running,Road Running,10K,Sofia,Bulgaria,Europe,2026-09-08,20:30,10km,Vitosha boulevard lights,9000
+Plovdiv 10K,Running,Road Running,10K,Plovdiv,Bulgaria,Europe,2026-05-12,10:00,10km,Ancient Roman theater run,6500
+Varna Sea Run 10K,Running,Road Running,10K,Varna,Bulgaria,Europe,2026-07-20,19:30,10km,Black Sea sunset run,8000
+Burgas 10K,Running,Road Running,10K,Burgas,Bulgaria,Europe,2026-08-11,10:30,10km,Sea Garden park run,6000
+Belgrade 10K Night,Running,Road Running,10K,Belgrade,Serbia,Europe,2026-10-19,20:00,10km,Kalemegdan fortress lights,10000
+Novi Sad 10K,Running,Road Running,10K,Novi Sad,Serbia,Europe,2026-05-26,10:15,10km,Petrovaradin fortress run,7000
+Niš 10K,Running,Road Running,10K,Niš,Serbia,Europe,2026-09-15,11:00,10km,Ancient Roman birthplace run,5500
+Sarajevo 10K,Running,Road Running,10K,Sarajevo,Bosnia and Herzegovina,Europe,2026-09-22,10:30,10km,Baščaršija to Miljacka river,6500
+Zagreb Advent Run 10K,Running,Road Running,10K,Zagreb,Croatia,Europe,2026-12-08,17:00,10km,Christmas markets edition,9000
+Split 10K Night,Running,Road Running,10K,Split,Croatia,Europe,2026-08-31,20:30,10km,Diocletian Palace lights,7500
+Rijeka 10K,Running,Road Running,10K,Rijeka,Croatia,Europe,2026-06-16,10:00,10km,Adriatic port city run,6000
+Osijek 10K,Running,Road Running,10K,Osijek,Croatia,Europe,2026-05-19,11:30,10km,Drava river fortress,5000
+Pula 10K,Running,Road Running,10K,Pula,Croatia,Europe,2026-07-14,10:45,10km,Roman amphitheatre start,6500
+Zadar 10K,Running,Road Running,10K,Zadar,Croatia,Europe,2026-04-28,11:00,10km,Sea organ sunset run,7000
+Athens Night Run 10K,Running,Road Running,10K,Athens,Greece,Europe,2026-09-21,20:00,10km,Acropolis illuminated run,14000
+Thessaloniki Night Run 10K,Running,Road Running,10K,Thessaloniki,Greece,Europe,2026-10-12,20:30,10km,White Tower lights,9000
+Heraklion 10K,Running,Road Running,10K,Heraklion,Greece,Europe,2026-05-26,10:00,10km,Venetian fortress run,6500
+Rhodes Medieval 10K,Running,Road Running,10K,Rhodes,Greece,Europe,2026-10-20,10:30,10km,UNESCO medieval city run,7000
+Corfu 10K,Running,Road Running,10K,Corfu Town,Greece,Europe,2026-06-09,11:00,10km,Venetian fortress island run,6000
+Patras Carnival 10K,Running,Road Running,10K,Patras,Greece,Europe,2026-02-23,11:30,10km,Carnival edition run,5500
+Volos 10K,Running,Road Running,10K,Volos,Greece,Europe,2026-09-29,10:15,10km,Pelion mountain backdrop,5000
+Larnaca 10K,Running,Road Running,10K,Larnaca,Cyprus,Europe,2026-11-17,10:00,10km,Finikoudes beachfront run,6000
+Limassol 10K,Running,Road Running,10K,Limassol,Cyprus,Europe,2026-03-24,10:30,10km,Seafront promenade run,7500
+Nicosia 10K,Running,Road Running,10K,Nicosia,Cyprus,Europe,2026-05-12,11:00,10km,Divided capital run,5500
+Valletta 10K,Running,Road Running,10K,Valletta,Malta,Europe,2026-03-31,10:00,10km,UNESCO capital harbor run,6500
+Mdina 10K,Running,Road Running,10K,Mdina,Malta,Europe,2026-11-03,10:30,10km,Silent city medieval run,4500
+Vienna Night Run 10K,Running,Road Running,10K,Vienna,Austria,Europe,2026-09-24,19:30,10km,Ringstrasse illuminated,16000
+Salzburg 10K,Running,Road Running,10K,Salzburg,Austria,Europe,2026-06-02,10:00,10km,Mozart city fortress run,9000
+Innsbruck 10K,Running,Road Running,10K,Innsbruck,Austria,Europe,2026-08-18,11:15,10km,Alps golden roof run,7500
+Graz 10K,Running,Road Running,10K,Graz,Austria,Europe,2026-05-26,10:30,10km,Clock tower hill run,7000
+Linz 10K,Running,Road Running,10K,Linz,Austria,Europe,2026-10-13,11:00,10km,Danube modern art run,6500
+Klagenfurt 10K,Running,Road Running,10K,Klagenfurt,Austria,Europe,2026-07-14,10:45,10km,Wörthersee lake run,6000
+Bern 10K,Running,Road Running,10K,Bern,Switzerland,Europe,2026-05-11,10:00,10km,Bear pit and federal palace,8500
+Basel 10K,Running,Road Running,10K,Basel,Switzerland,Europe,2026-09-15,11:30,10km,Rhine river tri-border run,7000
+Lausanne 10K,Running,Road Running,10K,Lausanne,Switzerland,Europe,2026-10-27,10:15,10km,Lake Geneva Olympic capital,8000
+Lucerne 10K,Running,Road Running,10K,Lucerne,Switzerland,Europe,2026-11-03,11:00,10km,Chapel Bridge lake run,7500
+St Gallen 10K,Running,Road Running,10K,St Gallen,Switzerland,Europe,2026-06-16,10:30,10km,Abbey cathedral run,6000
+Winterthur 10K,Running,Road Running,10K,Winterthur,Switzerland,Europe,2026-08-25,10:45,10km,Old town industrial heritage,5500
+Lugano 10K,Running,Road Running,10K,Lugano,Switzerland,Europe,2026-04-28,11:15,10km,Lake Lugano palm trees,7000
+St Moritz 10K,Running,Road Running,10K,St Moritz,Switzerland,Europe,2026-08-11,10:00,10km,Engadin alpine luxury run,5000
+Interlaken 10K,Running,Road Running,10K,Interlaken,Switzerland,Europe,2026-09-08,11:30,10km,Jungfrau region lakes,6500
+Luxembourg Night Run 10K,Running,Road Running,10K,Luxembourg,Luxembourg,Europe,2026-05-25,20:00,10km,Old town fortress lights,9000
+Monaco Run 10K,Running,Road Running,10K,Monte Carlo,Monaco,Europe,2026-03-10,10:30,10km,F1 circuit harbor run,7000
+San Marino 10K,Running,Road Running,10K,San Marino,San Marino,Europe,2026-09-22,10:00,10km,Medieval towers hill run,4000
+Andorra 10K,Running,Road Running,10K,Andorra la Vella,Andorra,Europe,2026-06-23,11:00,10km,Pyrenees shopping capital run,5000
+Vaduz 10K,Running,Road Running,10K,Vaduz,Liechtenstein,Europe,2026-08-04,10:30,10km,Castle hill Alpine run,4500
+Gibraltar 10K,Running,Road Running,10K,Gibraltar,Gibraltar,Europe,2026-09-15,11:15,10km,Rock and runway run,3500
+Cork BHAA 10K,Running,Road Running,10K,Cork,Ireland,Europe,2026-08-18,19:30,10km,Business houses league race,5500
+Galway Bay 10K,Running,Road Running,10K,Galway,Ireland,Europe,2026-10-06,11:00,10km,Wild Atlantic Way run,7000
+Waterford 10K,Running,Road Running,10K,Waterford,Ireland,Europe,2026-07-21,10:45,10km,Viking triangle run,5000
+Limerick 10K,Running,Road Running,10K,Limerick,Ireland,Europe,2026-05-05,11:30,10km,Shannon river treaty city,6000
+Kilkenny 10K,Running,Road Running,10K,Kilkenny,Ireland,Europe,2026-09-01,10:15,10km,Medieval mile run,5500
+Derry 10K,Running,Road Running,10K,Derry,UK,Europe,2026-06-16,11:00,10km,Peace Bridge walls run,6500
+Aberdeen 10K,Running,Road Running,10K,Aberdeen,UK,Europe,2026-08-25,10:30,10km,Granite city harbor run,7000
+Inverness 10K,Running,Road Running,10K,Inverness,UK,Europe,2026-03-10,11:15,10km,Loch Ness gateway run,6000
+Dundee 10K,Running,Road Running,10K,Dundee,UK,Europe,2026-09-22,10:00,10km,Tay river discovery point,5500
+Perth 10K Scotland,Running,Road Running,10K,Perth,UK,Europe,2026-08-18,11:30,10km,Scone Palace river run,5000
+Stirling 10K,Running,Road Running,10K,Stirling,UK,Europe,2026-09-08,10:45,10km,Castle and Wallace monument,6500
+Falkirk 10K,Running,Road Running,10K,Falkirk,UK,Europe,2026-07-14,11:00,10km,Kelpies and wheel run,6000
+Ayr 10K,Running,Road Running,10K,Ayr,UK,Europe,2026-08-11,10:30,10km,Robert Burns country coastal,5500
+Innsbruck Night Run 10K,Running,Road Running,10K,Innsbruck,Austria,Europe,2026-09-07,20:00,10km,Golden Roof illuminated,8000
+Salzburg Night Run 10K,Running,Road Running,10K,Salzburg,Austria,Europe,2026-08-25,20:30,10km,Mozart city lights,7500
+Graz Night Run 10K,Running,Road Running,10K,Graz,Austria,Europe,2026-09-14,20:00,10km,Clock tower illuminated,7000
+Linz Night Run 10K,Running,Road Running,10K,Linz,Austria,Europe,2026-08-11,20:45,10km,Danube lights modern art,6500
+Basel Night Run 10K,Running,Road Running,10K,Basel,Switzerland,Europe,2026-08-30,20:30,10km,Rhine river lights run,8500
+Lausanne 10K Night,Running,Road Running,10K,Lausanne,Switzerland,Europe,2026-09-21,20:00,10km,Lake Geneva Olympic lights,8000
+Lucerne Night Run 10K,Running,Road Running,10K,Lucerne,Switzerland,Europe,2026-10-27,19:30,10km,Chapel Bridge lights,9000
+Bern Night Run 10K,Running,Road Running,10K,Bern,Switzerland,Europe,2026-09-14,20:15,10km,Bear pit federal palace lights,8000
+Prague Night Run 10K,Running,Road Running,10K,Prague,Czech Republic,Europe,2026-08-10,21:00,10km,Charles Bridge castle lights,14000
+Bratislava Night Run 10K,Running,Road Running,10K,Bratislava,Slovakia,Europe,2026-09-07,20:00,10km,UFO bridge lights run,9000
+Budapest Autumn 10K,Running,Road Running,10K,Budapest,Hungary,Europe,2026-10-20,10:00,10km,Autumn colors Danube run,11000
+Warsaw Autumn 10K,Running,Road Running,10K,Warsaw,Poland,Europe,2026-10-13,11:30,10km,Fall parks run,9500
+Kraków Autumn 10K,Running,Road Running,10K,Kraków,Poland,Europe,2026-10-20,10:30,10km,Autumn castle run,8500
+Porto Spring 10K,Running,Road Running,10K,Porto,Portugal,Europe,2026-04-28,10:00,10km,Spring Duero run,10000
+Lisbon Spring 10K,Running,Road Running,10K,Lisbon,Portugal,Europe,2026-05-19,10:30,10km,Spring Tagus run,9000
+Barcelona Spring 10K,Running,Road Running,10K,Barcelona,Spain,Europe,2026-04-14,10:00,10km,Spring beach run,13000
+Madrid Spring 10K,Running,Road Running,10K,Madrid,Spain,Europe,2026-05-12,10:45,10km,Retiro Park spring run,11000
+Valencia Spring 10K,Running,Road Running,10K,Valencia,Spain,Europe,2026-04-21,11:00,10km,Turia Gardens spring run,10000
+Seville Spring 10K,Running,Road Running,10K,Seville,Spain,Europe,2026-04-07,10:30,10km,Spring Alcázar run,8500
+Athens Spring 10K,Running,Road Running,10K,Athens,Greece,Europe,2026-04-28,10:00,10km,Spring Acropolis run,10000
+Rome Spring 10K,Running,Road Running,10K,Rome,Italy,Europe,2026-04-14,10:15,10km,Spring Coliseum run,11000
+Milan Spring 10K,Running,Road Running,10K,Milan,Italy,Europe,2026-05-05,10:30,10km,Spring Duomo run,9000
+Naples Spring 10K,Running,Road Running,10K,Naples,Italy,Europe,2026-05-12,10:00,10km,Spring bay run,8500
+Florence Spring 10K,Running,Road Running,10K,Florence,Italy,Europe,2026-05-19,10:45,10km,Spring Arno river run,8000
+Venice Spring 10K,Running,Road Running,10K,Venice,Italy,Europe,2026-05-26,10:30,10km,Spring canals run,7000
+Hamburg Spring 10K,Running,Road Running,10K,Hamburg,Germany,Europe,2026-05-05,10:00,10km,Spring Elbe run,9500
+Munich Spring 10K,Running,Road Running,10K,Munich,Germany,Europe,2026-05-12,10:30,10km,Spring English Garden spring run,8500
+Berlin Spring 10K,Running,Road Running,10K,Berlin,Germany,Europe,2026-05-19,11:00,10km,Spring Tiergarten run,10000
+Cologne Spring 10K,Running,Road Running,10K,Cologne,Germany,Europe,2026-05-26,10:45,10km,Spring Rhine cathedral run,9000
+Frankfurt Spring 10K,Running,Road Running,10K,Frankfurt,Germany,Europe,2026-05-05,11:15,10km,Spring Main river run,8000
+Paris Spring 10K,Running,Road Running,10K,Paris,France,Europe,2026-05-19,10:00,10km,Spring Eiffel Tower run,13000
+Lyon Spring 10K,Running,Road Running,10K,Lyon,France,Europe,2026-05-26,10:30,10km,Spring Rhône run,9000
+Marseille Spring 10K,Running,Road Running,10K,Marseille,France,Europe,2026-05-12,10:00,10km,Spring old port run,8500
+Nice Spring 10K,Running,Road Running,10K,Nice,France,Europe,2026-05-05,10:45,10km,Spring Promenade run,8000
+Amsterdam Spring 10K,Running,Road Running,10K,Amsterdam,Netherlands,Europe,2026-05-19,11:00,10km,Spring canals run,12000
+Rotterdam Spring 10K,Running,Road Running,10K,Rotterdam,Netherlands,Europe,2026-05-26,10:30,10km,Spring Erasmus run,10000
+Brussels Spring 10K,Running,Road Running,10K,Brussels,Belgium,Europe,2026-05-12,10:15,10km,Spring Grand Place run,9000
+Antwerp Spring 10K,Running,Road Running,10K,Antwerp,Belgium,Europe,2026-05-19,10:45,10km,Spring port run,8000
+London Spring 10K,Running,Road Running,10K,London,UK,Europe,2026-04-28,10:00,10km,Spring parks run,14000
+Manchester Spring 10K,Running,Road Running,10K,Manchester,UK,Europe,2026-05-05,10:30,10km,Spring city run,12000
+Birmingham Spring 10K,Running,Road Running,10K,Birmingham,UK,Europe,2026-05-12,11:00,10km,Spring canals run,10000
+Glasgow Spring 10K,Running,Road Running,10K,Glasgow,UK,Europe,2026-05-19,10:15,10km,Spring parks run,11000
+Edinburgh Spring 10K,Running,Road Running,10K,Edinburgh,UK,Europe,2026-05-26,10:45,10km,Spring castle run,9000
+Cardiff Spring 10K,Running,Road Running,10K,Cardiff,UK,Europe,2026-05-05,11:30,10km,Spring bay run,8500
+Belfast Spring 10K,Running,Road Running,10K,Belfast,UK,Europe,2026-05-12,10:00,10km,Spring Titanic run,8000
+Dublin Spring 10K,Running,Road Running,10K,Dublin,Ireland,Europe,2026-05-19,11:15,10km,Spring Phoenix Park run,13000
+Cork Spring 10K,Running,Road Running,10K,Cork,Ireland,Europe,2026-05-26,10:30,10km,Spring river run,7500
+Galway Spring 10K,Running,Road Running,10K,Galway,Ireland,Europe,2026-05-05,10:45,10km,Spring Atlantic run,7000
+Limerick Spring 10K,Running,Road Running,10K,Limerick,Ireland,Europe,2026-05-12,11:00,10km,Spring Shannon run,6500
+Waterford Spring 10K,Running,Road Running,10K,Waterford,Ireland,Europe,2026-05-19,10:30,10km,Spring Viking run,6000
+Kilkenny Spring 10K,Running,Road Running,10K,Kilkenny,Ireland,Europe,2026-05-26,11:15,10km,Spring medieval run,5500
+Derry Spring 10K,Running,Road Running,10K,Derry,UK,Europe,2026-05-05,11:30,10km,Spring peace bridge run,6000
+Aberdeen Spring 10K,Running,Road Running,10K,Aberdeen,UK,Europe,2026-05-12,10:00,10km,Spring granite run,6500
+Inverness Spring 10K,Running,Road Running,10K,Inverness,UK,Europe,2026-05-19,11:45,10km,Spring Loch Ness run,7000
+Dundee Spring 10K,Running,Road Running,10K,Dundee,UK,Europe,2026-05-26,10:30,10km,Spring Tay run,6000
+Perth Scotland 10K,Running,Road Running,10K,Perth,UK,Europe,2026-05-05,10:15,10km,Spring Scone run,5500
+Stirling Spring 10K,Running,Road Running,10K,Stirling,UK,Europe,2026-05-12,11:00,10km,Spring castle run,6000
+Falkirk Spring 10K,Running,Road Running,10K,Falkirk,UK,Europe,2026-05-19,10:45,10km,Spring Kelpies run,6500
+Ayr Spring 10K,Running,Road Running,10K,Ayr,UK,Europe,2026-05-26,11:30,10km,Spring coastal run,5000
+Luxembourg Spring 10K,Running,Road Running,10K,Luxembourg,Luxembourg,Europe,2026-05-26,10:00,10km,Spring fortress run,8000
+Monaco Spring 10K,Running,Road Running,10K,Monte Carlo,Monaco,Europe,2026-05-19,10:30,10km,Spring harbor run,6500
+San Marino Spring 10K,Running,Road Running,10K,San Marino,San Marino,Europe,2026-05-26,10:45,10km,Spring towers run,4500
+Andorra Spring 10K,Running,Road Running,10K,Andorra la Vella,Andorra,Europe,2026-05-19,11:00,10km,Spring mountains run,5500
+Vaduz Spring 10K,Running,Road Running,10K,Vaduz,Liechtenstein,Europe,2026-05-26,10:30,10km,Spring castle run,4800
+Gibraltar Spring 10K,Running,Road Running,10K,Gibraltar,Gibraltar,Europe,2026-05-19,11:15,10km,Spring rock run,4000
+Reykjavik Spring 10K,Running,Road Running,10K,Reykjavik,Iceland,Europe,2026-05-25,11:00,10km,Spring capital run,8500
+Akureyri Spring 10K,Running,Road Running,10K,Akureyri,Iceland,Europe,2026-05-18,11:30,10km,Spring Arctic run,4000
+Tórshavn 10K,Running,Road Running,10K,Tórshavn,Faroe Islands,Europe,2026-07-01,11:00,10km,Nordic House harbor run,3000
+Tbilisi 10K,Running,Road Running,10K,Tbilisi,Georgia,Europe,2026-05-26,10:00,10km,Old town sulfur baths run,7000
+Yerevan 10K,Running,Road Running,10K,Yerevan,Armenia,Europe,2026-09-22,10:30,10km,Cascade and Republic Square run,6000
+Baku 10K,Running,Road Running,10K,Baku,Azerbaijan,Europe,2026-05-19,11:00,10km,Caspian sea boulevard run,8000
+Minsk 10K,Running,Road Running,10K,Minsk,Belarus,Europe,2026-09-15,10:00,10km,Independence Avenue run,7500
+Kyiv 10K,Running,Road Running,10K,Kyiv,Ukraine,Europe,2026-05-25,10:30,10km,Khreshchatyk street run,9000
+Lviv 10K,Running,Road Running,10K,Lviv,Ukraine,Europe,2026-06-16,11:00,10km,Rynok Square UNESCO run,6500
+Odessa 10K,Running,Road Running,10K,Odessa,Ukraine,Europe,2026-08-24,10:15,10km,Potemkin Stairs Black Sea run,7000
+Kharkiv 10K,Running,Road Running,10K,Kharkiv,Ukraine,Europe,2026-05-19,11:30,10km,Freedom Square run,6000
+Dnipro 10K,Running,Road Running,10K,Dnipro,Ukraine,Europe,2026-09-08,10:45,10km,Dnipro river embankment run,5500
+Chișinău 10K,Running,Road Running,10K,Chișinău,Moldova,Europe,2026-05-26,10:00,10km,Wine capital run,6500
+Skopje 10K,Running,Road Running,10K,Skopje,North Macedonia,Europe,2026-05-19,10:30,10km,Stone Bridge Vardar run,6000
+Podgorica 10K,Running,Road Running,10K,Podgorica,Montenegro,Europe,2026-09-22,11:00,10km,Moraca river run,5000
+Tirana 10K,Running,Road Running,10K,Tirana,Albania,Europe,2026-11-10,10:15,10km,Skanderbeg Square run,7000
+Pristina 10K,Running,Road Running,10K,Pristina,Kosovo,Europe,2026-06-17,10:00,10km,Mother Teresa boulevard run,5500
+Saranda 10K,Running,Road Running,10K,Saranda,Albania,Europe,2026-07-21,10:30,10km,Ionian Sea promenade run,4500
+Vlorë 10K,Running,Road Running,10K,Vlorë,Albania,Europe,2026-08-11,11:00,10km,Albanian Riviera run,4000
+Durrës 10K,Running,Road Running,10K,Durrës,Albania,Europe,2026-09-15,10:45,10km,Amphitheatre beach run,4200
+Shkodër 10K,Running,Road Running,10K,Shkodër,Albania,Europe,2026-05-26,11:30,10km,Castle lake run,3800
+Gjirokastër 10K,Running,Road Running,10K,Gjirokastër,Albania,Europe,2026-06-23,10:00,10km,UNESCO stone city run,3500
+Berat 10K,Running,Road Running,10K,Berat,Albania,Europe,2026-07-14,11:15,10km,Thousand windows city run,3200
+Fier 10K,Running,Road Running,10K,Fier,Albania,Europe,2026-08-18,10:30,10km,Historic center run,3000
+Elbasan 10K,Running,Road Running,10K,Elbasan,Albania,Europe,2026-09-29,10:45,10km,Castle walls run,2800
+Korçë 10K,Running,Road Running,10K,Korçë,Albania,Europe,2026-10-13,11:00,10km,Beer city run,3200
+Vienna Autumn 10K,Running,Road Running,10K,Vienna,Austria,Europe,2026-10-13,16:00,10km,Autumn Ringstrasse run,11000
+Salzburg Autumn 10K,Running,Road Running,10K,Salzburg,Austria,Europe,2026-10-20,15:30,10km,Autumn fortress run,8500
+Innsbruck Autumn 10K,Running,Road Running,10K,Innsbruck,Austria,Europe,2026-10-27,15:00,10km,Autumn Alps run,7500
+Graz Autumn 10K,Running,Road Running,10K,Graz,Austria,Europe,2026-10-13,15:45,10km,Autumn clock tower run,7000
+Linz Autumn 10K,Running,Road Running,10K,Linz,Austria,Europe,2026-10-20,15:15,10km,Autumn Danube run,6500
+Bern Autumn 10K,Running,Road Running,10K,Bern,Switzerland,Europe,2026-10-20,16:00,10km,Autumn bear pit run,8000
+Basel Autumn 10K,Running,Road Running,10K,Basel,Switzerland,Europe,2026-10-27,15:30,10km,Autumn Rhine run,7500
+Lausanne Autumn 10K,Running,Road Running,10K,Lausanne,Switzerland,Europe,2026-10-13,16:15,10km,Autumn lake run,7000
+Lucerne Autumn 10K,Running,Road Running,10K,Lucerne,Switzerland,Europe,2026-10-20,15:45,10km,Autumn chapel bridge run,7500
+Zurich Autumn 10K,Running,Road Running,10K,Zurich,Switzerland,Europe,2026-10-27,16:30,10km,Autumn lake run,7000
+Geneva Autumn 10K,Running,Road Running,10K,Geneva,Switzerland,Europe,2026-10-13,16:00,10km,Autumn Jet d'Eau run,8000
+Luxembourg Autumn 10K,Running,Road Running,10K,Luxembourg,Luxembourg,Europe,2026-10-20,16:30,10km,Autumn fortress run,8500
+Monaco Autumn 10K,Running,Road Running,10K,Monte Carlo,Monaco,Europe,2026-11-10,16:00,10km,Autumn harbor run,6500
+San Marino Autumn 10K,Running,Road Running,10K,San Marino,San Marino,Europe,2026-10-13,16:15,10km,Autumn towers run,4200
+Andorra Autumn 10K,Running,Road Running,10K,Andorra la Vella,Andorra,Europe,2026-10-20,16:00,10km,Autumn mountains run,5200
+Vaduz Autumn 10K,Running,Road Running,10K,Vaduz,Liechtenstein,Europe,2026-10-27,16:30,10km,Autumn castle run,4500
+Gibraltar Autumn 10K,Running,Road Running,10K,Gibraltar,Gibraltar,Europe,2026-11-03,16:00,10km,Autumn rock run,3800
+Reykjavik Autumn 10K,Running,Road Running,10K,Reykjavik,Iceland,Europe,2026-09-15,18:00,10km,Autumn northern lights chance,7500
+Akureyri Autumn 10K,Running,Road Running,10K,Akureyri,Iceland,Europe,2026-09-22,17:30,10km,Autumn Arctic run,3800
+Tórshavn Autumn 10K,Running,Road Running,10K,Tórshavn,Faroe Islands,Europe,2026-09-08,17:00,10km,Autumn harbor run,3200
+Tbilisi Autumn 10K,Running,Road Running,10K,Tbilisi,Georgia,Europe,2026-10-20,16:30,10km,Autumn old town run,7500
+Yerevan Autumn 10K,Running,Road Running,10K,Yerevan,Armenia,Europe,2026-10-13,16:00,10km,Autumn cascade run,6500
+Baku Autumn 10K,Running,Road Running,10K,Baku,Azerbaijan,Europe,2026-10-27,16:30,10km,Autumn boulevard run,8500
+Minsk Autumn 10K,Running,Road Running,10K,Minsk,Belarus,Europe,2026-10-20,16:00,10km,Autumn parks run,7000
+Kyiv Autumn 10K,Running,Road Running,10K,Kyiv,Ukraine,Europe,2026-10-13,16:15,10km,Autumn golden gates run,9500
+Lviv Autumn 10K,Running,Road Running,10K,Lviv,Ukraine,Europe,2026-10-20,16:30,10km,Autumn UNESCO run,7000
+Odessa Autumn 10K,Running,Road Running,10K,Odessa,Ukraine,Europe,2026-09-29,16:00,10km,Autumn sea steps run,7500
+Kharkiv Autumn 10K,Running,Road Running,10K,Kharkiv,Ukraine,Europe,2026-10-13,16:45,10km,Autumn parks run,6500
+Dnipro Autumn 10K,Running,Road Running,10K,Dnipro,Ukraine,Europe,2026-10-27,16:00,10km,Autumn embankment run,6000
+Chișinău Autumn 10K,Running,Road Running,10K,Chișinău,Moldova,Europe,2026-10-20,16:30,10km,Autumn wine run,6800
+Skopje Autumn 10K,Running,Road Running,10K,Skopje,North Macedonia,Europe,2026-10-13,16:15,10km,Autumn stone bridge run,6500
+Podgorica Autumn 10K,Running,Road Running,10K,Podgorica,Montenegro,Europe,2026-10-20,16:00,10km,Autumn river run,5200
+Tirana Autumn 10K,Running,Road Running,10K,Tirana,Albania,Europe,2026-10-27,16:30,10km,Autumn Skanderbeg run,7500
+Pristina Autumn 10K,Running,Road Running,10K,Pristina,Kosovo,Europe,2026-10-13,16:45,10km,Autumn Mother Teresa run,5800
+Saranda Autumn 10K,Running,Road Running,10K,Saranda,Albania,Europe,2026-10-20,17:00,10km,Autumn Riviera run,4800
+Vlorë Autumn 10K,Running,Road Running,10K,Vlorë,Albania,Europe,2026-10-27,17:15,10km,Autumn Ionian run,4500
+Durrës Autumn 10K,Running,Road Running,10K,Durrës,Albania,Europe,2026-11-03,17:00,10km,Autumn amphitheatre run,4300
+Shkodër Autumn 10K,Running,Road Running,10K,Shkodër,Albania,Europe,2026-10-20,17:30,10km,Autumn lake castle run,4000
+Gjirokastër Autumn 10K,Running,Road Running,10K,Gjirokastër,Albania,Europe,2026-10-27,17:45,10km,Autumn stone city run,3700
+Berat Autumn 10K,Running,Road Running,10K,Berat,Albania,Europe,2026-11-03,17:30,10km,Autumn thousand windows run,3500
+Fier Autumn 10K,Running,Road Running,10K,Fier,Albania,Europe,2026-10-20,17:00,10km,Autumn historic run,3200
+Elbasan Autumn 10K,Running,Road Running,10K,Elbasan,Albania,Europe,2026-10-27,17:15,10km,Autumn castle run,3000
+Korçë Autumn 10K,Running,Road Running,10K,Korçë,Albania,Europe,2026-11-10,17:30,10km,Autumn beer city run,3400
+HYROX Paris,Hyrox,Indoor Fitness Race,Pro,Paris,France,Europe,2026-02-14,08:00,Hyrox,Major indoor fitness race at Paris Expo,8500
+HYROX Lyon,Hyrox,Indoor Fitness Race,Open,Lyon,France,Europe,2026-03-21,08:00,Hyrox,Lyon edition with functional stations,6000
+HYROX Nice,Hyrox,Indoor Fitness Race,Pro,Nice,France,Europe,2026-04-18,08:00,Hyrox,Riviera fitness challenge,5500
+Spartan Trifecta Weekend Paris,Spartan,Obstacle Race,Trifecta,Paris,France,Europe,2026-05-09,07:00,5K+21K+Super,Full Trifecta in Bois de Vincennes,11000
+Spartan Sprint Paris,Spartan,Obstacle Race,Sprint,Paris,France,Europe,2026-05-09,08:00,5K,Urban Sprint near Paris,7000
+Spartan Super Paris,Spartan,Obstacle Race,Super,Paris,France,Europe,2026-05-10,07:30,10K,Super with iconic obstacles,6000
+Spartan Beast Paris,Spartan,Obstacle Race,Beast,Paris,France,Europe,2026-05-10,07:00,21K,Beast completing the Trifecta,5000
+Spartan Sprint Chamonix,Spartan,Obstacle Race,Sprint,Chamonix,France,Europe,2026-06-20,08:00,5K,Alpine Sprint with mountain views,4500
+Spartan Ultra Chamonix,Spartan,Obstacle Race,Ultra,Chamonix,France,Europe,2026-06-21,06:00,50K,Tough mountain Ultra race,2000
+Spartan Sprint Bordeaux,Spartan,Obstacle Race,Sprint,Bordeaux,France,Europe,2026-09-05,08:30,5K,Wine country Sprint,5000
+Triathlon de Paris,Triathlon,Olympic Distance,,Paris,France,Europe,2026-07-13,08:00,Standard,Iconic race with Eiffel Tower backdrop,5000
+Triathlon de Nice,Triathlon,Half Ironman,,Nice,France,Europe,2026-06-14,07:30,Half Ironman,Legendary Ironman 70.3 Nice,4000
+Ironman France,Triathlon,Full Ironman,,Nice,France,Europe,2026-06-28,07:00,Full Ironman,Iconic full-distance race on the Riviera,3000
+Triathlon de Marseille,Triathlon,Olympic Distance,,Marseille,France,Europe,2026-05-23,08:30,Standard,Mediterranean swim and city ride,2800
+Triathlon de Lyon,Triathlon,Olympic Distance,,Lyon,France,Europe,2026-09-06,09:00,Standard,Rhône river swim,2500
+Triathlon de Bordeaux,Triathlon,Olympic Distance,,Bordeaux,France,Europe,2026-07-05,08:30,Standard,Wine region triathlon,2200
+Marathon de Paris,Running,Road Running,Marathon,Paris,France,Europe,2026-04-12,08:30,42.2km,World-famous city marathon,55000
+Marathon de Lyon,Running,Road Running,Marathon,Lyon,France,Europe,2026-10-04,09:00,42.2km,Scenic race through Lyon,12000
+Marathon de Marseille,Running,Road Running,Marathon,Marseille,France,Europe,2026-11-15,09:00,42.2km,Coastal marathon in the South,10000
+Marathon de Bordeaux,Running,Road Running,Marathon,Bordeaux,France,Europe,2026-05-17,09:00,42.2km,Wine capital marathon,11000
+Semi-Marathon de Paris,Running,Road Running,Half Marathon,Paris,France,Europe,2026-03-08,09:00,21.1km,Major half marathon through Paris,25000
+Semi-Marathon de Nice,Running,Road Running,Half Marathon,Nice,France,Europe,2026-02-01,09:00,21.1km,Promenade des Anglais half,15000
+20km de Paris,Running,Road Running,20K,Paris,France,Europe,2026-10-11,09:00,20km,Iconic point-to-point 20K race,35000
+10km de Paris,Running,Road Running,10K,Paris,France,Europe,2026-06-21,09:30,10km,Summer 10K in the heart of Paris,20000
+10km de Lyon,Running,Road Running,10K,Lyon,France,Europe,2026-07-10,19:00,10km,Night run along the Rhône,12000
+10km de Nice,Running,Road Running,10K,Nice,France,Europe,2026-05-15,09:00,10km,Seafront 10K on the Riviera,10000
+5km de Paris,Running,Road Running,5K,Paris,France,Europe,2026-08-28,09:30,5km,Fast city centre 5K,8000
+La Parisienne,Running,Road Running,6.7K,Paris,France,Europe,2026-09-06,09:00,6.7km,Women-only race in Paris,15000
+Trail du Mont-Blanc,Running,Trail Running,Ultra Trail,Chamonix,France,Europe,2026-08-22,06:00,170km,World's most famous ultra-trail,2500
+Marathon du Médoc,Running,Road Running,Marathon,Pauillac,France,Europe,2026-09-05,09:30,42.2km,Wine and food marathon in vineyards,8500
+Triathlon de Strasbourg,Triathlon,Olympic Distance,,Strasbourg,France,Europe,2026-06-07,08:30,Standard,European capital triathlon,1800
+Triathlon Alpe d'Huez,Triathlon,Half Ironman,,Alpe d'Huez,France,Europe,2026-07-21,07:30,Half Ironman,Mountainous 70.3 with iconic climb,1500
+Triathlon de La Rochelle,Triathlon,Olympic Distance,,La Rochelle,France,Europe,2026-08-14,09:00,Standard,Atlantic coast triathlon,1600
+Spartan Sprint Strasbourg,Spartan,Obstacle Race,Sprint,Strasbourg,France,Europe,2026-07-11,08:00,5K,European Parliament Sprint,5000
+Spartan Super Marseille,Spartan,Obstacle Race,Super,Marseille,France,Europe,2026-08-08,07:30,10K,Coastal Super with Calanques views,4500
+HYROX Lille,Hyrox,Indoor Fitness Race,Open,Lille,France,Europe,2026-11-07,08:00,Hyrox,Northern France edition,5000
+HYROX Madrid,Hyrox,Indoor Fitness Race,Pro,Madrid,Spain,Europe,2026-01-18,08:00,Hyrox,World-class indoor fitness race with functional stations,8000
+HYROX Barcelona,Hyrox,Indoor Fitness Race,Pro,Barcelona,Spain,Europe,2026-02-08,08:00,Hyrox,Iconic Barcelona edition with full stations,7500
+HYROX Valencia,Hyrox,Indoor Fitness Race,Open,Valencia,Spain,Europe,2026-03-15,08:00,Hyrox,Fast-growing Mediterranean Hyrox event,6500
+HYROX Bilbao,Hyrox,Indoor Fitness Race,Pro,Bilbao,Spain,Europe,2026-04-05,08:00,Hyrox,Basque Country massive turnout,7000
+HYROX Málaga,Hyrox,Indoor Fitness Race,Open,Málaga,Spain,Europe,2026-05-10,08:00,Hyrox,Costa del Sol sunshine fitness race,6000
+HYROX Sevilla,Hyrox,Indoor Fitness Race,Pro,Sevilla,Spain,Europe,2026-06-07,08:00,Hyrox,Andalusian heat and passion,6500
+HYROX Mallorca,Hyrox,Indoor Fitness Race,Open,Palma de Mallorca,Spain,Europe,2026-09-20,08:00,Hyrox,Island holiday Hyrox weekend,5500
+HYROX Alicante,Hyrox,Indoor Fitness Race,Open,Alicante,Spain,Europe,2026-10-11,08:00,Hyrox,Costa Blanca fitness festival,5000
+HYROX Madrid Autumn,Hyrox,Indoor Fitness Race,Pro,Madrid,Spain,Europe,2026-11-08,08:00,Hyrox,Second Madrid edition of the year,8500
+HYROX Barcelona Autumn,Hyrox,Indoor Fitness Race,Open,Barcelona,Spain,Europe,2026-12-06,08:00,Hyrox,End-of-year Barcelona finale,7000
+Spartan Trifecta Weekend Madrid,Spartan,Obstacle Race,Trifecta,Madrid,Spain,Europe,2026-03-22,07:00,5K+21K+Super,Full Trifecta weekend in central Spain,12000
+Spartan Sprint Madrid,Spartan,Obstacle Race,Sprint,Madrid,Spain,Europe,2026-03-22,08:00,5K,Fast urban-area Sprint,8000
+Spartan Super Madrid,Spartan,Obstacle Race,Super,Madrid,Spain,Europe,2026-03-23,07:30,10K,Super with epic obstacles,7000
+Spartan Beast Madrid,Spartan,Obstacle Race,Beast,Madrid,Spain,Europe,2026-03-23,07:00,21K,Full Beast to complete Trifecta,6000
+Spartan Trifecta Weekend Barcelona,Spartan,Obstacle Race,Trifecta,Barcelona,Spain,Europe,2026-04-26,07:00,5K+21K+Super,Coastal Trifecta near Barcelona,13000
+Spartan Sprint Barcelona,Spartan,Obstacle Race,Sprint,Barcelona,Spain,Europe,2026-04-26,08:30,5K,Beach-area Sprint,8500
+Spartan Super Barcelona,Spartan,Obstacle Race,Super,Barcelona,Spain,Europe,2026-04-27,07:30,10K,Super with sea views,7500
+Spartan Beast Barcelona,Spartan,Obstacle Race,Beast,Barcelona,Spain,Europe,2026-04-27,07:00,21K,Brutal Beast finale,6500
+Spartan Sprint Valencia,Spartan,Obstacle Race,Sprint,Valencia,Spain,Europe,2026-05-17,08:00,5K,City of Arts venue Sprint,7000
+Spartan Super Valencia,Spartan,Obstacle Race,Super,Valencia,Spain,Europe,2026-05-18,07:30,10K,Super in futuristic park,6000
+Spartan Beast Andalucía,Spartan,Obstacle Race,Beast,Málaga,Spain,Europe,2026-10-18,07:00,21K,Southern Spain mountains Beast,5500
+Spartan Sprint Mallorca,Spartan,Obstacle Race,Sprint,Palma de Mallorca,Spain,Europe,2026-06-14,08:00,5K,Island Sprint paradise,5000
+Spartan Ultra Mallorca,Spartan,Obstacle Race,Ultra,Palma de Mallorca,Spain,Europe,2026-06-15,06:00,50K,First Spanish Ultra event,3000
+Spartan Sprint Bilbao,Spartan,Obstacle Race,Sprint,Bilbao,Spain,Europe,2026-09-27,08:30,5K,Basque industrial Sprint,6000
+Spartan Super Sevilla,Spartan,Obstacle Race,Super,Sevilla,Spain,Europe,2026-11-08,07:30,10K,Super in Andalusian heat,5500
+Triatlón Sevilla,Triathlon,Olympic Distance,,Sevilla,Spain,Europe,2026-04-27,09:00,Standard,Guadalquivir river classic,2500
+Triatlón Valencia,Triathlon,Olympic Distance,,Valencia,Spain,Europe,2026-05-18,08:30,Standard,City of Arts swim and bike,3000
+Triatlón Barcelona,Triathlon,Olympic Distance,,Barcelona,Spain,Europe,2026-06-08,08:00,Standard,Nova Icaria beach start,3500
+Triatlón Madrid,Triathlon,Olympic Distance,,Madrid,Spain,Europe,2026-06-22,09:00,Standard,Casa de Campo classic,2800
+Triatlón Málaga,Triathlon,Olympic Distance,,Málaga,Spain,Europe,2026-09-14,08:30,Standard,Costa del Sol Mediterranean swim,2200
+Triatlón Bilbao,Triathlon,Olympic Distance,,Bilbao,Spain,Europe,2026-07-13,09:00,Standard,Nervión river and Guggenheim,2000
+Triatlón Alicante,Triathlon,Olympic Distance,,Alicante,Spain,Europe,2026-10-05,08:00,Standard,Postiguet beach start,1800
+Triatlón Palma de Mallorca,Triathlon,Olympic Distance,,Palma de Mallorca,Spain,Europe,2026-05-25,08:30,Standard,Bay of Palma crystal waters,2500
+Triatlón Zaragoza,Triathlon,Olympic Distance,,Zaragoza,Spain,Europe,2026-06-15,09:00,Standard,Ebro river triathlon,1600
+Triatlón San Sebastián,Triathlon,Olympic Distance,,San Sebastián,Spain,Europe,2026-09-07,08:00,Standard,La Concha bay elite race,2000
+Triatlón Ibiza,Triathlon,Olympic Distance,,Ibiza,Spain,Europe,2026-05-11,08:30,Standard,Island turquoise waters,2200
+Triatlón Tarragona,Triathlon,Olympic Distance,,Tarragona,Spain,Europe,2026-07-20,09:00,Standard,Roman city Mediterranean tri,1500
+Triatlón Cádiz,Triathlon,Olympic Distance,,Cádiz,Spain,Europe,2026-10-19,08:30,Standard,Atlantic coast historic city,1700
+Triatlón Vigo,Triathlon,Olympic Distance,,Vigo,Spain,Europe,2026-06-29,09:00,Standard,Rías Baixas swim,1400
+Triatlón Pontevedra,Triathlon,Olympic Distance,,Pontevedra,Spain,Europe,2026-08-24,08:00,Standard,Galician championship race,1800
+Triatlón Santander,Triathlon,Olympic Distance,,Santander,Spain,Europe,2026-07-06,09:00,Standard,Cantabrian coast run,1600
+Triatlón Gijón,Triathlon,Olympic Distance,,Gijón,Spain,Europe,2026-08-10,08:30,Standard,San Lorenzo beach start,1500
+Triatlón A Coruña,Triathlon,Olympic Distance,,A Coruña,Spain,Europe,2026-09-21,08:00,Standard,Tower of Hercules backdrop,1700
+Triatlón Granada,Triathlon,Olympic Distance,,Granada,Spain,Europe,2026-05-04,09:00,Standard,Sierra Nevada mountain swim,1300
+Triatlón Marbella,Triathlon,Olympic Distance,,Marbella,Spain,Europe,2026-04-13,08:30,Standard,Luxury Costa del Sol tri,2000
+Triatlón Benidorm,Triathlon,Olympic Distance,,Benidorm,Spain,Europe,2026-11-02,08:00,Standard,Skyscraper city triathlon,1800
+Triatlón Castellón,Triathlon,Olympic Distance,,Castellón,Spain,Europe,2026-10-12,09:00,Standard,Costa Azahar race,1400
+Triatlón Elche,Triathlon,Olympic Distance,,Elche,Spain,Europe,2026-09-28,08:30,Standard,Palm grove finish,1500
+Triatlón Vitoria-Gasteiz,Triathlon,Half Ironman,,Vitoria-Gasteiz,Spain,Europe,2026-07-13,07:30,Half Ironman,Basque Country classic 70.3,3000
+Triatlón Pamplona-Iruña,Triathlon,Olympic Distance,,Pamplona,Spain,Europe,2026-06-22,09:00,Standard,Running of the bulls city tri,1600
+Triatlón Logroño,Triathlon,Olympic Distance,,Logroño,Spain,Europe,2026-09-14,09:00,Standard,La Rioja wine region tri,1300
+Triatlón Salamanca,Triathlon,Olympic Distance,,Salamanca,Spain,Europe,2026-05-25,09:00,Standard,Golden city university tri,1400
+Triatlón Valladolid,Triathlon,Olympic Distance,,Valladolid,Spain,Europe,2026-06-08,09:00,Standard,Castilla y León classic,1200
+Triatlón León,Triathlon,Olympic Distance,,León,Spain,Europe,2026-07-20,09:00,Standard,Cathedral city tri,1100
+Triatlón Burgos,Triathlon,Olympic Distance,,Burgos,Spain,Europe,2026-09-07,09:00,Standard,Gothic cathedral start,1000
+Triatlón Segovia,Triathlon,Olympic Distance,,Segovia,Spain,Europe,2026-05-18,09:00,Standard,Aqueduct and Alcázar tri,1300
+Triatlón Ávila,Triathlon,Olympic Distance,,Ávila,Spain,Europe,2026-06-15,09:00,Standard,Medieval walls triathlon,1100
+Triatlón Cuenca,Triathlon,Olympic Distance,,Cuenca,Spain,Europe,2026-07-06,09:00,Standard,Hanging houses tri,1000
+Triatlón Teruel,Triathlon,Olympic Distance,,Teruel,Spain,Europe,2026-09-21,09:00,Standard,Mudejar city tri,900
+Triatlón Huesca,Triathlon,Olympic Distance,,Huesca,Spain,Europe,2026-06-29,09:00,Standard,Pyrenees gateway tri,950
+Triatlón Lleida,Triathlon,Olympic Distance,,Lleida,Spain,Europe,2026-05-11,09:00,Standard,Segria plains tri,1000
+Triatlón Girona,Triathlon,Olympic Distance,,Girona,Spain,Europe,2026-10-05,08:30,Standard,Medieval city and river tri,1400
+Triatlón Almería,Triathlon,Olympic Distance,,Almería,Spain,Europe,2026-04-27,08:30,Standard,Desert and sea tri,1200
+Triatlón Huelva,Triathlon,Olympic Distance,,Huelva,Spain,Europe,2026-11-09,08:30,Standard,Columbus departure port tri,1100
+Triatlón Badajoz,Triathlon,Olympic Distance,,Badajoz,Spain,Europe,2026-05-25,09:00,Standard,Portuguese border tri,1000
+Triatlón Cáceres,Triathlon,Olympic Distance,,Cáceres,Spain,Europe,2026-06-22,09:00,Standard,UNESCO old town tri,950
+Triatlón Ourense,Triathlon,Olympic Distance,,Ourense,Spain,Europe,2026-07-13,09:00,Standard,Thermal springs city tri,900
+Triatlón Lugo,Triathlon,Olympic Distance,,Lugo,Spain,Europe,2026-09-14,09:00,Standard,Roman walls triathlon,850
+Triatlón Donostia,Spartan,Obstacle Race,Sprint,San Sebastián,Spain,Europe,2026-05-11,08:00,5K,Basque beach Sprint,7000
+Triatlón Zaragoza Half,Triathlon,Half Ironman,,Zaragoza,Spain,Europe,2026-09-28,07:30,Half Ironman,Ebro river 70.3,2200
+Maratón Valencia Trinidad Alfonso,Running,Road Running,Marathon,Valencia,Spain,Europe,2026-12-07,09:00,42.2km,Fastest Spanish marathon flat course,33000
+Maratón Sevilla,Running,Road Running,Marathon,Sevilla,Spain,Europe,2026-02-23,09:00,42.2km,Flat historic city marathon,15000
+Maratón Barcelona,Running,Road Running,Marathon,Barcelona,Spain,Europe,2026-03-09,08:30,42.2km,Gaudí and beach marathon,20000
+Maratón Madrid,Running,Road Running,Marathon,Madrid,Spain,Europe,2026-04-27,09:00,42.2km,Hilly royal palace marathon,16000
+Maratón Málaga,Running,Road Running,Marathon,Málaga,Spain,Europe,2026-12-14,09:00,42.2km,Coastal winter marathon,12000
+Maratón Bilbao,Running,Road Running,Marathon,Bilbao,Spain,Europe,2026-10-19,09:00,42.2km,Guggenheim night finish,10000
+Maratón Palma de Mallorca,Running,Road Running,Marathon,Palma de Mallorca,Spain,Europe,2026-10-12,09:00,42.2km,Cathedral and bay marathon,9000
+Media Maratón Valencia,Running,Road Running,Half Marathon,Valencia,Spain,Europe,2026-10-26,09:00,21.1km,World’s fastest half course,25000
+Media Maratón Barcelona,Running,Road Running,Half Marathon,Barcelona,Spain,Europe,2026-02-09,08:45,21.1km,Sagrada Familia half,22000
+Media Maratón Madrid,Running,Road Running,Half Marathon,Madrid,Spain,Europe,2026-03-30,09:00,21.1km,Retiro Park half marathon,18000
+Media Maratón Sevilla,Running,Road Running,Half Marathon,Sevilla,Spain,Europe,2026-01-26,09:00,21.1km,Flat Andalusian half,15000
+Media Maratón Granada,Running,Road Running,Half Marathon,Granada,Spain,Europe,2026-04-13,09:00,21.1km,Alhambra views half,8000
+Media Maratón Málaga,Running,Road Running,Half Marathon,Málaga,Spain,Europe,2026-03-16,09:00,21.1km,Costa del Sol half,12000
+Media Maratón Bilbao,Running,Road Running,Half Marathon,Bilbao,Spain,Europe,2026-04-06,09:00,21.1km,Guggenheim half marathon,9000
+Media Maratón Palma de Mallorca,Running,Road Running,Half Marathon,Palma de Mallorca,Spain,Europe,2026-03-23,09:00,21.1km,Bay of Palma half,8000
+Behobia-San Sebastián,Running,Road Running,20K,San Sebastián,Spain,Europe,2026-11-09,09:00,20km,Iconic point-to-point race,30000
+Cursa dels Nassos 5K,Running,Road Running,5K,Barcelona,Spain,Europe,2026-12-31,17:00,5km,Fast NYE 5K elite field,15000
+San Silvestre Vallecana 10K,Running,Road Running,10K,Madrid,Spain,Europe,2026-12-31,17:30,10km,World-famous New Year’s Eve 10K,40000
+Cursa El Corte Inglés 10K,Running,Road Running,10K,Barcelona,Spain,Europe,2026-05-11,09:30,10km,Massive popular city race,60000
+Jean Bouin 10K,Running,Road Running,10K,Barcelona,Spain,Europe,2026-11-30,09:00,10km,Historic Barcelona race,12000
+10K Valencia Ibercaja,Running,Road Running,10K,Valencia,Spain,Europe,2026-01-12,09:00,10km,Fastest 10K in Spain,15000
+10K Ibiza,Running,Road Running,10K,Ibiza,Spain,Europe,2026-04-27,19:00,10km,Sunset island race,8000
+10K Madrid Corre por Ucrania,Running,Road Running,10K,Madrid,Spain,Europe,2026-02-23,09:30,10km,Charity city race,10000
+10K Bilbao Night,Running,Road Running,10K,Bilbao,Spain,Europe,2026-10-11,20:00,10km,Illuminated Guggenheim run,9000
+10K Sevilla,Running,Road Running,10K,Sevilla,Spain,Europe,2026-01-26,09:30,10km,Andalusian classic,12000
+10K Málaga,Running,Road Running,10K,Málaga,Spain,Europe,2026-03-16,09:30,10km,Costa del Sol race,10000
+10K Zaragoza,Running,Road Running,10K,Zaragoza,Spain,Europe,2026-05-18,09:00,10km,Ebro river race,8000
+10K Alicante,Running,Road Running,10K,Alicante,Spain,Europe,2026-04-13,09:30,10km,Costa Blanca race,7000
+10K Palma de Mallorca,Running,Road Running,10K,Palma de Mallorca,Spain,Europe,2026-11-02,09:00,10km,Bay of Palma race,8500
+10K Granada,Running,Road Running,10K,Granada,Spain,Europe,2026-10-19,09:30,10km,Alhambra night race,7500
+10K San Sebastián,Running,Road Running,10K,San Sebastián,Spain,Europe,2026-11-16,09:00,10km,La Concha bay race,9000
+5K Madrid,Running,Road Running,5K,Madrid,Spain,Europe,2026-06-15,09:30,5km,Fast city centre 5K,8000
+5K Barcelona,Running,Road Running,5K,Barcelona,Spain,Europe,2026-07-13,09:00,5km,Beachfront 5K,7000
+5K Valencia,Running,Road Running,5K,Valencia,Spain,Europe,2026-08-10,09:30,5km,Turia Gardens 5K,6500
+5K Sevilla,Running,Road Running,5K,Sevilla,Spain,Europe,2026-09-07,09:00,5km,Historic centre 5K,6000
+5K Málaga,Running,Road Running,5K,Málaga,Spain,Europe,2026-10-05,09:30,5km,Coastal 5K,5500
+HYROX Granada,Hyrox,Indoor Fitness Race,Open,Granada,Spain,Europe,2026-11-22,08:00,Hyrox,Alhambra city edition,5000
+Spartan Sprint Andalucía,Spartan,Obstacle Race,Sprint,Málaga,Spain,Europe,2026-11-15,08:00,5K,Southern Spain Sprint,6500
+Spartan Super Mallorca,Spartan,Obstacle Race,Super,Palma de Mallorca,Spain,Europe,2026-06-15,07:30,10K,Island Super,5500
+Triatlón Half Vitoria-Gasteiz,Triathlon,Half Ironman,,Vitoria-Gasteiz,Spain,Europe,2026-07-13,07:30,Half Ironman,Long-distance Basque classic,3000
+Triatlón Half Barcelona,Triathlon,Half Ironman,,Barcelona,Spain,Europe,2026-05-18,07:00,Half Ironman,Full Mediterranean 70.3,3500
+Triatlón Half Mallorca,Triathlon,Half Ironman,,Alcúdia,Spain,Europe,2026-05-10,07:30,Half Ironman,Iconic Balearic 70.3,3200
+Triatlón Half Lanzarote,Triathlon,Half Ironman,,Club La Santa,Spain,Europe,2026-10-18,07:30,Half Ironman,Volcanic tough 70.3,2500
+Triatlón Half Marbella,Triathlon,Half Ironman,,Marbella,Spain,Europe,2026-04-27,07:30,Half Ironman,Costa del Sol luxury 70.3,2800
+Triatlón Half Bilbao,Triathlon,Half Ironman,,Bilbao,Spain,Europe,2026-06-08,07:30,Half Ironman,Basque Country 70.3,2600
+Triatlón Half Tarragona,Triathlon,Half Ironman,,Tarragona,Spain,Europe,2026-09-28,07:30,Half Ironman,Roman heritage 70.3,2200
+Triatlón Half Calella,Triathlon,Half Ironman,,Calella,Spain,Europe,2026-10-05,07:00,Half Ironman,Barcelona 70.3 classic,3500
+Triatlón Half Elche,Triathlon,Half Ironman,,Elche,Spain,Europe,2026-04-13,07:30,Half Ironman,Palm grove 70.3,2000
+Triatlón Half Zaragoza,Triathlon,Half Ironman,,Zaragoza,Spain,Europe,2026-09-14,07:30,Half Ironman,Ebro river 70.3,2100
+Spartan Beast Pyrenees,Spartan,Obstacle Race,Beast,Encamp,Andorra,Europe,2026-09-20,07:00,21K,High mountain Beast,5000
+Spartan Sprint Andorra,Spartan,Obstacle Race,Sprint,Encamp,Andorra,Europe,2026-09-21,08:30,5K,Pyrenees Sprint,6000
+HYROX Bilbao,Hyrox,Indoor Fitness Race,Open,Bilbao,Spain,Europe,2026-10-25,08:00,Hyrox,Basque edition,6000
+HYROX Sevilla,Hyrox,Indoor Fitness Race,Open,Sevilla,Spain,Europe,2026-11-29,08:00,Hyrox,Andalusian finale,5500
+Spartan Sprint Granada,Spartan,Obstacle Race,Sprint,Granada,Spain,Europe,2026-05-18,08:00,5K,Alhambra backdrop Sprint,5500
+Spartan Super Granada,Spartan,Obstacle Race,Super,Granada,Spain,Europe,2026-05-19,07:30,10K,Sierra Nevada Super,5000
+Triatlón Full Ironman Vitoria-Gasteiz,Triathlon,Full Ironman,,Vitoria-Gasteiz,Spain,Europe,2026-07-13,07:00,Full Ironman,Spanish full-distance classic,2800
+Triatlón Full Ironman Calella-Barcelona,Triathlon,Full Ironman,,Calella,Spain,Europe,2026-10-05,07:00,Full Ironman,Mediterranean full Ironman,3200
+Triatlón Full Ironman Lanzarote,Triathlon,Full Ironman,,Club La Santa,Spain,Europe,2026-05-17,07:00,Full Ironman,Toughest Ironman in Europe,2500
+Maratón Ibiza,Running,Road Running,Marathon,Ibiza,Spain,Europe,2026-04-26,09:00,42.2km,Island party marathon,8000
+Maratón San Sebastián,Running,Road Running,Marathon,San Sebastián,Spain,Europe,2026-11-30,09:00,42.2km,La Concha bay marathon,10000
+Maratón Zaragoza,Running,Road Running,Marathon,Zaragoza,Spain,Europe,2026-04-13,09:00,42.2km,Ebro river marathon,9000
+Maratón Logroño,Running,Road Running,Marathon,Logroño,Spain,Europe,2026-10-05,09:00,42.2km,La Rioja wine marathon,7000
+Maratón Vitoria-Gasteiz,Running,Road Running,Marathon,Vitoria-Gasteiz,Spain,Europe,2026-11-16,09:00,42.2km,Basque capital marathon,8000
+Media Maratón Ibiza,Running,Road Running,Half Marathon,Ibiza,Spain,Europe,2026-04-26,17:00,21.1km,Sunset island half,7000
+Media Maratón San Sebastián,Running,Road Running,Half Marathon,San Sebastián,Spain,Europe,2026-11-30,09:00,21.1km,Basque coast half,9000
+Media Maratón Zaragoza,Running,Road Running,Half Marathon,Zaragoza,Spain,Europe,2026-04-13,09:00,21.1km,Ebro half marathon,8000
+Media Maratón Logroño,Running,Road Running,Half Marathon,Logroño,Spain,Europe,2026-10-05,09:00,21.1km,Wine region half,6500
+Media Maratón Vitoria-Gasteiz,Running,Road Running,Half Marathon,Vitoria-Gasteiz,Spain,Europe,2026-11-16,09:00,21.1km,Basque half marathon,7500
+10K Ibiza Sunset,Running,Road Running,10K,Ibiza,Spain,Europe,2026-10-18,19:00,10km,Famous sunset run,9000
+10K San Sebastián,Running,Road Running,10K,San Sebastián,Spain,Europe,2026-11-16,09:30,10km,La Concha bay 10K,8000
+10K Zaragoza,Running,Road Running,10K,Zaragoza,Spain,Europe,2026-04-13,10:00,10km,Ebro river 10K,7000
+10K Logroño,Running,Road Running,10K,Logroño,Spain,Europe,2026-10-05,10:30,10km,Wine capital 10K,6000
+10K Vitoria-Gasteiz,Running,Road Running,10K,Vitoria-Gasteiz,Spain,Europe,2026-11-16,10:00,10km,Basque green city 10K,6500
+HYROX Ibiza,Hyrox,Indoor Fitness Race,Open,Ibiza,Spain,Europe,2026-05-03,08:00,Hyrox,Island party weekend Hyrox,5500
+Spartan Sprint Ibiza,Spartan,Obstacle Race,Sprint,Ibiza,Spain,Europe,2026-05-04,08:00,5K,Island obstacle party,6000
+Spartan Super Ibiza,Spartan,Obstacle Race,Super,Ibiza,Spain,Europe,2026-05-05,07:30,10K,Island Super,5000
+Triatlón Ibiza Half,Triathlon,Half Ironman,,Ibiza,Spain,Europe,2026-05-04,07:30,Half Ironman,Crystal waters 70.3,2800
