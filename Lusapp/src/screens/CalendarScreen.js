@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react';
+import React, { useState, useEffect, useCallback, useRef, useMemo } from 'react';
 import { 
   View, 
   Text, 
@@ -212,79 +212,97 @@ export const CalendarScreen = ({ navigation }) => {
   
   const today = new Date();
   today.setHours(0, 0, 0, 0);
+  const todayTimestamp = today.getTime();
   
-  const upcomingRaces = races
-    .filter((race) => {
-      const isUpcoming = new Date(race.date) >= today;
-      const isJoined = joinedRaceIds.includes(race.id.toString());
-      return isUpcoming && isJoined;
-    })
-    .sort((a, b) => new Date(a.date) - new Date(b.date));
+  const upcomingRaces = useMemo(() => {
+    const todayDate = new Date(todayTimestamp);
+    return races
+      .filter((race) => {
+        const isUpcoming = new Date(race.date) >= todayDate;
+        const isJoined = joinedRaceIds.includes(race.id.toString());
+        return isUpcoming && isJoined;
+      })
+      .sort((a, b) => new Date(a.date) - new Date(b.date));
+  }, [races, joinedRaceIds, todayTimestamp]);
   
-  const completedRaces = races
-    .filter((race) => {
-      const isPast = new Date(race.date) < today;
-      const isCompleted = completedRaceIds.includes(race.id.toString());
-      return isPast && isCompleted;
-    })
-    .sort((a, b) => new Date(b.date) - new Date(a.date));
+  const completedRaces = useMemo(() => {
+    const todayDate = new Date(todayTimestamp);
+    return races
+      .filter((race) => {
+        const isPast = new Date(race.date) < todayDate;
+        const isCompleted = completedRaceIds.includes(race.id.toString());
+        return isPast && isCompleted;
+      })
+      .sort((a, b) => new Date(b.date) - new Date(a.date));
+  }, [races, completedRaceIds, todayTimestamp]);
   
-  const pastUncompletedRaces = races
-    .filter((race) => {
-      const isPast = new Date(race.date) < today;
-      const isJoined = joinedRaceIds.includes(race.id.toString());
-      const isCompleted = completedRaceIds.includes(race.id.toString());
-      return isPast && isJoined && !isCompleted;
-    })
-    .sort((a, b) => new Date(b.date) - new Date(a.date));
+  const pastUncompletedRaces = useMemo(() => {
+    const todayDate = new Date(todayTimestamp);
+    return races
+      .filter((race) => {
+        const isPast = new Date(race.date) < todayDate;
+        const isJoined = joinedRaceIds.includes(race.id.toString());
+        const isCompleted = completedRaceIds.includes(race.id.toString());
+        return isPast && isJoined && !isCompleted;
+      })
+      .sort((a, b) => new Date(b.date) - new Date(a.date));
+  }, [races, joinedRaceIds, completedRaceIds, todayTimestamp]);
 
-  const markedDates = {};
-  
-  [...upcomingRaces, ...completedRaces, ...pastUncompletedRaces].forEach((race) => {
-    const raceColors = getRaceColors(race);
-    markedDates[race.date] = {
-      marked: true,
-      dotColor: raceColors.dot,
-    };
-  });
+  const markedDates = useMemo(() => {
+    const dates = {};
+    
+    [...upcomingRaces, ...completedRaces, ...pastUncompletedRaces].forEach((race) => {
+      const raceColors = getRaceColors(race);
+      dates[race.date] = {
+        marked: true,
+        dotColor: raceColors.dot,
+      };
+    });
 
-  if (selectedDate) {
-    markedDates[selectedDate] = {
-      ...markedDates[selectedDate],
-      selected: true,
-      selectedColor: '#4ADE80',
-    };
-  }
+    if (selectedDate) {
+      dates[selectedDate] = {
+        ...dates[selectedDate],
+        selected: true,
+        selectedColor: '#4ADE80',
+      };
+    }
+    
+    return dates;
+  }, [upcomingRaces, completedRaces, pastUncompletedRaces, selectedDate]);
 
   const handleDayPress = (day) => {
     haptic.selection();
     setSelectedDate(day.dateString);
   };
 
-  const sections = [];
-  
-  if (!selectedDate) {
-    if (upcomingRaces.length > 0) {
-      sections.push({ title: 'Upcoming', data: upcomingRaces, type: 'upcoming' });
+  const sections = useMemo(() => {
+    const result = [];
+    
+    if (!selectedDate) {
+      if (upcomingRaces.length > 0) {
+        result.push({ title: 'Upcoming', data: upcomingRaces, type: 'upcoming' });
+      }
+      if (pastUncompletedRaces.length > 0) {
+        result.push({ title: 'Mark Complete', data: pastUncompletedRaces, type: 'pending' });
+      }
+      if (completedRaces.length > 0) {
+        result.push({ title: 'Completed', data: completedRaces, type: 'completed' });
+      }
+    } else {
+      const filteredRaces = [...upcomingRaces, ...pastUncompletedRaces, ...completedRaces]
+        .filter((race) => race.date === selectedDate);
+      if (filteredRaces.length > 0) {
+        const formattedDate = new Date(selectedDate).toLocaleDateString('en-US', {
+          weekday: 'long',
+          month: 'long',
+          day: 'numeric'
+        });
+        result.push({ title: formattedDate, data: filteredRaces, type: 'filtered' });
+      }
     }
-    if (pastUncompletedRaces.length > 0) {
-      sections.push({ title: 'Mark Complete', data: pastUncompletedRaces, type: 'pending' });
-    }
-    if (completedRaces.length > 0) {
-      sections.push({ title: 'Completed', data: completedRaces, type: 'completed' });
-    }
-  } else {
-    const filteredRaces = [...upcomingRaces, ...pastUncompletedRaces, ...completedRaces]
-      .filter((race) => race.date === selectedDate);
-    if (filteredRaces.length > 0) {
-      const formattedDate = new Date(selectedDate).toLocaleDateString('en-US', {
-        weekday: 'long',
-        month: 'long',
-        day: 'numeric'
-      });
-      sections.push({ title: formattedDate, data: filteredRaces, type: 'filtered' });
-    }
-  }
+    
+    return result;
+  }, [selectedDate, upcomingRaces, pastUncompletedRaces, completedRaces]);
 
   const onRefresh = async () => {
     setRefreshing(true);
