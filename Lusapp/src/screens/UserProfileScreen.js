@@ -124,7 +124,7 @@ export const UserProfileScreen = ({ route, navigation }) => {
   return (
     <ScrollView style={[styles.container, { backgroundColor: colors.background }]}>
       <LinearGradient
-        colors={[colors.gradient1, colors.gradient2]}
+        colors={['#0B0F1A', '#1E3A5A']}
         style={styles.header}
       >
         <UserAvatar uri={user.avatar} size={100} />

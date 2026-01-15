@@ -53,7 +53,7 @@ export const EmailVerificationScreen = ({ navigation }) => {
 
   return (
     <LinearGradient
-      colors={[colors.gradient1, colors.gradient2]}
+      colors={['#0B0F1A', '#1E3A5A']}
       style={styles.container}
     >
       <View style={styles.content}>

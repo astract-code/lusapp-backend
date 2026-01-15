@@ -44,7 +44,7 @@ export const ForgotPasswordScreen = ({ navigation }) => {
       style={styles.container}
     >
       <LinearGradient
-        colors={[colors.gradient1, colors.gradient2]}
+        colors={['#0B0F1A', '#1E3A5A']}
         style={styles.gradient}
       >
         <View style={styles.content}>

@@ -998,6 +998,45 @@ app.delete('/api/races/:raceId/completion', verifyFirebaseToken, async (req, res
   }
 });
 
+app.get('/api/auth/users/suggested', verifyFirebaseToken, async (req, res) => {
+  try {
+    const userId = req.user.userId;
+    
+    const currentUser = await pool.query(
+      'SELECT following FROM users WHERE id = $1',
+      [userId]
+    );
+    
+    const following = currentUser.rows[0]?.following || [];
+    
+    let result;
+    if (following.length === 0) {
+      result = await pool.query(
+        `SELECT id, name, avatar, location, bio 
+         FROM users 
+         WHERE id != $1
+         ORDER BY RANDOM()
+         LIMIT 10`,
+        [userId]
+      );
+    } else {
+      result = await pool.query(
+        `SELECT id, name, avatar, location, bio 
+         FROM users 
+         WHERE id != $1 
+         AND id::text != ALL($2::text[])
+         ORDER BY RANDOM()
+         LIMIT 10`,
+        [userId, following]
+      );
+    }
+    
+    res.json({ users: result.rows });
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to get suggested users' });
+  }
+});
+
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`Server running on port ${PORT}`);
 });

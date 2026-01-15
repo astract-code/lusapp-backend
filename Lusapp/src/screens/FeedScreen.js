@@ -1,16 +1,18 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { View, Text, StyleSheet, FlatList, RefreshControl, ActivityIndicator } from 'react-native';
+import { View, Text, StyleSheet, FlatList, RefreshControl, ActivityIndicator, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { PostCard } from '../components/PostCard';
+import { UserAvatar } from '../components/UserAvatar';
 import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
-import { SPACING, FONT_SIZE } from '../constants/theme';
+import { SPACING, FONT_SIZE, BORDER_RADIUS } from '../constants/theme';
 import API_URL from '../config/api';
 
 export const FeedScreen = ({ navigation }) => {
   const { colors } = useTheme();
   const { token } = useAuth();
   const [posts, setPosts] = useState([]);
+  const [suggestedUsers, setSuggestedUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
 
@@ -25,24 +27,39 @@ export const FeedScreen = ({ navigation }) => {
       if (response.ok) {
         const data = await response.json();
         setPosts(data.posts || []);
-      } else {
-        console.error('Failed to fetch feed');
       }
     } catch (error) {
-      console.error('Error fetching feed:', error);
     } finally {
       setLoading(false);
       setRefreshing(false);
     }
   };
 
+  const fetchSuggestedUsers = async () => {
+    try {
+      const response = await fetch(`${API_URL}/api/auth/users/suggested`, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        },
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setSuggestedUsers(data.users || []);
+      }
+    } catch (error) {
+    }
+  };
+
   useEffect(() => {
     fetchFeed();
+    fetchSuggestedUsers();
   }, []);
 
   const onRefresh = useCallback(() => {
     setRefreshing(true);
     fetchFeed();
+    fetchSuggestedUsers();
   }, []);
 
   const handleUserPress = (userId) => {
@@ -82,9 +99,41 @@ export const FeedScreen = ({ navigation }) => {
           </Text>
         }
         ListEmptyComponent={
-          <Text style={[styles.emptyText, { color: colors.textSecondary }]}>
-            No posts to show. Follow other athletes to see their activity!
-          </Text>
+          <View style={styles.emptyContainer}>
+            <Text style={[styles.emptyText, { color: colors.textSecondary }]}>
+              No posts yet. Follow athletes to see their activity!
+            </Text>
+            
+            {suggestedUsers.length > 0 && (
+              <View style={styles.suggestedSection}>
+                <Text style={[styles.suggestedTitle, { color: colors.text }]}>
+                  Suggested Athletes
+                </Text>
+                {suggestedUsers.slice(0, 5).map((user) => (
+                  <TouchableOpacity
+                    key={user.id}
+                    style={[styles.suggestedUser, { backgroundColor: colors.card }]}
+                    onPress={() => navigation.navigate('UserProfile', { userId: user.id })}
+                  >
+                    <UserAvatar uri={user.avatar} size={50} />
+                    <View style={styles.suggestedUserInfo}>
+                      <Text style={[styles.suggestedUserName, { color: colors.text }]}>
+                        {user.name}
+                      </Text>
+                      {user.location && (
+                        <Text style={[styles.suggestedUserLocation, { color: colors.textSecondary }]}>
+                          {user.location}
+                        </Text>
+                      )}
+                    </View>
+                    <View style={[styles.viewButton, { backgroundColor: colors.primary }]}>
+                      <Text style={styles.viewButtonText}>View</Text>
+                    </View>
+                  </TouchableOpacity>
+                ))}
+              </View>
+            )}
+          </View>
         }
         refreshControl={
           <RefreshControl
@@ -115,9 +164,49 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: SPACING.md,
   },
+  emptyContainer: {
+    paddingVertical: SPACING.lg,
+  },
   emptyText: {
     fontSize: FONT_SIZE.md,
     textAlign: 'center',
-    marginVertical: SPACING.xxl,
+    marginBottom: SPACING.xl,
+  },
+  suggestedSection: {
+    marginTop: SPACING.md,
+  },
+  suggestedTitle: {
+    fontSize: FONT_SIZE.lg,
+    fontWeight: '600',
+    marginBottom: SPACING.md,
+  },
+  suggestedUser: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: SPACING.md,
+    borderRadius: BORDER_RADIUS.md,
+    marginBottom: SPACING.sm,
+  },
+  suggestedUserInfo: {
+    flex: 1,
+    marginLeft: SPACING.md,
+  },
+  suggestedUserName: {
+    fontSize: FONT_SIZE.md,
+    fontWeight: '600',
+  },
+  suggestedUserLocation: {
+    fontSize: FONT_SIZE.sm,
+    marginTop: 2,
+  },
+  viewButton: {
+    paddingHorizontal: SPACING.md,
+    paddingVertical: SPACING.sm,
+    borderRadius: BORDER_RADIUS.sm,
+  },
+  viewButtonText: {
+    color: '#FFFFFF',
+    fontSize: FONT_SIZE.sm,
+    fontWeight: '600',
   },
 });
