@@ -1,0 +1,15 @@
+{
+  "expo": {
+    "extra": {
+      "eas": {
+        "projectId": "c71e8832-c458-4e95-b450-53348453158e"
+      }
+    },
+    "ios": {
+      "bundleIdentifier": "com.biterdi.workspace",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
+    }
+  }
+}
