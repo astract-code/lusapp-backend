@@ -31,8 +31,8 @@ export const PostCard = ({ post, onUserPress, onRacePress }) => {
     sportSubtype: post.sportSubtype
   } : getRaceById(post.raceId);
   
-  // For new_race type, we don't need an author
-  if (post.type !== 'new_race' && !postAuthor) return null;
+  // For new_race and upcoming_race types, we don't need an author
+  if (post.type !== 'new_race' && post.type !== 'upcoming_race' && !postAuthor) return null;
   if (!currentUser) return null;
 
   const handleLike = () => {
@@ -63,7 +63,7 @@ export const PostCard = ({ post, onUserPress, onRacePress }) => {
   return (
     <View style={[styles.container, { backgroundColor: colors.card }]}>
       <View style={styles.header}>
-        {post.type === 'new_race' ? (
+        {(post.type === 'new_race' || post.type === 'upcoming_race') ? (
           <View style={[styles.lusappIcon, { backgroundColor: colors.primary }]}>
             <Text style={styles.lusappIconText}>L</Text>
           </View>
@@ -73,6 +73,8 @@ export const PostCard = ({ post, onUserPress, onRacePress }) => {
         <View style={styles.headerText}>
           {post.type === 'new_race' ? (
             <Text style={[styles.userName, { color: colors.text }]}>New Race Added</Text>
+          ) : post.type === 'upcoming_race' ? (
+            <Text style={[styles.userName, { color: colors.text }]}>Upcoming Race</Text>
           ) : (
             <TouchableOpacity onPress={() => postAuthor?.id && onUserPress(postAuthor.id)}>
               <Text style={[styles.userName, { color: colors.text }]}>{postAuthor?.name}</Text>
@@ -85,10 +87,10 @@ export const PostCard = ({ post, onUserPress, onRacePress }) => {
       </View>
 
       <View style={styles.content}>
-        {post.type === 'new_race' ? (
+        {(post.type === 'new_race' || post.type === 'upcoming_race') ? (
           <View>
             <Text style={[styles.activityText, { color: colors.text }]}>
-              🏁 New race available:{' '}
+              🏁 {post.type === 'upcoming_race' ? 'Check out this race:' : 'New race available:'}{' '}
               <Text style={[styles.raceLink, { color: colors.primary }]} onPress={() => race && onRacePress(race.id)}>
                 {race?.name || post.raceName || 'a race'}
               </Text>

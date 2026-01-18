@@ -90,7 +90,7 @@ router.get('/feed', verifyFirebaseToken, async (req, res) => {
     const racesResult = await pool.query(
       `SELECT r.id, r.name, r.sport_category, r.sport_subtype, r.city, r.country, r.date, r.distance, r.created_at
        FROM races r
-       WHERE r.status = 'approved' 
+       WHERE r.approval_status = 'approved' 
        AND r.created_at > NOW() - INTERVAL '30 days'
        ORDER BY r.created_at DESC
        LIMIT 20`
@@ -117,9 +117,50 @@ router.get('/feed', verifyFirebaseToken, async (req, res) => {
     }));
     
     // Combine posts and recent races, sort by timestamp, and limit
-    const combinedFeed = [...posts, ...recentRaces]
+    let combinedFeed = [...posts, ...recentRaces]
       .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp))
       .slice(0, limit);
+    
+    // If feed is still empty, get popular upcoming races as fallback
+    if (combinedFeed.length === 0) {
+      // Try upcoming races first
+      let fallbackResult = await pool.query(
+        `SELECT r.id, r.name, r.sport_category, r.sport_subtype, r.city, r.country, r.date, r.distance, r.created_at
+         FROM races r
+         WHERE r.date >= CURRENT_DATE
+         ORDER BY r.date ASC
+         LIMIT 20`
+      );
+      
+      // If no upcoming races, get any recent races
+      if (fallbackResult.rows.length === 0) {
+        fallbackResult = await pool.query(
+          `SELECT r.id, r.name, r.sport_category, r.sport_subtype, r.city, r.country, r.date, r.distance, r.created_at
+           FROM races r
+           ORDER BY r.created_at DESC NULLS LAST, r.id DESC
+           LIMIT 20`
+        );
+      }
+      
+      combinedFeed = fallbackResult.rows.map(race => ({
+        id: `upcoming_${race.id}`,
+        userId: null,
+        userName: 'Lusapp',
+        userAvatar: null,
+        type: 'upcoming_race',
+        raceId: race.id.toString(),
+        raceName: race.name,
+        sportCategory: race.sport_category,
+        sportSubtype: race.sport_subtype,
+        city: race.city,
+        country: race.country,
+        date: race.date,
+        distance: race.distance,
+        timestamp: race.created_at || new Date().toISOString(),
+        likedBy: [],
+        comments: []
+      }));
+    }
     
     res.json({ posts: combinedFeed });
     
