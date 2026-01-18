@@ -15,6 +15,8 @@ export const AuthProvider = ({ children }) => {
   const [emailVerified, setEmailVerified] = useState(false);
 
   useEffect(() => {
+    let tokenRefreshInterval = null;
+
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
       console.log('[AUTH] Firebase auth state changed:', firebaseUser ? firebaseUser.uid : 'null');
       
@@ -40,6 +42,24 @@ export const AuthProvider = ({ children }) => {
             await AsyncStorage.setItem('token', idToken);
             await AsyncStorage.setItem('user', JSON.stringify(dbUser));
             console.log('[AUTH] ✅ User fully synced and stored');
+
+            // Set up automatic token refresh every 45 minutes (tokens expire after 1 hour)
+            if (tokenRefreshInterval) {
+              clearInterval(tokenRefreshInterval);
+            }
+            tokenRefreshInterval = setInterval(async () => {
+              try {
+                const currentUser = auth.currentUser;
+                if (currentUser) {
+                  const newToken = await currentUser.getIdToken(true);
+                  setToken(newToken);
+                  await AsyncStorage.setItem('token', newToken);
+                  console.log('[AUTH] Token refreshed automatically');
+                }
+              } catch (error) {
+                console.log('[AUTH] Auto token refresh failed:', error.message);
+              }
+            }, 45 * 60 * 1000); // 45 minutes
           } catch (error) {
             console.error('[AUTH] ❌ Error syncing user with backend:', error);
             console.error('[AUTH] Error details:', error.message);
@@ -57,12 +77,23 @@ export const AuthProvider = ({ children }) => {
         setEmailVerified(false);
         await AsyncStorage.removeItem('token');
         await AsyncStorage.removeItem('user');
+        
+        // Clear token refresh interval on logout
+        if (tokenRefreshInterval) {
+          clearInterval(tokenRefreshInterval);
+          tokenRefreshInterval = null;
+        }
       }
       
       setIsLoading(false);
     });
 
-    return () => unsubscribe();
+    return () => {
+      unsubscribe();
+      if (tokenRefreshInterval) {
+        clearInterval(tokenRefreshInterval);
+      }
+    };
   }, []);
 
   const syncUserWithBackend = async (firebaseUser, idToken) => {
