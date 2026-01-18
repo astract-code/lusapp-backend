@@ -9,6 +9,7 @@ export const API_ENDPOINTS = {
     login: `${API_URL}/api/auth/login`,
     me: `${API_URL}/api/auth/me`,
     sync: `${API_URL}/api/auth/sync`,
+    social: `${API_URL}/api/auth/social`,
     deleteAccount: `${API_URL}/api/auth/account`,
   },
   races: {

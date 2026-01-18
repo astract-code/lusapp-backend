@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
   View,
   Text,
@@ -17,9 +17,15 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
+import * as AppleAuthentication from 'expo-apple-authentication';
+import * as Google from 'expo-auth-session/providers/google';
+import * as WebBrowser from 'expo-web-browser';
+import * as Crypto from 'expo-crypto';
 import { useAuth } from '../context/AuthContext';
 import { SPACING, BORDER_RADIUS, GRADIENTS } from '../constants/theme';
 import haptic from '../utils/haptics';
+
+WebBrowser.maybeCompleteAuthSession();
 
 const backgroundImage = require('../../assets/images/athletes_running_at_sunrise.png');
 
@@ -66,8 +72,20 @@ const InputField = ({
   );
 };
 
+const GOOGLE_IOS_CLIENT_ID = process.env.EXPO_PUBLIC_GOOGLE_IOS_CLIENT_ID || '';
+const GOOGLE_ANDROID_CLIENT_ID = process.env.EXPO_PUBLIC_GOOGLE_ANDROID_CLIENT_ID || '';
+const GOOGLE_WEB_CLIENT_ID = process.env.EXPO_PUBLIC_GOOGLE_WEB_CLIENT_ID || '';
+
+const getGoogleClientIdForPlatform = () => {
+  if (Platform.OS === 'ios') return GOOGLE_IOS_CLIENT_ID;
+  if (Platform.OS === 'android') return GOOGLE_ANDROID_CLIENT_ID;
+  return GOOGLE_WEB_CLIENT_ID;
+};
+
+const hasGoogleConfigForPlatform = Boolean(getGoogleClientIdForPlatform());
+
 export const OnboardingScreen = ({ navigation }) => {
-  const { login, signupWithEmail } = useAuth();
+  const { login, signupWithEmail, signupWithGoogle, signupWithApple } = useAuth();
   
   const [isLogin, setIsLogin] = useState(true);
   const [email, setEmail] = useState('');
@@ -78,12 +96,60 @@ export const OnboardingScreen = ({ navigation }) => {
   const [bio, setBio] = useState('');
   const [favoriteSport, setFavoriteSport] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [isSocialLoading, setIsSocialLoading] = useState(false);
   const [error, setError] = useState('');
   const [ageConfirmed, setAgeConfirmed] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [appleAuthAvailable, setAppleAuthAvailable] = useState(false);
+  const [googleAuthAvailable] = useState(hasGoogleConfigForPlatform);
   
   const buttonScale = useRef(new Animated.Value(1)).current;
+  
+  const googleAuthConfig = hasGoogleConfigForPlatform ? {
+    iosClientId: GOOGLE_IOS_CLIENT_ID || undefined,
+    androidClientId: GOOGLE_ANDROID_CLIENT_ID || undefined,
+    webClientId: GOOGLE_WEB_CLIENT_ID || undefined,
+  } : {
+    iosClientId: 'placeholder.apps.googleusercontent.com',
+    androidClientId: 'placeholder.apps.googleusercontent.com',
+    webClientId: 'placeholder.apps.googleusercontent.com',
+  };
+  
+  const [request, response, promptAsync] = Google.useAuthRequest(googleAuthConfig);
+  
+  useEffect(() => {
+    const checkAppleAuth = async () => {
+      if (Platform.OS === 'ios') {
+        const isAvailable = await AppleAuthentication.isAvailableAsync();
+        setAppleAuthAvailable(isAvailable);
+      }
+    };
+    checkAppleAuth();
+  }, []);
+  
+  useEffect(() => {
+    if (response?.type === 'success') {
+      const { id_token } = response.params;
+      if (id_token) {
+        handleGoogleAuth(id_token);
+      }
+    } else if (response?.type === 'dismiss' || response?.type === 'cancel') {
+      setIsSocialLoading(false);
+    }
+  }, [response]);
+  
+  const handleGoogleAuth = async (idToken) => {
+    setIsSocialLoading(true);
+    setError('');
+    try {
+      await signupWithGoogle(idToken);
+    } catch (err) {
+      setError(err.message || 'Failed to sign in with Google');
+    } finally {
+      setIsSocialLoading(false);
+    }
+  };
 
   const handleEmailAuth = async () => {
     setError('');
@@ -136,12 +202,35 @@ export const OnboardingScreen = ({ navigation }) => {
     }).start();
   };
 
-  const handleAppleSignIn = () => {
-    Alert.alert(
-      'Coming Soon',
-      'Apple sign-in will be available in the next update.',
-      [{ text: 'OK' }]
-    );
+  const handleAppleSignIn = async () => {
+    if (!appleAuthAvailable) {
+      Alert.alert('Not Available', 'Apple Sign-In is not available on this device.');
+      return;
+    }
+    
+    setIsSocialLoading(true);
+    setError('');
+    
+    try {
+      await signupWithApple();
+    } catch (err) {
+      if (err.message !== 'Sign-in was cancelled') {
+        setError(err.message || 'Failed to sign in with Apple');
+      }
+    } finally {
+      setIsSocialLoading(false);
+    }
+  };
+  
+  const handleGoogleSignIn = async () => {
+    if (!googleAuthAvailable || !request) {
+      Alert.alert('Coming Soon', 'Google Sign-In will be available in a future update.');
+      return;
+    }
+    
+    setError('');
+    haptic.light();
+    await promptAsync();
   };
 
   return (
@@ -334,17 +423,45 @@ export const OnboardingScreen = ({ navigation }) => {
 
               <View style={styles.divider}>
                 <View style={styles.dividerLine} />
-                <Text style={styles.dividerText}>or</Text>
+                <Text style={styles.dividerText}>or continue with</Text>
                 <View style={styles.dividerLine} />
               </View>
 
-              <TouchableOpacity
-                style={styles.appleButton}
-                onPress={handleAppleSignIn}
-              >
-                <Text style={styles.appleIcon}></Text>
-                <Text style={styles.appleButtonText}>Continue with Apple</Text>
-              </TouchableOpacity>
+              <View style={styles.socialButtonsContainer}>
+                {Platform.OS === 'ios' && appleAuthAvailable && (
+                  <TouchableOpacity
+                    style={styles.appleButton}
+                    onPress={handleAppleSignIn}
+                    disabled={isSocialLoading}
+                  >
+                    {isSocialLoading ? (
+                      <ActivityIndicator color="#000000" />
+                    ) : (
+                      <>
+                        <Text style={styles.appleIcon}></Text>
+                        <Text style={styles.appleButtonText}>Apple</Text>
+                      </>
+                    )}
+                  </TouchableOpacity>
+                )}
+
+                {googleAuthAvailable && (
+                  <TouchableOpacity
+                    style={styles.googleButton}
+                    onPress={handleGoogleSignIn}
+                    disabled={isSocialLoading || !request}
+                  >
+                    {isSocialLoading ? (
+                      <ActivityIndicator color="#000000" />
+                    ) : (
+                      <>
+                        <Text style={styles.googleIcon}>G</Text>
+                        <Text style={styles.googleButtonText}>Google</Text>
+                      </>
+                    )}
+                  </TouchableOpacity>
+                )}
+              </View>
             </View>
 
             <Text style={styles.termsText}>
@@ -602,20 +719,47 @@ const styles = StyleSheet.create({
     color: '#64748B',
     fontSize: 13,
   },
+  socialButtonsContainer: {
+    flexDirection: 'row',
+    gap: SPACING.md,
+  },
   appleButton: {
+    flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#FFFFFF',
     borderRadius: BORDER_RADIUS.lg,
     paddingVertical: SPACING.md,
+    minHeight: 50,
   },
   appleIcon: {
     fontSize: 20,
     color: '#000000',
-    marginRight: SPACING.sm,
+    marginRight: SPACING.xs,
   },
   appleButtonText: {
+    color: '#000000',
+    fontSize: 16,
+    fontWeight: '600',
+  },
+  googleButton: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#FFFFFF',
+    borderRadius: BORDER_RADIUS.lg,
+    paddingVertical: SPACING.md,
+    minHeight: 50,
+  },
+  googleIcon: {
+    fontSize: 18,
+    color: '#4285F4',
+    fontWeight: 'bold',
+    marginRight: SPACING.xs,
+  },
+  googleButtonText: {
     color: '#000000',
     fontSize: 16,
     fontWeight: '600',

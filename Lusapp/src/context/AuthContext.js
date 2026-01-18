@@ -1,9 +1,12 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Platform } from 'react-native';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../config/firebase';
 import { firebaseAuthService } from '../services/firebaseAuth';
 import { API_ENDPOINTS } from '../config/api';
+import * as AppleAuthentication from 'expo-apple-authentication';
+import * as Crypto from 'expo-crypto';
 
 const AuthContext = createContext();
 
@@ -157,8 +160,108 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const signupWithGoogle = async (idToken) => {
+    try {
+      console.log('[AUTH] Starting Google sign-in...');
+      const response = await fetch(API_ENDPOINTS.auth.social, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          provider: 'google',
+          id_token: idToken,
+        }),
+      });
+      
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(`Google sign-in failed: ${errorText}`);
+      }
+      
+      const data = await response.json();
+      console.log('[AUTH] Google sign-in successful');
+      
+      setToken(data.token);
+      setUser(data.user);
+      setEmailVerified(true);
+      
+      await AsyncStorage.setItem('token', data.token);
+      await AsyncStorage.setItem('user', JSON.stringify(data.user));
+      
+      return data;
+    } catch (error) {
+      console.error('[AUTH] Google sign-in error:', error);
+      throw error;
+    }
+  };
+
   const signupWithApple = async () => {
-    throw new Error('Apple sign-in not yet implemented. Please use email signup.');
+    try {
+      console.log('[AUTH] Starting Apple sign-in...');
+      
+      if (Platform.OS !== 'ios') {
+        throw new Error('Apple Sign-In is only available on iOS');
+      }
+      
+      const isAvailable = await AppleAuthentication.isAvailableAsync();
+      if (!isAvailable) {
+        throw new Error('Apple Sign-In is not available on this device');
+      }
+      
+      const nonce = await Crypto.digestStringAsync(
+        Crypto.CryptoDigestAlgorithm.SHA256,
+        Math.random().toString(36).substring(2, 15)
+      );
+      
+      const credential = await AppleAuthentication.signInAsync({
+        requestedScopes: [
+          AppleAuthentication.AppleAuthenticationScope.FULL_NAME,
+          AppleAuthentication.AppleAuthenticationScope.EMAIL,
+        ],
+        nonce,
+      });
+      
+      const response = await fetch(API_ENDPOINTS.auth.social, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          provider: 'apple',
+          id_token: credential.identityToken,
+          user: credential.user,
+          full_name: credential.fullName,
+          email: credential.email,
+          nonce,
+        }),
+      });
+      
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(`Apple sign-in failed: ${errorText}`);
+      }
+      
+      const data = await response.json();
+      console.log('[AUTH] Apple sign-in successful');
+      
+      setToken(data.token);
+      setUser(data.user);
+      setEmailVerified(true);
+      
+      await AsyncStorage.setItem('token', data.token);
+      await AsyncStorage.setItem('user', JSON.stringify(data.user));
+      
+      return data;
+    } catch (error) {
+      if (error.code === 'ERR_REQUEST_CANCELED' || 
+          error.code === 'ERR_CANCELED' ||
+          error.code === 'ERR_REQUEST_CANCELLED') {
+        throw new Error('Sign-in was cancelled');
+      }
+      console.error('[AUTH] Apple sign-in error:', error);
+      throw error;
+    }
   };
 
   const updateUser = async (updatedUser) => {
@@ -229,6 +332,7 @@ export const AuthProvider = ({ children }) => {
         emailVerified,
         login,
         signupWithEmail,
+        signupWithGoogle,
         signupWithApple,
         logout,
         updateUser,

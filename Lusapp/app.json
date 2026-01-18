@@ -4,6 +4,7 @@
     "slug": "lusapp",
     "version": "1.0.0",
     "sdkVersion": "54.0.0",
+    "scheme": "lusapp",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -16,7 +17,8 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.lusapp.mobile",
-      "buildNumber": "32",
+      "buildNumber": "33",
+      "usesAppleSignIn": true,
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false,
         "NSPhotoLibraryUsageDescription": "Lusapp needs access to your photo library so you can upload a profile picture to personalize your athlete profile.",
@@ -44,6 +46,9 @@
         "projectId": "17011401-d4d9-4d78-a931-3e960fb21539"
       },
       "apiUrl": "https://lusapp-backend-1.onrender.com"
-    }
+    },
+    "plugins": [
+      "expo-web-browser"
+    ]
   }
 }

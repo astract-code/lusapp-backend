@@ -422,6 +422,131 @@ router.delete('/users/:userId/unfollow', verifyFirebaseToken, async (req, res) =
   }
 });
 
+const GOOGLE_CLIENT_IDS = [
+  process.env.GOOGLE_IOS_CLIENT_ID,
+  process.env.GOOGLE_ANDROID_CLIENT_ID,
+  process.env.GOOGLE_WEB_CLIENT_ID,
+].filter(Boolean);
+
+router.post('/social', async (req, res) => {
+  console.log('[SOCIAL AUTH] Processing social sign-in request');
+  
+  try {
+    const { provider, id_token, user: appleUserId, full_name, email: appleEmail, nonce } = req.body;
+    
+    if (!provider || !id_token) {
+      return res.status(400).json({ error: 'Provider and id_token are required' });
+    }
+    
+    let email, name, providerId;
+    
+    if (provider === 'google') {
+      try {
+        const tokenInfoResponse = await fetch(`https://oauth2.googleapis.com/tokeninfo?id_token=${id_token}`);
+        if (!tokenInfoResponse.ok) {
+          return res.status(401).json({ error: 'Invalid Google token' });
+        }
+        const googleUser = await tokenInfoResponse.json();
+        
+        if (GOOGLE_CLIENT_IDS.length > 0 && !GOOGLE_CLIENT_IDS.includes(googleUser.aud)) {
+          console.error('[SOCIAL AUTH] Google token audience mismatch:', googleUser.aud);
+          return res.status(401).json({ error: 'Invalid token audience' });
+        }
+        
+        const now = Math.floor(Date.now() / 1000);
+        if (googleUser.exp && parseInt(googleUser.exp) < now) {
+          console.error('[SOCIAL AUTH] Google token expired');
+          return res.status(401).json({ error: 'Token expired' });
+        }
+        
+        email = googleUser.email;
+        name = googleUser.name || googleUser.email.split('@')[0];
+        providerId = `google_${googleUser.sub}`;
+      } catch (err) {
+        console.error('[SOCIAL AUTH] Google token verification failed:', err);
+        return res.status(401).json({ error: 'Failed to verify Google token' });
+      }
+    } else if (provider === 'apple') {
+      if (!appleUserId) {
+        return res.status(400).json({ error: 'Apple user ID is required' });
+      }
+      
+      email = appleEmail;
+      if (full_name) {
+        const firstName = full_name.givenName || '';
+        const lastName = full_name.familyName || '';
+        name = `${firstName} ${lastName}`.trim() || (email ? email.split('@')[0] : 'Apple User');
+      } else {
+        name = email ? email.split('@')[0] : 'Apple User';
+      }
+      providerId = `apple_${appleUserId}`;
+    } else {
+      return res.status(400).json({ error: 'Unsupported provider' });
+    }
+    
+    let user = await pool.query(
+      'SELECT * FROM users WHERE social_provider_id = $1',
+      [providerId]
+    );
+    
+    if (user.rows.length === 0 && email) {
+      user = await pool.query(
+        'SELECT * FROM users WHERE email = $1',
+        [email]
+      );
+      
+      if (user.rows.length > 0) {
+        await pool.query(
+          'UPDATE users SET social_provider_id = $1, social_provider = $2 WHERE id = $3',
+          [providerId, provider, user.rows[0].id]
+        );
+        user = await pool.query('SELECT * FROM users WHERE id = $1', [user.rows[0].id]);
+      }
+    }
+    
+    if (user.rows.length === 0) {
+      console.log('[SOCIAL AUTH] Creating new user for provider:', provider);
+      const result = await pool.query(
+        `INSERT INTO users (email, name, social_provider, social_provider_id, location, bio) 
+         VALUES ($1, $2, $3, $4, $5, $6) 
+         RETURNING *`,
+        [email || `${providerId}@lusapp.local`, name, provider, providerId, 'Unknown', '']
+      );
+      user = result;
+    }
+    
+    const dbUser = user.rows[0];
+    
+    const token = jwt.sign(
+      { userId: dbUser.id, email: dbUser.email },
+      JWT_SECRET,
+      { expiresIn: '30d' }
+    );
+    
+    const userData = {
+      id: dbUser.id.toString(),
+      email: dbUser.email,
+      name: dbUser.name,
+      location: dbUser.location,
+      bio: dbUser.bio,
+      favoriteSport: dbUser.favorite_sport,
+      avatar: getFullAvatarUrl(req, dbUser.avatar),
+      totalRaces: dbUser.total_races,
+      joinedRaces: dbUser.joined_races || [],
+      completedRaces: dbUser.completed_races || [],
+      following: dbUser.following || [],
+      followers: dbUser.followers || [],
+    };
+    
+    console.log('[SOCIAL AUTH] Successfully authenticated user:', dbUser.id);
+    res.json({ token, user: userData });
+    
+  } catch (error) {
+    console.error('[SOCIAL AUTH] Error:', error);
+    res.status(500).json({ error: 'Failed to authenticate with social provider' });
+  }
+});
+
 router.post('/sync', verifyFirebaseTokenOnly, async (req, res) => {
   console.log('🔍 [AUTH SYNC] Starting user sync...');
   console.log('🔍 [AUTH SYNC] Request body:', JSON.stringify(req.body));
