@@ -14,7 +14,7 @@ import { useAppStore } from './src/context/AppContext';
 const AuthStack = createNativeStackNavigator();
 
 const AppContent = () => {
-  const { user, firebaseUser, emailVerified, isLoading } = useAuth();
+  const { user, token, firebaseUser, emailVerified, isLoading } = useAuth();
   const { isDarkMode } = useTheme();
   const fetchRaces = useAppStore((state) => state.fetchRaces);
 
@@ -28,14 +28,20 @@ const AppContent = () => {
     return null;
   }
 
+  const isAuthenticated = !!user && !!token;
+  const isSocialAuth = isAuthenticated && !firebaseUser;
+  const isFirebaseAuth = !!firebaseUser;
+
   return (
     <NavigationContainer>
       <StatusBar style={isDarkMode ? 'light' : 'dark'} />
-      {!firebaseUser ? (
+      {!isAuthenticated && !isFirebaseAuth ? (
         <AuthStack.Navigator screenOptions={{ headerShown: false }}>
           <AuthStack.Screen name="Onboarding" component={OnboardingScreen} />
           <AuthStack.Screen name="ForgotPassword" component={ForgotPasswordScreen} />
         </AuthStack.Navigator>
+      ) : isSocialAuth ? (
+        <AppNavigator />
       ) : !emailVerified ? (
         <EmailVerificationScreen />
       ) : (
