@@ -7,6 +7,7 @@ import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
 import { SPACING, FONT_SIZE, BORDER_RADIUS } from '../constants/theme';
 import API_URL from '../config/api';
+import { fetchWithAuth } from '../utils/apiClient';
 
 export const FeedScreen = ({ navigation }) => {
   const { colors } = useTheme();
@@ -18,11 +19,7 @@ export const FeedScreen = ({ navigation }) => {
 
   const fetchFeed = async () => {
     try {
-      const response = await fetch(`${API_URL}/api/posts/feed`, {
-        headers: {
-          'Authorization': `Bearer ${token}`,
-        },
-      });
+      const response = await fetchWithAuth(`${API_URL}/api/posts/feed`);
 
       if (response.ok) {
         const data = await response.json();
@@ -37,11 +34,7 @@ export const FeedScreen = ({ navigation }) => {
 
   const fetchSuggestedUsers = async () => {
     try {
-      const response = await fetch(`${API_URL}/api/auth/users/suggested`, {
-        headers: {
-          'Authorization': `Bearer ${token}`,
-        },
-      });
+      const response = await fetchWithAuth(`${API_URL}/api/auth/users/suggested`);
 
       if (response.ok) {
         const data = await response.json();
