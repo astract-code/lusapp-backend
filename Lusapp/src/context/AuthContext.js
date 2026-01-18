@@ -271,10 +271,29 @@ export const AuthProvider = ({ children }) => {
 
   const logout = async () => {
     try {
-      await firebaseAuthService.logout();
+      // Clear local state first
+      setToken(null);
+      setUser(null);
+      setEmailVerified(false);
+      
+      // Clear AsyncStorage
+      await AsyncStorage.removeItem('token');
+      await AsyncStorage.removeItem('user');
+      
+      // Only call Firebase logout if there's a Firebase user
+      if (firebaseUser) {
+        await firebaseAuthService.logout();
+      }
+      
+      console.log('[AUTH] Logout successful');
     } catch (error) {
       console.error('Logout error:', error);
-      throw error;
+      // Still clear state even if Firebase logout fails
+      setToken(null);
+      setUser(null);
+      setEmailVerified(false);
+      await AsyncStorage.removeItem('token');
+      await AsyncStorage.removeItem('user');
     }
   };
 
