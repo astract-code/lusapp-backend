@@ -1,6 +1,6 @@
 const express = require('express');
 const { Pool } = require('pg');
-const { verifyFirebaseToken } = require('../middleware/firebaseAuth');
+const { combinedAuthMiddleware } = require('../middleware/authMiddleware');
 
 const router = express.Router();
 
@@ -9,7 +9,7 @@ const pool = new Pool({
   ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false,
 });
 
-router.post('/', verifyFirebaseToken, async (req, res) => {
+router.post('/', combinedAuthMiddleware, async (req, res) => {
   try {
     const { type, raceId, content } = req.body;
     const userId = req.user.userId;
@@ -48,7 +48,7 @@ router.post('/', verifyFirebaseToken, async (req, res) => {
   }
 });
 
-router.get('/feed', verifyFirebaseToken, async (req, res) => {
+router.get('/feed', combinedAuthMiddleware, async (req, res) => {
   try {
     const userId = req.user.userId;
     const limit = parseInt(req.query.limit) || 50;
@@ -170,7 +170,7 @@ router.get('/feed', verifyFirebaseToken, async (req, res) => {
   }
 });
 
-router.post('/:postId/like', verifyFirebaseToken, async (req, res) => {
+router.post('/:postId/like', combinedAuthMiddleware, async (req, res) => {
   try {
     const postId = parseInt(req.params.postId, 10);
     const userId = req.user.userId.toString();
@@ -202,7 +202,7 @@ router.post('/:postId/like', verifyFirebaseToken, async (req, res) => {
   }
 });
 
-router.delete('/:postId/unlike', verifyFirebaseToken, async (req, res) => {
+router.delete('/:postId/unlike', combinedAuthMiddleware, async (req, res) => {
   try {
     const postId = parseInt(req.params.postId, 10);
     const userId = req.user.userId.toString();
@@ -234,7 +234,7 @@ router.delete('/:postId/unlike', verifyFirebaseToken, async (req, res) => {
   }
 });
 
-router.post('/:postId/comment', verifyFirebaseToken, async (req, res) => {
+router.post('/:postId/comment', combinedAuthMiddleware, async (req, res) => {
   try {
     const postId = parseInt(req.params.postId, 10);
     const userId = req.user.userId;
