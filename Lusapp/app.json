@@ -31,11 +31,23 @@
         "backgroundColor": "#0B0F1A"
       },
       "package": "com.lusapp.mobile",
-      "versionCode": 16,
+      "versionCode": 17,
       "edgeToEdgeEnabled": true,
       "permissions": [
         "android.permission.READ_MEDIA_IMAGES",
         "android.permission.CAMERA"
+      ],
+      "intentFilters": [
+        {
+          "action": "VIEW",
+          "autoVerify": true,
+          "data": [
+            {
+              "scheme": "lusapp"
+            }
+          ],
+          "category": ["BROWSABLE", "DEFAULT"]
+        }
       ]
     },
     "web": {

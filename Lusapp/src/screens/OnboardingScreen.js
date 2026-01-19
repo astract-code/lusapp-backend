@@ -21,6 +21,8 @@ import * as AppleAuthentication from 'expo-apple-authentication';
 import * as Google from 'expo-auth-session/providers/google';
 import * as WebBrowser from 'expo-web-browser';
 import * as Crypto from 'expo-crypto';
+import { makeRedirectUri } from 'expo-auth-session';
+import Constants from 'expo-constants';
 import { useAuth } from '../context/AuthContext';
 import { SPACING, BORDER_RADIUS, GRADIENTS } from '../constants/theme';
 import haptic from '../utils/haptics';
@@ -106,10 +108,17 @@ export const OnboardingScreen = ({ navigation }) => {
   
   const buttonScale = useRef(new Animated.Value(1)).current;
   
+  const isExpoGo = Constants.appOwnership === 'expo';
+  
+  const redirectUri = isExpoGo
+    ? makeRedirectUri({ useProxy: true })
+    : makeRedirectUri({ scheme: 'lusapp', path: 'redirect' });
+  
   const googleAuthConfig = hasGoogleConfigForPlatform ? {
     iosClientId: GOOGLE_IOS_CLIENT_ID || undefined,
     androidClientId: GOOGLE_ANDROID_CLIENT_ID || undefined,
     webClientId: GOOGLE_WEB_CLIENT_ID || undefined,
+    redirectUri,
   } : {
     iosClientId: 'placeholder.apps.googleusercontent.com',
     androidClientId: 'placeholder.apps.googleusercontent.com',
