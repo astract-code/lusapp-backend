@@ -3,12 +3,13 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const fetchWithAuth = async (url, options = {}, retryCount = 0) => {
   const currentUser = auth.currentUser;
+  let token = await AsyncStorage.getItem('token');
   
-  if (!currentUser) {
+  // Support both Firebase users and social auth users (Apple/Google Sign-In)
+  // Social auth users have a backend JWT token but no Firebase currentUser
+  if (!currentUser && !token) {
     throw new Error('User not authenticated');
   }
-  
-  let token = await AsyncStorage.getItem('token');
   
   const fetchOptions = {
     ...options,
@@ -21,7 +22,9 @@ export const fetchWithAuth = async (url, options = {}, retryCount = 0) => {
   
   const response = await fetch(url, fetchOptions);
   
-  if (response.status === 401 && retryCount < 1) {
+  // Token refresh only works for Firebase users
+  // Social auth users with expired tokens need to re-login
+  if (response.status === 401 && retryCount < 1 && currentUser) {
     try {
       const newToken = await currentUser.getIdToken(true);
       await AsyncStorage.setItem('token', newToken);
