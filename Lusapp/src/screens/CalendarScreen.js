@@ -181,7 +181,8 @@ export const CalendarScreen = ({ navigation }) => {
   const [completionDataMap, setCompletionDataMap] = useState({});
 
   const fetchCompletionData = useCallback(async () => {
-    if (!token || !user?.id || !user?.completed_races?.length) return;
+    const completedRaces = user?.completedRaces || user?.completed_races || [];
+    if (!token || !user?.id || !completedRaces.length) return;
     
     try {
       const response = await fetch(`${API_BASE_URL}/api/users/${user.id}/completions`, {
@@ -201,14 +202,14 @@ export const CalendarScreen = ({ navigation }) => {
     } catch (error) {
       console.error('Error fetching completion data:', error);
     }
-  }, [token, user?.id, user?.completed_races]);
+  }, [token, user?.id, user?.completedRaces, user?.completed_races]);
 
   useEffect(() => {
     fetchCompletionData();
   }, [fetchCompletionData]);
 
-  const joinedRaceIds = user?.joined_races || [];
-  const completedRaceIds = user?.completed_races || [];
+  const joinedRaceIds = user?.joinedRaces || user?.joined_races || [];
+  const completedRaceIds = user?.completedRaces || user?.completed_races || [];
   
   const today = new Date();
   today.setHours(0, 0, 0, 0);

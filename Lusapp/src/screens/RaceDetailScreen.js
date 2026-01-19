@@ -73,7 +73,7 @@ export const RaceDetailScreen = ({ route, navigation }) => {
   const race = getRaceById(raceId);
   
   const isPastRace = race && new Date(race.date) < new Date();
-  const isCompleted = user?.completed_races?.includes(raceId.toString());
+  const isCompleted = (user?.completedRaces || user?.completed_races || []).includes(raceId.toString());
 
   // Refresh race data when screen comes into focus
   useFocusEffect(
