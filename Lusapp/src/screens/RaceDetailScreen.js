@@ -321,6 +321,8 @@ export const RaceDetailScreen = ({ route, navigation }) => {
             ...user,
             joined_races: (user.joined_races || []).filter(id => id.toString() !== raceId.toString())
           });
+          setRaceGroup(null);
+          setRegisteredUsers(registeredUsers.filter(u => u.id !== user.id));
         } else {
           registerForRace(raceId, user.id);
           updateUser({
@@ -328,7 +330,9 @@ export const RaceDetailScreen = ({ route, navigation }) => {
             joined_races: [...(user.joined_races || []), raceId.toString()]
           });
           fetchRaceGroup();
+          setRegisteredUsers([...registeredUsers, { id: user.id, name: user.name, avatar: user.avatar }]);
         }
+        fetchRaces();
       } else {
         const error = await response.json();
         Alert.alert('Error', error.error || 'Failed to update registration');
