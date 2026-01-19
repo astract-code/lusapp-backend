@@ -17,6 +17,56 @@ export const AuthProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [emailVerified, setEmailVerified] = useState(false);
 
+  // Load social auth users from AsyncStorage on app startup
+  useEffect(() => {
+    const loadStoredAuth = async () => {
+      try {
+        const storedToken = await AsyncStorage.getItem('token');
+        const storedUser = await AsyncStorage.getItem('user');
+        
+        if (storedToken && storedUser) {
+          const parsedUser = JSON.parse(storedUser);
+          // Check if this is a social auth user (no Firebase UID means social auth)
+          if (parsedUser && !parsedUser.firebase_uid) {
+            console.log('[AUTH] Loading social auth user from storage:', parsedUser.id);
+            setToken(storedToken);
+            setUser(parsedUser);
+            setEmailVerified(true);
+            
+            // Refresh user data from backend to get latest joinedRaces
+            try {
+              const response = await fetch(API_ENDPOINTS.auth.me, {
+                headers: {
+                  'Authorization': `Bearer ${storedToken}`,
+                },
+              });
+              
+              if (response.ok) {
+                const freshUser = await response.json();
+                console.log('[AUTH] Refreshed social user data, joinedRaces:', freshUser.joinedRaces);
+                setUser(freshUser);
+                await AsyncStorage.setItem('user', JSON.stringify(freshUser));
+              } else if (response.status === 401) {
+                // Token expired, clear auth
+                console.log('[AUTH] Social auth token expired, clearing');
+                setToken(null);
+                setUser(null);
+                await AsyncStorage.removeItem('token');
+                await AsyncStorage.removeItem('user');
+              }
+            } catch (refreshError) {
+              console.log('[AUTH] Failed to refresh social user, using cached:', refreshError.message);
+            }
+          }
+        }
+      } catch (error) {
+        console.error('[AUTH] Error loading stored auth:', error);
+      }
+    };
+    
+    loadStoredAuth();
+  }, []);
+
   useEffect(() => {
     let tokenRefreshInterval = null;
 
@@ -312,6 +362,38 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  // Refresh user data from backend (works for both Firebase and social auth users)
+  const refreshUser = async () => {
+    try {
+      const currentToken = token || await AsyncStorage.getItem('token');
+      if (!currentToken) {
+        console.log('[AUTH] No token available for refreshUser');
+        return null;
+      }
+      
+      console.log('[AUTH] Refreshing user data from backend...');
+      const response = await fetch(API_ENDPOINTS.auth.me, {
+        headers: {
+          'Authorization': `Bearer ${currentToken}`,
+        },
+      });
+      
+      if (response.ok) {
+        const freshUser = await response.json();
+        console.log('[AUTH] User refreshed, joinedRaces:', freshUser.joinedRaces?.length || 0);
+        setUser(freshUser);
+        await AsyncStorage.setItem('user', JSON.stringify(freshUser));
+        return freshUser;
+      } else {
+        console.error('[AUTH] Failed to refresh user:', response.status);
+        return null;
+      }
+    } catch (error) {
+      console.error('[AUTH] Error refreshing user:', error);
+      return null;
+    }
+  };
+
   const refreshEmailVerificationStatus = async () => {
     try {
       const isVerified = await firebaseAuthService.checkEmailVerified();
@@ -356,6 +438,7 @@ export const AuthProvider = ({ children }) => {
         logout,
         updateUser,
         refreshToken,
+        refreshUser,
         refreshEmailVerificationStatus,
         firebaseAuthService,
       }}
