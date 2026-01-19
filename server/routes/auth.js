@@ -2,7 +2,7 @@ const express = require('express');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { Pool } = require('pg');
-const { authMiddleware, JWT_SECRET } = require('../middleware/authMiddleware');
+const { authMiddleware, combinedAuthMiddleware, JWT_SECRET } = require('../middleware/authMiddleware');
 const { verifyFirebaseToken, verifyFirebaseTokenOnly } = require('../middleware/firebaseAuth');
 
 const router = express.Router();
@@ -145,7 +145,7 @@ router.post('/login', async (req, res) => {
   }
 });
 
-router.get('/me', verifyFirebaseToken, async (req, res) => {
+router.get('/me', combinedAuthMiddleware, async (req, res) => {
   try {
     const result = await pool.query(
       `SELECT id, email, name, location, bio, favorite_sport, avatar, 
@@ -181,7 +181,7 @@ router.get('/me', verifyFirebaseToken, async (req, res) => {
   }
 });
 
-router.put('/update-profile', verifyFirebaseToken, async (req, res) => {
+router.put('/update-profile', combinedAuthMiddleware, async (req, res) => {
   try {
     const userId = req.user.userId;
     const { name, bio, location, favoriteSport } = req.body;
@@ -227,7 +227,7 @@ router.put('/update-profile', verifyFirebaseToken, async (req, res) => {
   }
 });
 
-router.delete('/account', verifyFirebaseToken, async (req, res) => {
+router.delete('/account', combinedAuthMiddleware, async (req, res) => {
   const client = await pool.connect();
   
   try {
@@ -270,7 +270,7 @@ router.delete('/account', verifyFirebaseToken, async (req, res) => {
   }
 });
 
-router.get('/users/batch', verifyFirebaseToken, async (req, res) => {
+router.get('/users/batch', combinedAuthMiddleware, async (req, res) => {
   try {
     const { ids } = req.query;
     
@@ -314,7 +314,7 @@ router.get('/users/batch', verifyFirebaseToken, async (req, res) => {
   }
 });
 
-router.post('/users/:userId/follow', verifyFirebaseToken, async (req, res) => {
+router.post('/users/:userId/follow', combinedAuthMiddleware, async (req, res) => {
   const client = await pool.connect();
   
   try {
@@ -373,7 +373,7 @@ router.post('/users/:userId/follow', verifyFirebaseToken, async (req, res) => {
   }
 });
 
-router.delete('/users/:userId/unfollow', verifyFirebaseToken, async (req, res) => {
+router.delete('/users/:userId/unfollow', combinedAuthMiddleware, async (req, res) => {
   const client = await pool.connect();
   
   try {
