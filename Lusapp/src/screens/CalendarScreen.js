@@ -208,8 +208,9 @@ export const CalendarScreen = ({ navigation }) => {
     fetchCompletionData();
   }, [fetchCompletionData]);
 
-  const joinedRaceIds = user?.joinedRaces || user?.joined_races || [];
-  const completedRaceIds = user?.completedRaces || user?.completed_races || [];
+  // Normalize to strings for consistent comparison with race.id.toString()
+  const joinedRaceIds = (user?.joinedRaces || user?.joined_races || []).map(String);
+  const completedRaceIds = (user?.completedRaces || user?.completed_races || []).map(String);
   
   const today = new Date();
   today.setHours(0, 0, 0, 0);

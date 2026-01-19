@@ -113,12 +113,16 @@ export const UserProfileScreen = ({ route, navigation }) => {
     );
   }
 
+  // Normalize to strings for consistent comparison
+  const userJoinedRaceIds = (user.joinedRaces || user.joined_races || []).map(String);
+  const userCompletedRaceIds = (user.completedRaces || user.completed_races || []).map(String);
+  
   const joinedRaces = races.filter((race) =>
-    (user.joinedRaces || user.joined_races || []).includes(race.id.toString())
+    userJoinedRaceIds.includes(race.id.toString())
   );
 
   const completedRaces = races.filter((race) =>
-    (user.completedRaces || user.completed_races || []).includes(race.id.toString())
+    userCompletedRaceIds.includes(race.id.toString())
   );
 
   return (

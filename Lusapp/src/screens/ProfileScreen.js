@@ -219,8 +219,9 @@ export const ProfileScreen = ({ navigation }) => {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
 
-  const joinedRaceIds = (authUser.joinedRaces || authUser.joined_races || []).map(id => id.toString());
-  const completedRaceIds = (authUser.completedRaces || authUser.completed_races || []).map(id => id.toString());
+  // Normalize to strings for consistent comparison with race.id.toString()
+  const joinedRaceIds = (authUser?.joinedRaces || authUser?.joined_races || []).map(String);
+  const completedRaceIds = (authUser?.completedRaces || authUser?.completed_races || []).map(String);
 
   const upcomingRaces = races.filter((race) => {
     const raceDate = new Date(race.date);
