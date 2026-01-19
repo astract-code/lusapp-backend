@@ -22,6 +22,22 @@ const getFullAvatarUrl = (req, avatarPath) => {
   return `${protocol}://${host}${avatarPath}`;
 };
 
+// Normalize PostgreSQL arrays to JavaScript arrays of strings
+// Handles cases where pg returns "{1,2,3}" string format or actual arrays
+const normalizeArray = (value) => {
+  if (!value) return [];
+  if (Array.isArray(value)) {
+    return value.map(String);
+  }
+  if (typeof value === 'string') {
+    // Handle PostgreSQL array string format: "{1,2,3}"
+    const cleaned = value.replace(/^\{|\}$/g, '');
+    if (!cleaned) return [];
+    return cleaned.split(',').map(s => s.trim()).filter(Boolean);
+  }
+  return [];
+};
+
 router.post('/signup', async (req, res) => {
   try {
     const { email, password, name, location, bio, favoriteSport } = req.body;
@@ -132,10 +148,10 @@ router.post('/login', async (req, res) => {
         favoriteSport: user.favorite_sport,
         avatar: getFullAvatarUrl(req, user.avatar),
         totalRaces: user.total_races,
-        joinedRaces: user.joined_races || [],
-        completedRaces: user.completed_races || [],
-        following: user.following || [],
-        followers: user.followers || []
+        joinedRaces: normalizeArray(user.joined_races),
+        completedRaces: normalizeArray(user.completed_races),
+        following: normalizeArray(user.following),
+        followers: normalizeArray(user.followers)
       }
     });
     
@@ -169,10 +185,10 @@ router.get('/me', combinedAuthMiddleware, async (req, res) => {
       favoriteSport: user.favorite_sport,
       avatar: getFullAvatarUrl(req, user.avatar),
       totalRaces: user.total_races,
-      joinedRaces: user.joined_races || [],
-      completedRaces: user.completed_races || [],
-      following: user.following || [],
-      followers: user.followers || []
+      joinedRaces: normalizeArray(user.joined_races),
+      completedRaces: normalizeArray(user.completed_races),
+      following: normalizeArray(user.following),
+      followers: normalizeArray(user.followers)
     });
     
   } catch (error) {
@@ -301,10 +317,10 @@ router.get('/users/batch', combinedAuthMiddleware, async (req, res) => {
       favoriteSport: user.favorite_sport,
       avatar: getFullAvatarUrl(req, user.avatar),
       totalRaces: user.total_races,
-      joinedRaces: user.joined_races || [],
-      completedRaces: user.completed_races || [],
-      following: user.following || [],
-      followers: user.followers || []
+      joinedRaces: normalizeArray(user.joined_races),
+      completedRaces: normalizeArray(user.completed_races),
+      following: normalizeArray(user.following),
+      followers: normalizeArray(user.followers)
     }));
     
     res.json({ users });
@@ -532,13 +548,13 @@ router.post('/social', async (req, res) => {
       favoriteSport: dbUser.favorite_sport,
       avatar: getFullAvatarUrl(req, dbUser.avatar),
       totalRaces: dbUser.total_races,
-      joinedRaces: dbUser.joined_races || [],
-      completedRaces: dbUser.completed_races || [],
-      following: dbUser.following || [],
-      followers: dbUser.followers || [],
+      joinedRaces: normalizeArray(dbUser.joined_races),
+      completedRaces: normalizeArray(dbUser.completed_races),
+      following: normalizeArray(dbUser.following),
+      followers: normalizeArray(dbUser.followers),
     };
     
-    console.log('[SOCIAL AUTH] Successfully authenticated user:', dbUser.id);
+    console.log('[SOCIAL AUTH] Successfully authenticated user:', dbUser.id, 'joinedRaces:', userData.joinedRaces);
     res.json({ token, user: userData });
     
   } catch (error) {
@@ -623,10 +639,12 @@ router.post('/sync', verifyFirebaseTokenOnly, async (req, res) => {
       favoriteSport: dbUser.favorite_sport,
       avatar: getFullAvatarUrl(req, dbUser.avatar),
       totalRaces: dbUser.total_races,
-      joined_races: dbUser.joined_races || [],
-      completed_races: dbUser.completed_races || [],
-      followers: dbUser.followers || [],
-      following: dbUser.following || [],
+      joinedRaces: normalizeArray(dbUser.joined_races),
+      completedRaces: normalizeArray(dbUser.completed_races),
+      joined_races: normalizeArray(dbUser.joined_races),
+      completed_races: normalizeArray(dbUser.completed_races),
+      followers: normalizeArray(dbUser.followers),
+      following: normalizeArray(dbUser.following),
       created_at: dbUser.created_at,
     };
     
