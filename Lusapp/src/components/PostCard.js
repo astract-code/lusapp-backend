@@ -5,6 +5,8 @@ import { SPACING, BORDER_RADIUS, FONT_SIZE } from '../constants/theme';
 import { useTheme } from '../context/ThemeContext';
 import { useAppStore } from '../context/AppContext';
 import { useAuth } from '../context/AuthContext';
+import { fetchWithAuth } from '../utils/apiClient';
+import API_URL from '../config/api';
 
 export const PostCard = ({ post, onUserPress, onRacePress }) => {
   const { colors } = useTheme();
@@ -35,14 +37,56 @@ export const PostCard = ({ post, onUserPress, onRacePress }) => {
   if (post.type !== 'new_race' && post.type !== 'upcoming_race' && !postAuthor) return null;
   if (!currentUser) return null;
 
-  const handleLike = () => {
+  const handleLike = async () => {
+    const isCurrentlyLiked = post.likedBy?.includes(currentUser.id?.toString()) || 
+                              post.likedBy?.includes(currentUser.id);
+    
+    // Optimistic update
     toggleLikePost(post.id, currentUser.id);
+    
+    try {
+      // Only call API for real posts (not upcoming_race or new_race which have string IDs like "upcoming_123")
+      const postIdStr = post.id?.toString() || '';
+      if (postIdStr.startsWith('upcoming_') || postIdStr.startsWith('race_')) {
+        return; // These are virtual feed items, not real posts
+      }
+      
+      if (isCurrentlyLiked) {
+        await fetchWithAuth(`${API_URL}/api/posts/${post.id}/unlike`, { method: 'DELETE' });
+      } else {
+        await fetchWithAuth(`${API_URL}/api/posts/${post.id}/like`, { method: 'POST' });
+      }
+    } catch (error) {
+      // Revert on error
+      toggleLikePost(post.id, currentUser.id);
+    }
   };
 
-  const handleAddComment = () => {
-    if (commentText.trim()) {
-      addComment(post.id, currentUser.id, commentText);
-      setCommentText('');
+  const handleAddComment = async () => {
+    if (!commentText.trim()) return;
+    
+    const text = commentText.trim();
+    setCommentText('');
+    
+    // Only call API for real posts
+    const postIdStr = post.id?.toString() || '';
+    if (postIdStr.startsWith('upcoming_') || postIdStr.startsWith('race_')) {
+      return; // These are virtual feed items, not real posts
+    }
+    
+    try {
+      const response = await fetchWithAuth(`${API_URL}/api/posts/${post.id}/comment`, {
+        method: 'POST',
+        body: JSON.stringify({ text }),
+      });
+      
+      if (response.ok) {
+        const data = await response.json();
+        // Update local state with the new comment
+        addComment(post.id, currentUser.id, text);
+      }
+    } catch (error) {
+      // Could show error to user
     }
   };
 
