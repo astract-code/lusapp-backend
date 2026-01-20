@@ -113,11 +113,13 @@ export const OnboardingScreen = ({ navigation }) => {
     preferLocalhost: false,
   });
   
+  // For Android, don't set redirectUri - let Google SDK handle it natively
+  // For iOS/web, use the custom scheme redirect
   const googleAuthConfig = hasGoogleConfigForPlatform ? {
     iosClientId: GOOGLE_IOS_CLIENT_ID || undefined,
     androidClientId: GOOGLE_ANDROID_CLIENT_ID || undefined,
     webClientId: GOOGLE_WEB_CLIENT_ID || undefined,
-    redirectUri,
+    ...(Platform.OS !== 'android' && { redirectUri }),
   } : {
     iosClientId: 'placeholder.apps.googleusercontent.com',
     androidClientId: 'placeholder.apps.googleusercontent.com',
