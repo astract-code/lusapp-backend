@@ -107,11 +107,10 @@ export const OnboardingScreen = ({ navigation }) => {
   
   const buttonScale = useRef(new Animated.Value(1)).current;
   
-  // For Android APK builds, use native scheme without proxy
-  // For iOS, use the standard redirect
+  // Use Expo auth proxy for Android builds
+  // This uses auth.expo.io which is already configured in Google Console
   const redirectUri = makeRedirectUri({
-    scheme: 'lusapp',
-    path: 'oauth2redirect/google',
+    useProxy: true,
   });
   
   // Log redirect URI for debugging
