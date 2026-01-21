@@ -107,19 +107,22 @@ export const OnboardingScreen = ({ navigation }) => {
   
   const buttonScale = useRef(new Animated.Value(1)).current;
   
+  // For Android APK builds, use native scheme without proxy
+  // For iOS, use the standard redirect
   const redirectUri = makeRedirectUri({
     scheme: 'lusapp',
-    path: 'redirect',
-    preferLocalhost: false,
+    path: 'oauth2redirect/google',
   });
   
-  // For Android, don't set redirectUri - let Google SDK handle it natively
-  // For iOS/web, use the custom scheme redirect
+  // Log redirect URI for debugging
+  console.log('[GOOGLE AUTH] Platform:', Platform.OS);
+  console.log('[GOOGLE AUTH] Redirect URI:', redirectUri);
+  
   const googleAuthConfig = hasGoogleConfigForPlatform ? {
     iosClientId: GOOGLE_IOS_CLIENT_ID || undefined,
     androidClientId: GOOGLE_ANDROID_CLIENT_ID || undefined,
     webClientId: GOOGLE_WEB_CLIENT_ID || undefined,
-    ...(Platform.OS !== 'android' && { redirectUri }),
+    redirectUri: redirectUri,
   } : {
     iosClientId: 'placeholder.apps.googleusercontent.com',
     androidClientId: 'placeholder.apps.googleusercontent.com',
