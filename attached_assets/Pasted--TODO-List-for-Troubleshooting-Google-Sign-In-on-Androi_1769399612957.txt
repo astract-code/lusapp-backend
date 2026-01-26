@@ -1,0 +1,78 @@
+### TODO List for Troubleshooting Google Sign-In on Android
+
+Follow these steps one by one to diagnose and fix the "Error 400: invalid_request" issue. This error often stems from OAuth configuration problems in the Google Cloud Console, such as missing settings for your Android client ID. I'll assume you're using the standard Google Sign-In SDK (e.g., via Firebase or directly with Google Play Services). If you're using a cross-platform framework like Flutter or React Native, the core setup is similar, but check your library's docs for platform-specific tweaks.
+
+1. **Verify your app's SHA-1 fingerprint**:
+   - For a debug build: Run `keytool -list -v -keystore ~/.android/debug.keystore -alias androiddebugkey -storepass android -keypass android` in your terminal (on macOS/Linux; adjust for Windows).
+   - For a release build: Use `keytool -list -v -keystore path/to/your/release.keystore` with your keystore details.
+   - Note the SHA-1 value (it looks like XX:XX:XX:...). You'll need this for the next steps. If testing a debug build, use the debug SHA-1; for production, use the release one.
+
+2. **Check or create an Android OAuth 2.0 Client ID in Google Cloud Console**:
+   - Go to [console.cloud.google.com/apis/credentials](https://console.cloud.google.com/apis/credentials).
+   - Select your project (or create one if none exists).
+   - Click "Create Credentials" > "OAuth client ID".
+   - Set "Application type" to "Android".
+   - Enter your app's package name (e.g., from `build.gradle` file: `applicationId "com.example.lusapp"`).
+   - Enter the SHA-1 fingerprint from step 1.
+   - Create the client ID if it doesn't exist.
+
+3. **Enable Custom URI Scheme for your Android Client ID**:
+   - In the Credentials page, click on your Android client ID (e.g., "Android client 1").
+   - Scroll down to "Advanced settings".
+   - Check the box for "Enable custom URI scheme" (ignore any warnings about it being for older apps—it's often required for native sign-in flows).
+   - Click "Save".
+   - Wait 5–10 minutes (or up to a few hours) for changes to propagate. Test again after this wait.
+
+4. **Set up or verify Web Client ID (if using ID tokens for server verification)**:
+   - If your app requests an ID token (e.g., for backend auth), you need a Web application client ID.
+   - In Credentials, create one if missing: "Create Credentials" > "OAuth client ID" > "Web application".
+   - No specific fields needed for Android, but note the Client ID value.
+   - In your Android code, ensure `GoogleSignInOptions` uses this Web Client ID: e.g., `.requestIdToken("your-web-client-id")`.
+   - If using Firebase, this is auto-generated—skip to step 5.
+
+5. **Integrate or update Firebase configuration (if using Firebase Auth)**:
+   - Go to [console.firebase.google.com](https://console.firebase.google.com).
+   - Add your Android app if not already (provide package name and SHA-1).
+   - Download the latest `google-services.json` file.
+   - Place it in your app's `app/` directory.
+   - In Firebase console > Authentication > Sign-in method, enable "Google".
+   - Rebuild and test your app.
+
+6. **Verify OAuth Consent Screen settings**:
+   - In Google Cloud Console > APIs & Services > OAuth consent screen.
+   - Ensure "App name" matches "Lusapp" (as shown in the error).
+   - Set "User support email" to a valid email (e.g., evapazatibo@gmail.com).
+   - If "Publishing status" is "Testing", add your test email (evapazatibo@gmail.com) as a test user under "Test users".
+   - If in "Production", consider app verification if using sensitive scopes (but basic email/profile shouldn't require it).
+   - Save changes and wait 5 minutes.
+
+7. **Update your app's Google Sign-In implementation**:
+   - Ensure you're using the latest Google Play Services Auth library: In `build.gradle`, add `implementation 'com.google.android.gms:play-services-auth:20.7.0'` (or newer; check for updates).
+   - In code, use the standard setup:
+     ```
+     GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+         .requestEmail() // Add .requestIdToken(webClientId) if needed
+         .build();
+     GoogleSignInClient mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+     // Then start sign-in: startActivityForResult(mGoogleSignInClient.getSignInIntent(), RC_SIGN_IN);
+     ```
+   - Avoid manual OAuth flows or WebView—use the native API to comply with Google's security policies.
+   - If using a library (e.g., google_sign_in for Flutter), update to the latest version and recheck platform setup.
+
+8. **Test the sign-in flow**:
+   - Clean and rebuild your app (e.g., `./gradlew clean assembleDebug`).
+   - Uninstall and reinstall the app on your device/emulator.
+   - Attempt Google sign-in again.
+   - If the error persists, click "detalles del error" (error details) in the popup for more info (e.g., it might mention "Custom URI scheme is not enabled").
+   - Try with a different Google account or disable VPN (as shown in your screenshot).
+
+9. **Check for additional errors or logs**:
+   - In Android Studio, check Logcat for GoogleSignIn errors (filter by "GoogleSignIn").
+   - If using Firebase, check Firebase console > Authentication for failed attempts.
+   - Search the exact detailed error message online if it provides more clues.
+
+10. **If nothing works, seek developer support**:
+    - Post in Google Identity forums or Stack Overflow with your client ID type, code snippet, and full error details (anonymize sensitive info).
+    - Contact Google support via the console if your app is verified.
+
+This should cover the most common causes. Start from the top, as the Custom URI scheme enablement (step 3) resolves many "invalid_request" issues for Android apps. If you provide more details (e.g., your code snippet, framework, or full error details), I can refine this further.
