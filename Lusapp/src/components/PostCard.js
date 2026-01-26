@@ -8,7 +8,7 @@ import { useAuth } from '../context/AuthContext';
 import { fetchWithAuth } from '../utils/apiClient';
 import API_URL from '../config/api';
 
-export const PostCard = ({ post, onUserPress, onRacePress }) => {
+export const PostCard = ({ post, onUserPress, onRacePress, onPostUpdate }) => {
   const { colors } = useTheme();
   const [showComments, setShowComments] = useState(false);
   const [commentText, setCommentText] = useState('');
@@ -41,7 +41,16 @@ export const PostCard = ({ post, onUserPress, onRacePress }) => {
     const isCurrentlyLiked = post.likedBy?.includes(currentUser.id?.toString()) || 
                               post.likedBy?.includes(currentUser.id);
     
-    // Optimistic update
+    const userId = currentUser.id?.toString();
+    
+    // Optimistic update - update local state immediately
+    const updatedLikedBy = isCurrentlyLiked
+      ? (post.likedBy || []).filter(id => id !== userId && id !== currentUser.id)
+      : [...(post.likedBy || []), userId];
+    
+    if (onPostUpdate) {
+      onPostUpdate(post.id, { likedBy: updatedLikedBy });
+    }
     toggleLikePost(post.id, currentUser.id);
     
     try {
@@ -58,6 +67,9 @@ export const PostCard = ({ post, onUserPress, onRacePress }) => {
       }
     } catch (error) {
       // Revert on error
+      if (onPostUpdate) {
+        onPostUpdate(post.id, { likedBy: post.likedBy });
+      }
       toggleLikePost(post.id, currentUser.id);
     }
   };
@@ -74,6 +86,21 @@ export const PostCard = ({ post, onUserPress, onRacePress }) => {
       return; // These are virtual feed items, not real posts
     }
     
+    // Create the new comment object
+    const newComment = {
+      userId: currentUser.id,
+      userName: currentUser.name,
+      userAvatar: currentUser.avatar,
+      text,
+      timestamp: new Date().toISOString()
+    };
+    
+    // Optimistic update - update local state immediately
+    const updatedComments = [...(post.comments || []), newComment];
+    if (onPostUpdate) {
+      onPostUpdate(post.id, { comments: updatedComments });
+    }
+    
     try {
       const response = await fetchWithAuth(`${API_URL}/api/posts/${post.id}/comment`, {
         method: 'POST',
@@ -82,11 +109,14 @@ export const PostCard = ({ post, onUserPress, onRacePress }) => {
       
       if (response.ok) {
         const data = await response.json();
-        // Update local state with the new comment
+        // Update global store as well
         addComment(post.id, currentUser.id, text);
       }
     } catch (error) {
-      // Could show error to user
+      // Revert on error
+      if (onPostUpdate) {
+        onPostUpdate(post.id, { comments: post.comments });
+      }
     }
   };
 

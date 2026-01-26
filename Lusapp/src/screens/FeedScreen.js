@@ -55,6 +55,14 @@ export const FeedScreen = ({ navigation }) => {
     fetchSuggestedUsers();
   }, []);
 
+  const handlePostUpdate = useCallback((postId, updates) => {
+    setPosts(currentPosts => 
+      currentPosts.map(post => 
+        post.id === postId ? { ...post, ...updates } : post
+      )
+    );
+  }, []);
+
   const handleUserPress = (userId) => {
     navigation.navigate('UserProfile', { userId });
   };
@@ -83,6 +91,7 @@ export const FeedScreen = ({ navigation }) => {
             post={item}
             onUserPress={handleUserPress}
             onRacePress={handleRacePress}
+            onPostUpdate={handlePostUpdate}
           />
         )}
         contentContainerStyle={styles.list}
