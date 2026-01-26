@@ -254,11 +254,7 @@ const GroupsStack = () => {
           headerBackTitleVisible: false,
           headerLeft: () => (
             <TouchableOpacity onPress={() => {
-              if (navigation.canGoBack()) {
-                navigation.goBack();
-              } else {
-                navigation.navigate('GroupsMain');
-              }
+              navigation.navigate('GroupsMain');
             }}>
               <Ionicons 
                 name="arrow-back" 
