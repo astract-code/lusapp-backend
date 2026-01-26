@@ -338,9 +338,14 @@
     <div id="list-tab" class="tab-content">
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
         <h2 style="color: #333; margin: 0;">All Races</h2>
-        <a href="/static/race-template.csv" download="race-template.csv" class="btn btn-primary" style="text-decoration: none;" target="_blank">
-          📥 Download CSV Template
-        </a>
+        <div style="display: flex; gap: 10px;">
+          <button onclick="exportAllRaces()" class="btn btn-success" style="cursor: pointer;">
+            📤 Export All Races (CSV)
+          </button>
+          <a href="/static/race-template.csv" download="race-template.csv" class="btn btn-primary" style="text-decoration: none;" target="_blank">
+            📥 Download CSV Template
+          </a>
+        </div>
       </div>
       <div id="races-list" class="races-list">
         <p style="text-align: center; color: #666;">Loading races...</p>
@@ -569,6 +574,58 @@
         }).join('');
       } catch (error) {
         console.error('Error loading races:', error);
+      }
+    }
+
+    async function exportAllRaces() {
+      try {
+        const response = await fetch('/api/races', {
+          credentials: 'include'
+        });
+        const races = await response.json();
+        
+        if (races.length === 0) {
+          alert('No races to export');
+          return;
+        }
+
+        // CSV headers matching the import format
+        const headers = ['name', 'sport', 'sport_category', 'sport_subtype', 'city', 'country', 'continent', 'date', 'start_time', 'distance', 'description', 'participants'];
+        
+        // Build CSV content
+        const csvRows = [headers.join(',')];
+        
+        races.forEach(race => {
+          const row = headers.map(header => {
+            let value = race[header];
+            if (value === null || value === undefined) value = '';
+            if (header === 'date' && value) {
+              value = new Date(value).toISOString().split('T')[0];
+            }
+            // Escape quotes and wrap in quotes if contains comma, quote, or newline
+            value = String(value);
+            if (value.includes(',') || value.includes('"') || value.includes('\n')) {
+              value = '"' + value.replace(/"/g, '""') + '"';
+            }
+            return value;
+          });
+          csvRows.push(row.join(','));
+        });
+
+        const csvContent = csvRows.join('\n');
+        
+        // Create download
+        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = `lusapp_races_export_${new Date().toISOString().split('T')[0]}.csv`;
+        link.click();
+        URL.revokeObjectURL(link.href);
+        
+        alert(`Exported ${races.length} races successfully!`);
+      } catch (error) {
+        console.error('Error exporting races:', error);
+        alert('Failed to export races');
       }
     }
 
