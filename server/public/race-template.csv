@@ -1,3 +1,12 @@
 name,sport,sport_category,sport_subtype,city,country,continent,date,start_time,distance,description,participants
-Sample Marathon,Running,Road Running,Marathon,New York,USA,North America,2025-12-15,08:00,42.2km,Annual city marathon,5000
-Sample Triathlon,Triathlon,Standard Distance,,Miami,USA,North America,2025-11-20,07:00,Standard,Olympic distance triathlon,1200
+Berlin Marathon,Running,Running,Marathon,Berlin,Germany,Europe,2026-09-27,09:00,42.2 km,One of the World Marathon Majors,45000
+Tokyo Marathon,Running,Running,Marathon,Tokyo,Japan,Asia,2026-03-01,09:10,42.2 km,One of the World Marathon Majors,38000
+Boston Marathon,Running,Running,Marathon,Boston,USA,North America,2026-04-20,10:00,42.2 km,The oldest annual marathon,30000
+London Triathlon,Triathlon,Triathlon,Olympic,London,United Kingdom,Europe,2026-07-25,06:30,51.5 km,Europe's largest triathlon,13000
+Ironman Hawaii,Triathlon,Triathlon,Ironman,Kailua-Kona,USA,North America,2026-10-10,06:25,226 km,The Ironman World Championship,2500
+Paris 10K,Running,Running,10K,Paris,France,Europe,2026-06-14,09:00,10 km,Scenic run through Paris,35000
+Gran Fondo New York,Cycling,Cycling,Gran Fondo,New York,USA,North America,2026-05-17,06:00,160 km,Challenging cycling event,5000
+Spartan Beast,Fitness,Fitness,Spartan Race,Lake Tahoe,USA,North America,2026-09-19,07:30,21 km,Obstacle course racing,8000
+HYROX Munich,Fitness,Fitness,HYROX,Munich,Germany,Europe,2026-11-14,08:00,8 km,Functional fitness race,4000
+Open Water Swim Zurich,Swimming,Swimming,Open Water Swim,Zurich,Switzerland,Europe,2026-08-22,10:00,2.5 km,Lake swimming competition,2000
+Ultra Trail Mont Blanc,Running,Running,Ultra Marathon,Chamonix,France,Europe,2026-08-28,18:00,171 km,Premier ultra trail race,2300
