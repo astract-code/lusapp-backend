@@ -1,0 +1,60 @@
+Yes, the format is **correct** with the `@` symbol — that's the standard way Expo structures the proxy redirect URI for apps using `expo-auth-session` (especially in Expo Go or development builds).
+
+The full authorized redirect URI should be:  
+**https://auth.expo.io/@biterdi/lusapp**
+
+### Why this is right
+- Expo's auth proxy uses this pattern: `https://auth.expo.io/@<expo-username>/<project-slug>`
+- `<expo-username>` is your Expo account username (here: `biterdi`).
+- `<project-slug>` is the app name/slug from your `app.json` or `app.config.js` (e.g., `"slug": "lusapp"`).
+- The `@` is required — it's part of the path, separating the username from the project.
+- Many official Expo docs and tutorials explicitly show examples like:
+  - `https://auth.expo.io/@your-username/your-app-slug`
+  - Or `https://auth.expo.io/@expo/example-app`
+- Without the `@`, it would be invalid and cause redirect_uri_mismatch errors.
+
+### Quick checks to confirm it's working for your setup
+1. In your `app.json` / `app.config.js`, verify:
+   ```json
+   {
+     "expo": {
+       "name": "Lusapp",
+       "slug": "lusapp",
+       "owner": "biterdi",  // optional but good to have
+       ...
+     }
+   }
+   ```
+   - The slug must match exactly what you put after the `/` (case-sensitive).
+
+2. In your code (using `expo-auth-session`), make sure you're generating the redirect URI correctly:
+   ```js
+   import * as AuthSession from 'expo-auth-session';
+
+   const redirect = AuthSession.makeRedirectUri({ useProxy: true });
+   // This should return something like: https://auth.expo.io/@biterdi/lusapp
+   ```
+   - If you're in Expo Go, `useProxy: true` is what triggers the `auth.expo.io` proxy.
+   - For standalone/development builds, you might switch to a custom scheme (e.g., `lusapp://`), but for now/testing, the proxy is fine.
+
+3. In Google Cloud Console (for your **Web application** Client ID):
+   - You've already added: `https://auth.expo.io/@biterdi/lusapp`
+   - Make sure there are no typos (e.g., no extra spaces, correct casing for `biterdi` and `lusapp`).
+   - If testing in Expo Go, this is the one that matters for the web flow proxy.
+   - Save and wait 5–30 minutes (or longer) for propagation.
+
+4. Important note for Android/native flows:
+   - The error you showed earlier had `redirect_uri=lusapp://` — that's your **custom scheme**, which is used in standalone builds or when `useProxy: false`.
+   - For that to work, you need:
+     - An **Android** OAuth Client ID (not just Web) with your package name and SHA-1.
+     - The "Enable custom URI scheme" checkbox turned on (as we discussed before).
+   - If you're currently testing in Expo Go → stick with the proxy URI above (no custom scheme needed yet).
+   - If building a standalone app (eas build or dev client) → add your custom scheme URI (e.g., `lusapp://`) to the **Authorized redirect URIs** in the **Web** client ID as well (Google sometimes requires it even for native).
+
+### Next steps if still failing
+- Run your app and log the redirect URI being used (console.log it from `makeRedirectUri()`).
+- Compare it exactly to what's in Google Console.
+- If it's using `exp://` or something else → set `useProxy: true` explicitly.
+- Test with a fresh Expo Go session (close/reopen the app).
+
+This should resolve the "doesn't comply" / invalid_request issues tied to the redirect. If you share what `makeRedirectUri()` outputs in your code (or if you're using a different library like `@react-native-google-signin`), I can help further!
