@@ -70,16 +70,18 @@ const combinedAuthMiddleware = async (req, res, next) => {
     // Try Firebase token verification
     try {
       const decodedFirebase = await verifyFirebaseTokenInternal(token);
-      console.log('[COMBINED AUTH] Firebase token verified for:', decodedFirebase.email);
+      // Firebase JWT uses 'sub' for user ID, or 'user_id' field
+      const firebaseUid = decodedFirebase.sub || decodedFirebase.user_id || decodedFirebase.uid;
+      console.log('[COMBINED AUTH] Firebase token verified for:', decodedFirebase.email, 'UID:', firebaseUid);
       
       // Look up database user ID from Firebase UID
       const userResult = await pool.query(
         'SELECT id FROM users WHERE firebase_uid = $1',
-        [decodedFirebase.uid]
+        [firebaseUid]
       );
       
       if (userResult.rows.length === 0) {
-        console.error('[COMBINED AUTH] No database user found for Firebase UID:', decodedFirebase.uid);
+        console.error('[COMBINED AUTH] No database user found for Firebase UID:', firebaseUid);
         return res.status(404).json({ error: 'User not found in database' });
       }
       
@@ -88,7 +90,7 @@ const combinedAuthMiddleware = async (req, res, next) => {
       
       req.user = {
         userId: dbUserId,
-        firebaseUid: decodedFirebase.uid,
+        firebaseUid: firebaseUid,
         email: decodedFirebase.email,
         emailVerified: decodedFirebase.email_verified,
       };
