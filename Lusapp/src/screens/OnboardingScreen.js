@@ -18,15 +18,10 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 import * as AppleAuthentication from 'expo-apple-authentication';
-import * as Google from 'expo-auth-session/providers/google';
-import * as WebBrowser from 'expo-web-browser';
-import * as Crypto from 'expo-crypto';
-import { makeRedirectUri } from 'expo-auth-session';
+import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin';
 import { useAuth } from '../context/AuthContext';
 import { SPACING, BORDER_RADIUS, GRADIENTS } from '../constants/theme';
 import haptic from '../utils/haptics';
-
-WebBrowser.maybeCompleteAuthSession();
 
 const backgroundImage = require('../../assets/images/athletes_running_at_sunrise.png');
 
@@ -73,17 +68,17 @@ const InputField = ({
   );
 };
 
-const GOOGLE_IOS_CLIENT_ID = process.env.EXPO_PUBLIC_GOOGLE_IOS_CLIENT_ID || '';
-const GOOGLE_ANDROID_CLIENT_ID = process.env.EXPO_PUBLIC_GOOGLE_ANDROID_CLIENT_ID || '';
 const GOOGLE_WEB_CLIENT_ID = process.env.EXPO_PUBLIC_GOOGLE_WEB_CLIENT_ID || '';
+const GOOGLE_IOS_CLIENT_ID = process.env.EXPO_PUBLIC_GOOGLE_IOS_CLIENT_ID || '';
 
-const getGoogleClientIdForPlatform = () => {
-  if (Platform.OS === 'ios') return GOOGLE_IOS_CLIENT_ID;
-  if (Platform.OS === 'android') return GOOGLE_ANDROID_CLIENT_ID;
-  return GOOGLE_WEB_CLIENT_ID;
-};
+// Configure Google Sign-In with the native SDK
+GoogleSignin.configure({
+  webClientId: GOOGLE_WEB_CLIENT_ID,
+  iosClientId: GOOGLE_IOS_CLIENT_ID,
+  offlineAccess: true,
+});
 
-const hasGoogleConfigForPlatform = Boolean(getGoogleClientIdForPlatform());
+const hasGoogleConfig = Boolean(GOOGLE_WEB_CLIENT_ID);
 
 export const OnboardingScreen = ({ navigation }) => {
   const { login, signupWithEmail, signupWithGoogle, signupWithApple } = useAuth();
@@ -103,32 +98,9 @@ export const OnboardingScreen = ({ navigation }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [appleAuthAvailable, setAppleAuthAvailable] = useState(false);
-  const [googleAuthAvailable] = useState(hasGoogleConfigForPlatform);
+  const [googleAuthAvailable] = useState(hasGoogleConfig);
   
   const buttonScale = useRef(new Animated.Value(1)).current;
-  
-  // Use Expo auth proxy for Android builds
-  // This uses auth.expo.io which is already configured in Google Console
-  const redirectUri = makeRedirectUri({
-    useProxy: true,
-  });
-  
-  // Log redirect URI for debugging
-  console.log('[GOOGLE AUTH] Platform:', Platform.OS);
-  console.log('[GOOGLE AUTH] Redirect URI:', redirectUri);
-  
-  const googleAuthConfig = hasGoogleConfigForPlatform ? {
-    iosClientId: GOOGLE_IOS_CLIENT_ID || undefined,
-    androidClientId: GOOGLE_ANDROID_CLIENT_ID || undefined,
-    webClientId: GOOGLE_WEB_CLIENT_ID || undefined,
-    redirectUri: redirectUri,
-  } : {
-    iosClientId: 'placeholder.apps.googleusercontent.com',
-    androidClientId: 'placeholder.apps.googleusercontent.com',
-    webClientId: 'placeholder.apps.googleusercontent.com',
-  };
-  
-  const [request, response, promptAsync] = Google.useAuthRequest(googleAuthConfig);
   
   useEffect(() => {
     const checkAppleAuth = async () => {
@@ -139,29 +111,6 @@ export const OnboardingScreen = ({ navigation }) => {
     };
     checkAppleAuth();
   }, []);
-  
-  useEffect(() => {
-    if (response?.type === 'success') {
-      const { id_token } = response.params;
-      if (id_token) {
-        handleGoogleAuth(id_token);
-      }
-    } else if (response?.type === 'dismiss' || response?.type === 'cancel') {
-      setIsSocialLoading(false);
-    }
-  }, [response]);
-  
-  const handleGoogleAuth = async (idToken) => {
-    setIsSocialLoading(true);
-    setError('');
-    try {
-      await signupWithGoogle(idToken);
-    } catch (err) {
-      setError(err.message || 'Failed to sign in with Google');
-    } finally {
-      setIsSocialLoading(false);
-    }
-  };
 
   const handleEmailAuth = async () => {
     setError('');
@@ -235,14 +184,42 @@ export const OnboardingScreen = ({ navigation }) => {
   };
   
   const handleGoogleSignIn = async () => {
-    if (!googleAuthAvailable || !request) {
-      Alert.alert('Coming Soon', 'Google Sign-In will be available in a future update.');
+    if (!googleAuthAvailable) {
+      Alert.alert('Configuration Error', 'Google Sign-In is not configured.');
       return;
     }
     
     setError('');
+    setIsSocialLoading(true);
     haptic.light();
-    await promptAsync();
+    
+    try {
+      await GoogleSignin.hasPlayServices();
+      const userInfo = await GoogleSignin.signIn();
+      
+      console.log('[GOOGLE AUTH] Sign-in successful:', userInfo.data?.user?.email);
+      
+      const idToken = userInfo.data?.idToken;
+      if (idToken) {
+        await signupWithGoogle(idToken);
+      } else {
+        throw new Error('No ID token received from Google');
+      }
+    } catch (err) {
+      console.error('[GOOGLE AUTH] Error:', err);
+      
+      if (err.code === statusCodes.SIGN_IN_CANCELLED) {
+        console.log('[GOOGLE AUTH] User cancelled sign-in');
+      } else if (err.code === statusCodes.IN_PROGRESS) {
+        setError('Sign-in already in progress');
+      } else if (err.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+        setError('Google Play Services not available');
+      } else {
+        setError(err.message || 'Failed to sign in with Google');
+      }
+    } finally {
+      setIsSocialLoading(false);
+    }
   };
 
   return (
@@ -461,7 +438,7 @@ export const OnboardingScreen = ({ navigation }) => {
                   <TouchableOpacity
                     style={styles.googleButton}
                     onPress={handleGoogleSignIn}
-                    disabled={isSocialLoading || !request}
+                    disabled={isSocialLoading}
                   >
                     {isSocialLoading ? (
                       <ActivityIndicator color="#000000" />
