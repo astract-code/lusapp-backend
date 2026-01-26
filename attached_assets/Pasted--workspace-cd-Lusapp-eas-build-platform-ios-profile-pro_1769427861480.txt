@@ -1,4 +1,17 @@
-{
+~/workspace$ cd Lusapp && eas build --platform ios --profile production
+★ eas-cli@16.28.0 is now available.
+To upgrade, run:
+npm install -g eas-cli
+Proceeding with outdated version.
+
+An Expo user account is required to proceed.
+
+Log in to EAS with email or username (exit and run eas login --help to see other login options)
+✔ Email or username … astract@gmail.com
+✔ Password … *********
+Failed to read the app config from the project using "npx expo config" command: npx expo config --json exited with non-zero code: 1.
+Falling back to the version of "@expo/config" shipped with the EAS CLI.
+Error parsing JSON: {
   "expo": {
     "name": "Lusapp",
     "slug": "lusapp",
@@ -64,9 +77,20 @@
       [
         "@react-native-google-signin/google-signin",
         {
-          "iosUrlScheme": "com.googleusercontent.apps.899499968631-ij9igb0746b6484f3i6t51ab4410cqh7"
+          "iosUrlScheme": "com.googleusercontent.apps.
+          899499968631-ij9igb0746b6484f3i6t51ab4410cqh7"
         }
       ]
     ]
   }
 }
+
+├─ File: /home/runner/workspace/Lusapp/app.json
+└─ Cause: SyntaxError: JSON5: invalid character '\n' at 68:0
+  66 |         {
+  67 |           "iosUrlScheme": "com.googleusercontent.apps.
+> 68 |           899499968631-ij9igb0746b6484f3i6t51ab4410cqh7"
+  69 |         }
+  70 |       ]
+  71 |     ]
+    Error: build command failed.
