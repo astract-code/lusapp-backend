@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { verifyFirebaseToken } = require('../middleware/firebaseAuth');
+const { combinedAuthMiddleware } = require('../middleware/authMiddleware');
 
 module.exports = (pool) => {
   
@@ -10,7 +10,7 @@ module.exports = (pool) => {
   };
 
   // Get all conversations for a user (with muted/archived status)
-  router.get('/conversations', verifyFirebaseToken, async (req, res) => {
+  router.get('/conversations', combinedAuthMiddleware, async (req, res) => {
     try {
       const userId = req.user.userId;
       const { includeArchived } = req.query;
@@ -79,7 +79,7 @@ module.exports = (pool) => {
   });
 
   // Get messages for a conversation (excluding deleted)
-  router.get('/conversations/:otherUserId/messages', verifyFirebaseToken, async (req, res) => {
+  router.get('/conversations/:otherUserId/messages', combinedAuthMiddleware, async (req, res) => {
     try {
       const userId = req.user.userId;
       const otherUserId = parseInt(req.params.otherUserId);
@@ -145,7 +145,7 @@ module.exports = (pool) => {
   });
 
   // Get total unread message count (excluding deleted)
-  router.get('/unread-count', verifyFirebaseToken, async (req, res) => {
+  router.get('/unread-count', combinedAuthMiddleware, async (req, res) => {
     try {
       const userId = req.user.userId;
       
@@ -173,7 +173,7 @@ module.exports = (pool) => {
   });
 
   // Search messages in a conversation
-  router.get('/conversations/:otherUserId/search', verifyFirebaseToken, async (req, res) => {
+  router.get('/conversations/:otherUserId/search', combinedAuthMiddleware, async (req, res) => {
     try {
       const userId = req.user.userId;
       const otherUserId = parseInt(req.params.otherUserId);
@@ -220,7 +220,7 @@ module.exports = (pool) => {
   });
 
   // Send a message
-  router.post('/conversations/:otherUserId/messages', verifyFirebaseToken, async (req, res) => {
+  router.post('/conversations/:otherUserId/messages', combinedAuthMiddleware, async (req, res) => {
     try {
       const userId = req.user.userId;
       const otherUserId = parseInt(req.params.otherUserId);
@@ -272,7 +272,7 @@ module.exports = (pool) => {
   });
 
   // Delete a message (soft delete - own messages only, or any if admin)
-  router.delete('/messages/:messageId', verifyFirebaseToken, async (req, res) => {
+  router.delete('/messages/:messageId', combinedAuthMiddleware, async (req, res) => {
     try {
       const userId = req.user.userId;
       const messageId = parseInt(req.params.messageId);
@@ -313,7 +313,7 @@ module.exports = (pool) => {
   });
 
   // Mute/unmute a conversation
-  router.post('/conversations/:conversationId/mute', verifyFirebaseToken, async (req, res) => {
+  router.post('/conversations/:conversationId/mute', combinedAuthMiddleware, async (req, res) => {
     try {
       const userId = req.user.userId;
       const conversationId = parseInt(req.params.conversationId);
@@ -334,7 +334,7 @@ module.exports = (pool) => {
   });
 
   // Archive/unarchive a conversation
-  router.post('/conversations/:conversationId/archive', verifyFirebaseToken, async (req, res) => {
+  router.post('/conversations/:conversationId/archive', combinedAuthMiddleware, async (req, res) => {
     try {
       const userId = req.user.userId;
       const conversationId = parseInt(req.params.conversationId);
@@ -355,7 +355,7 @@ module.exports = (pool) => {
   });
 
   // Get user online status
-  router.get('/users/:userId/status', verifyFirebaseToken, async (req, res) => {
+  router.get('/users/:userId/status', combinedAuthMiddleware, async (req, res) => {
     try {
       const targetUserId = parseInt(req.params.userId);
 

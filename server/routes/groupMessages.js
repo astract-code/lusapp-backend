@@ -1,5 +1,5 @@
 const express = require('express');
-const { verifyFirebaseToken } = require('../middleware/firebaseAuth');
+const { combinedAuthMiddleware } = require('../middleware/authMiddleware');
 
 const router = express.Router();
 
@@ -18,7 +18,7 @@ module.exports = (pool) => {
 
   // Get total unread group message count across all groups
   // IMPORTANT: This must come BEFORE /:groupId/messages to avoid route conflicts
-  router.get('/unread-count', verifyFirebaseToken, async (req, res) => {
+  router.get('/unread-count', combinedAuthMiddleware, async (req, res) => {
     try {
       const userId = req.user.userId;
 
@@ -55,7 +55,7 @@ module.exports = (pool) => {
   });
 
   // Get messages for a group (including pinned status, excluding deleted)
-  router.get('/:groupId/messages', verifyFirebaseToken, async (req, res) => {
+  router.get('/:groupId/messages', combinedAuthMiddleware, async (req, res) => {
     try {
       const { groupId } = req.params;
       const userId = req.user.userId;
@@ -129,7 +129,7 @@ module.exports = (pool) => {
   });
 
   // Search messages in a group
-  router.get('/:groupId/search', verifyFirebaseToken, async (req, res) => {
+  router.get('/:groupId/search', combinedAuthMiddleware, async (req, res) => {
     try {
       const { groupId } = req.params;
       const { q } = req.query;
@@ -174,7 +174,7 @@ module.exports = (pool) => {
   });
 
   // Send a message (respects announcement_mode)
-  router.post('/:groupId/messages', verifyFirebaseToken, async (req, res) => {
+  router.post('/:groupId/messages', combinedAuthMiddleware, async (req, res) => {
     try {
       const { groupId } = req.params;
       const { content } = req.body;
@@ -242,7 +242,7 @@ module.exports = (pool) => {
   });
 
   // Delete a message (soft delete - own messages only, or any if admin)
-  router.delete('/:groupId/messages/:messageId', verifyFirebaseToken, async (req, res) => {
+  router.delete('/:groupId/messages/:messageId', combinedAuthMiddleware, async (req, res) => {
     try {
       const userId = req.user.userId;
       const messageId = parseInt(req.params.messageId);
@@ -279,7 +279,7 @@ module.exports = (pool) => {
   });
 
   // Pin/unpin a message (admin only)
-  router.post('/:groupId/messages/:messageId/pin', verifyFirebaseToken, async (req, res) => {
+  router.post('/:groupId/messages/:messageId/pin', combinedAuthMiddleware, async (req, res) => {
     try {
       const userId = req.user.userId;
       const messageId = parseInt(req.params.messageId);
@@ -314,7 +314,7 @@ module.exports = (pool) => {
   });
 
   // Toggle announcement mode (admin only)
-  router.post('/:groupId/announcement-mode', verifyFirebaseToken, async (req, res) => {
+  router.post('/:groupId/announcement-mode', combinedAuthMiddleware, async (req, res) => {
     try {
       const userId = req.user.userId;
       const groupId = parseInt(req.params.groupId);
@@ -338,7 +338,7 @@ module.exports = (pool) => {
   });
 
   // Mute/unmute a group
-  router.post('/:groupId/mute', verifyFirebaseToken, async (req, res) => {
+  router.post('/:groupId/mute', combinedAuthMiddleware, async (req, res) => {
     try {
       const userId = req.user.userId;
       const groupId = parseInt(req.params.groupId);
@@ -357,7 +357,7 @@ module.exports = (pool) => {
   });
 
   // Archive/unarchive a group
-  router.post('/:groupId/archive', verifyFirebaseToken, async (req, res) => {
+  router.post('/:groupId/archive', combinedAuthMiddleware, async (req, res) => {
     try {
       const userId = req.user.userId;
       const groupId = parseInt(req.params.groupId);

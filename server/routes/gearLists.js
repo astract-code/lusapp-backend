@@ -1,11 +1,11 @@
 const express = require('express');
-const { verifyFirebaseToken } = require('../middleware/firebaseAuth');
+const { combinedAuthMiddleware } = require('../middleware/authMiddleware');
 
 const router = express.Router();
 
 module.exports = (pool) => {
   
-  router.get('/:groupId/gear-lists', verifyFirebaseToken, async (req, res) => {
+  router.get('/:groupId/gear-lists', combinedAuthMiddleware, async (req, res) => {
     try {
       const { groupId } = req.params;
       const userId = req.user.userId;
@@ -52,7 +52,7 @@ module.exports = (pool) => {
     }
   });
 
-  router.post('/:groupId/gear-lists', verifyFirebaseToken, async (req, res) => {
+  router.post('/:groupId/gear-lists', combinedAuthMiddleware, async (req, res) => {
     console.log('📝 [CREATE GEAR LIST] Request received for group:', req.params.groupId);
     console.log('📝 [CREATE GEAR LIST] Body:', req.body);
     console.log('📝 [CREATE GEAR LIST] User ID:', req.user.userId);
@@ -102,7 +102,7 @@ module.exports = (pool) => {
     }
   });
 
-  router.get('/:groupId/gear-lists/:listId/items', verifyFirebaseToken, async (req, res) => {
+  router.get('/:groupId/gear-lists/:listId/items', combinedAuthMiddleware, async (req, res) => {
     try {
       const { groupId, listId } = req.params;
       const userId = req.user.userId;
@@ -163,7 +163,7 @@ module.exports = (pool) => {
     }
   });
 
-  router.post('/:groupId/gear-lists/:listId/items', verifyFirebaseToken, async (req, res) => {
+  router.post('/:groupId/gear-lists/:listId/items', combinedAuthMiddleware, async (req, res) => {
     try {
       const { groupId, listId } = req.params;
       const { description } = req.body;
@@ -207,7 +207,7 @@ module.exports = (pool) => {
     }
   });
 
-  router.patch('/:groupId/gear-lists/:listId/items/:itemId', verifyFirebaseToken, async (req, res) => {
+  router.patch('/:groupId/gear-lists/:listId/items/:itemId', combinedAuthMiddleware, async (req, res) => {
     try {
       const { groupId, listId, itemId } = req.params;
       const { status } = req.body;
@@ -273,7 +273,7 @@ module.exports = (pool) => {
     }
   });
 
-  router.delete('/:groupId/gear-lists/:listId/items/:itemId', verifyFirebaseToken, async (req, res) => {
+  router.delete('/:groupId/gear-lists/:listId/items/:itemId', combinedAuthMiddleware, async (req, res) => {
     try {
       const { groupId, itemId } = req.params;
       const userId = req.user.userId;
@@ -312,7 +312,7 @@ module.exports = (pool) => {
     }
   });
 
-  router.get('/:groupId/gear-lists/:listId/share', verifyFirebaseToken, async (req, res) => {
+  router.get('/:groupId/gear-lists/:listId/share', combinedAuthMiddleware, async (req, res) => {
     try {
       const { groupId, listId } = req.params;
       const userId = req.user.userId;

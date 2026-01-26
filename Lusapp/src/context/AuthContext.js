@@ -116,6 +116,23 @@ export const AuthProvider = ({ children }) => {
           } catch (error) {
             console.error('[AUTH] ❌ Error syncing user with backend:', error);
             console.error('[AUTH] Error details:', error.message);
+            // Retry sync once after a short delay
+            console.log('[AUTH] ⚠️ Sync failed, retrying in 2 seconds...');
+            await new Promise(resolve => setTimeout(resolve, 2000));
+            try {
+              const retryToken = await currentUser.getIdToken(true);
+              const retryDbUser = await syncUserWithBackend(currentUser, retryToken);
+              setToken(retryToken);
+              setUser(retryDbUser);
+              await AsyncStorage.setItem('token', retryToken);
+              await AsyncStorage.setItem('user', JSON.stringify(retryDbUser));
+              console.log('[AUTH] ✅ Retry sync succeeded');
+            } catch (retryError) {
+              console.error('[AUTH] ❌ Retry sync also failed:', retryError.message);
+              // Clear auth state so user can try logging in again
+              setToken(null);
+              setUser(null);
+            }
           }
         } else {
           console.log('[AUTH] Email not verified yet');
