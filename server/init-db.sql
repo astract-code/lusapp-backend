@@ -222,3 +222,20 @@ CREATE TABLE IF NOT EXISTS race_completions (
 CREATE INDEX IF NOT EXISTS idx_race_completions_user ON race_completions(user_id);
 CREATE INDEX IF NOT EXISTS idx_race_completions_race ON race_completions(race_id);
 CREATE INDEX IF NOT EXISTS idx_race_completions_date ON race_completions(completed_at DESC);
+
+-- Create notifications table for in-app notifications
+CREATE TABLE IF NOT EXISTS notifications (
+  id SERIAL PRIMARY KEY,
+  user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  type VARCHAR(50) NOT NULL,
+  actor_id INTEGER REFERENCES users(id) ON DELETE SET NULL,
+  post_id INTEGER REFERENCES posts(id) ON DELETE CASCADE,
+  message TEXT NOT NULL,
+  is_read BOOLEAN DEFAULT FALSE,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Create indexes for notifications performance
+CREATE INDEX IF NOT EXISTS idx_notifications_user_id ON notifications(user_id);
+CREATE INDEX IF NOT EXISTS idx_notifications_created_at ON notifications(created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_notifications_is_read ON notifications(user_id, is_read);
