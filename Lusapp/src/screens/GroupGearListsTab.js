@@ -22,6 +22,7 @@ export const GroupGearListsTab = ({ groupId, navigation, userRole }) => {
   const [gearLists, setGearLists] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showCreateModal, setShowCreateModal] = useState(false);
+  const [showInfoModal, setShowInfoModal] = useState(false);
   const [newListTitle, setNewListTitle] = useState('');
   const [listVisibility, setListVisibility] = useState('collaborative');
   const [creating, setCreating] = useState(false);
@@ -134,12 +135,20 @@ export const GroupGearListsTab = ({ groupId, navigation, userRole }) => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <TouchableOpacity
-          style={[styles.createButton, { backgroundColor: colors.primary }]}
-          onPress={() => setShowCreateModal(true)}
-        >
-          <Text style={styles.createButtonText}>+ New Gear List</Text>
-        </TouchableOpacity>
+        <View style={styles.headerRow}>
+          <TouchableOpacity
+            style={[styles.createButton, { backgroundColor: colors.primary, flex: 1 }]}
+            onPress={() => setShowCreateModal(true)}
+          >
+            <Text style={styles.createButtonText}>+ New Gear List</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.infoButton, { backgroundColor: colors.card, borderColor: colors.border }]}
+            onPress={() => setShowInfoModal(true)}
+          >
+            <Text style={styles.infoButtonText}>ℹ️</Text>
+          </TouchableOpacity>
+        </View>
       </View>
 
       {gearLists.length === 0 ? (
@@ -255,6 +264,45 @@ export const GroupGearListsTab = ({ groupId, navigation, userRole }) => {
           </View>
         </View>
       </Modal>
+
+      <Modal visible={showInfoModal} animationType="fade" transparent={true}>
+        <View style={styles.modalOverlay}>
+          <View style={[styles.infoModalContent, { backgroundColor: colors.card }]}>
+            <Text style={[styles.infoModalTitle, { color: colors.text }]}>
+              📋 About Gear Lists
+            </Text>
+            
+            <Text style={[styles.infoModalText, { color: colors.textSecondary }]}>
+              Gear lists help you and your group organize equipment for races. Create lists to track what gear is needed and who's bringing what.
+            </Text>
+
+            <View style={[styles.infoSection, { backgroundColor: colors.background }]}>
+              <Text style={[styles.infoSectionTitle, { color: colors.primary }]}>
+                👥 Collaborative Lists
+              </Text>
+              <Text style={[styles.infoSectionText, { color: colors.textSecondary }]}>
+                Shared lists where all group members can add items, claim them, and mark them complete. Perfect for coordinating team logistics - who's bringing the tent, first aid kit, etc.
+              </Text>
+            </View>
+
+            <View style={[styles.infoSection, { backgroundColor: colors.background }]}>
+              <Text style={[styles.infoSectionTitle, { color: colors.primary }]}>
+                👤 Personal Lists
+              </Text>
+              <Text style={[styles.infoSectionText, { color: colors.textSecondary }]}>
+                Your private checklist. Friends can add items to remind you, but only you can mark items complete. Great for tracking your own race gear.
+              </Text>
+            </View>
+
+            <TouchableOpacity
+              style={[styles.infoCloseButton, { backgroundColor: colors.primary }]}
+              onPress={() => setShowInfoModal(false)}
+            >
+              <Text style={styles.infoCloseButtonText}>Got it!</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 };
@@ -271,10 +319,26 @@ const styles = StyleSheet.create({
   header: {
     padding: SPACING.md,
   },
+  headerRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: SPACING.sm,
+  },
   createButton: {
     padding: SPACING.md,
     borderRadius: BORDER_RADIUS.md,
     alignItems: 'center',
+  },
+  infoButton: {
+    width: 44,
+    height: 44,
+    borderRadius: BORDER_RADIUS.md,
+    borderWidth: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  infoButtonText: {
+    fontSize: 20,
   },
   createButtonText: {
     color: '#FFFFFF',
@@ -390,6 +454,48 @@ const styles = StyleSheet.create({
     marginHorizontal: SPACING.xs,
   },
   modalButtonText: {
+    color: '#FFFFFF',
+    fontSize: FONT_SIZE.md,
+    fontWeight: '600',
+  },
+  infoModalContent: {
+    width: '90%',
+    borderRadius: BORDER_RADIUS.lg,
+    padding: SPACING.xl,
+  },
+  infoModalTitle: {
+    fontSize: FONT_SIZE.xl,
+    fontWeight: 'bold',
+    marginBottom: SPACING.md,
+    textAlign: 'center',
+  },
+  infoModalText: {
+    fontSize: FONT_SIZE.md,
+    lineHeight: 22,
+    marginBottom: SPACING.lg,
+    textAlign: 'center',
+  },
+  infoSection: {
+    padding: SPACING.md,
+    borderRadius: BORDER_RADIUS.md,
+    marginBottom: SPACING.md,
+  },
+  infoSectionTitle: {
+    fontSize: FONT_SIZE.md,
+    fontWeight: '600',
+    marginBottom: SPACING.xs,
+  },
+  infoSectionText: {
+    fontSize: FONT_SIZE.sm,
+    lineHeight: 20,
+  },
+  infoCloseButton: {
+    padding: SPACING.md,
+    borderRadius: BORDER_RADIUS.md,
+    alignItems: 'center',
+    marginTop: SPACING.sm,
+  },
+  infoCloseButtonText: {
     color: '#FFFFFF',
     fontSize: FONT_SIZE.md,
     fontWeight: '600',

@@ -63,6 +63,7 @@ export const RaceDetailScreen = ({ route, navigation }) => {
   
   const [completion, setCompletion] = useState(null);
   const [showCompletionModal, setShowCompletionModal] = useState(false);
+  const [showCertificateInfoModal, setShowCertificateInfoModal] = useState(false);
   const [completionTime, setCompletionTime] = useState('');
   const [position, setPosition] = useState('');
   const [notes, setNotes] = useState('');
@@ -597,14 +598,22 @@ export const RaceDetailScreen = ({ route, navigation }) => {
               onChangeText={setNotes}
             />
 
-            <TouchableOpacity
-              style={[styles.pickCertificateButton, { borderColor: colors.primary }]}
-              onPress={handlePickCertificate}
-            >
-              <Text style={[styles.pickCertificateText, { color: colors.primary }]}>
-                {certificate ? '✓ Certificate Selected' : '📄 Upload Certificate (PDF or Image)'}
-              </Text>
-            </TouchableOpacity>
+            <View style={styles.certificateRow}>
+              <TouchableOpacity
+                style={[styles.pickCertificateButton, { borderColor: colors.primary, flex: 1 }]}
+                onPress={handlePickCertificate}
+              >
+                <Text style={[styles.pickCertificateText, { color: colors.primary }]}>
+                  {certificate ? '✓ Certificate Selected' : '📄 Upload Certificate'}
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[styles.certificateInfoButton, { backgroundColor: colors.background, borderColor: colors.border }]}
+                onPress={() => setShowCertificateInfoModal(true)}
+              >
+                <Ionicons name="help-circle-outline" size={22} color={colors.primary} />
+              </TouchableOpacity>
+            </View>
 
             <View style={styles.modalButtons}>
               <TouchableOpacity
@@ -626,6 +635,48 @@ export const RaceDetailScreen = ({ route, navigation }) => {
                 )}
               </TouchableOpacity>
             </View>
+          </View>
+        </View>
+      </Modal>
+
+      <Modal visible={showCertificateInfoModal} animationType="fade" transparent={true}>
+        <View style={styles.modalContainer}>
+          <View style={[styles.certificateInfoModalContent, { backgroundColor: colors.card }]}>
+            <Text style={[styles.certificateInfoTitle, { color: colors.text }]}>
+              🏆 About Certificates
+            </Text>
+            
+            <Text style={[styles.certificateInfoText, { color: colors.textSecondary }]}>
+              Upload your official race finisher certificate or results to keep a record of your achievement.
+            </Text>
+
+            <View style={[styles.certificateInfoSection, { backgroundColor: colors.background }]}>
+              <Text style={[styles.certificateInfoSectionTitle, { color: colors.primary }]}>
+                What to upload?
+              </Text>
+              <Text style={[styles.certificateInfoSectionText, { color: colors.textSecondary }]}>
+                • Official finisher certificate{'\n'}
+                • Race results screenshot{'\n'}
+                • Timing chip results{'\n'}
+                • Any proof of completion
+              </Text>
+            </View>
+
+            <View style={[styles.certificateInfoSection, { backgroundColor: colors.background }]}>
+              <Text style={[styles.certificateInfoSectionTitle, { color: colors.primary }]}>
+                Supported formats
+              </Text>
+              <Text style={[styles.certificateInfoSectionText, { color: colors.textSecondary }]}>
+                PDF, JPG, PNG images. Your certificate is stored securely and visible only on your profile.
+              </Text>
+            </View>
+
+            <TouchableOpacity
+              style={[styles.certificateInfoCloseButton, { backgroundColor: colors.primary }]}
+              onPress={() => setShowCertificateInfoModal(false)}
+            >
+              <Text style={styles.certificateInfoCloseButtonText}>Got it!</Text>
+            </TouchableOpacity>
           </View>
         </View>
       </Modal>
@@ -857,7 +908,6 @@ const styles = StyleSheet.create({
     textAlignVertical: 'top',
   },
   pickCertificateButton: {
-    marginTop: SPACING.md,
     padding: SPACING.md,
     borderRadius: BORDER_RADIUS.md,
     borderWidth: 2,
@@ -884,5 +934,61 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontSize: FONT_SIZE.md,
     fontWeight: 'bold',
+  },
+  certificateRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: SPACING.sm,
+    marginTop: SPACING.md,
+  },
+  certificateInfoButton: {
+    width: 44,
+    height: 44,
+    borderRadius: BORDER_RADIUS.md,
+    borderWidth: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  certificateInfoModalContent: {
+    width: '90%',
+    borderRadius: BORDER_RADIUS.lg,
+    padding: SPACING.xl,
+  },
+  certificateInfoTitle: {
+    fontSize: FONT_SIZE.xl,
+    fontWeight: 'bold',
+    marginBottom: SPACING.md,
+    textAlign: 'center',
+  },
+  certificateInfoText: {
+    fontSize: FONT_SIZE.md,
+    lineHeight: 22,
+    marginBottom: SPACING.lg,
+    textAlign: 'center',
+  },
+  certificateInfoSection: {
+    padding: SPACING.md,
+    borderRadius: BORDER_RADIUS.md,
+    marginBottom: SPACING.md,
+  },
+  certificateInfoSectionTitle: {
+    fontSize: FONT_SIZE.md,
+    fontWeight: '600',
+    marginBottom: SPACING.xs,
+  },
+  certificateInfoSectionText: {
+    fontSize: FONT_SIZE.sm,
+    lineHeight: 20,
+  },
+  certificateInfoCloseButton: {
+    padding: SPACING.md,
+    borderRadius: BORDER_RADIUS.md,
+    alignItems: 'center',
+    marginTop: SPACING.sm,
+  },
+  certificateInfoCloseButtonText: {
+    color: '#FFFFFF',
+    fontSize: FONT_SIZE.md,
+    fontWeight: '600',
   },
 });
