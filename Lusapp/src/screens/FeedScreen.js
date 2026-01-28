@@ -1,10 +1,12 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { View, Text, StyleSheet, FlatList, RefreshControl, ActivityIndicator, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { Ionicons } from '@expo/vector-icons';
 import { PostCard } from '../components/PostCard';
 import { UserAvatar } from '../components/UserAvatar';
 import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
+import { useNotifications } from '../context/NotificationContext';
 import { SPACING, FONT_SIZE, BORDER_RADIUS } from '../constants/theme';
 import API_URL from '../config/api';
 import { fetchWithAuth } from '../utils/apiClient';
@@ -12,6 +14,7 @@ import { fetchWithAuth } from '../utils/apiClient';
 export const FeedScreen = ({ navigation }) => {
   const { colors } = useTheme();
   const { token } = useAuth();
+  const { unreadCount, fetchUnreadCount } = useNotifications();
   const [posts, setPosts] = useState([]);
   const [suggestedUsers, setSuggestedUsers] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -96,9 +99,24 @@ export const FeedScreen = ({ navigation }) => {
         )}
         contentContainerStyle={styles.list}
         ListHeaderComponent={
-          <Text style={[styles.header, { color: colors.text }]}>
-            Activity Feed
-          </Text>
+          <View style={styles.headerRow}>
+            <Text style={[styles.header, { color: colors.text }]}>
+              Activity Feed
+            </Text>
+            <TouchableOpacity 
+              style={styles.bellButton}
+              onPress={() => navigation.navigate('Notifications')}
+            >
+              <Ionicons name="notifications-outline" size={26} color={colors.text} />
+              {unreadCount > 0 && (
+                <View style={[styles.badge, { backgroundColor: colors.primary }]}>
+                  <Text style={styles.badgeText}>
+                    {unreadCount > 99 ? '99+' : unreadCount}
+                  </Text>
+                </View>
+              )}
+            </TouchableOpacity>
+          </View>
         }
         ListEmptyComponent={
           <View style={styles.emptyContainer}>
@@ -161,10 +179,35 @@ const styles = StyleSheet.create({
   list: {
     padding: SPACING.md,
   },
+  headerRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: SPACING.md,
+  },
   header: {
     fontSize: FONT_SIZE.xl,
     fontWeight: 'bold',
-    marginBottom: SPACING.md,
+  },
+  bellButton: {
+    padding: SPACING.sm,
+    position: 'relative',
+  },
+  badge: {
+    position: 'absolute',
+    top: 2,
+    right: 2,
+    minWidth: 18,
+    height: 18,
+    borderRadius: 9,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 4,
+  },
+  badgeText: {
+    color: '#FFFFFF',
+    fontSize: 10,
+    fontWeight: 'bold',
   },
   emptyContainer: {
     paddingVertical: SPACING.lg,

@@ -14,6 +14,7 @@ const groupsRoutes = require('./routes/groups');
 const groupMessagesRoutes = require('./routes/groupMessages');
 const gearListsRoutes = require('./routes/gearLists');
 const postsRoutes = require('./routes/posts');
+const notificationsRoutes = require('./routes/notifications');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -181,6 +182,7 @@ app.use('/api/groups', groupsRoutes(pool));
 app.use('/api/groups', groupMessagesRoutes(pool));
 app.use('/api/groups', gearListsRoutes(pool));
 app.use('/api/posts', postsRoutes);
+app.use('/api/notifications', notificationsRoutes);
 
 app.get('/api/races', async (req, res) => {
   try {

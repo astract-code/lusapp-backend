@@ -20,6 +20,7 @@ import { ChatScreen } from '../screens/ChatScreen';
 import { GroupsScreen } from '../screens/GroupsScreen';
 import { GroupDetailScreen } from '../screens/GroupDetailScreen';
 import { GearListDetailScreen } from '../screens/GearListDetailScreen';
+import { NotificationsScreen } from '../screens/NotificationsScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -65,6 +66,11 @@ const FeedStack = () => {
         name="Chat" 
         component={ChatScreen}
         options={{ title: 'Chat' }}
+      />
+      <Stack.Screen 
+        name="Notifications" 
+        component={NotificationsScreen}
+        options={{ headerShown: false }}
       />
     </Stack.Navigator>
   );

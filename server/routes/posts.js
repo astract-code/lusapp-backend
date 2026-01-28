@@ -174,10 +174,24 @@ router.post('/:postId/like', combinedAuthMiddleware, async (req, res) => {
   try {
     const postId = parseInt(req.params.postId, 10);
     const userId = req.user.userId.toString();
+    const actorId = parseInt(req.user.userId, 10);
     
     if (isNaN(postId)) {
       return res.status(400).json({ error: 'Invalid post ID' });
     }
+    
+    // Get the post to check owner and if already liked
+    const postCheck = await pool.query(
+      'SELECT user_id, liked_by FROM posts WHERE id = $1',
+      [postId]
+    );
+    
+    if (postCheck.rows.length === 0) {
+      return res.status(404).json({ error: 'Post not found' });
+    }
+    
+    const postOwnerId = postCheck.rows[0].user_id;
+    const alreadyLiked = (postCheck.rows[0].liked_by || []).includes(userId);
     
     const result = await pool.query(
       `UPDATE posts 
@@ -187,8 +201,20 @@ router.post('/:postId/like', combinedAuthMiddleware, async (req, res) => {
       [userId, postId]
     );
     
-    if (result.rows.length === 0) {
-      return res.status(404).json({ error: 'Post not found' });
+    // Create notification for post owner (if not liking own post and not already liked)
+    if (postOwnerId !== actorId && !alreadyLiked) {
+      try {
+        const actorResult = await pool.query('SELECT name FROM users WHERE id = $1', [actorId]);
+        const actorName = actorResult.rows[0]?.name || 'Someone';
+        
+        await pool.query(
+          `INSERT INTO notifications (user_id, type, actor_id, post_id, message)
+           VALUES ($1, 'like', $2, $3, $4)`,
+          [postOwnerId, actorId, postId, `${actorName} liked your post`]
+        );
+      } catch (notifError) {
+        console.error('Error creating like notification:', notifError);
+      }
     }
     
     res.json({
@@ -238,6 +264,7 @@ router.post('/:postId/comment', combinedAuthMiddleware, async (req, res) => {
   try {
     const postId = parseInt(req.params.postId, 10);
     const userId = req.user.userId;
+    const actorId = parseInt(req.user.userId, 10);
     const { text } = req.body;
     
     if (isNaN(postId)) {
@@ -249,7 +276,7 @@ router.post('/:postId/comment', combinedAuthMiddleware, async (req, res) => {
     }
     
     const postResult = await pool.query(
-      'SELECT comments FROM posts WHERE id = $1',
+      'SELECT user_id, comments FROM posts WHERE id = $1',
       [postId]
     );
     
@@ -257,17 +284,20 @@ router.post('/:postId/comment', combinedAuthMiddleware, async (req, res) => {
       return res.status(404).json({ error: 'Post not found' });
     }
     
+    const postOwnerId = postResult.rows[0].user_id;
+    
     const userResult = await pool.query(
       'SELECT name, avatar FROM users WHERE id = $1',
       [userId]
     );
     
     const comments = JSON.parse(postResult.rows[0].comments || '[]');
+    const actorName = userResult.rows[0]?.name || 'Someone';
     
     const newComment = {
       id: Date.now().toString(),
       userId: userId.toString(),
-      userName: userResult.rows[0].name,
+      userName: actorName,
       userAvatar: userResult.rows[0].avatar,
       text: text.trim(),
       timestamp: new Date().toISOString()
@@ -279,6 +309,19 @@ router.post('/:postId/comment', combinedAuthMiddleware, async (req, res) => {
       'UPDATE posts SET comments = $1 WHERE id = $2',
       [JSON.stringify(comments), postId]
     );
+    
+    // Create notification for post owner (if not commenting on own post)
+    if (postOwnerId !== actorId) {
+      try {
+        await pool.query(
+          `INSERT INTO notifications (user_id, type, actor_id, post_id, message)
+           VALUES ($1, 'comment', $2, $3, $4)`,
+          [postOwnerId, actorId, postId, `${actorName} commented on your post`]
+        );
+      } catch (notifError) {
+        console.error('Error creating comment notification:', notifError);
+      }
+    }
     
     res.json({
       success: true,

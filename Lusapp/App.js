@@ -5,6 +5,7 @@ import { StatusBar } from 'expo-status-bar';
 import { AuthProvider, useAuth } from './src/context/AuthContext';
 import { SettingsProvider } from './src/context/SettingsContext';
 import { ThemeProvider, useTheme } from './src/context/ThemeContext';
+import { NotificationProvider } from './src/context/NotificationContext';
 import { OnboardingScreen } from './src/screens/OnboardingScreen';
 import { ForgotPasswordScreen } from './src/screens/ForgotPasswordScreen';
 import { EmailVerificationScreen } from './src/screens/EmailVerificationScreen';
@@ -56,7 +57,9 @@ export default function App() {
     <AuthProvider>
       <ThemeProvider>
         <SettingsProvider>
-          <AppContent />
+          <NotificationProvider>
+            <AppContent />
+          </NotificationProvider>
         </SettingsProvider>
       </ThemeProvider>
     </AuthProvider>
