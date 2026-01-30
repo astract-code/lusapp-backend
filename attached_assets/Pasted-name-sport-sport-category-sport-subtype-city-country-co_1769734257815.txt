@@ -1,0 +1,31 @@
+name,sport,sport_category,sport_subtype,city,country,continent,date,start_time,distance,description,participants
+Xiamen Triathlon,Triathlon,Standard Distance,Olympic,Xiamen,China,Asia,2026-04-19,06:30,51.5km,Scenic coastal triathlon with swim in the harbor,800
+Chengdu International Triathlon,Triathlon,Sprint Distance,Sprint,Chengdu,China,Asia,2026-06-07,07:15,25.75km,Urban triathlon featuring city landmarks,1500
+IRONMAN 70.3 Shanghai,Triathlon,Middle Distance,70.3,Shanghai,China,Asia,2026-10-18,07:00,113km,Official Ironman 70.3 event with international field,1200
+Beijing International Triathlon,Triathlon,Standard Distance,Olympic,Beijing,China,Asia,2026-09-13,07:30,51.5km,Elite race at Ming Tomb Reservoir,1000
+Shenzhen Triathlon,Triathlon,Sprint Distance,Sprint,Shenzhen,China,Asia,2026-11-08,07:45,25.75km,Modern course in China's tech hub,900
+Zhangjiajie Sky Trail,Running,Trail Running,50K,Zhangjiajie,China,Asia,2026-05-10,06:00,50km,Technical trail through UNESCO World Heritage site,300
+Huangshan Mountain Trail,Running,Trail Running,100K,Huangshan,China,Asia,2026-04-25,05:30,100km,Iconic mountain race on the Yellow Mountains,450
+Great Wall Marathon,Running,Road Running,Marathon,Beijing,China,Asia,2026-05-16,07:30,42.2km,Historic run along the Great Wall with steep steps,2500
+Shanghai Marathon,Running,Road Running,Marathon,Shanghai,China,Asia,2026-11-29,07:00,42.2km,World Athletics Platinum Label road race,38000
+Beijing Marathon,Running,Road Running,Marathon,Beijing,China,Asia,2026-09-20,07:30,42.2km,China's oldest marathon, Platinum Label race,30000
+Xiamen Marathon,Running,Road Running,Marathon,Xiamen,China,Asia,2026-01-04,07:30,42.2km,World Athletics Platinum Label, scenic coastal route,35000
+Wuhan Marathon,Running,Road Running,Marathon,Wuhan,China,Asia,2026-04-12,07:30,42.2km,Scenic route crossing Yangtze River bridges,26000
+Guangzhou Marathon,Running,Road Running,Marathon,Guangzhou,China,Asia,2026-12-13,07:30,42.2km,World Athletics Gold Label race,30000
+Chongqing Marathon,Running,Road Running,Marathon,Chongqing,China,Asia,2026-03-28,07:30,42.2km,Hilly course in "Mountain City", Gold Label,20000
+Hangzhou Marathon,Running,Road Running,Marathon,Hangzhou,China,Asia,2026-11-07,07:30,42.2km,Scenic course around West Lake, Gold Label,35000
+Chengdu Marathon,Running,Road Running,Marathon,Chengdu,China,Asia,2026-10-25,07:30,42.2km,World Athletics Gold Label race,30000
+Hong Kong Marathon,Running,Road Running,Marathon,Hong Kong,China,Asia,2026-01-17,06:00,42.2km,Challenging route with bridges and tunnels,74000
+Shenzhen Marathon,Running,Road Running,Marathon,Shenzhen,China,Asia,2026-12-20,07:30,42.2km,World Athletics Gold Label race,25000
+Macau Marathon,Running,Road Running,Marathon,Macau,China,Asia,2026-12-05,06:00,42.2km,International marathon with cultural heritage route,12000
+Yunnan Ultra Trail,Running,Trail Running,100K,Shangri-La,China,Asia,2026-07-11,04:00,100km,High-altitude ultra through Tibetan plateau,200
+Gobi March China,Running,Trail Running,Stage Race,Gansu,China,Asia,2026-06-06,07:00,250km,7-day self-supported stage race,150
+Lijiang Rock Trail,Running,Trail Running,50K,Lijiang,China,Asia,2026-06-20,07:00,50km,High-altitude trail near Jade Dragon Snow Mountain,350
+Guilin Karst Trail,Running,Trail Running,25K,Guilin,China,Asia,2026-11-14,08:30,25km,Picturesque trail through limestone landscape,700
+Tibet Everest Trail,Running,Trail Running,80K,Shigatse,China,Asia,2026-09-12,06:00,80km,High-altitude race with Himalayan views,180
+Ningbo International Half Marathon,Running,Road Running,Half Marathon,Ningbo,China,Asia,2026-03-21,08:00,21.1km,Flat and fast coastal course,15000
+Suzhou Taihu Marathon,Running,Road Running,Marathon,Suzhou,China,Asia,2026-11-21,07:30,42.2km,Scenic route around Taihu Lake,18000
+Harbin Marathon,Running,Road Running,Marathon,Harbin,China,Asia,2026-08-28,07:30,42.2km,Summer marathon in Northern China,15000
+Kunming Plateau Run,Running,Trail Running,60K,Kunming,China,Asia,2026-07-18,06:30,60km,High-altitude trail around Dianchi Lake,320
+Qinghai Lake Ultra,Running,Trail Running,100K,Xining,China,Asia,2026-08-07,06:00,100km,High-altitude race around China's largest lake,200
+Xi'an Marathon,Running,Road Running,Marathon,Xi'an,China,Asia,2026-10-10,07:30,42.2km,Historic route from ancient city wall,22000
