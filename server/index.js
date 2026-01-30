@@ -187,12 +187,16 @@ app.use('/api/notifications', notificationsRoutes);
 app.get('/api/races', async (req, res) => {
   try {
     // Include all past races so users can mark them complete
+    // Join with users table to get creator name
     const result = await pool.query(
-      `SELECT *, COALESCE(registered_users, ARRAY[]::text[]) as registered_users 
-       FROM races 
-       WHERE date >= CURRENT_DATE - INTERVAL '100 years'
-       AND approval_status = 'approved'
-       ORDER BY date ASC`
+      `SELECT r.*, 
+              COALESCE(r.registered_users, ARRAY[]::text[]) as registered_users,
+              u.name as created_by_name
+       FROM races r
+       LEFT JOIN users u ON r.created_by_user_id = u.id
+       WHERE r.date >= CURRENT_DATE - INTERVAL '100 years'
+       AND r.approval_status = 'approved'
+       ORDER BY r.date ASC`
     );
     res.json(result.rows);
   } catch (error) {
@@ -256,7 +260,15 @@ app.get('/api/races/csv-download', noCors, csrfProtection, adminAuth, async (req
 app.get('/api/races/:id', async (req, res) => {
   try {
     const { id } = req.params;
-    const result = await pool.query('SELECT *, COALESCE(registered_users, ARRAY[]::text[]) as registered_users FROM races WHERE id = $1', [id]);
+    const result = await pool.query(
+      `SELECT r.*, 
+              COALESCE(r.registered_users, ARRAY[]::text[]) as registered_users,
+              u.name as created_by_name
+       FROM races r
+       LEFT JOIN users u ON r.created_by_user_id = u.id
+       WHERE r.id = $1`, 
+      [id]
+    );
     if (result.rows.length === 0) {
       return res.status(404).json({ error: 'Race not found' });
     }

@@ -10,6 +10,8 @@ import {
   TextInput,
   Modal,
   RefreshControl,
+  KeyboardAvoidingView,
+  Platform,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { CompactRaceCard } from '../components/CompactRaceCard';
@@ -206,14 +208,23 @@ export const DiscoverScreen = ({ navigation }) => {
         onRequestClose={() => setShowAddForm(false)}
       >
         <SafeAreaView style={[styles.modalContainer, { backgroundColor: colors.background }]}>
-          <View style={styles.modalHeader}>
-            <Text style={[styles.modalTitle, { color: colors.text }]}>Add New Race</Text>
-            <TouchableOpacity onPress={() => setShowAddForm(false)}>
-              <Text style={[styles.modalClose, { color: colors.primary }]}>Cancel</Text>
-            </TouchableOpacity>
-          </View>
+          <KeyboardAvoidingView 
+            style={{ flex: 1 }} 
+            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+            keyboardVerticalOffset={0}
+          >
+            <View style={styles.modalHeader}>
+              <Text style={[styles.modalTitle, { color: colors.text }]}>Add New Race</Text>
+              <TouchableOpacity onPress={() => setShowAddForm(false)}>
+                <Text style={[styles.modalClose, { color: colors.primary }]}>Cancel</Text>
+              </TouchableOpacity>
+            </View>
 
-          <ScrollView style={styles.form}>
+            <ScrollView 
+              style={styles.form}
+              keyboardShouldPersistTaps="handled"
+              showsVerticalScrollIndicator={true}
+            >
             <Text style={[styles.label, { color: colors.text }]}>Race Name *</Text>
             <TextInput
               style={[styles.input, { backgroundColor: colors.card, color: colors.text, borderColor: colors.border }]}
@@ -331,7 +342,10 @@ export const DiscoverScreen = ({ navigation }) => {
             >
               <Text style={styles.submitButtonText}>Add Race</Text>
             </TouchableOpacity>
-          </ScrollView>
+            
+            <View style={{ height: 100 }} />
+            </ScrollView>
+          </KeyboardAvoidingView>
         </SafeAreaView>
       </Modal>
 

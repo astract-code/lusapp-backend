@@ -426,6 +426,12 @@ export const RaceDetailScreen = ({ route, navigation }) => {
         </View>
       )}
 
+      <View style={styles.addedByContainer}>
+        <Text style={[styles.addedByText, { color: colors.textSecondary }]}>
+          Added by {race.created_by_name || 'admin'}
+        </Text>
+      </View>
+
       {registeredUsers.length > 0 && (
         <View style={[styles.card, { backgroundColor: colors.card }]}>
           <Text style={[styles.sectionTitle, { color: colors.text }]}>
@@ -990,5 +996,14 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontSize: FONT_SIZE.md,
     fontWeight: '600',
+  },
+  addedByContainer: {
+    paddingHorizontal: SPACING.md,
+    paddingVertical: SPACING.sm,
+    marginBottom: SPACING.sm,
+  },
+  addedByText: {
+    fontSize: FONT_SIZE.sm,
+    fontStyle: 'italic',
   },
 });
