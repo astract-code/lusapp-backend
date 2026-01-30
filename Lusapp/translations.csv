@@ -1,0 +1,98 @@
+Category,English,Español,Euskera,中文,Français,Català,Deutsch
+Navigation,Feed,Últimos movimientos,Berriak,订阅源,Fil d'actualité,Feed,Feed
+Navigation,Calendar,Calendario,Egutegia,日历,Calendrier,Calendari,Kalender
+Navigation,Discover,Descubrir,Aurkitu,发现,Découvrir,Descobreix,Entdecken
+Navigation,Groups,Grupos,Taldeak,群组,Groupes,Grups,Gruppen
+Navigation,Messages,Mensajes,Mezuak,消息,Messages,Missatges,Nachrichten
+Navigation,Profile,Perfil,Profila,个人资料,Profil,Perfil,Profil
+Navigation,Settings,Configuración,Ezarpenak,设置,Paramètres,Configuració,Einstellungen
+Navigation,Notifications,Notificaciones,Jakinarazpenak,通知,Notifications,Notificacions,Benachrichtigungen
+Authentication,Sign In,Iniciar sesión,Saioa hasi,登录,Se connecter,Inicia sessió,Anmelden
+Authentication,Sign Up,Registrarse,Erregistratu,注册,S'inscrire,Registra't,Registrieren
+Authentication,Log Out,Cerrar sesión,Saioa amaitu,登出,Se déconnecter,Tanca la sessió,Abmelden
+Authentication,Create Account,Crear cuenta,Kontua sortu,创建账户,Créer un compte,Crea un compte,Konto erstellen
+Authentication,Forgot Password?,¿Olvidaste tu contraseña?,Pasahitza ahaztu duzu?,忘记密码？,Mot de passe oublié ?,Has oblidat la contrasenya?,Passwort vergessen?
+Authentication,Reset Password,Restablecer contraseña,Pasahitza berrezarri,重置密码,Réinitialiser le mot de passe,Restableix la contrasenya,Passwort zurücksetzen
+Authentication,Email,Correo electrónico,Posta elektronikoa,电子邮件,E-mail,Correu electrònic,E-Mail
+Authentication,Password,Contraseña,Pasahitza,密码,Mot de passe,Contrasenya,Passwort
+Authentication,Confirm Password,Confirmar contraseña,Pasahitza berretsi,确认密码,Confirmer le mot de passe,Confirma la contrasenya,Passwort bestätigen
+Authentication,Verify Your Email,Verifica tu correo electrónico,Berretsi zure posta elektronikoa,验证您的电子邮件,Vérifiez votre e-mail,Verifica el teu correu electrònic,Bestätige deine E-Mail
+Authentication,Continue with Google,Continuar con Google,Google-rekin jarraitu,继续使用 Google,Continuer avec Google,Continua amb Google,Weiter mit Google
+Authentication,Continue with Apple,Continuar con Apple,Apple-rekin jarraitu,继续使用 Apple,Continuer avec Apple,Continua amb Apple,Weiter mit Apple
+Races,Discover Races,Descubrir carreras,Lasterketak aurkitu,发现赛事,Découvrir des courses,Descobreix curses,Rennen entdecken
+Races,Upcoming,Próximas,Etorkizunekoak,即将举行,À venir,Pròximes,Kommende
+Races,Completed,Completadas,Osatutakoak,已完成,Terminées,Completades,Abgeschlossene
+Races,Sign Up for Race,Inscribirse en la carrera,Lasterketan izena eman,报名参加赛事,S'inscrire à la course,Inscriu-te a la cursa,Für Rennen anmelden
+Races,Cancel Registration,Cancelar inscripción,Izen-ematea bertan behera utzi,取消报名,Annuler l'inscription,Cancel·la la inscripció,Registrierung stornieren
+Races,Mark as Completed,Marcar como completada,Osatuta markatu,标记为已完成,Marquer comme terminé,Marca com a completada,Als abgeschlossen markieren
+Races,Add New Race,Añadir nueva carrera,Lasterketa berria gehitu,添加新赛事,Ajouter une nouvelle course,Afegeix una nova cursa,Neues Rennen hinzufügen
+Races,Race Details,Detalles de la carrera,Lasterketaren xehetasunak,赛事详情,Détails de la course,Detalls de la cursa,Renn-Details
+Races,Participants,Participantes,Parte-hartzaileak,参与者,Participants,Participants,Teilnehmer
+Races,Distance,Distancia,Distantzia,距离,Distance,Distància,Distanz
+Races,Date,Fecha,Data,日期,Date,Data,Datum
+Races,Start Time,Hora de inicio,Hasiera ordua,开始时间,Heure de départ,Hora d'inici,Startzeit
+Races,Location,Ubicación,Kokapena,位置,Emplacement,Ubicació,Ort
+Races,City,Ciudad,Hiria,城市,Ville,Ciutat,Stadt
+Races,Country,País,Herrialdea,国家,Pays,País,Land
+Races,About,Acerca de,Honi buruz,关于,À propos de,Sobre,Über
+Races,Added by,Añadido por,Gehitua:,添加者,Ajouté par,Afegit per,Hinzugefügt von
+Sports,Running,Running,Korrika egin,跑步,Course à pied,Córrer,Laufen
+Sports,Marathon,Maratón,Maratoia,马拉松,Marathon,Marató,Marathon
+Sports,Half Marathon,Media maratón,Erdi maratoia,半程马拉松,Demi-marathon,Mitja marató,Halbmarathon
+Sports,Trail Running,Trail running,Mendi lasterketa,越野跑,Course en sentier,Trail running,Trailrunning
+Sports,Ultra Marathon,Ultramaratón,Ultra maratoia,超马,Ultra-marathon,Ultramarató,Ultramarathon
+Sports,Triathlon,Triatlón,Triatloia,铁人三项,Triathlon,Triatló,Triathlon
+Sports,Cycling,Ciclismo,Txirrindularitza,自行车,Cyclisme,Ciclisme,Radfahren
+Sports,Swimming,Natación,Igeriketa,游泳,Natation,Natació,Schwimmen
+Sports,Fitness,Fitness,Fitness,健身,Fitness,Fitness,Fitness
+Sports,HYROX,HYROX,HYROX,HYROX,HYROX,HYROX,HYROX
+Sports,Spartan Race,Spartan Race,Spartan Race,斯巴达勇士赛,Spartan Race,Spartan Race,Spartan Race
+Groups,Create Group,Crear grupo,Taldea sortu,创建群组,Créer un groupe,Crea un grup,Gruppe erstellen
+Groups,Join,Unirse,Batu,加入,Rejoindre,Uneix-te,Beitreten
+Groups,Leave Group,Abandonar grupo,Taldea utzi,离开群组,Quitter le groupe,Abandona el grup,Gruppe verlassen
+Groups,Delete Group,Eliminar grupo,Taldea ezabatu,删除群组,Supprimer le groupe,Elimina el grup,Gruppe löschen
+Groups,Members,Miembros,Kideak,成员,Membres,Membres,Mitglieder
+Groups,Chat,Chat,Txata,聊天,Chat,Xat,Chat
+Groups,Gear Lists,Listas de equipo,Tresna zerrendak,装备清单,Listes d'équipement,Llistes d'equip,Gear-Listen
+Profile,Edit,Editar,Editatu,编辑,Modifier,Edita,Bearbeiten
+Profile,Save,Guardar,Gorde,保存,Enregistrer,Desa,Speichern
+Profile,Full Name,Nombre completo,Izen-abizen osoa,全名,Nom complet,Nom complet,Voller Name
+Profile,Bio,Biografía,Bio,简介,Bio,Bio,Bio
+Profile,Followers,Seguidores,Jarraitzaileak,关注者,Abonnés,Seguidors,Folger
+Profile,Following,Siguiendo,Jarraitzen ari zarenak,关注中,Abonnements,Seguints,Gefolgte
+Profile,Follow,Seguir,Jarraitu,关注,Suivre,Segueix,Folgen
+Profile,Total Races,Carreras totales,Lasterketa guztiak,总赛事,Total des courses,Total de curses,Gesamtrennen
+Profile,Delete Account,Eliminar cuenta,Kontua ezabatu,删除账户,Supprimer le compte,Elimina el compte,Konto löschen
+Messages,Type a message...,Escribe un mensaje...,Idatzi mezu bat...,输入消息...,Tapez un message...,Escriu un missatge...,Nachricht schreiben...
+Messages,No messages yet,Aún no hay mensajes,Oraindik mezurik ez,暂无消息,Aucun message pour le moment,Encara no hi ha missatges,Keine Nachrichten bisher
+Messages,Mute,Silenciar,Isilarazi,静音,Rendre muet,Silencia,Muten
+Messages,Archive,Archivar,Artxibatu,归档,Archiver,Arxiva,Archivieren
+Messages,Pinned,Fijado,Itsatsita,置顶,Épinglé,Fixat,Angeheftet
+Actions,Cancel,Cancelar,Bertan behera utzi,取消,Annuler,Cancel·la,Abbrechen
+Actions,Done,Hecho,Eginda,完成,Terminé,Fet,Erledigt
+Actions,Create,Crear,Sortu,创建,Créer,Crea,Erstellen
+Actions,Delete,Eliminar,Ezabatu,删除,Supprimer,Elimina,Löschen
+Actions,Share,Compartir,Partekatu,分享,Partager,Comparteix,Teilen
+Actions,Search,Buscar,Bilatu,搜索,Rechercher,Cerca,Suchen
+Settings,Dark,Oscuro,Iluna,暗黑,Mode sombre,Fosc,Dunkel
+Settings,Light,Claro,Argia,浅色,Mode clair,Clar,Hell
+Settings,Auto,Auto,Automatikoa,自动,Automatique,Automàtic,Auto
+Settings,Language,Idioma,Hizkuntza,语言,Langue,Idioma,Sprache
+Settings,Privacy Policy,Política de privacidad,Pribatutasun politika,隐私政策,Politique de confidentialité,Política de privacitat,Datenschutzrichtlinie
+Settings,Terms of Service,Términos de servicio,Zerbitzu-baldintzak,服务条款,Conditions d'utilisation,Condicions del servei,Nutzungsbedingungen
+Time,January,Enero,Urtarrila,一月,Janvier,Gener,Januar
+Time,February,Febrero,Otsaila,二月,Février,Febrer,Februar
+Time,March,Marzo,Martxoa,三月,Mars,Març,März
+Time,April,Abril,Apirila,四月,Avril,Abril,April
+Time,May,Mayo,Maiatza,五月,Mai,Mai,Mai
+Time,June,Junio,Ekaina,六月,Juin,Juny,Juni
+Time,July,Julio,Uztaila,七月,Juillet,Juliol,Juli
+Time,August,Agosto,Abuztua,八月,Août,Agost,August
+Time,September,Septiembre,Iraila,九月,Septembre,Setembre,September
+Time,October,Octubre,Urria,十月,Octobre,Octubre,Oktober
+Time,November,Noviembre,Azaroa,十一月,Novembre,Novembre,November
+Time,December,Diciembre,Abendua,十二月,Décembre,Desembre,Dezember
+Errors,Error,Error,Errorea,错误,Erreur,Error,Fehler
+Errors,Failed to upload photo,No se pudo subir la foto,Argazkia igotzeak huts egin du,上传照片失败,Échec du téléchargement de la photo,No s'ha pogut pujar la foto,Foto-Upload fehlgeschlagen
+Errors,User not found,Usuario no encontrado,Erabiltzailea ez da aurkitu,用户未找到,Utilisateur non trouvé,Usuari no trobat,Benutzer nicht gefunden
+Errors,Permission Required,Permiso requerido,Baimena behar da,需要权限,Autorisation requise,Permís requerit,Berechtigung erforderlich
