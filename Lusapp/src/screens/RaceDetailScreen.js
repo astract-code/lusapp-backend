@@ -350,13 +350,19 @@ export const RaceDetailScreen = ({ route, navigation }) => {
         }
       }
 
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 60000);
+
       const response = await fetch(`${API_URL}/api/races/${raceId}/complete`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,
         },
         body: formData,
+        signal: controller.signal,
       });
+
+      clearTimeout(timeoutId);
 
       if (response.ok) {
         const data = await response.json();
@@ -373,7 +379,16 @@ export const RaceDetailScreen = ({ route, navigation }) => {
       }
     } catch (error) {
       console.error('Error submitting completion:', error);
-      Alert.alert('Error', 'Failed to submit completion');
+      if (error.name === 'AbortError') {
+        Alert.alert(
+          'Upload taking too long',
+          'The upload is still processing. Please check back in a moment to see if it completed.',
+          [{ text: 'OK', onPress: () => setShowCompletionModal(false) }]
+        );
+        setTimeout(() => fetchCompletionData(), 5000);
+      } else {
+        Alert.alert('Error', 'Failed to submit completion. Please try again.');
+      }
     } finally {
       setSubmitting(false);
     }
