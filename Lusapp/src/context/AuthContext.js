@@ -366,16 +366,27 @@ export const AuthProvider = ({ children }) => {
 
   const refreshToken = async () => {
     try {
+      // For Firebase email/password users, get a fresh token
       if (firebaseUser) {
         const idToken = await firebaseUser.getIdToken(true);
         setToken(idToken);
         await AsyncStorage.setItem('token', idToken);
         return idToken;
       }
+      
+      // For social auth users (Apple/Google), return existing token
+      // Their backend JWT tokens are long-lived
+      const existingToken = token || await AsyncStorage.getItem('token');
+      if (existingToken) {
+        return existingToken;
+      }
+      
       return null;
     } catch (error) {
       console.error('Error refreshing token:', error);
-      return null;
+      // Try to return existing token as fallback
+      const fallbackToken = token || await AsyncStorage.getItem('token');
+      return fallbackToken || null;
     }
   };
 

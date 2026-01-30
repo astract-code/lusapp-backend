@@ -2,7 +2,7 @@ const express = require('express');
 const multer = require('multer');
 const cloudinary = require('cloudinary').v2;
 const { Pool } = require('pg');
-const { verifyFirebaseToken } = require('../middleware/firebaseAuth');
+const { combinedAuthMiddleware } = require('../middleware/authMiddleware');
 
 const router = express.Router();
 
@@ -35,7 +35,7 @@ const upload = multer({
   }
 });
 
-router.post('/avatar', verifyFirebaseToken, upload.single('avatar'), async (req, res) => {
+router.post('/avatar', combinedAuthMiddleware, upload.single('avatar'), async (req, res) => {
   try {
     if (!req.file) {
       return res.status(400).json({ error: 'No file uploaded' });
