@@ -160,12 +160,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: SPACING.md,
+    paddingTop: SPACING.xl,
   },
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingBottom: SPACING.md,
+    paddingTop: SPACING.md,
     borderBottomWidth: 1,
     borderBottomColor: 'rgba(255,255,255,0.1)',
     marginBottom: SPACING.md,
