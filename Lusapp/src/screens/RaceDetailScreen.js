@@ -17,6 +17,7 @@ import { useFocusEffect } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 import * as DocumentPicker from 'expo-document-picker';
+import * as ImagePicker from 'expo-image-picker';
 import { UserAvatar } from '../components/UserAvatar';
 import { useAuth } from '../context/AuthContext';
 import { useAppStore } from '../context/AppContext';
@@ -201,6 +202,88 @@ export const RaceDetailScreen = ({ route, navigation }) => {
   };
 
   const handlePickCertificate = async () => {
+    Alert.alert(
+      'Upload Certificate',
+      'Choose how to upload your certificate',
+      [
+        {
+          text: 'Take Photo',
+          onPress: () => pickFromCamera(),
+        },
+        {
+          text: 'Choose from Photos',
+          onPress: () => pickFromGallery(),
+        },
+        {
+          text: 'Choose from Files',
+          onPress: () => pickFromFiles(),
+        },
+        {
+          text: 'Cancel',
+          style: 'cancel',
+        },
+      ]
+    );
+  };
+
+  const pickFromCamera = async () => {
+    try {
+      const { status } = await ImagePicker.requestCameraPermissionsAsync();
+      if (status !== 'granted') {
+        Alert.alert('Permission Required', 'Camera access is needed to take photos');
+        return;
+      }
+
+      const result = await ImagePicker.launchCameraAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        quality: 0.8,
+      });
+
+      if (!result.canceled && result.assets && result.assets[0]) {
+        const asset = result.assets[0];
+        setCertificate({
+          uri: asset.uri,
+          mimeType: asset.mimeType || 'image/jpeg',
+          name: `certificate_${Date.now()}.jpg`,
+        });
+        Alert.alert('Success', 'Photo captured');
+      }
+    } catch (error) {
+      console.error('Error taking photo:', error);
+      Alert.alert('Error', 'Failed to take photo');
+    }
+  };
+
+  const pickFromGallery = async () => {
+    try {
+      const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+      if (status !== 'granted') {
+        Alert.alert('Permission Required', 'Photo library access is needed');
+        return;
+      }
+
+      const result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        quality: 0.8,
+      });
+
+      if (!result.canceled && result.assets && result.assets[0]) {
+        const asset = result.assets[0];
+        const extension = asset.uri.split('.').pop()?.toLowerCase() || 'jpg';
+        setCertificate({
+          uri: asset.uri,
+          mimeType: asset.mimeType || (extension === 'png' ? 'image/png' : 'image/jpeg'),
+          name: `certificate_${Date.now()}.${extension}`,
+        });
+        Alert.alert('Success', 'Photo selected');
+      }
+    } catch (error) {
+      console.error('Error picking from gallery:', error);
+      Alert.alert('Error', 'Failed to pick photo');
+    }
+  };
+
+  const pickFromFiles = async () => {
     try {
       const result = await DocumentPicker.getDocumentAsync({
         type: ['application/pdf', 'image/jpeg', 'image/png', 'image/jpg'],
