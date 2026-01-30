@@ -1,0 +1,60 @@
+name,sport,sport_category,sport_subtype,city,country,continent,date,start_time,distance,description,participants
+Sample Marathon,Running,Road Running,Marathon,New York,USA,North America,2025-12-15,08:00,42.2km,Annual city marathon,5000
+Sample Triathlon,Triathlon,Standard Distance,,Miami,USA,North America,2025-11-20,07:00,Standard,Olympic distance triathlon,1200
+Xiamen Triathlon,Triathlon,Standard Distance,,Xiamen,China,Asia,2025-04-20,06:30,Olympic,Scenic coastal triathlon with swim in the harbor,800
+Chengdu International Triathlon,Triathlon,Sprint Distance,,Chengdu,China,Asia,2025-06-08,07:15,Sprint,Urban triathlon featuring city landmarks,1500
+Shanghai Triathlon,Triathlon,Standard Distance,,Shanghai,China,Asia,2025-09-14,06:45,Olympic,Major international event with a fast, flat course,2000
+Zhangjiajie Sky Trail,Running,Trail Running,50K,Zhangjiajie,China,Asia,2025-05-10,06:00,50km,Techincal trail through UNESCO World Heritage site with stunning sandstone pillars,300
+Huangshan Mountain Trail,Running,Trail Running,100K,Huangshan,China,Asia,2025-04-12,05:30,100km,Iconic mountain race on the Yellow Mountains with steep granite peaks,450
+Great Wall Marathon Trail,Running,Trail Running,Marathon,Beijing,China,Asia,2025-10-18,07:30,42.2km,Historic trail run along sections of the Great Wall with steep steps,800
+Yunnan Ultra Trail,Running,Trail Running,100 Miles,Shangri-La,China,Asia,2025-07-05,04:00,161km,High-altitude ultra through Tibetan plateau and Himalayan foothills,200
+Sichuan Panda Trail,Running,Trail Running,30K,Wolong,China,Asia,2025-09-06,08:00,30km,Scenic trail through panda reserve with lush bamboo forests,600
+Gobi March,Running,Trail Running,Stage Race,Dunhuang,China,Asia,2025-08-15,07:00,250km,7-day self-supported stage race across Gobi Desert,150
+Hong Kong 100,Running,Trail Running,100K,Hong Kong,China,Asia,2025-01-18,08:00,100km,Iconic ultra along Hong Kong's MacLehose Trail with 4500m elevation,1500
+Taiwan Mountain Marathon,Running,Trail Running,Marathon,Taichung,Taiwan,Asia,2025-03-22,06:30,42.2km,Challenging mountain marathon in Central Taiwan,500
+Lijiang Rock Trail,Running,Trail Running,50K,Lijiang,China,Asia,2025-06-14,07:00,50km,High-altitude trail through ancient town and Jade Dragon Snow Mountain,350
+Guilin Karst Trail,Running,Trail Running,25K,Guilin,China,Asia,2025-11-08,08:30,25km,Picturesque trail through limestone karst landscape and rice terraces,700
+Xinjiang Desert Ultra,Running,Trail Running,120K,Turpan,China,Asia,2025-09-20,05:00,120km,Extreme desert race in one of Earth's hottest places,120
+Tibet Everest Trail,Running,Trail Running,80K,Shigatse,China,Asia,2025-05-25,06:00,80km,High-altitude race with views of Mount Everest north face,180
+Chongqing Mountain Steps,Running,Trail Running,Vertical K,Chongqing,China,Asia,2025-04-05,09:00,3.5km,Short but brutal vertical kilometer race up city's famous stairs,400
+Hangzhou Lake Trail,Running,Trail Running,20K,Hangzhou,China,Asia,2025-10-12,08:00,20km,Scenic trail around West Lake and surrounding tea plantations,900
+Fujian Coastal Trail,Running,Trail Running,55K,Xiamen,China,Asia,2025-02-28,07:30,55km,Coastal trail with ocean views and fishing village passages,380
+Yading Skyrun,Running,Trail Running,46K,Daocheng,China,Asia,2025-08-08,06:30,46km,High-altitude circuit of three sacred mountains in Sichuan,220
+Beijing Hill Trail,Running,Trail Running,35K,Beijing,China,Asia,2025-11-01,08:00,35km,Autumn trail in Fragrant Hills and surrounding mountains,650
+Shanghai Forest Trail,Running,Trail Running,15K,Shanghai,China,Asia,2025-04-25,08:30,15km,Urban escape in Shanghai's largest forest park,1200
+Macau Coastal Trail,Running,Trail Running,10K,Macau,China,Asia,2025-12-06,09:00,10km,Scenic coastal path with historic Portuguese architecture views,800
+Nepal Everest Trail,Running,Trail Running,160K,Kathmandu,Nepal,Asia,2025-10-25,05:00,160km,Epic trail run to Everest Base Camp and back,90
+Japan Fuji Mountain,Running,Trail Running,100 Miles,Kawaguchiko,Japan,Asia,2025-07-12,04:30,161km,Circumnavigation of Mount Fuji with significant elevation,250
+Swiss Alpine Marathon,Running,Trail Running,78K,Davos,Switzerland,Europe,2025-07-26,06:00,78km,Classic high alpine race in Swiss mountains,1200
+UTMB Mont-Blanc,Running,Trail Running,171K,Chamonix,France,Europe,2025-08-29,18:00,171km,The Ultra-Trail du Mont-Blanc, world's most famous trail race,2500
+Western States 100,Running,Trail Running,100 Miles,California,USA,North America,2025-06-28,05:00,161km,Oldest 100-mile trail race in the world,369
+Hardrock 100,Running,Trail Running,100 Miles,Silverton,USA,North America,2025-07-11,06:00,161km,Extremely difficult high-altitude Colorado race,145
+Leadville 100,Running,Trail Running,100 Miles,Leadville,USA,North America,2025-08-15,04:00,161km,High-altitude race through Colorado Rockies,800
+Australian Alpine Ultra,Running,Trail Running,100K,Falls Creek,Australia,Australia,2025-02-08,06:00,100km,Summer alpine running in Victorian Alps,300
+Tarawera Ultramarathon,Running,Trail Running,102K,Rotorua,New Zealand,Australia,2025-02-15,06:00,102km,Beautiful trail through New Zealand's volcanic landscape,850
+Patagonia Run,Running,Trail Running,100K,El Chaltén,Argentina,South America,2025-03-22,07:00,100km,Stunning Patagonian landscapes with Torres del Paine views,200
+Transvulcania,Running,Trail Running,74K,La Palma,Spain,Europe,2025-05-10,06:00,74km,Volcanic island race with massive vertical ascent,1500
+Lavaredo Ultra Trail,Running,Trail Running,120K,Cortina d'Ampezzo,Italy,Europe,2025-06-27,23:00,120km,Night start through Dolomites UNESCO site,1600
+Matterhorn Ultraks,Running,Trail Running,46K,Zermatt,Switzerland,Europe,2025-08-23,08:00,46km,Technical trail with stunning Matterhorn views,1200
+South Africa Skyrun,Running,Trail Running,100K,Eastern Cape,South Africa,Africa,2025-11-07,05:00,100km,Self-navigated race through rugged mountain terrain,150
+Big's Backyard Ultra,Running,Trail Running,Last Man Standing,Bell Buckle,USA,North America,2025-10-18,07:00,Varies,Last person standing format with 4.167-mile loops every hour,75
+Barkley Marathons,Running,Trail Running,100 Miles,Frozen Head,USA,North America,2025-04-01,Unknown,161km,Infamously difficult race with navigation challenge,40
+Dragon's Back Race,Running,Trail Running,315K,Wales,UK,Europe,2025-09-08,07:00,315km,6-day stage race along mountainous spine of Wales,250
+Marathon des Sables,Running,Trail Running,250K,Sahara Desert,Morocco,Africa,2025-04-12,09:00,250km,6-day self-sufficient stage race in Sahara,1200
+Atacama Crossing,Running,Trail Running,250K,San Pedro,Chile,South America,2025-03-02,08:00,250km,7-day stage race across driest desert on Earth,180
+Grand Canyon Rim2Rim2Rim,Running,Trail Running,70K,Grand Canyon,USA,North America,2025-10-05,05:00,70km,Unofficial but iconic double crossing of Grand Canyon,Unlimited
+Zion Ultra,Running,Trail Running,100K,Springdale,USA,North America,2025-04-19,06:00,100km,Red rock desert course through Zion National Park,500
+Chinesische Mauer Ultra,Running,Trail Running,68K,Beijing,China,Asia,2025-09-27,07:00,68km,German-organized ultra along remote Great Wall sections,180
+Guangzhou Mountain Challenge,Running,Trail Running,50K,Guangzhou,China,Asia,2025-03-15,07:30,50km,Technical trail in Baiyun Mountain area,420
+Shenzhen Coastal Ultra,Running,Trail Running,85K,Shenzhen,China,Asia,2025-11-22,06:00,85km,Urban coastal trail connecting beaches and parks,380
+Nanjing Forest Marathon,Running,Trail Running,Trail Marathon,Nanjing,China,Asia,2025-05-18,08:00,42.2km,Techincal trail race through Purple Mountain forests,550
+Harbin Ice Trail,Running,Trail Running,30K,Harbin,China,Asia,2025-01-10,10:00,30km,Winter trail run on frozen river with ice sculptures,300
+Wuhan Lake Circuit,Running,Trail Running,45K,Wuhan,China,Asia,2025-10-25,07:00,45km,Circuit of East Lake, one of largest urban lakes in China,480
+Xi'an Ancient Wall,Running,Trail Running,21K,Xi'an,China,Asia,2025-04-08,08:30,21km,Historic run on and around ancient city walls,750
+Chengdu Panda Trail,Running,Trail Running,18K,Chengdu,China,Asia,2025-06-20,08:00,18km,Family-friendly trail in panda research base area,1000
+Kunming Plateau Run,Running,Trail Running,60K,Kunming,China,Asia,2025-07-12,06:30,60km,High-altitude trail around Dianchi Lake,320
+Qinghai Lake Ultra,Running,Trail Running,100K,Xining,China,Asia,2025-08-05,06:00,100km,High-altitude race around China's largest lake,200
+Tianjin Wetlands Trail,Running,Trail Running,25K,Tianjin,China,Asia,2025-09-13,08:00,25km,Flat but scenic trail through coastal wetlands,600
+Urumqi Tianshan Trail,Running,Trail Running,80K,Urumqi,China,Asia,2025-06-28,07:00,80km,Mountain race in Tianshan range with glacier views,150
+Lhasa Holy Mountain,Running,Trail Running,42K,Lhasa,China,Asia,2025-09-20,09:00,42.2km,High-altitude marathon around sacred Mount Kailash region,120
+Xining Alpine Challenge,Running,Trail Running,70K,Xining,China,Asia,2025-07-25,06:00,70km,High plateau running with Tibetan cultural elements,180
