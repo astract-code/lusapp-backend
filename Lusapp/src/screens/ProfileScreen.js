@@ -32,7 +32,7 @@ const { width } = Dimensions.get('window');
 
 export const ProfileScreen = ({ navigation }) => {
   const { colors, isDark } = useTheme();
-  const { user: authUser, logout, updateUser, token, refreshUser } = useAuth();
+  const { user: authUser, logout, updateUser, token, refreshUser, refreshToken } = useAuth();
   const { races, fetchRaces } = useAppStore();
   const [uploading, setUploading] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
@@ -117,6 +117,12 @@ export const ProfileScreen = ({ navigation }) => {
     try {
       setUploading(true);
 
+      // Get a fresh token to avoid expired token errors
+      const freshToken = await refreshToken();
+      if (!freshToken) {
+        throw new Error('Please log in again to update your photo');
+      }
+
       const filename = uri.split('/').pop();
       const match = /\.(\w+)$/.exec(filename);
       const type = match ? `image/${match[1]}` : 'image/jpeg';
@@ -131,7 +137,7 @@ export const ProfileScreen = ({ navigation }) => {
       const response = await fetch(`${API_URL}/api/upload/avatar`, {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${token}`,
+          'Authorization': `Bearer ${freshToken}`,
         },
         body: formData,
       });

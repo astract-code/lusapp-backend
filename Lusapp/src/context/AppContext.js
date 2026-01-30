@@ -57,6 +57,8 @@ export const useAppStore = create((set, get) => ({
         description: race.description,
         participants: race.participants,
         registeredUsers: (race.registered_users || []).map(id => id.toString()),
+        created_by_name: race.created_by_name,
+        created_by_user_id: race.created_by_user_id,
       }));
       
       console.log(`Successfully loaded ${formattedRaces.length} races from API`);
