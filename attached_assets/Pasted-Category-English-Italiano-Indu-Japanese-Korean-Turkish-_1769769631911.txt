@@ -1,0 +1,98 @@
+Category,English,Italiano,Indu,Japanese,Korean,Turkish,Dutch,Danish
+Navigation,Feed,Feed,फ़ीड,フィード,피드,Akış,Feed,Feed
+Navigation,Calendar,Calendario,कैलेंडर,カレンダー,캘린더,Takvim,Agenda,Kalender
+Navigation,Discover,Scopri,खोजें,発見,발견,Keşfet,Ontdek,Opdag
+Navigation,Groups,Gruppi,समूह,グループ,그룹,Gruplar,Groepen,Grupper
+Navigation,Messages,Messaggi,संदेश,メッセージ,메시지,Mesajlar,Berichten,Beskeder
+Navigation,Profile,Profilo,प्रोफ़ाइल,プロフィール,프로필,Profil,Profiel,Profil
+Navigation,Settings,Impostazioni,सेटिंग्स,設定,설정,Ayarlar,Instellingen,Indstillinger
+Navigation,Notifications,Notifiche,सूचनाएं,通知,알림,Bildirimler,Meldingen,Notifikationer
+Authentication,Sign In,Accedi,साइन इन करें,サインイン,로그인,Giriş Yap,Inloggen,Log ind
+Authentication,Sign Up,Iscriviti,साइन अप करें,サインアップ,회원가입,Kaydol,Aanmelden,Tilmeld
+Authentication,Log Out,Esci,लॉग आउट करें,ログアウト,로그아웃,Çıkış Yap,Uitloggen,Log ud
+Authentication,Create Account,Crea account,खाता बनाएं,アカウントを作成,계정 생성,Hesap Oluştur,Account aanmaken,Opret konto
+Authentication,Forgot Password?,Password dimenticata?,पासवर्ड भूल गए?,パスワードをお忘れですか？,비밀번호를 잊으셨나요?,Şifremi Unuttum?,Wachtwoord vergeten?,Glemt adgangskode?
+Authentication,Reset Password,Reimposta password,पासवर्ड रीसेट करें,パスワードをリセット,비밀번호 재설정,Şifre Sıfırla,Wachtwoord resetten,Nulstil adgangskode
+Authentication,Email,Email,ईमेल,メール,이메일,E-posta,E-mail,E-mail
+Authentication,Password,Password,पासवर्ड,パスワード,비밀번호,Şifre,Wachtwoord,Adgangskode
+Authentication,Confirm Password,Conferma password,पासवर्ड की पुष्टि करें,パスワードを確認,비밀번호 확인,Şifreyi Onayla,Bevestig wachtwoord,Bekræft adgangskode
+Authentication,Verify Your Email,Verifica la tua email,अपना ईमेल सत्यापित करें,メールアドレスを確認,이메일 인증,E-postanızı Doğrulayın,Verifieer je e-mail,Bekræft din e-mail
+Authentication,Continue with Google,Continua con Google,Google से जारी रखें,Googleで続行,Google로 계속,Google ile Devam Et,Ga verder met Google,Fortsæt med Google
+Authentication,Continue with Apple,Continua con Apple,Apple से जारी रखें,Appleで続行,Apple로 계속,Apple ile Devam Et,Ga verder met Apple,Fortsæt med Apple
+Races,Discover Races,Scopri gare,रेस खोजें,レースを発見,레이스 발견,Yarışları Keşfet,Races ontdekken,Opdag løb
+Races,Upcoming,Prossime,आगामी,今後の,다가오는,Yaklaşan,Aankomende,Kommende
+Races,Completed,Completate,पूर्ण,完了,완료,Tamamlanan,Afgerond,Gennemførte
+Races,Sign Up for Race,Iscriviti alla gara,रेस के लिए साइन अप करें,レースに登録,레이스 등록,Yarışa Kaydol,Inschrijven voor race,Tilmeld dig løb
+Races,Cancel Registration,Annulla iscrizione,पंजीकरण रद्द करें,登録をキャンセル,등록 취소,Kayıt İptal Et,Registratie annuleren,Annuller tilmelding
+Races,Mark as Completed,Segna come completata,पूर्ण के रूप में चिह्नित करें,完了としてマーク,완료로 표시,Tamamlandı Olarak İşaretle,Markeer als voltooid,Marker som gennemført
+Races,Add New Race,Aggiungi nuova gara,नई रेस जोड़ें,新しいレースを追加,새 레이스 추가,Yeni Yarış Ekle,Nieuwe race toevoegen,Tilføj nyt løb
+Races,Race Details,Dettagli gara,रेस विवरण,レース詳細,레이스 상세,Yarış Detayları,Race details,Løbsdetaljer
+Races,Participants,Partecipanti,प्रतिभागी,参加者,참가자,Katılımcılar,Deelnemers,Deltagere
+Races,Distance,Distanza,दूरी,距離,거리,Mesafe,Afstand,Afstand
+Races,Date,Data,तारीख,日付,날짜,Tarih,Datum,Dato
+Races,Start Time,Ora di inizio,प्रारंभ समय,開始時間,시작 시간,Başlangıç Saati,Starttijd,Starttid
+Races,Location,Posizione,स्थान,場所,위치,Konum,Locatie,Sted
+Races,City,Città,शहर,都市,도시,Şehir,Stad,By
+Races,Country,Paese,देश,国,국,Ülke,Land,Land
+Races,About,Informazioni,के बारे में,詳細,정보,Hakkında,Over,Om
+Races,Added by,Aggiunto da,द्वारा जोड़ा गया,追加者,추가한 사람,Ekleyen,E toegevoegd door,Tilføjet af
+Sports,Running,Corsa,दौड़ना,ランニング,러닝,Koşu,Hardlopen,Løb
+Sports,Marathon,Maratona,मैराथन,マラソン,마라톤,Maraton,Marathon,Maraton
+Sports,Half Marathon,Mezza maratona,अर्ध मैराथन,ハーフマラソン,하프 마라톤,Yarı Maraton,halve marathon,Halvmaraton
+Sports,Trail Running,Corsa trail,ट्रेल रनिंग,トレイルランニング,트레일 러닝,Patika Koşusu,Trailrunning,Trail løb
+Sports,Ultra Marathon,Ultra maratona,अल्ट्रा मैराथन,ウルトラマラソン,울트라 마라톤,Ultra Maraton,Ultramarathon,Ultramaraton
+Sports,Triathlon,Triathlon,त्रिक्रीड़ा,トライアスロン,트라이애슬론,Triatlon,Triatlon,Triatlon
+Sports,Cycling,Ciclismo,साइकिल चलाना,サイクリング,사이클링,Bisiklet,Cyclisme,Cykling
+Sports,Swimming,Nuoto,तैराकी,スイミング,수영,Yüzme,Zwemmen,Svømning
+Sports,Fitness,Fitness,फिटनेस,フィットネス,피트니스,Fitness,Fitness,Fitness
+Sports,HYROX,HYROX,HYROX,HYROX,HYROX,HYROX,HYROX,HYROX
+Sports,Spartan Race,Spartan Race,Spartan Race,スパルタンレース,스파르탄 레이스,Spartan Race,Spartan Race,Spartan Race
+Groups,Create Group,Crea gruppo,समूह बनाएं,グループを作成,그룹 생성,Grup Oluştur,Groep aanmaken,Opret gruppe
+Groups,Join,Unisciti,शामिल हों,参加,참가,Katıl,Deelnemen,Deltag
+Groups,Leave Group,Lascia gruppo,समूह छोड़ें,グループを離脱,그룹 떠나기,Gruptan Ayrıl,Groep verlaten,Forlad gruppe
+Groups,Delete Group,Elimina gruppo,समूह हटाएं,グループを削除,그룹 삭제,Grubu Sil,Groep verwijderen,Slet gruppe
+Groups,Members,Membri,सदस्य,メンバー,멤버,Üyeler,Leden,Medlemmer
+Groups,Chat,Chat,चैट,チャット,채팅,Sohbet,Chat,Chat
+Groups,Gear Lists,Liste attrezzatura,गियर सूचियाँ,ギアリスト,기어 목록,Ekipman Listeleri,Uitrustingslijsten,Udstyrs lister
+Profile,Edit,Modifica,संपादित करें,編集,편집,Düzenle,Bewerken,Rediger
+Profile,Save,Salva,सहेजें,保存,저장,Kaydet,Opslaan,Gem
+Profile,Full Name,Nome completo,पूरा नाम,フルネーム,전체 이름,Tam Ad,Volledige naam,Fulde navn
+Profile,Bio,Bio,बायो,自己紹介,소개글,Biyografi,Bio,Bio
+Profile,Followers,Follower,अनुयायी,フォロワー,팔로워,Takipçiler,Volgers,Følgere
+Profile,Following,Seguiti,फॉलोइंग,フォロー中,팔로잉,Takip Edilenler,Volgend,Følger
+Profile,Follow,Segui,फॉलो करें,フォロー,팔로우,Takip Et,Volgen,Følg
+Profile,Total Races,Gare totali,कुल रेस,総レース,총 레이스,Toplam Yarış,Totaal races,Samlet løb
+Profile,Delete Account,Elimina account,खाता हटाएं,アカウントを削除,계정 삭제,Hesabı Sil,Account verwijderen,Slet konto
+Messages,Type a message...,Scrivi un messaggio...,संदेश टाइप करें...,メッセージを入力...,메시지를 입력하세요...,Bir mesaj yaz...,Typ een bericht...,Skriv en besked...
+Messages,No messages yet,Nessun messaggio ancora,अभी कोई संदेश नहीं,まだメッセージはありません,아직 메시지가 없습니다,Henüz mesaj yok,Nog geen berichten,Ingen beskeder endnu
+Messages,Mute,Silenzia,म्यूट करें,ミュート,음소거,Sessize Al,Dempen,Slå fra
+Messages,Archive,Archivia,संग्रह करें,アーカイブ,보관,Arşivle,Archiveren,Arkivér
+Messages,Pinned,Fissati,पिन किए गए,ピン留め,고정,Sabitlenmiş,Vastgezet,Fastgjort
+Actions,Cancel,Annulla,रद्द करें,キャンセル,취소,İptal,Annuleren,Annuller
+Actions,Done,Fatto,पूर्ण,完了,완료,Tamamlandı,Klaar,Færdig
+Actions,Create,Crea,बनाएं,作成,생성,Oluştur,Aanmaken,Opret
+Actions,Delete,Elimina,हटाएं,削除,삭제,Sil,Verwijderen,Slet
+Actions,Share,Condividi,साझा करें,共有,공유,Paylaş,Delen,Del
+Actions,Search,Cerca,खोजें,検索,검색,Ara,Zoeken,Søg
+Settings,Dark,Scuro,डार्क,ダーク,다크,Karanlık,Donker,Mørk
+Settings,Light,Chiaro,लाइट,ライト,라이트,Açık,Licht,Lys
+Settings,Auto,Auto,स्वचालित,自動,자동,Otomatik,Auto,Auto
+Settings,Language,Lingua,भाषा,言語,언어,Dil,Taal,Sprog
+Settings,Privacy Policy,Informativa sulla privacy,गोपनीयता नीति,プライバシーポリシー,개인정보 보호정책,Gizlilik Politikası,Privacybeleid,Fortrolighedspolitik
+Settings,Terms of Service,Termini di servizio,सेवा की शर्तें,利用規約,이용 약관,Hizmet Şartları,Gebruiksvoorwaarden,Brugervilkår
+Time,January,Gennaio,जनवरी,1月,1월,Ocak,Januari,Januar
+Time,February,Febbraio,फ़रवरी,2月,2월,Şubat,Februari,Februar
+Time,March,Marzo,मार्च,3月,3월,Mart,Maart,Marts
+Time,April,Aprile,अप्रैल,4月,4월,Nisan,April,April
+Time,May,Maggio,मई,5月,5월,Mayıs,Mei,Maj
+Time,June,Giugno,जून,6月,6월,Haziran,Juni,Juni
+Time,July,Luglio,जुलाई,7月,7월,Temmuz,July,July
+Time,August,Agosto,अगस्त,8月,8월,Ağustos,August,August
+Time,September,Settembre,सितंबर,9月,9월,Eylül,September,September
+Time,October,Ottobre,अक्टूबर,10月,10월,Ekim,Oktober,Oktober
+Time,November,Novembre,नवंबर,11月,11월,Kasım,November,November
+Time,December,Dicembre,दिसंबर,12月,12월,Aralık,December,December
+Errors,Error,Errore,त्रुटि,エラー,오류,Hata,Fout,Fejl
+Errors,Failed to upload photo,Caricamento foto fallito,फोटो अपलोड करने में विफल,写真のアップロードに失敗しました,사진 업로드 실패,Foto yüklenemedi,Foto uploaden mislukt,Foto upload mislykkedes
+Errors,User not found,Utente non trovato,उपयोगकर्ता नहीं मिला,ユーザーが見つかりません,사용자를 찾을 수 없습니다,Kullanıcı bulunamadı,Gebruiker niet gevonden,Bruger ikke fundet
+Errors,Permission Required,Autorizzazione richiesta,अनुमति आवश्यक,許可が必要です,권한 필요,İzin Gerekli,Toestemming vereist, Tilladelse påkrævet
