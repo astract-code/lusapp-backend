@@ -14,8 +14,12 @@ import {
   Platform,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { Ionicons } from '@expo/vector-icons';
 import { CompactRaceCard } from '../components/CompactRaceCard';
-import { FilterChip } from '../components/FilterChip';
+import { FilterChipButton } from '../components/FilterChipButton';
+import { ActiveFiltersBar } from '../components/ActiveFiltersBar';
+import { DateFilterModal } from '../components/DateFilterModal';
+import { FilterSelectModal } from '../components/FilterSelectModal';
 import { DropdownFilter } from '../components/DropdownFilter';
 import { useAppStore } from '../context/AppContext';
 import { useTheme } from '../context/ThemeContext';
@@ -36,6 +40,15 @@ export const DiscoverScreen = ({ navigation }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [showAddForm, setShowAddForm] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
+  
+  const [dateFilterOption, setDateFilterOption] = useState(null);
+  const [dateFilterMonth, setDateFilterMonth] = useState(null);
+  
+  const [showDateModal, setShowDateModal] = useState(false);
+  const [showSportModal, setShowSportModal] = useState(false);
+  const [showSubtypeModal, setShowSubtypeModal] = useState(false);
+  const [showContinentModal, setShowContinentModal] = useState(false);
+  const [showCountryModal, setShowCountryModal] = useState(false);
   
   const [newRace, setNewRace] = useState({
     name: '',
@@ -69,6 +82,17 @@ export const DiscoverScreen = ({ navigation }) => {
       const raceDate = new Date(race.date);
       if (raceDate < today) return false;
       
+      if (dateFilterOption && dateFilterOption.days) {
+        const maxDate = new Date(today);
+        maxDate.setDate(maxDate.getDate() + dateFilterOption.days);
+        if (raceDate > maxDate) return false;
+      }
+      
+      if (dateFilterMonth) {
+        const raceMonth = raceDate.getMonth();
+        if (raceMonth !== dateFilterMonth.month) return false;
+      }
+      
       if (selectedCategory || selectedSubtype) {
         const raceCategory = race.sport_category || normalizeLegacySport(race.sport).category;
         const raceSubtype = race.sport_subtype || normalizeLegacySport(race.sport).subtype;
@@ -81,8 +105,61 @@ export const DiscoverScreen = ({ navigation }) => {
       if (searchQuery && !race.city?.toLowerCase().includes(searchQuery.toLowerCase())) return false;
       return true;
     });
-  }, [races, selectedCategory, selectedSubtype, selectedContinent, selectedCountry, searchQuery]);
+  }, [races, selectedCategory, selectedSubtype, selectedContinent, selectedCountry, searchQuery, dateFilterOption, dateFilterMonth]);
 
+  const activeFilters = useMemo(() => {
+    const filters = [];
+    if (dateFilterOption) {
+      filters.push({ type: 'date', label: dateFilterOption.label });
+    }
+    if (dateFilterMonth) {
+      filters.push({ type: 'month', label: dateFilterMonth.label });
+    }
+    if (selectedCategory) {
+      filters.push({ type: 'category', label: `${SPORT_TAXONOMY[selectedCategory]?.icon || ''} ${selectedCategory}` });
+    }
+    if (selectedSubtype) {
+      filters.push({ type: 'subtype', label: selectedSubtype });
+    }
+    if (selectedContinent) {
+      filters.push({ type: 'continent', label: selectedContinent });
+    }
+    if (selectedCountry) {
+      filters.push({ type: 'country', label: selectedCountry });
+    }
+    if (searchQuery) {
+      filters.push({ type: 'search', label: `City: ${searchQuery}` });
+    }
+    return filters;
+  }, [dateFilterOption, dateFilterMonth, selectedCategory, selectedSubtype, selectedContinent, selectedCountry, searchQuery]);
+
+  const handleRemoveFilter = (filterType) => {
+    switch (filterType) {
+      case 'date':
+        setDateFilterOption(null);
+        break;
+      case 'month':
+        setDateFilterMonth(null);
+        break;
+      case 'category':
+        setSelectedCategory(null);
+        setSelectedSubtype(null);
+        break;
+      case 'subtype':
+        setSelectedSubtype(null);
+        break;
+      case 'continent':
+        setSelectedContinent(null);
+        setSelectedCountry(null);
+        break;
+      case 'country':
+        setSelectedCountry(null);
+        break;
+      case 'search':
+        setSearchQuery('');
+        break;
+    }
+  };
 
   const handleAddRace = async () => {
     if (!newRace.name.trim() || !newRace.sport_category || !newRace.sport_subtype || !newRace.date) {
@@ -152,22 +229,15 @@ export const DiscoverScreen = ({ navigation }) => {
   };
 
   const handleContinentSelect = (continent) => {
-    const newContinent = selectedContinent === continent ? null : continent;
-    setSelectedContinent(newContinent);
-    
-    if (selectedCountry && newContinent && COUNTRY_TO_CONTINENT[selectedCountry] !== newContinent) {
+    setSelectedContinent(continent);
+    if (selectedCountry && continent && COUNTRY_TO_CONTINENT[selectedCountry] !== continent) {
       setSelectedCountry(null);
     }
   };
 
   const handleCategorySelect = (category) => {
-    if (selectedCategory === category) {
-      setSelectedCategory(null);
-      setSelectedSubtype(null);
-    } else {
-      setSelectedCategory(category);
-      setSelectedSubtype(null);
-    }
+    setSelectedCategory(category);
+    setSelectedSubtype(null);
   };
 
   const clearFilters = () => {
@@ -176,30 +246,149 @@ export const DiscoverScreen = ({ navigation }) => {
     setSelectedContinent(null);
     setSelectedCountry(null);
     setSearchQuery('');
+    setDateFilterOption(null);
+    setDateFilterMonth(null);
   };
 
-  const hasFilters = selectedCategory || selectedSubtype || selectedContinent || selectedCountry || searchQuery;
+  const hasFilters = selectedCategory || selectedSubtype || selectedContinent || selectedCountry || searchQuery || dateFilterOption || dateFilterMonth;
+
+  const getDateChipValue = () => {
+    if (dateFilterMonth) return dateFilterMonth.label;
+    if (dateFilterOption) return dateFilterOption.label;
+    return null;
+  };
+
+  const getSportChipValue = () => {
+    if (selectedSubtype) return selectedSubtype;
+    if (selectedCategory) return selectedCategory;
+    return null;
+  };
+
+  const getLocationChipValue = () => {
+    if (selectedCountry) return selectedCountry;
+    if (selectedContinent) return selectedContinent;
+    return null;
+  };
 
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
       <View style={styles.header}>
         <Text style={[styles.title, { color: colors.text }]}>Discover Races</Text>
-        <View style={styles.headerButtons}>
-          {hasFilters && (
-            <TouchableOpacity onPress={clearFilters} style={styles.headerButton}>
-              <Text style={[styles.clearButton, { color: colors.primary }]}>
-                Clear Filters
-              </Text>
-            </TouchableOpacity>
-          )}
-          <TouchableOpacity 
-            style={[styles.addButton, { backgroundColor: colors.primary }]}
-            onPress={() => setShowAddForm(true)}
-          >
-            <Text style={styles.addButtonText}>+ Add Race</Text>
-          </TouchableOpacity>
-        </View>
+        <TouchableOpacity 
+          style={[styles.addButton, { backgroundColor: colors.primary }]}
+          onPress={() => setShowAddForm(true)}
+        >
+          <Ionicons name="add" size={20} color="#FFFFFF" />
+        </TouchableOpacity>
       </View>
+
+      <View style={[styles.searchContainer, { backgroundColor: colors.card, borderColor: colors.border }]}>
+        <Ionicons name="search" size={18} color={colors.textSecondary} />
+        <TextInput
+          style={[styles.searchInput, { color: colors.text }]}
+          placeholder="Search by city..."
+          placeholderTextColor={colors.textSecondary}
+          value={searchQuery}
+          onChangeText={setSearchQuery}
+        />
+        {searchQuery.length > 0 && (
+          <TouchableOpacity onPress={() => setSearchQuery('')}>
+            <Ionicons name="close-circle" size={18} color={colors.textSecondary} />
+          </TouchableOpacity>
+        )}
+      </View>
+
+      <ScrollView 
+        horizontal 
+        showsHorizontalScrollIndicator={false}
+        style={styles.chipsRow}
+        contentContainerStyle={styles.chipsContent}
+      >
+        <FilterChipButton
+          label="Date"
+          icon="📅"
+          value={getDateChipValue()}
+          onPress={() => setShowDateModal(true)}
+          isActive={!!dateFilterOption || !!dateFilterMonth}
+        />
+        <FilterChipButton
+          label="Sport"
+          icon="🏃"
+          value={getSportChipValue()}
+          onPress={() => setShowSportModal(true)}
+          isActive={!!selectedCategory}
+        />
+        <FilterChipButton
+          label="Location"
+          icon="🌍"
+          value={getLocationChipValue()}
+          onPress={() => setShowContinentModal(true)}
+          isActive={!!selectedContinent || !!selectedCountry}
+        />
+      </ScrollView>
+
+      <ActiveFiltersBar 
+        filters={activeFilters}
+        onRemove={handleRemoveFilter}
+        onClearAll={clearFilters}
+      />
+
+      <DateFilterModal
+        visible={showDateModal}
+        onClose={() => setShowDateModal(false)}
+        selectedOption={dateFilterOption}
+        selectedMonth={dateFilterMonth}
+        onSelectOption={setDateFilterOption}
+        onSelectMonth={setDateFilterMonth}
+      />
+
+      <FilterSelectModal
+        visible={showSportModal}
+        onClose={() => setShowSportModal(false)}
+        title="Sport Category"
+        options={SPORT_CATEGORIES}
+        selectedValue={selectedCategory}
+        onSelect={(value) => {
+          handleCategorySelect(value);
+          if (value) {
+            setTimeout(() => setShowSubtypeModal(true), 300);
+          }
+        }}
+        renderOption={(value) => `${SPORT_TAXONOMY[value]?.icon || ''} ${value}`}
+      />
+
+      <FilterSelectModal
+        visible={showSubtypeModal}
+        onClose={() => setShowSubtypeModal(false)}
+        title="Distance / Type"
+        options={selectedCategory ? SPORT_TAXONOMY[selectedCategory].subtypes : []}
+        selectedValue={selectedSubtype}
+        onSelect={setSelectedSubtype}
+      />
+
+      <FilterSelectModal
+        visible={showContinentModal}
+        onClose={() => setShowContinentModal(false)}
+        title="Continent"
+        options={CONTINENTS}
+        selectedValue={selectedContinent}
+        onSelect={(value) => {
+          handleContinentSelect(value);
+          if (value) {
+            setTimeout(() => setShowCountryModal(true), 300);
+          }
+        }}
+      />
+
+      <FilterSelectModal
+        visible={showCountryModal}
+        onClose={() => setShowCountryModal(false)}
+        title="Country"
+        options={filteredCountries}
+        selectedValue={selectedCountry}
+        onSelect={setSelectedCountry}
+        searchable={true}
+      />
 
       <Modal
         visible={showAddForm}
@@ -306,7 +495,7 @@ export const DiscoverScreen = ({ navigation }) => {
               onSelect={(value) => setNewRace({ ...newRace, country: value })}
             />
 
-            <Text style={[styles.label, { color: colors.text }]}>Distance</Text>
+            <Text style={[styles.label, { color: colors.text }]}>Distance (optional)</Text>
             <TextInput
               style={[styles.input, { backgroundColor: colors.card, color: colors.text, borderColor: colors.border }]}
               placeholder="e.g., 42.2 km"
@@ -315,93 +504,34 @@ export const DiscoverScreen = ({ navigation }) => {
               onChangeText={(text) => setNewRace({ ...newRace, distance: text })}
             />
 
-            <Text style={[styles.label, { color: colors.text }]}>Participants</Text>
-            <TextInput
-              style={[styles.input, { backgroundColor: colors.card, color: colors.text, borderColor: colors.border }]}
-              placeholder="e.g., 30000"
-              placeholderTextColor={colors.textSecondary}
-              keyboardType="number-pad"
-              value={newRace.participants}
-              onChangeText={(text) => setNewRace({ ...newRace, participants: text })}
-            />
-
-            <Text style={[styles.label, { color: colors.text }]}>Description</Text>
+            <Text style={[styles.label, { color: colors.text }]}>Description (optional)</Text>
             <TextInput
               style={[styles.textArea, { backgroundColor: colors.card, color: colors.text, borderColor: colors.border }]}
-              placeholder="Describe the race..."
+              placeholder="Tell us about this race..."
               placeholderTextColor={colors.textSecondary}
-              multiline
-              numberOfLines={4}
               value={newRace.description}
               onChangeText={(text) => setNewRace({ ...newRace, description: text })}
+              multiline
+              numberOfLines={3}
             />
 
             <TouchableOpacity
               style={[styles.submitButton, { backgroundColor: colors.primary }]}
               onPress={handleAddRace}
             >
-              <Text style={styles.submitButtonText}>Add Race</Text>
+              <Text style={styles.submitButtonText}>Submit Race</Text>
             </TouchableOpacity>
             
-            <View style={{ height: 100 }} />
-            </ScrollView>
+            <View style={{ height: 50 }} />
+          </ScrollView>
           </KeyboardAvoidingView>
         </SafeAreaView>
       </Modal>
 
-      <View style={styles.filtersSection}>
-        <ScrollView
-          style={styles.filters}
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={styles.filtersContent}
-        >
-          <Text style={[styles.filterLabel, { color: colors.text }]}>🔍 Search by City</Text>
-          <TextInput
-            style={[styles.searchInput, { backgroundColor: colors.card, color: colors.text, borderColor: colors.border }]}
-            placeholder="e.g., Tokyo, Paris, New York..."
-            placeholderTextColor={colors.textSecondary}
-            value={searchQuery}
-            onChangeText={setSearchQuery}
-          />
-
-          <DropdownFilter
-            title="Sport Category"
-            options={SPORT_CATEGORIES}
-            selectedValue={selectedCategory}
-            onSelect={handleCategorySelect}
-            renderOption={(value) => 
-              value === 'All' ? value : `${SPORT_TAXONOMY[value]?.icon || ''} ${value}`
-            }
-          />
-
-          {selectedCategory && (
-            <DropdownFilter
-              title="Distance / Type"
-              options={SPORT_TAXONOMY[selectedCategory].subtypes}
-              selectedValue={selectedSubtype}
-              onSelect={(value) => setSelectedSubtype(value)}
-            />
-          )}
-
-          <DropdownFilter
-            title="Continent"
-            options={CONTINENTS}
-            selectedValue={selectedContinent}
-            onSelect={handleContinentSelect}
-          />
-
-          {selectedContinent && (
-            <DropdownFilter
-              title="Country"
-              options={filteredCountries}
-              selectedValue={selectedCountry}
-              onSelect={(value) => setSelectedCountry(value)}
-            />
-          )}
-        </ScrollView>
-      </View>
-
       <View style={styles.resultsSection}>
+        <Text style={[styles.resultCount, { color: colors.textSecondary }]}>
+          {filteredRaces.length} {filteredRaces.length === 1 ? 'race' : 'races'} found
+        </Text>
         <FlatList
           data={filteredRaces}
           keyExtractor={(item) => item.id}
@@ -412,11 +542,6 @@ export const DiscoverScreen = ({ navigation }) => {
             />
           )}
           contentContainerStyle={styles.list}
-          ListHeaderComponent={
-            <Text style={[styles.resultCount, { color: colors.textSecondary }]}>
-              {filteredRaces.length} {filteredRaces.length === 1 ? 'race' : 'races'} found
-            </Text>
-          }
           refreshControl={
             <RefreshControl
               refreshing={refreshing}
@@ -442,33 +567,55 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    padding: SPACING.md,
+    paddingHorizontal: SPACING.md,
+    paddingVertical: SPACING.sm,
   },
   title: {
     fontSize: FONT_SIZE.xl,
     fontWeight: 'bold',
   },
-  headerButtons: {
+  addButton: {
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  searchContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: SPACING.sm,
-  },
-  headerButton: {
-    marginRight: SPACING.xs,
-  },
-  clearButton: {
-    fontSize: FONT_SIZE.sm,
-    fontWeight: '600',
-  },
-  addButton: {
-    borderRadius: BORDER_RADIUS.md,
+    marginHorizontal: SPACING.md,
     paddingHorizontal: SPACING.md,
     paddingVertical: SPACING.sm,
+    borderRadius: BORDER_RADIUS.lg,
+    borderWidth: 1,
+    gap: SPACING.sm,
   },
-  addButtonText: {
-    color: '#FFFFFF',
+  searchInput: {
+    flex: 1,
+    fontSize: FONT_SIZE.md,
+    padding: 0,
+  },
+  chipsRow: {
+    marginTop: SPACING.sm,
+    maxHeight: 50,
+  },
+  chipsContent: {
+    paddingHorizontal: SPACING.md,
+    alignItems: 'center',
+  },
+  resultsSection: {
+    flex: 1,
+    paddingTop: SPACING.sm,
+  },
+  resultCount: {
     fontSize: FONT_SIZE.sm,
-    fontWeight: '600',
+    paddingHorizontal: SPACING.md,
+    marginBottom: SPACING.xs,
+  },
+  list: {
+    paddingHorizontal: SPACING.md,
+    paddingBottom: SPACING.xl,
   },
   modalContainer: {
     flex: 1,
@@ -478,11 +625,9 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     padding: SPACING.md,
-    borderBottomWidth: 1,
-    borderBottomColor: '#E0E0E0',
   },
   modalTitle: {
-    fontSize: FONT_SIZE.xl,
+    fontSize: FONT_SIZE.lg,
     fontWeight: 'bold',
   },
   modalClose: {
@@ -491,10 +636,10 @@ const styles = StyleSheet.create({
   },
   form: {
     flex: 1,
-    padding: SPACING.md,
+    paddingHorizontal: SPACING.md,
   },
   label: {
-    fontSize: FONT_SIZE.md,
+    fontSize: FONT_SIZE.sm,
     fontWeight: '600',
     marginTop: SPACING.md,
     marginBottom: SPACING.xs,
@@ -502,82 +647,40 @@ const styles = StyleSheet.create({
   input: {
     borderWidth: 1,
     borderRadius: BORDER_RADIUS.md,
-    paddingHorizontal: SPACING.sm,
-    paddingVertical: SPACING.sm,
+    padding: SPACING.md,
     fontSize: FONT_SIZE.md,
   },
   textArea: {
     borderWidth: 1,
     borderRadius: BORDER_RADIUS.md,
-    paddingHorizontal: SPACING.sm,
-    paddingVertical: SPACING.sm,
+    padding: SPACING.md,
     fontSize: FONT_SIZE.md,
-    minHeight: 100,
+    minHeight: 80,
     textAlignVertical: 'top',
   },
   sportPicker: {
-    marginBottom: SPACING.sm,
+    marginBottom: SPACING.xs,
   },
   sportOption: {
-    borderWidth: 1,
-    borderRadius: BORDER_RADIUS.md,
     paddingHorizontal: SPACING.md,
     paddingVertical: SPACING.sm,
+    borderRadius: BORDER_RADIUS.md,
+    borderWidth: 1,
     marginRight: SPACING.sm,
   },
   sportText: {
     fontSize: FONT_SIZE.sm,
-    fontWeight: '600',
+    fontWeight: '500',
   },
   submitButton: {
-    borderRadius: BORDER_RADIUS.md,
-    paddingVertical: SPACING.md,
-    alignItems: 'center',
     marginTop: SPACING.lg,
-    marginBottom: SPACING.xl,
+    padding: SPACING.md,
+    borderRadius: BORDER_RADIUS.md,
+    alignItems: 'center',
   },
   submitButtonText: {
     color: '#FFFFFF',
     fontSize: FONT_SIZE.md,
-    fontWeight: '600',
-  },
-  filtersSection: {
-    flex: 1,
-    borderBottomWidth: 2,
-    borderBottomColor: '#E0E0E0',
-  },
-  filters: {
-    flex: 1,
-  },
-  filtersContent: {
-    paddingHorizontal: SPACING.md,
-    paddingBottom: SPACING.md,
-  },
-  resultsSection: {
-    flex: 1,
-  },
-  searchInput: {
-    borderWidth: 1,
-    borderRadius: BORDER_RADIUS.md,
-    paddingHorizontal: SPACING.md,
-    paddingVertical: SPACING.sm,
-    fontSize: FONT_SIZE.md,
-    marginBottom: SPACING.md,
-  },
-  filterLabel: {
-    fontSize: FONT_SIZE.md,
-    fontWeight: '600',
-    marginTop: SPACING.sm,
-    marginBottom: SPACING.sm,
-  },
-  filterRow: {
-    marginBottom: SPACING.sm,
-  },
-  list: {
-    padding: SPACING.md,
-  },
-  resultCount: {
-    fontSize: FONT_SIZE.sm,
-    marginBottom: SPACING.md,
+    fontWeight: 'bold',
   },
 });
