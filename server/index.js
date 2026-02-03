@@ -992,7 +992,7 @@ app.delete('/api/races/:raceId/completion', combinedAuthMiddleware, async (req, 
   }
 });
 
-app.get('/api/auth/users/suggested', verifyFirebaseToken, async (req, res) => {
+app.get('/api/auth/users/suggested', combinedAuthMiddleware, async (req, res) => {
   try {
     const userId = req.user.userId;
     
