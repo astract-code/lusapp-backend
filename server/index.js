@@ -906,7 +906,7 @@ app.post('/api/races/:raceId/complete', combinedAuthMiddleware, upload.single('c
   }
 });
 
-app.get('/api/races/:raceId/completion', verifyFirebaseToken, async (req, res) => {
+app.get('/api/races/:raceId/completion', combinedAuthMiddleware, async (req, res) => {
   try {
     const raceId = parseInt(req.params.raceId, 10);
     const userId = req.user.userId;
@@ -931,7 +931,7 @@ app.get('/api/races/:raceId/completion', verifyFirebaseToken, async (req, res) =
   }
 });
 
-app.get('/api/users/:userId/completions', verifyFirebaseToken, async (req, res) => {
+app.get('/api/users/:userId/completions', combinedAuthMiddleware, async (req, res) => {
   try {
     const userId = parseInt(req.params.userId, 10);
     
@@ -955,7 +955,7 @@ app.get('/api/users/:userId/completions', verifyFirebaseToken, async (req, res) 
   }
 });
 
-app.delete('/api/races/:raceId/completion', verifyFirebaseToken, async (req, res) => {
+app.delete('/api/races/:raceId/completion', combinedAuthMiddleware, async (req, res) => {
   const client = await pool.connect();
   
   try {
