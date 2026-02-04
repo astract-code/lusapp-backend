@@ -372,6 +372,8 @@ export const RaceDetailScreen = ({ route, navigation }) => {
           completed_races: [...(user.completed_races || []), raceId.toString()]
         });
         setShowCompletionModal(false);
+        // Refresh race data to show updated completion status
+        fetchRaces();
         Alert.alert('Success', 'Race marked as completed!');
       } else {
         const error = await response.json();
