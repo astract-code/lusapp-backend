@@ -2,12 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Alert, ActivityIndicator } from 'react-native';
 import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
+import { useLanguage } from '../context/LanguageContext';
 import { FONT_SIZE, SPACING } from '../constants/theme';
 import { LinearGradient } from 'expo-linear-gradient';
 
 export const EmailVerificationScreen = ({ navigation }) => {
   const { firebaseUser, firebaseAuthService, logout, refreshEmailVerificationStatus } = useAuth();
   const { colors } = useTheme();
+  const { t } = useLanguage();
   const [isChecking, setIsChecking] = useState(false);
   const [isResending, setIsResending] = useState(false);
 
@@ -17,13 +19,13 @@ export const EmailVerificationScreen = ({ navigation }) => {
       const isVerified = await refreshEmailVerificationStatus();
       
       if (isVerified) {
-        Alert.alert('Success', 'Email verified! You can now access the app.');
+        Alert.alert(t('success'), t('emailVerifiedSuccess'));
       } else {
-        Alert.alert('Not Verified', 'Please check your email and click the verification link before continuing.');
+        Alert.alert(t('notVerified'), t('pleaseCheckEmailVerification'));
       }
     } catch (error) {
       console.error('Error checking verification:', error);
-      Alert.alert('Error', 'Failed to check verification status. Please try again.');
+      Alert.alert(t('oops'), t('failedToCheckVerification'));
     } finally {
       setIsChecking(false);
     }
@@ -33,10 +35,10 @@ export const EmailVerificationScreen = ({ navigation }) => {
     setIsResending(true);
     try {
       const result = await firebaseAuthService.resendVerificationEmail();
-      Alert.alert('Success', result.message);
+      Alert.alert(t('success'), result.message);
     } catch (error) {
       console.error('Error resending email:', error);
-      Alert.alert('Error', error.message || 'Failed to resend verification email.');
+      Alert.alert(t('oops'), error.message || t('failedToResendVerification'));
     } finally {
       setIsResending(false);
     }
@@ -47,7 +49,7 @@ export const EmailVerificationScreen = ({ navigation }) => {
       await logout();
     } catch (error) {
       console.error('Logout error:', error);
-      Alert.alert('Error', 'Failed to logout. Please try again.');
+      Alert.alert(t('oops'), t('failedToLogout'));
     }
   };
 
@@ -58,15 +60,15 @@ export const EmailVerificationScreen = ({ navigation }) => {
     >
       <View style={styles.content}>
         <Text style={styles.icon}>📧</Text>
-        <Text style={styles.title}>Verify Your Email</Text>
+        <Text style={styles.title}>{t('verifyYourEmail')}</Text>
         <Text style={[styles.subtitle, { color: colors.background }]}>
-          We sent a verification email to:
+          {t('weSentVerificationEmail')}
         </Text>
         <Text style={[styles.email, { color: colors.background }]}>
           {firebaseUser?.email}
         </Text>
         <Text style={[styles.instructions, { color: colors.background }]}>
-          Please check your inbox and click the verification link, then tap "I've Verified" below.
+          {t('verificationInstructions')}
         </Text>
 
         <TouchableOpacity
@@ -78,7 +80,7 @@ export const EmailVerificationScreen = ({ navigation }) => {
             <ActivityIndicator color={colors.primary} />
           ) : (
             <Text style={[styles.buttonText, { color: colors.primary }]}>
-              I've Verified My Email
+              {t('iveVerifiedMyEmail')}
             </Text>
           )}
         </TouchableOpacity>
@@ -92,7 +94,7 @@ export const EmailVerificationScreen = ({ navigation }) => {
             <ActivityIndicator color={colors.background} />
           ) : (
             <Text style={[styles.buttonTextOutline, { color: colors.background }]}>
-              Resend Verification Email
+              {t('resendVerificationEmail')}
             </Text>
           )}
         </TouchableOpacity>
@@ -102,7 +104,7 @@ export const EmailVerificationScreen = ({ navigation }) => {
           onPress={handleLogout}
         >
           <Text style={[styles.linkText, { color: colors.background }]}>
-            Sign Out
+            {t('signOut')}
           </Text>
         </TouchableOpacity>
       </View>

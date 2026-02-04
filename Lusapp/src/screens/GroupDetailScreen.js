@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import { useTheme } from '../context/ThemeContext';
 import { useAuth } from '../context/AuthContext';
+import { useLanguage } from '../context/LanguageContext';
 import { SPACING, FONT_SIZE, BORDER_RADIUS } from '../constants/theme';
 import { GroupChatTab } from './GroupChatTab';
 import { GroupMembersTab } from './GroupMembersTab';
@@ -22,6 +23,7 @@ export const GroupDetailScreen = ({ route, navigation }) => {
   const { groupId } = route.params;
   const { colors } = useTheme();
   const { user, token } = useAuth();
+  const { t } = useLanguage();
   const [activeTab, setActiveTab] = useState('chat');
   const [group, setGroup] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -52,12 +54,12 @@ export const GroupDetailScreen = ({ route, navigation }) => {
 
   const handleLeaveGroup = () => {
     Alert.alert(
-      'Leave Group',
-      'Are you sure you want to leave this group?',
+      t('leaveGroup'),
+      t('leaveGroupConfirmation'),
       [
-        { text: 'Cancel', style: 'cancel' },
+        { text: t('cancel'), style: 'cancel' },
         {
-          text: 'Leave',
+          text: t('leave'),
           style: 'destructive',
           onPress: async () => {
             try {
@@ -69,14 +71,14 @@ export const GroupDetailScreen = ({ route, navigation }) => {
               });
 
               if (response.ok) {
-                Alert.alert('Success', 'You have left the group');
+                Alert.alert(t('success'), t('youHaveLeftTheGroup'));
                 navigation.goBack();
               } else {
                 const error = await response.json();
-                Alert.alert('Error', error.error || 'Failed to leave group');
+                Alert.alert(t('oops'), error.error || t('failedToLeaveGroup'));
               }
             } catch (error) {
-              Alert.alert('Error', 'Failed to leave group');
+              Alert.alert(t('oops'), t('failedToLeaveGroup'));
             }
           },
         },
@@ -86,12 +88,12 @@ export const GroupDetailScreen = ({ route, navigation }) => {
 
   const handleDeleteGroup = () => {
     Alert.alert(
-      'Delete Group',
-      'Are you sure you want to delete this group? This action cannot be undone and will remove all messages and data.',
+      t('deleteGroup'),
+      t('deleteGroupConfirmation'),
       [
-        { text: 'Cancel', style: 'cancel' },
+        { text: t('cancel'), style: 'cancel' },
         {
-          text: 'Delete',
+          text: t('delete'),
           style: 'destructive',
           onPress: async () => {
             try {
@@ -103,14 +105,14 @@ export const GroupDetailScreen = ({ route, navigation }) => {
               });
 
               if (response.ok) {
-                Alert.alert('Success', 'Group deleted successfully');
+                Alert.alert(t('success'), t('groupDeletedSuccessfully'));
                 navigation.navigate('GroupsMain');
               } else {
                 const error = await response.json();
-                Alert.alert('Error', error.error || 'Failed to delete group');
+                Alert.alert(t('oops'), error.error || t('failedToDeleteGroup'));
               }
             } catch (error) {
-              Alert.alert('Error', 'Failed to delete group');
+              Alert.alert(t('oops'), t('failedToDeleteGroup'));
             }
           },
         },
@@ -133,7 +135,7 @@ export const GroupDetailScreen = ({ route, navigation }) => {
       <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
         <View style={styles.errorContainer}>
           <Text style={[styles.errorText, { color: colors.textSecondary }]}>
-            Group not found
+            {t('groupNotFound')}
           </Text>
         </View>
       </SafeAreaView>
@@ -157,7 +159,7 @@ export const GroupDetailScreen = ({ route, navigation }) => {
           </Text>
         )}
         <Text style={[styles.memberCount, { color: colors.textSecondary }]}>
-          👥 {group.member_count} {group.member_count === 1 ? 'member' : 'members'}
+          👥 {group.member_count} {group.member_count === 1 ? t('member') : t('members')}
         </Text>
         
         {isOwner ? (
@@ -165,14 +167,14 @@ export const GroupDetailScreen = ({ route, navigation }) => {
             style={[styles.deleteButton, { backgroundColor: '#d32f2f' }]}
             onPress={handleDeleteGroup}
           >
-            <Text style={styles.deleteButtonText}>Delete Group</Text>
+            <Text style={styles.deleteButtonText}>{t('deleteGroup')}</Text>
           </TouchableOpacity>
         ) : (
           <TouchableOpacity
             style={[styles.leaveButton, { backgroundColor: colors.error }]}
             onPress={handleLeaveGroup}
           >
-            <Text style={styles.leaveButtonText}>Leave Group</Text>
+            <Text style={styles.leaveButtonText}>{t('leaveGroup')}</Text>
           </TouchableOpacity>
         )}
       </ScrollView>
@@ -191,7 +193,7 @@ export const GroupDetailScreen = ({ route, navigation }) => {
               { color: activeTab === 'chat' ? colors.primary : colors.textSecondary },
             ]}
           >
-            Chat
+            {t('chat')}
           </Text>
         </TouchableOpacity>
 
@@ -208,7 +210,7 @@ export const GroupDetailScreen = ({ route, navigation }) => {
               { color: activeTab === 'members' ? colors.primary : colors.textSecondary },
             ]}
           >
-            Members
+            {t('members')}
           </Text>
         </TouchableOpacity>
 
@@ -225,7 +227,7 @@ export const GroupDetailScreen = ({ route, navigation }) => {
               { color: activeTab === 'gear' ? colors.primary : colors.textSecondary },
             ]}
           >
-            Gear Lists
+            {t('gearLists')}
           </Text>
         </TouchableOpacity>
       </View>

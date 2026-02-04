@@ -20,6 +20,7 @@ import { Ionicons } from '@expo/vector-icons';
 import * as AppleAuthentication from 'expo-apple-authentication';
 import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin';
 import { useAuth } from '../context/AuthContext';
+import { useLanguage } from '../context/LanguageContext';
 import { SPACING, BORDER_RADIUS, GRADIENTS } from '../constants/theme';
 import haptic from '../utils/haptics';
 
@@ -82,6 +83,7 @@ const hasGoogleConfig = Boolean(GOOGLE_WEB_CLIENT_ID);
 
 export const OnboardingScreen = ({ navigation }) => {
   const { login, signupWithEmail, signupWithGoogle, signupWithApple } = useAuth();
+  const { t } = useLanguage();
   
   const [isLogin, setIsLogin] = useState(true);
   const [email, setEmail] = useState('');
@@ -121,26 +123,26 @@ export const OnboardingScreen = ({ navigation }) => {
         await login(email, password);
       } else {
         if (!name.trim()) {
-          setError('Name is required');
+          setError(t('nameRequired'));
           return;
         }
         if (password.length < 6) {
-          setError('Password must be at least 6 characters');
+          setError(t('passwordMinLength'));
           return;
         }
         if (password !== confirmPassword) {
-          setError('Passwords do not match');
+          setError(t('passwordsDoNotMatch'));
           return;
         }
         if (!ageConfirmed) {
-          setError('You must confirm that you are at least 13 years old');
+          setError(t('ageConfirmationRequired'));
           return;
         }
         const result = await signupWithEmail(email, password, { name, location, bio, favoriteSport });
-        Alert.alert('Success', result.message || 'Account created! Please verify your email.');
+        Alert.alert(t('success'), result.message || t('accountCreatedVerifyEmail'));
       }
     } catch (err) {
-      setError(err.message || 'Something went wrong. Please try again.');
+      setError(err.message || t('somethingWentWrong'));
     } finally {
       setIsLoading(false);
     }
@@ -165,7 +167,7 @@ export const OnboardingScreen = ({ navigation }) => {
 
   const handleAppleSignIn = async () => {
     if (!appleAuthAvailable) {
-      Alert.alert('Not Available', 'Apple Sign-In is not available on this device.');
+      Alert.alert(t('notAvailable'), t('appleSignInNotAvailable'));
       return;
     }
     
@@ -176,7 +178,7 @@ export const OnboardingScreen = ({ navigation }) => {
       await signupWithApple();
     } catch (err) {
       if (err.message !== 'Sign-in was cancelled') {
-        setError(err.message || 'Failed to sign in with Apple');
+        setError(err.message || t('failedToSignInApple'));
       }
     } finally {
       setIsSocialLoading(false);
@@ -185,7 +187,7 @@ export const OnboardingScreen = ({ navigation }) => {
   
   const handleGoogleSignIn = async () => {
     if (!googleAuthAvailable) {
-      Alert.alert('Configuration Error', 'Google Sign-In is not configured.');
+      Alert.alert(t('configurationError'), t('googleSignInNotConfigured'));
       return;
     }
     
@@ -211,11 +213,11 @@ export const OnboardingScreen = ({ navigation }) => {
       if (err.code === statusCodes.SIGN_IN_CANCELLED) {
         console.log('[GOOGLE AUTH] User cancelled sign-in');
       } else if (err.code === statusCodes.IN_PROGRESS) {
-        setError('Sign-in already in progress');
+        setError(t('signInInProgress'));
       } else if (err.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
-        setError('Google Play Services not available');
+        setError(t('googlePlayServicesNotAvailable'));
       } else {
-        setError(err.message || 'Failed to sign in with Google');
+        setError(err.message || t('failedToSignInGoogle'));
       }
     } finally {
       setIsSocialLoading(false);
@@ -254,7 +256,7 @@ export const OnboardingScreen = ({ navigation }) => {
               </LinearGradient>
               <Text style={styles.appName}>LUSAPP</Text>
               <Text style={styles.tagline}>
-                Race. Connect. Achieve.
+                {t('tagline')}
               </Text>
             </View>
 
@@ -271,10 +273,10 @@ export const OnboardingScreen = ({ navigation }) => {
                       end={{ x: 1, y: 0 }}
                       style={styles.tabGradient}
                     >
-                      <Text style={styles.tabTextActive}>Sign In</Text>
+                      <Text style={styles.tabTextActive}>{t('signIn')}</Text>
                     </LinearGradient>
                   ) : (
-                    <Text style={styles.tabText}>Sign In</Text>
+                    <Text style={styles.tabText}>{t('signIn')}</Text>
                   )}
                 </TouchableOpacity>
                 <TouchableOpacity
@@ -288,10 +290,10 @@ export const OnboardingScreen = ({ navigation }) => {
                       end={{ x: 1, y: 0 }}
                       style={styles.tabGradient}
                     >
-                      <Text style={styles.tabTextActive}>Sign Up</Text>
+                      <Text style={styles.tabTextActive}>{t('signUp')}</Text>
                     </LinearGradient>
                   ) : (
-                    <Text style={styles.tabText}>Sign Up</Text>
+                    <Text style={styles.tabText}>{t('signUp')}</Text>
                   )}
                 </TouchableOpacity>
               </View>
@@ -301,20 +303,20 @@ export const OnboardingScreen = ({ navigation }) => {
                   <>
                     <InputField
                       icon="person-outline"
-                      placeholder="Full Name"
+                      placeholder={t('fullName')}
                       value={name}
                       onChangeText={setName}
                       autoCapitalize="words"
                     />
                     <InputField
                       icon="location-outline"
-                      placeholder="Location (optional)"
+                      placeholder={t('locationOptional')}
                       value={location}
                       onChangeText={setLocation}
                     />
                     <InputField
                       icon="trophy-outline"
-                      placeholder="Favorite Sport (optional)"
+                      placeholder={t('favoriteSportOptional')}
                       value={favoriteSport}
                       onChangeText={setFavoriteSport}
                     />
@@ -323,7 +325,7 @@ export const OnboardingScreen = ({ navigation }) => {
 
                 <InputField
                   icon="mail-outline"
-                  placeholder="Email"
+                  placeholder={t('email')}
                   value={email}
                   onChangeText={setEmail}
                   keyboardType="email-address"
@@ -332,7 +334,7 @@ export const OnboardingScreen = ({ navigation }) => {
 
                 <InputField
                   icon="lock-closed-outline"
-                  placeholder="Password"
+                  placeholder={t('password')}
                   value={password}
                   onChangeText={setPassword}
                   secureTextEntry
@@ -345,7 +347,7 @@ export const OnboardingScreen = ({ navigation }) => {
                   <>
                     <InputField
                       icon="lock-closed-outline"
-                      placeholder="Confirm Password"
+                      placeholder={t('confirmPassword')}
                       value={confirmPassword}
                       onChangeText={setConfirmPassword}
                       secureTextEntry
@@ -363,7 +365,7 @@ export const OnboardingScreen = ({ navigation }) => {
                         {ageConfirmed && <Ionicons name="checkmark-outline" size={14} color="#FFFFFF" />}
                       </View>
                       <Text style={styles.checkboxLabel}>
-                        I confirm that I am at least 13 years old
+                        {t('ageConfirmation')}
                       </Text>
                     </TouchableOpacity>
                   </>
@@ -394,7 +396,7 @@ export const OnboardingScreen = ({ navigation }) => {
                       <ActivityIndicator color="#FFFFFF" />
                     ) : (
                       <Text style={styles.primaryButtonText}>
-                        {isLogin ? 'Sign In' : 'Create Account'}
+                        {isLogin ? t('signIn') : t('createAccount')}
                       </Text>
                     )}
                   </LinearGradient>
@@ -406,13 +408,13 @@ export const OnboardingScreen = ({ navigation }) => {
                   style={styles.forgotPasswordButton}
                   onPress={() => navigation.navigate('ForgotPassword')}
                 >
-                  <Text style={styles.forgotPasswordText}>Forgot Password?</Text>
+                  <Text style={styles.forgotPasswordText}>{t('forgotPassword')}</Text>
                 </TouchableOpacity>
               )}
 
               <View style={styles.divider}>
                 <View style={styles.dividerLine} />
-                <Text style={styles.dividerText}>or continue with</Text>
+                <Text style={styles.dividerText}>{t('orContinueWith')}</Text>
                 <View style={styles.dividerLine} />
               </View>
 
@@ -454,7 +456,7 @@ export const OnboardingScreen = ({ navigation }) => {
             </View>
 
             <Text style={styles.termsText}>
-              By continuing, you agree to our Terms of Service and Privacy Policy
+              {t('termsAgreement')}
             </Text>
           </ScrollView>
         </KeyboardAvoidingView>

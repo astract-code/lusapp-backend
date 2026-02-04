@@ -2,18 +2,20 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, StyleSheet, TouchableOpacity, Alert, KeyboardAvoidingView, Platform, ActivityIndicator } from 'react-native';
 import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
+import { useLanguage } from '../context/LanguageContext';
 import { FONT_SIZE, SPACING } from '../constants/theme';
 import { LinearGradient } from 'expo-linear-gradient';
 
 export const ForgotPasswordScreen = ({ navigation }) => {
   const { firebaseAuthService } = useAuth();
   const { colors } = useTheme();
+  const { t } = useLanguage();
   const [email, setEmail] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
   const handleResetPassword = async () => {
     if (!email.trim()) {
-      Alert.alert('Error', 'Please enter your email address.');
+      Alert.alert(t('oops'), t('pleaseEnterEmail'));
       return;
     }
 
@@ -21,18 +23,18 @@ export const ForgotPasswordScreen = ({ navigation }) => {
     try {
       const result = await firebaseAuthService.sendPasswordReset(email.trim());
       Alert.alert(
-        'Success', 
+        t('success'), 
         result.message,
         [
           {
-            text: 'OK',
+            text: t('ok'),
             onPress: () => navigation.goBack()
           }
         ]
       );
     } catch (error) {
       console.error('Password reset error:', error);
-      Alert.alert('Error', error.message || 'Failed to send password reset email.');
+      Alert.alert(t('oops'), error.message || t('failedToSendResetEmail'));
     } finally {
       setIsLoading(false);
     }
@@ -49,15 +51,15 @@ export const ForgotPasswordScreen = ({ navigation }) => {
       >
         <View style={styles.content}>
           <Text style={styles.icon}>🔑</Text>
-          <Text style={styles.title}>Reset Password</Text>
+          <Text style={styles.title}>{t('resetPassword')}</Text>
           <Text style={[styles.subtitle, { color: colors.background }]}>
-            Enter your email address and we'll send you instructions to reset your password.
+            {t('resetPasswordInstructions')}
           </Text>
 
           <View style={styles.form}>
             <TextInput
               style={[styles.input, { backgroundColor: colors.background, color: colors.text }]}
-              placeholder="Email"
+              placeholder={t('email')}
               placeholderTextColor={colors.textSecondary}
               value={email}
               onChangeText={setEmail}
@@ -80,7 +82,7 @@ export const ForgotPasswordScreen = ({ navigation }) => {
                 <ActivityIndicator color={colors.primary} />
               ) : (
                 <Text style={[styles.buttonText, { color: colors.primary }]}>
-                  Send Reset Link
+                  {t('sendResetLink')}
                 </Text>
               )}
             </TouchableOpacity>
@@ -91,7 +93,7 @@ export const ForgotPasswordScreen = ({ navigation }) => {
               disabled={isLoading}
             >
               <Text style={[styles.linkText, { color: colors.background }]}>
-                Back to Login
+                {t('backToLogin')}
               </Text>
             </TouchableOpacity>
           </View>

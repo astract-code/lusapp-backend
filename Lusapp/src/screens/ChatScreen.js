@@ -16,6 +16,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { useFocusEffect } from '@react-navigation/native';
 import { useTheme } from '../context/ThemeContext';
 import { useAuth } from '../context/AuthContext';
+import { useLanguage } from '../context/LanguageContext';
 import { UserAvatar } from '../components/UserAvatar';
 import { SPACING, FONT_SIZE, BORDER_RADIUS } from '../constants/theme';
 import API_URL from '../config/api';
@@ -24,6 +25,7 @@ export const ChatScreen = ({ route, navigation }) => {
   const { userId, userName, userAvatar } = route.params;
   const { colors } = useTheme();
   const { user: currentUser, token } = useAuth();
+  const { t } = useLanguage();
   const [messages, setMessages] = useState([]);
   const [inputText, setInputText] = useState('');
   const [loading, setLoading] = useState(true);
@@ -208,9 +210,9 @@ export const ChatScreen = ({ route, navigation }) => {
     const now = new Date();
     const diff = now - date;
     
-    if (diff < 60000) return 'just now';
-    if (diff < 3600000) return `${Math.floor(diff / 60000)}m ago`;
-    if (diff < 86400000) return `${Math.floor(diff / 3600000)}h ago`;
+    if (diff < 60000) return t('justNow');
+    if (diff < 3600000) return `${Math.floor(diff / 60000)}${t('minutesAgo')}`;
+    if (diff < 86400000) return `${Math.floor(diff / 3600000)}${t('hoursAgo')}`;
     return date.toLocaleDateString();
   };
 
@@ -276,7 +278,7 @@ export const ChatScreen = ({ route, navigation }) => {
         <View style={styles.statusContent}>
           <View style={[styles.onlineIndicator, { backgroundColor: otherUserOnline ? '#4ADE80' : colors.textSecondary }]} />
           <Text style={[styles.statusText, { color: colors.textSecondary }]}>
-            {otherUserOnline ? 'Online' : `Last seen ${formatLastActive(otherUserLastActive)}`}
+            {otherUserOnline ? t('online') : `${t('lastSeen')} ${formatLastActive(otherUserLastActive)}`}
           </Text>
         </View>
       </View>
@@ -285,7 +287,7 @@ export const ChatScreen = ({ route, navigation }) => {
         <View style={[styles.searchContainer, { backgroundColor: colors.card }]}>
           <TextInput
             style={[styles.searchInput, { backgroundColor: colors.background, color: colors.text }]}
-            placeholder="Search messages..."
+            placeholder={t('searchMessages')}
             placeholderTextColor={colors.textSecondary}
             value={searchQuery}
             onChangeText={setSearchQuery}
@@ -295,7 +297,7 @@ export const ChatScreen = ({ route, navigation }) => {
           {searchResults.length > 0 && (
             <View style={styles.searchResults}>
               <Text style={[styles.searchResultsCount, { color: colors.textSecondary }]}>
-                {searchResults.length} results found
+                {searchResults.length} {t('resultsFound')}
               </Text>
             </View>
           )}
@@ -311,10 +313,10 @@ export const ChatScreen = ({ route, navigation }) => {
           <View style={styles.emptyContainer}>
             <Ionicons name="chatbubbles-outline" size={64} color={colors.textSecondary} />
             <Text style={[styles.emptyText, { color: colors.textSecondary }]}>
-              No messages yet
+              {t('noMessagesYet')}
             </Text>
             <Text style={[styles.emptySubtext, { color: colors.textSecondary }]}>
-              Send a message to start the conversation
+              {t('sendMessageToStart')}
             </Text>
           </View>
         ) : (
@@ -333,7 +335,7 @@ export const ChatScreen = ({ route, navigation }) => {
             style={[styles.input, { backgroundColor: colors.background, color: colors.text }]}
             value={inputText}
             onChangeText={setInputText}
-            placeholder="Type a message..."
+            placeholder={t('typeMessage')}
             placeholderTextColor={colors.textSecondary}
             multiline
             maxLength={1000}

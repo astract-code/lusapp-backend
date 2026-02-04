@@ -13,9 +13,10 @@ import { Ionicons } from '@expo/vector-icons';
 import { UserAvatar } from '../components/UserAvatar';
 import { useTheme } from '../context/ThemeContext';
 import { useNotifications } from '../context/NotificationContext';
+import { useLanguage } from '../context/LanguageContext';
 import { SPACING, FONT_SIZE, BORDER_RADIUS } from '../constants/theme';
 
-const formatTimeAgo = (dateString) => {
+const formatTimeAgo = (dateString, t) => {
   const date = new Date(dateString);
   const now = new Date();
   const diffMs = now - date;
@@ -23,10 +24,10 @@ const formatTimeAgo = (dateString) => {
   const diffHours = Math.floor(diffMs / 3600000);
   const diffDays = Math.floor(diffMs / 86400000);
 
-  if (diffMins < 1) return 'Just now';
-  if (diffMins < 60) return `${diffMins}m ago`;
-  if (diffHours < 24) return `${diffHours}h ago`;
-  if (diffDays < 7) return `${diffDays}d ago`;
+  if (diffMins < 1) return t('justNow');
+  if (diffMins < 60) return `${diffMins}${t('minutesAgo')}`;
+  if (diffHours < 24) return `${diffHours}${t('hoursAgo')}`;
+  if (diffDays < 7) return `${diffDays}${t('daysAgo')}`;
   return date.toLocaleDateString();
 };
 
@@ -45,6 +46,7 @@ const getNotificationIcon = (type) => {
 
 export const NotificationsScreen = ({ navigation }) => {
   const { colors } = useTheme();
+  const { t } = useLanguage();
   const {
     notifications,
     unreadCount,
@@ -107,7 +109,7 @@ export const NotificationsScreen = ({ navigation }) => {
             {item.message}
           </Text>
           <Text style={[styles.timestamp, { color: colors.textSecondary }]}>
-            {formatTimeAgo(item.createdAt)}
+            {formatTimeAgo(item.createdAt, t)}
           </Text>
         </View>
         
@@ -121,9 +123,9 @@ export const NotificationsScreen = ({ navigation }) => {
   const renderEmpty = () => (
     <View style={styles.emptyContainer}>
       <Ionicons name="notifications-off-outline" size={64} color={colors.textSecondary} />
-      <Text style={[styles.emptyTitle, { color: colors.text }]}>No notifications yet</Text>
+      <Text style={[styles.emptyTitle, { color: colors.text }]}>{t('noNotificationsYet')}</Text>
       <Text style={[styles.emptySubtitle, { color: colors.textSecondary }]}>
-        When someone likes or comments on your posts, you'll see it here
+        {t('notificationsDescription')}
       </Text>
     </View>
   );
@@ -134,10 +136,10 @@ export const NotificationsScreen = ({ navigation }) => {
         <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
           <Ionicons name="arrow-back" size={24} color={colors.text} />
         </TouchableOpacity>
-        <Text style={[styles.headerTitle, { color: colors.text }]}>Notifications</Text>
+        <Text style={[styles.headerTitle, { color: colors.text }]}>{t('notifications')}</Text>
         {unreadCount > 0 && (
           <TouchableOpacity onPress={markAllAsRead} style={styles.markAllButton}>
-            <Text style={[styles.markAllText, { color: colors.primary }]}>Mark all read</Text>
+            <Text style={[styles.markAllText, { color: colors.primary }]}>{t('markAllRead')}</Text>
           </TouchableOpacity>
         )}
       </View>
