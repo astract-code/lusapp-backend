@@ -116,17 +116,17 @@ export const MessagesScreen = ({ navigation }) => {
   const showConversationOptions = (item) => {
     Alert.alert(
       item.other_user_name,
-      'Choose an action',
+      t('chooseAction'),
       [
         {
-          text: item.muted ? 'Unmute' : 'Mute',
+          text: item.muted ? t('unmute') : t('mute'),
           onPress: () => handleMute(item.id, item.muted),
         },
         {
-          text: item.archived ? 'Unarchive' : 'Archive',
+          text: item.archived ? t('unarchive') : t('archive'),
           onPress: () => handleArchive(item.id, item.archived),
         },
-        { text: 'Cancel', style: 'cancel' },
+        { text: t('cancel'), style: 'cancel' },
       ]
     );
   };
@@ -201,7 +201,7 @@ export const MessagesScreen = ({ navigation }) => {
             ]}
             numberOfLines={1}
           >
-            {item.last_message || 'No messages yet'}
+            {item.last_message || t('noMessagesYet')}
           </Text>
           {item.unread_count > 0 && (
             <View style={[styles.unreadBadge, { backgroundColor: colors.primary }]}>
@@ -246,7 +246,7 @@ export const MessagesScreen = ({ navigation }) => {
         <View style={[styles.archiveNotice, { backgroundColor: colors.card }]}>
           <Ionicons name="archive-outline" size={16} color={colors.textSecondary} />
           <Text style={[styles.archiveNoticeText, { color: colors.textSecondary }]}>
-            Showing archived conversations
+            {t('showingArchived')}
           </Text>
         </View>
       )}
@@ -255,12 +255,12 @@ export const MessagesScreen = ({ navigation }) => {
         <View style={styles.emptyContainer}>
           <Ionicons name="chatbubbles-outline" size={64} color={colors.textSecondary} />
           <Text style={[styles.emptyText, { color: colors.textSecondary }]}>
-            {showArchived ? 'No archived messages' : 'No messages yet'}
+            {showArchived ? t('noArchivedMessages') : t('noMessagesYet')}
           </Text>
           <Text style={[styles.emptySubtext, { color: colors.textSecondary }]}>
             {showArchived 
-              ? 'Archived conversations will appear here'
-              : 'Start a conversation by sending a message to another athlete'
+              ? t('archivedHint')
+              : t('startConversation')
             }
           </Text>
         </View>
@@ -281,7 +281,7 @@ export const MessagesScreen = ({ navigation }) => {
       )}
 
       <Text style={[styles.hint, { color: colors.textSecondary }]}>
-        Long press a conversation for more options
+        {t('longPressHint')}
       </Text>
     </SafeAreaView>
   );

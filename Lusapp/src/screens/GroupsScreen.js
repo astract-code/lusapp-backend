@@ -75,7 +75,7 @@ export const GroupsScreen = ({ navigation }) => {
 
   const createGroup = async () => {
     if (!newGroup.name.trim()) {
-      Alert.alert('Error', 'Group name is required');
+      Alert.alert(t('error'), t('groupNameRequired'));
       return;
     }
 
@@ -112,15 +112,15 @@ export const GroupsScreen = ({ navigation }) => {
         let errorMessage;
         try {
           const error = JSON.parse(errorText);
-          errorMessage = error.error || error.details || 'Failed to create group';
+          errorMessage = error.error || error.details || t('failedToCreateGroup');
         } catch {
           errorMessage = `Server error (${response.status}): ${errorText.substring(0, 100)}`;
         }
-        Alert.alert('Error Creating Group', errorMessage);
+        Alert.alert(t('error'), errorMessage);
       }
     } catch (error) {
       console.error('Exception creating group:', error);
-      Alert.alert('Error', `Failed to create group: ${error.message}`);
+      Alert.alert(t('error'), t('failedToCreateGroup'));
     }
   };
 
@@ -142,15 +142,15 @@ export const GroupsScreen = ({ navigation }) => {
       });
 
       if (response.ok) {
-        Alert.alert('Success', 'Joined group successfully');
+        Alert.alert(t('success'), t('joinedSuccess'));
         searchGroups();
         fetchMyGroups();
       } else {
         const error = await response.json();
-        Alert.alert('Error', error.error || 'Failed to join group');
+        Alert.alert(t('error'), error.error || t('failedToJoin'));
       }
     } catch (error) {
-      Alert.alert('Error', 'Failed to join group');
+      Alert.alert(t('error'), t('failedToJoin'));
     }
   };
 
@@ -169,15 +169,15 @@ export const GroupsScreen = ({ navigation }) => {
         setShowJoinModal(false);
         setJoinPassword('');
         setSelectedGroup(null);
-        Alert.alert('Success', 'Joined group successfully');
+        Alert.alert(t('success'), t('joinedSuccess'));
         searchGroups();
         fetchMyGroups();
       } else {
         const error = await response.json();
-        Alert.alert('Error', error.error || 'Incorrect password');
+        Alert.alert(t('error'), error.error || t('incorrectPassword'));
       }
     } catch (error) {
-      Alert.alert('Error', 'Failed to join group');
+      Alert.alert(t('error'), t('failedToJoin'));
     }
   };
 
@@ -248,7 +248,7 @@ export const GroupsScreen = ({ navigation }) => {
           style={[styles.createButton, { backgroundColor: colors.primary }]}
           onPress={() => setShowCreateModal(true)}
         >
-          <Text style={styles.createButtonText}>+ Create</Text>
+          <Text style={styles.createButtonText}>+ {t('create')}</Text>
         </TouchableOpacity>
       </View>
 
@@ -258,7 +258,7 @@ export const GroupsScreen = ({ navigation }) => {
           onPress={() => setActiveTab('my')}
         >
           <Text style={[styles.tabText, { color: activeTab === 'my' ? colors.primary : colors.textSecondary }]}>
-            My Groups
+            {t('myGroups')}
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
@@ -266,7 +266,7 @@ export const GroupsScreen = ({ navigation }) => {
           onPress={() => setActiveTab('discover')}
         >
           <Text style={[styles.tabText, { color: activeTab === 'discover' ? colors.primary : colors.textSecondary }]}>
-            Discover
+            {t('discover')}
           </Text>
         </TouchableOpacity>
       </View>
@@ -276,7 +276,7 @@ export const GroupsScreen = ({ navigation }) => {
           <Text style={styles.searchIcon}>🔍</Text>
           <TextInput
             style={[styles.searchInput, { color: colors.text }]}
-            placeholder="Search groups..."
+            placeholder={t('searchGroups')}
             placeholderTextColor={colors.textSecondary}
             value={searchQuery}
             onChangeText={setSearchQuery}
@@ -294,7 +294,7 @@ export const GroupsScreen = ({ navigation }) => {
         onRefresh={activeTab === 'my' ? fetchMyGroups : searchGroups}
         ListEmptyComponent={
           <Text style={[styles.emptyText, { color: colors.textSecondary }]}>
-            {activeTab === 'my' ? 'No groups yet. Create or join one!' : 'No groups found'}
+            {activeTab === 'my' ? t('noGroupsYet') : t('noGroupsFound')}
           </Text>
         }
       />
@@ -305,7 +305,7 @@ export const GroupsScreen = ({ navigation }) => {
           style={styles.modalOverlay}
         >
           <View style={[styles.modalContent, { backgroundColor: colors.card }]}>
-            <Text style={[styles.modalTitle, { color: colors.text }]}>Create Group</Text>
+            <Text style={[styles.modalTitle, { color: colors.text }]}>{t('createGroup')}</Text>
             
             <ScrollView 
               style={styles.modalScrollView}
@@ -314,7 +314,7 @@ export const GroupsScreen = ({ navigation }) => {
             >
             <TextInput
               style={[styles.input, { backgroundColor: colors.background, color: colors.text, borderColor: colors.border }]}
-              placeholder="Group Name *"
+              placeholder={`${t('groupName')} *`}
               placeholderTextColor={colors.textSecondary}
               value={newGroup.name}
               onChangeText={(text) => setNewGroup({ ...newGroup, name: text })}
@@ -322,7 +322,7 @@ export const GroupsScreen = ({ navigation }) => {
             
             <TextInput
               style={[styles.input, { backgroundColor: colors.background, color: colors.text, borderColor: colors.border }]}
-              placeholder="Sport Type (e.g., Marathon, Triathlon)"
+              placeholder={t('sportType')}
               placeholderTextColor={colors.textSecondary}
               value={newGroup.sport_type}
               onChangeText={(text) => setNewGroup({ ...newGroup, sport_type: text })}
@@ -346,7 +346,7 @@ export const GroupsScreen = ({ navigation }) => {
             
             <TextInput
               style={[styles.textArea, { backgroundColor: colors.background, color: colors.text, borderColor: colors.border }]}
-              placeholder="Description"
+              placeholder={t('description')}
               placeholderTextColor={colors.textSecondary}
               value={newGroup.description}
               onChangeText={(text) => setNewGroup({ ...newGroup, description: text })}
@@ -356,7 +356,7 @@ export const GroupsScreen = ({ navigation }) => {
             
             <TextInput
               style={[styles.input, { backgroundColor: colors.background, color: colors.text, borderColor: colors.border }]}
-              placeholder="Password (optional)"
+              placeholder={`${t('password')} (${t('optional')})`}
               placeholderTextColor={colors.textSecondary}
               value={newGroup.password}
               onChangeText={(text) => setNewGroup({ ...newGroup, password: text })}
@@ -372,13 +372,13 @@ export const GroupsScreen = ({ navigation }) => {
                   setNewGroup({ name: '', sport_type: '', city: '', country: '', description: '', password: '' });
                 }}
               >
-                <Text style={[styles.modalButtonText, { color: colors.text }]}>Cancel</Text>
+                <Text style={[styles.modalButtonText, { color: colors.text }]}>{t('cancel')}</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 style={[styles.modalButton, { backgroundColor: colors.primary }]}
                 onPress={createGroup}
               >
-                <Text style={[styles.modalButtonText, { color: '#FFFFFF' }]}>Create</Text>
+                <Text style={[styles.modalButtonText, { color: '#FFFFFF' }]}>{t('create')}</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -388,11 +388,11 @@ export const GroupsScreen = ({ navigation }) => {
       <Modal visible={showJoinModal} animationType="fade" transparent={true}>
         <View style={styles.modalOverlay}>
           <View style={[styles.modalContent, { backgroundColor: colors.card }]}>
-            <Text style={[styles.modalTitle, { color: colors.text }]}>Enter Password</Text>
+            <Text style={[styles.modalTitle, { color: colors.text }]}>{t('enterPassword')}</Text>
             
             <TextInput
               style={[styles.input, { backgroundColor: colors.background, color: colors.text, borderColor: colors.border }]}
-              placeholder="Group Password"
+              placeholder={t('password')}
               placeholderTextColor={colors.textSecondary}
               value={joinPassword}
               onChangeText={setJoinPassword}
@@ -409,13 +409,13 @@ export const GroupsScreen = ({ navigation }) => {
                   setSelectedGroup(null);
                 }}
               >
-                <Text style={[styles.modalButtonText, { color: colors.text }]}>Cancel</Text>
+                <Text style={[styles.modalButtonText, { color: colors.text }]}>{t('cancel')}</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 style={[styles.modalButton, { backgroundColor: colors.primary }]}
                 onPress={submitJoinWithPassword}
               >
-                <Text style={[styles.modalButtonText, { color: '#FFFFFF' }]}>Join</Text>
+                <Text style={[styles.modalButtonText, { color: '#FFFFFF' }]}>{t('join')}</Text>
               </TouchableOpacity>
             </View>
           </View>
