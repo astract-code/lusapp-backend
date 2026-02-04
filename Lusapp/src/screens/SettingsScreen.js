@@ -42,15 +42,15 @@ export const SettingsScreen = ({ navigation }) => {
 
   const handleDeleteAccount = () => {
     Alert.alert(
-      'Delete Account',
-      'Are you sure you want to delete your account? This action cannot be undone and will permanently delete all your data including:\n\n• Profile information\n• Race history\n• Messages\n• Social connections',
+      t('deleteAccountConfirmTitle'),
+      t('deleteAccountConfirmMessage'),
       [
         {
-          text: 'Cancel',
+          text: t('cancel'),
           style: 'cancel',
         },
         {
-          text: 'Delete',
+          text: t('delete'),
           style: 'destructive',
           onPress: async () => {
             setIsDeleting(true);
@@ -65,21 +65,21 @@ export const SettingsScreen = ({ navigation }) => {
               const data = await response.json();
 
               if (!response.ok) {
-                throw new Error(data.error || 'Failed to delete account');
+                throw new Error(data.error || t('failedToDeleteAccount'));
               }
 
               Alert.alert(
-                'Account Deleted',
-                'Your account has been permanently deleted.',
+                t('accountDeleted'),
+                t('accountDeletedMessage'),
                 [
                   {
-                    text: 'OK',
+                    text: t('ok'),
                     onPress: () => logout(),
                   },
                 ]
               );
             } catch (error) {
-              Alert.alert('Error', error.message || 'Failed to delete account. Please try again.');
+              Alert.alert(t('error'), error.message || t('failedToDeleteAccount'));
             } finally {
               setIsDeleting(false);
             }
@@ -93,9 +93,9 @@ export const SettingsScreen = ({ navigation }) => {
     <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
       <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Text style={[styles.backButton, { color: colors.primary }]}>← Back</Text>
+          <Text style={[styles.backButton, { color: colors.primary }]}>← {t('back')}</Text>
         </TouchableOpacity>
-        <Text style={[styles.title, { color: colors.text }]}>Settings</Text>
+        <Text style={[styles.title, { color: colors.text }]}>{t('settings')}</Text>
         <View style={{ width: 60 }} />
       </View>
 
@@ -117,7 +117,7 @@ export const SettingsScreen = ({ navigation }) => {
 
         {/* Theme Selection */}
         <Card elevation="md" padding="md" style={styles.section}>
-          <Text style={[styles.sectionTitle, { color: colors.text }]}>🎨 {t('settings')}</Text>
+          <Text style={[styles.sectionTitle, { color: colors.text }]}>🎨 {t('appearance')}</Text>
           
           <View style={styles.themeOptions}>
             {themeOptions.map((option) => (
@@ -149,13 +149,13 @@ export const SettingsScreen = ({ navigation }) => {
 
         {/* Display Preferences */}
         <Card elevation="md" padding="md" style={styles.section}>
-          <Text style={[styles.sectionTitle, { color: colors.text }]}>⚙️ Display Preferences</Text>
+          <Text style={[styles.sectionTitle, { color: colors.text }]}>⚙️ {t('displayPreferences')}</Text>
           
           <View style={styles.settingRow}>
             <View style={styles.settingInfo}>
-              <Text style={[styles.settingLabel, { color: colors.text }]}>24-Hour Format</Text>
+              <Text style={[styles.settingLabel, { color: colors.text }]}>{t('timeFormat24')}</Text>
               <Text style={[styles.settingDescription, { color: colors.textSecondary }]}>
-                {use24HourFormat ? 'Use 24-hour time (14:30)' : 'Use 12-hour time (2:30 PM)'}
+                {use24HourFormat ? t('timeFormat24Desc') : t('timeFormat12Desc')}
               </Text>
             </View>
             <Switch
@@ -171,9 +171,9 @@ export const SettingsScreen = ({ navigation }) => {
 
           <View style={styles.settingRow}>
             <View style={styles.settingInfo}>
-              <Text style={[styles.settingLabel, { color: colors.text }]}>Distance Unit</Text>
+              <Text style={[styles.settingLabel, { color: colors.text }]}>{t('distanceUnit')}</Text>
               <Text style={[styles.settingDescription, { color: colors.textSecondary }]}>
-                {useMetric ? 'Use kilometers (km)' : 'Use miles (mi)'}
+                {useMetric ? t('distanceUnitKm') : t('distanceUnitMi')}
               </Text>
             </View>
             <Switch
@@ -188,17 +188,17 @@ export const SettingsScreen = ({ navigation }) => {
 
         {/* About */}
         <Card elevation="md" padding="md" style={styles.section}>
-          <Text style={[styles.sectionTitle, { color: colors.text }]}>ℹ️ About</Text>
+          <Text style={[styles.sectionTitle, { color: colors.text }]}>ℹ️ {t('about')}</Text>
           
           <View style={styles.infoRow}>
-            <Text style={[styles.infoLabel, { color: colors.textSecondary }]}>Version</Text>
+            <Text style={[styles.infoLabel, { color: colors.textSecondary }]}>{t('version')}</Text>
             <Text style={[styles.infoValue, { color: colors.text }]}>1.0.0</Text>
           </View>
           
           <View style={[styles.divider, { backgroundColor: colors.border }]} />
           
           <View style={styles.infoRow}>
-            <Text style={[styles.infoLabel, { color: colors.textSecondary }]}>App Name</Text>
+            <Text style={[styles.infoLabel, { color: colors.textSecondary }]}>{t('appName')}</Text>
             <Text style={[styles.infoValue, { color: colors.text }]}>Lusapp</Text>
           </View>
 
@@ -212,12 +212,12 @@ export const SettingsScreen = ({ navigation }) => {
               if (canOpen) {
                 await Linking.openURL(url);
               } else {
-                Alert.alert('Error', 'Unable to open Privacy Policy. Please visit: ' + url);
+                Alert.alert(t('error'), t('unableToOpenPrivacyPolicy'));
               }
             }}
           >
-            <Text style={[styles.infoLabel, { color: colors.textSecondary }]}>Privacy Policy</Text>
-            <Text style={[styles.infoValue, { color: colors.primary }]}>View →</Text>
+            <Text style={[styles.infoLabel, { color: colors.textSecondary }]}>{t('privacyPolicy')}</Text>
+            <Text style={[styles.infoValue, { color: colors.primary }]}>→</Text>
           </TouchableOpacity>
 
           <View style={[styles.divider, { backgroundColor: colors.border }]} />
@@ -230,18 +230,18 @@ export const SettingsScreen = ({ navigation }) => {
               if (canOpen) {
                 await Linking.openURL(url);
               } else {
-                Alert.alert('Error', 'Unable to open Terms of Service. Please visit: ' + url);
+                Alert.alert(t('error'), t('unableToOpenTermsOfService'));
               }
             }}
           >
-            <Text style={[styles.infoLabel, { color: colors.textSecondary }]}>Terms of Service</Text>
-            <Text style={[styles.infoValue, { color: colors.primary }]}>View →</Text>
+            <Text style={[styles.infoLabel, { color: colors.textSecondary }]}>{t('termsOfService')}</Text>
+            <Text style={[styles.infoValue, { color: colors.primary }]}>→</Text>
           </TouchableOpacity>
         </Card>
 
         {/* Account Management */}
         <Card elevation="md" padding="md" style={styles.section}>
-          <Text style={[styles.sectionTitle, { color: colors.text }]}>🔐 Account</Text>
+          <Text style={[styles.sectionTitle, { color: colors.text }]}>🔐 {t('account')}</Text>
           
           <TouchableOpacity
             style={[
@@ -254,12 +254,12 @@ export const SettingsScreen = ({ navigation }) => {
             {isDeleting ? (
               <ActivityIndicator color="#fff" />
             ) : (
-              <Text style={styles.deleteButtonText}>Delete Account</Text>
+              <Text style={styles.deleteButtonText}>{t('deleteAccount')}</Text>
             )}
           </TouchableOpacity>
           
           <Text style={[styles.deleteWarning, { color: colors.textSecondary }]}>
-            Warning: This action is permanent and cannot be undone
+            {t('deleteAccountWarning')}
           </Text>
         </Card>
       </ScrollView>
