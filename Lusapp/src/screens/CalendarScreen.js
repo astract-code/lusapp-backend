@@ -16,6 +16,7 @@ import { useAppStore } from '../context/AppContext';
 import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
 import { useSettings } from '../context/SettingsContext';
+import { useLanguage } from '../context/LanguageContext';
 import { SPACING, BORDER_RADIUS, GRADIENTS, SHADOWS } from '../constants/theme';
 import { API_BASE_URL } from '../config/api';
 import { getDisplayDistance } from '../utils/distanceHelper';
@@ -174,6 +175,7 @@ export const CalendarScreen = ({ navigation }) => {
   const { colors, isDark } = useTheme();
   const { user, token, refreshUser } = useAuth();
   const { races, fetchRaces } = useAppStore();
+  const { t } = useLanguage();
   
   const [viewMode, setViewMode] = useState('calendar');
   const [selectedDate, setSelectedDate] = useState('');

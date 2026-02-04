@@ -24,6 +24,7 @@ import { DropdownFilter } from '../components/DropdownFilter';
 import { useAppStore } from '../context/AppContext';
 import { useTheme } from '../context/ThemeContext';
 import { useAuth } from '../context/AuthContext';
+import { useLanguage } from '../context/LanguageContext';
 import API_URL from '../config/api';
 import { SPACING, FONT_SIZE, BORDER_RADIUS, SPORTS, CONTINENTS, COUNTRIES, COUNTRY_TO_CONTINENT } from '../constants/theme';
 import { SPORT_TAXONOMY, SPORT_CATEGORIES, normalizeLegacySport, formatSportDisplay } from '../constants/sportTaxonomy';
@@ -32,6 +33,7 @@ export const DiscoverScreen = ({ navigation }) => {
   const { colors } = useTheme();
   const { races, addRace, fetchRaces } = useAppStore();
   const { token } = useAuth();
+  const { t } = useLanguage();
   
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedSubtype, setSelectedSubtype] = useState(null);
@@ -273,7 +275,7 @@ export const DiscoverScreen = ({ navigation }) => {
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
       <View style={styles.header}>
-        <Text style={[styles.title, { color: colors.text }]}>Discover Races</Text>
+        <Text style={[styles.title, { color: colors.text }]}>{t('discoverRaces')}</Text>
         <TouchableOpacity 
           style={[styles.addButton, { backgroundColor: colors.primary }]}
           onPress={() => setShowAddForm(true)}
@@ -286,7 +288,7 @@ export const DiscoverScreen = ({ navigation }) => {
         <Ionicons name="search" size={18} color={colors.textSecondary} />
         <TextInput
           style={[styles.searchInput, { color: colors.text }]}
-          placeholder="Search by city..."
+          placeholder={t('searchRaces')}
           placeholderTextColor={colors.textSecondary}
           value={searchQuery}
           onChangeText={setSearchQuery}

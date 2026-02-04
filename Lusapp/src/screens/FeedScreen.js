@@ -7,6 +7,7 @@ import { UserAvatar } from '../components/UserAvatar';
 import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
 import { useNotifications } from '../context/NotificationContext';
+import { useLanguage } from '../context/LanguageContext';
 import { SPACING, FONT_SIZE, BORDER_RADIUS } from '../constants/theme';
 import API_URL from '../config/api';
 import { fetchWithAuth } from '../utils/apiClient';
@@ -15,6 +16,7 @@ export const FeedScreen = ({ navigation }) => {
   const { colors } = useTheme();
   const { token } = useAuth();
   const { unreadCount, fetchUnreadCount } = useNotifications();
+  const { t } = useLanguage();
   const [posts, setPosts] = useState([]);
   const [suggestedUsers, setSuggestedUsers] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -101,7 +103,7 @@ export const FeedScreen = ({ navigation }) => {
         ListHeaderComponent={
           <View style={styles.headerRow}>
             <Text style={[styles.header, { color: colors.text }]}>
-              Activity Feed
+              {t('activityFeed')}
             </Text>
             <TouchableOpacity 
               style={styles.bellButton}
@@ -121,13 +123,13 @@ export const FeedScreen = ({ navigation }) => {
         ListEmptyComponent={
           <View style={styles.emptyContainer}>
             <Text style={[styles.emptyText, { color: colors.textSecondary }]}>
-              No posts yet. Follow athletes to see their activity!
+              {t('noPostsYet')}
             </Text>
             
             {suggestedUsers.length > 0 && (
               <View style={styles.suggestedSection}>
                 <Text style={[styles.suggestedTitle, { color: colors.text }]}>
-                  Suggested Athletes
+                  {t('suggestedAthletes')}
                 </Text>
                 {suggestedUsers.slice(0, 5).map((user) => (
                   <TouchableOpacity
@@ -147,7 +149,7 @@ export const FeedScreen = ({ navigation }) => {
                       )}
                     </View>
                     <View style={[styles.viewButton, { backgroundColor: colors.primary }]}>
-                      <Text style={styles.viewButtonText}>View</Text>
+                      <Text style={styles.viewButtonText}>{t('view')}</Text>
                     </View>
                   </TouchableOpacity>
                 ))}

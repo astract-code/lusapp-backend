@@ -24,6 +24,7 @@ import { CompactRaceCard } from '../components/CompactRaceCard';
 import { useAuth } from '../context/AuthContext';
 import { useAppStore } from '../context/AppContext';
 import { useTheme } from '../context/ThemeContext';
+import { useLanguage } from '../context/LanguageContext';
 import { SPACING, BORDER_RADIUS, GRADIENTS, SHADOWS } from '../constants/theme';
 import API_URL from '../config/api';
 import haptic from '../utils/haptics';
@@ -34,6 +35,7 @@ export const ProfileScreen = ({ navigation }) => {
   const { colors, isDark } = useTheme();
   const { user: authUser, logout, updateUser, token, refreshUser, refreshToken } = useAuth();
   const { races, fetchRaces } = useAppStore();
+  const { t } = useLanguage();
   const [uploading, setUploading] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [refreshing, setRefreshing] = useState(false);

@@ -15,12 +15,14 @@ import { Ionicons } from '@expo/vector-icons';
 import { useFocusEffect } from '@react-navigation/native';
 import { useTheme } from '../context/ThemeContext';
 import { useAuth } from '../context/AuthContext';
+import { useLanguage } from '../context/LanguageContext';
 import { SPACING, FONT_SIZE, BORDER_RADIUS } from '../constants/theme';
 import API_URL from '../config/api';
 
 export const MessagesScreen = ({ navigation }) => {
   const { colors } = useTheme();
   const { token } = useAuth();
+  const { t } = useLanguage();
   const [conversations, setConversations] = useState([]);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
@@ -215,7 +217,7 @@ export const MessagesScreen = ({ navigation }) => {
     return (
       <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
         <View style={styles.header}>
-          <Text style={[styles.headerTitle, { color: colors.text }]}>Messages</Text>
+          <Text style={[styles.headerTitle, { color: colors.text }]}>{t('messages')}</Text>
         </View>
         <View style={styles.loadingContainer}>
           <ActivityIndicator size="large" color={colors.primary} />
@@ -227,7 +229,7 @@ export const MessagesScreen = ({ navigation }) => {
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
       <View style={styles.header}>
-        <Text style={[styles.headerTitle, { color: colors.text }]}>Messages</Text>
+        <Text style={[styles.headerTitle, { color: colors.text }]}>{t('messages')}</Text>
         <TouchableOpacity 
           onPress={() => setShowArchived(!showArchived)}
           style={styles.archiveToggle}

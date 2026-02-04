@@ -3,12 +3,14 @@ import { View, Text, StyleSheet, FlatList, TouchableOpacity, TextInput, Modal, A
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
+import { useLanguage } from '../context/LanguageContext';
 import { SPACING, FONT_SIZE, BORDER_RADIUS } from '../constants/theme';
 import API_URL from '../config/api';
 
 export const GroupsScreen = ({ navigation }) => {
   const { colors } = useTheme();
   const { token } = useAuth();
+  const { t } = useLanguage();
   const [activeTab, setActiveTab] = useState('my');
   const [myGroups, setMyGroups] = useState([]);
   const [searchResults, setSearchResults] = useState([]);
@@ -241,7 +243,7 @@ export const GroupsScreen = ({ navigation }) => {
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
       <View style={styles.header}>
-        <Text style={[styles.title, { color: colors.text }]}>Groups</Text>
+        <Text style={[styles.title, { color: colors.text }]}>{t('groups')}</Text>
         <TouchableOpacity
           style={[styles.createButton, { backgroundColor: colors.primary }]}
           onPress={() => setShowCreateModal(true)}
