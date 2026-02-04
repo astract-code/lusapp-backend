@@ -79,7 +79,7 @@ export const SettingsScreen = ({ navigation }) => {
                 ]
               );
             } catch (error) {
-              Alert.alert(t('error'), error.message || t('failedToDeleteAccount'));
+              Alert.alert(t('oops'), error.message || t('failedToDeleteAccount'));
             } finally {
               setIsDeleting(false);
             }
@@ -212,7 +212,7 @@ export const SettingsScreen = ({ navigation }) => {
               if (canOpen) {
                 await Linking.openURL(url);
               } else {
-                Alert.alert(t('error'), t('unableToOpenPrivacyPolicy'));
+                Alert.alert(t('oops'), t('unableToOpenPrivacyPolicy'));
               }
             }}
           >
@@ -230,7 +230,7 @@ export const SettingsScreen = ({ navigation }) => {
               if (canOpen) {
                 await Linking.openURL(url);
               } else {
-                Alert.alert(t('error'), t('unableToOpenTermsOfService'));
+                Alert.alert(t('oops'), t('unableToOpenTermsOfService'));
               }
             }}
           >

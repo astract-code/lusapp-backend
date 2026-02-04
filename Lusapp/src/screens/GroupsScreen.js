@@ -75,7 +75,7 @@ export const GroupsScreen = ({ navigation }) => {
 
   const createGroup = async () => {
     if (!newGroup.name.trim()) {
-      Alert.alert(t('error'), t('groupNameRequired'));
+      Alert.alert(t('oops'), t('groupNameRequired'));
       return;
     }
 
@@ -116,11 +116,11 @@ export const GroupsScreen = ({ navigation }) => {
         } catch {
           errorMessage = `Server error (${response.status}): ${errorText.substring(0, 100)}`;
         }
-        Alert.alert(t('error'), errorMessage);
+        Alert.alert(t('oops'), errorMessage);
       }
     } catch (error) {
       console.error('Exception creating group:', error);
-      Alert.alert(t('error'), t('failedToCreateGroup'));
+      Alert.alert(t('oops'), t('failedToCreateGroup'));
     }
   };
 
@@ -147,10 +147,10 @@ export const GroupsScreen = ({ navigation }) => {
         fetchMyGroups();
       } else {
         const error = await response.json();
-        Alert.alert(t('error'), error.error || t('failedToJoin'));
+        Alert.alert(t('oops'), error.error || t('failedToJoin'));
       }
     } catch (error) {
-      Alert.alert(t('error'), t('failedToJoin'));
+      Alert.alert(t('oops'), t('failedToJoin'));
     }
   };
 
@@ -174,10 +174,10 @@ export const GroupsScreen = ({ navigation }) => {
         fetchMyGroups();
       } else {
         const error = await response.json();
-        Alert.alert(t('error'), error.error || t('incorrectPassword'));
+        Alert.alert(t('oops'), error.error || t('incorrectPassword'));
       }
     } catch (error) {
-      Alert.alert(t('error'), t('failedToJoin'));
+      Alert.alert(t('oops'), t('failedToJoin'));
     }
   };
 
