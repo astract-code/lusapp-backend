@@ -11,6 +11,7 @@ import {
 import { useNavigation } from '@react-navigation/native';
 import { useTheme } from '../context/ThemeContext';
 import { useAuth } from '../context/AuthContext';
+import { useLanguage } from '../context/LanguageContext';
 import { SPACING, FONT_SIZE, BORDER_RADIUS } from '../constants/theme';
 
 import API_URL from '../config/api';
@@ -18,6 +19,7 @@ import API_URL from '../config/api';
 export const GroupMembersTab = ({ groupId }) => {
   const { colors } = useTheme();
   const { token } = useAuth();
+  const { t } = useLanguage();
   const navigation = useNavigation();
   const [members, setMembers] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -99,7 +101,7 @@ export const GroupMembersTab = ({ groupId }) => {
         )}
       </View>
       <View style={[styles.roleBadge, { backgroundColor: getRoleBadgeColor(item.role) }]}>
-        <Text style={styles.roleText}>{item.role.toUpperCase()}</Text>
+        <Text style={styles.roleText}>{t(`role_${item.role}`) || item.role.toUpperCase()}</Text>
       </View>
     </TouchableOpacity>
   );
@@ -118,7 +120,7 @@ export const GroupMembersTab = ({ groupId }) => {
         <View style={styles.emptyContainer}>
           <Text style={styles.emptyIcon}>👥</Text>
           <Text style={[styles.emptyText, { color: colors.textSecondary }]}>
-            No members found
+            {t('noMembersFound')}
           </Text>
         </View>
       ) : (

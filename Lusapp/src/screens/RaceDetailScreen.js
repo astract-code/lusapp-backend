@@ -22,6 +22,7 @@ import { UserAvatar } from '../components/UserAvatar';
 import { useAuth } from '../context/AuthContext';
 import { useAppStore } from '../context/AppContext';
 import { useTheme } from '../context/ThemeContext';
+import { useLanguage } from '../context/LanguageContext';
 import { useSettings } from '../context/SettingsContext';
 import { SPACING, FONT_SIZE, BORDER_RADIUS, SPORTS } from '../constants/theme';
 import API_URL from '../config/api';
@@ -55,6 +56,7 @@ const getSportIcon = (race) => {
 export const RaceDetailScreen = ({ route, navigation }) => {
   const { raceId, openCompletionModal } = route.params;
   const { colors } = useTheme();
+  const { t } = useLanguage();
   const { useMetric } = useSettings();
   const { user, token, updateUser } = useAuth();
   const { getRaceById, registerForRace, unregisterFromRace, fetchRaces } = useAppStore();
@@ -87,7 +89,7 @@ export const RaceDetailScreen = ({ route, navigation }) => {
   if (!race) {
     return (
       <View style={[styles.container, { backgroundColor: colors.background }]}>
-        <Text style={[styles.errorText, { color: colors.text }]}>Race not found</Text>
+        <Text style={[styles.errorText, { color: colors.text }]}>{t('raceNotFound')}</Text>
       </View>
     );
   }
@@ -203,23 +205,23 @@ export const RaceDetailScreen = ({ route, navigation }) => {
 
   const handlePickCertificate = async () => {
     Alert.alert(
-      'Upload Certificate',
-      'Choose how to upload your certificate',
+      t('uploadCertificate'),
+      t('chooseCertificateUploadMethod'),
       [
         {
-          text: 'Take Photo',
+          text: t('takePhoto'),
           onPress: () => pickFromCamera(),
         },
         {
-          text: 'Choose from Photos',
+          text: t('chooseFromPhotos'),
           onPress: () => pickFromGallery(),
         },
         {
-          text: 'Choose from Files',
+          text: t('chooseFromFiles'),
           onPress: () => pickFromFiles(),
         },
         {
-          text: 'Cancel',
+          text: t('cancel'),
           style: 'cancel',
         },
       ]
@@ -230,7 +232,7 @@ export const RaceDetailScreen = ({ route, navigation }) => {
     try {
       const { status } = await ImagePicker.requestCameraPermissionsAsync();
       if (status !== 'granted') {
-        Alert.alert('Permission Required', 'Camera access is needed to take photos');
+        Alert.alert(t('permissionRequired'), t('cameraAccessNeeded'));
         return;
       }
 
@@ -246,11 +248,11 @@ export const RaceDetailScreen = ({ route, navigation }) => {
           mimeType: asset.mimeType || 'image/jpeg',
           name: `certificate_${Date.now()}.jpg`,
         });
-        Alert.alert('Success', 'Photo captured');
+        Alert.alert(t('success'), t('photoCaptured'));
       }
     } catch (error) {
       console.error('Error taking photo:', error);
-      Alert.alert('Error', 'Failed to take photo');
+      Alert.alert(t('oops'), t('failedToTakePhoto'));
     }
   };
 
@@ -258,7 +260,7 @@ export const RaceDetailScreen = ({ route, navigation }) => {
     try {
       const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
       if (status !== 'granted') {
-        Alert.alert('Permission Required', 'Photo library access is needed');
+        Alert.alert(t('permissionRequired'), t('photoLibraryAccessNeeded'));
         return;
       }
 
@@ -275,11 +277,11 @@ export const RaceDetailScreen = ({ route, navigation }) => {
           mimeType: asset.mimeType || (extension === 'png' ? 'image/png' : 'image/jpeg'),
           name: `certificate_${Date.now()}.${extension}`,
         });
-        Alert.alert('Success', 'Photo selected');
+        Alert.alert(t('success'), t('photoSelected'));
       }
     } catch (error) {
       console.error('Error picking from gallery:', error);
-      Alert.alert('Error', 'Failed to pick photo');
+      Alert.alert(t('oops'), t('failedToPickPhoto'));
     }
   };
 
@@ -292,12 +294,11 @@ export const RaceDetailScreen = ({ route, navigation }) => {
 
       if (!result.canceled && result.assets && result.assets[0]) {
         setCertificate(result.assets[0]);
-        const fileType = result.assets[0].mimeType?.includes('image') ? 'image' : 'PDF';
-        Alert.alert('Success', `Certificate ${fileType} selected`);
+        Alert.alert(t('success'), t('certificateSelected'));
       }
     } catch (error) {
       console.error('Error picking certificate:', error);
-      Alert.alert('Error', 'Failed to pick certificate');
+      Alert.alert(t('oops'), t('failedToPickCertificate'));
     }
   };
 
@@ -374,22 +375,22 @@ export const RaceDetailScreen = ({ route, navigation }) => {
         setShowCompletionModal(false);
         // Refresh race data to show updated completion status
         fetchRaces();
-        Alert.alert('Success', 'Race marked as completed!');
+        Alert.alert(t('success'), t('raceMarkedAsCompleted'));
       } else {
         const error = await response.json();
-        Alert.alert('Error', error.error || 'Failed to mark race as completed');
+        Alert.alert(t('oops'), error.error || t('failedToMarkComplete'));
       }
     } catch (error) {
       console.error('Error submitting completion:', error);
       if (error.name === 'AbortError') {
         Alert.alert(
-          'Upload taking too long',
-          'The upload is still processing. Please check back in a moment to see if it completed.',
-          [{ text: 'OK', onPress: () => setShowCompletionModal(false) }]
+          t('uploadTakingTooLong'),
+          t('uploadStillProcessing'),
+          [{ text: t('ok'), onPress: () => setShowCompletionModal(false) }]
         );
         setTimeout(() => fetchCompletionData(), 5000);
       } else {
-        Alert.alert('Error', 'Failed to submit completion. Please try again.');
+        Alert.alert(t('oops'), t('failedToSubmitCompletion'));
       }
     } finally {
       setSubmitting(false);
@@ -414,7 +415,7 @@ export const RaceDetailScreen = ({ route, navigation }) => {
 
       if (response.ok) {
         const data = await response.json();
-        Alert.alert('Success', isRegistered ? 'You have unregistered from this race' : 'You have registered for this race!');
+        Alert.alert(t('success'), isRegistered ? t('unregisteredFromRace') : t('registeredForRace'));
         
         if (isRegistered) {
           unregisterFromRace(raceId, user.id);
@@ -436,11 +437,11 @@ export const RaceDetailScreen = ({ route, navigation }) => {
         fetchRaces();
       } else {
         const error = await response.json();
-        Alert.alert('Error', error.error || 'Failed to update registration');
+        Alert.alert(t('oops'), error.error || t('failedToUpdateRegistration'));
       }
     } catch (error) {
       console.error('Error updating registration:', error);
-      Alert.alert('Error', 'Failed to update registration');
+      Alert.alert(t('oops'), t('failedToUpdateRegistration'));
     }
   };
 
@@ -465,7 +466,7 @@ export const RaceDetailScreen = ({ route, navigation }) => {
         <View style={styles.infoRow}>
           <Text style={styles.icon}>📍</Text>
           <View style={styles.infoText}>
-            <Text style={[styles.label, { color: colors.textSecondary }]}>Location</Text>
+            <Text style={[styles.label, { color: colors.textSecondary }]}>{t('location')}</Text>
             <Text style={[styles.value, { color: colors.text }]}>
               {race.city}, {race.country}
             </Text>
@@ -478,7 +479,7 @@ export const RaceDetailScreen = ({ route, navigation }) => {
         <View style={styles.infoRow}>
           <Text style={styles.icon}>📅</Text>
           <View style={styles.infoText}>
-            <Text style={[styles.label, { color: colors.textSecondary }]}>Date</Text>
+            <Text style={[styles.label, { color: colors.textSecondary }]}>{t('date')}</Text>
             <Text style={[styles.value, { color: colors.text }]}>
               {new Date(race.date).toLocaleDateString('en-US', {
                 weekday: 'long',
@@ -494,7 +495,7 @@ export const RaceDetailScreen = ({ route, navigation }) => {
           <View style={styles.infoRow}>
             <Text style={styles.icon}>⏰</Text>
             <View style={styles.infoText}>
-              <Text style={[styles.label, { color: colors.textSecondary }]}>Start Time</Text>
+              <Text style={[styles.label, { color: colors.textSecondary }]}>{t('startTime')}</Text>
               <Text style={[styles.value, { color: colors.text }]}>{formatTime(race.start_time)}</Text>
             </View>
           </View>
@@ -503,7 +504,7 @@ export const RaceDetailScreen = ({ route, navigation }) => {
         <View style={styles.infoRow}>
           <Text style={styles.icon}>📏</Text>
           <View style={styles.infoText}>
-            <Text style={[styles.label, { color: colors.textSecondary }]}>Distance</Text>
+            <Text style={[styles.label, { color: colors.textSecondary }]}>{t('distance')}</Text>
             <Text style={[styles.value, { color: colors.text }]}>{getDisplayDistance(race, useMetric)}</Text>
           </View>
         </View>
@@ -511,7 +512,7 @@ export const RaceDetailScreen = ({ route, navigation }) => {
         <View style={styles.infoRow}>
           <Text style={styles.icon}>👥</Text>
           <View style={styles.infoText}>
-            <Text style={[styles.label, { color: colors.textSecondary }]}>Participants</Text>
+            <Text style={[styles.label, { color: colors.textSecondary }]}>{t('participants')}</Text>
             <Text style={[styles.value, { color: colors.text }]}>{race.participants}</Text>
           </View>
         </View>
@@ -519,7 +520,7 @@ export const RaceDetailScreen = ({ route, navigation }) => {
 
       {race.description && (
         <View style={[styles.card, { backgroundColor: colors.card }]}>
-          <Text style={[styles.sectionTitle, { color: colors.text }]}>About</Text>
+          <Text style={[styles.sectionTitle, { color: colors.text }]}>{t('about')}</Text>
           <Text style={[styles.description, { color: colors.textSecondary }]}>
             {race.description}
           </Text>
@@ -535,7 +536,7 @@ export const RaceDetailScreen = ({ route, navigation }) => {
       {registeredUsers.length > 0 && (
         <View style={[styles.card, { backgroundColor: colors.card }]}>
           <Text style={[styles.sectionTitle, { color: colors.text }]}>
-            Registered Athletes ({registeredUsers.length})
+            {t('registeredAthletes')} ({registeredUsers.length})
           </Text>
           <ScrollView horizontal showsHorizontalScrollIndicator={false}>
             {registeredUsers.map((athlete) => (
@@ -558,30 +559,30 @@ export const RaceDetailScreen = ({ route, navigation }) => {
         <View style={[styles.card, { backgroundColor: colors.card }]}>
           <View style={styles.completionHeader}>
             <Text style={[styles.sectionTitle, { color: colors.text }]}>
-              Race Completed ✓
+              {t('raceCompleted')} ✓
             </Text>
             <TouchableOpacity
               style={[styles.editButton, { backgroundColor: colors.primary }]}
               onPress={() => setShowCompletionModal(true)}
             >
-              <Text style={styles.editButtonText}>Edit</Text>
+              <Text style={styles.editButtonText}>{t('edit')}</Text>
             </TouchableOpacity>
           </View>
           {completion.completion_time && (
             <View style={styles.completionRow}>
-              <Text style={[styles.completionLabel, { color: colors.textSecondary }]}>Finish Time:</Text>
+              <Text style={[styles.completionLabel, { color: colors.textSecondary }]}>{t('finishTime')}:</Text>
               <Text style={[styles.completionValue, { color: colors.text }]}>{completion.completion_time}</Text>
             </View>
           )}
           {completion.position && (
             <View style={styles.completionRow}>
-              <Text style={[styles.completionLabel, { color: colors.textSecondary }]}>Position:</Text>
+              <Text style={[styles.completionLabel, { color: colors.textSecondary }]}>{t('position')}:</Text>
               <Text style={[styles.completionValue, { color: colors.text }]}>{completion.position}</Text>
             </View>
           )}
           {completion.notes && (
             <View style={styles.completionRow}>
-              <Text style={[styles.completionLabel, { color: colors.textSecondary }]}>Notes:</Text>
+              <Text style={[styles.completionLabel, { color: colors.textSecondary }]}>{t('notes')}:</Text>
               <Text style={[styles.completionValue, { color: colors.text }]}>{completion.notes}</Text>
             </View>
           )}
@@ -603,7 +604,7 @@ export const RaceDetailScreen = ({ route, navigation }) => {
                       resizeMode="contain"
                     />
                     <Text style={[styles.certificateImageLabel, { color: colors.textSecondary }]}>
-                      Tap to view full size
+                      {t('tapToViewFullSize')}
                     </Text>
                   </TouchableOpacity>
                 );
@@ -614,7 +615,7 @@ export const RaceDetailScreen = ({ route, navigation }) => {
                   onPress={() => Linking.openURL(url)}
                 >
                   <Text style={styles.certificateButtonText}>
-                    {isPdf ? 'View Certificate PDF' : 'View Certificate'}
+                    {isPdf ? t('viewCertificatePDF') : t('viewCertificate')}
                   </Text>
                 </TouchableOpacity>
               );
@@ -632,7 +633,7 @@ export const RaceDetailScreen = ({ route, navigation }) => {
           onPress={handleRegister}
         >
           <Text style={styles.registerButtonText}>
-            {isRegistered ? 'Unregister' : 'Sign Up for Race'}
+            {isRegistered ? t('unregister') : t('signUpForRace')}
           </Text>
         </TouchableOpacity>
       )}
@@ -642,7 +643,7 @@ export const RaceDetailScreen = ({ route, navigation }) => {
           style={[styles.registerButton, { backgroundColor: colors.primary }]}
           onPress={handleMarkComplete}
         >
-          <Text style={styles.registerButtonText}>Mark as Completed</Text>
+          <Text style={styles.registerButtonText}>{t('markAsCompleted')}</Text>
         </TouchableOpacity>
       )}
 
@@ -656,9 +657,9 @@ export const RaceDetailScreen = ({ route, navigation }) => {
         >
           <Text style={styles.chatButtonIcon}>💬</Text>
           <View style={styles.chatButtonText}>
-            <Text style={styles.chatButtonTitle}>Race Chat</Text>
+            <Text style={styles.chatButtonTitle}>{t('raceChat')}</Text>
             <Text style={styles.chatButtonSubtitle}>
-              Connect with {raceGroup.member_count} participants
+              {t('connectWithParticipants').replace('{count}', raceGroup.member_count)}
             </Text>
           </View>
         </TouchableOpacity>
@@ -672,31 +673,31 @@ export const RaceDetailScreen = ({ route, navigation }) => {
       >
         <View style={styles.modalContainer}>
           <View style={[styles.modalContent, { backgroundColor: colors.card }]}>
-            <Text style={[styles.modalTitle, { color: colors.text }]}>Mark Race as Completed</Text>
+            <Text style={[styles.modalTitle, { color: colors.text }]}>{t('markRaceAsCompleted')}</Text>
 
-            <Text style={[styles.inputLabel, { color: colors.textSecondary }]}>Finish Time (optional)</Text>
+            <Text style={[styles.inputLabel, { color: colors.textSecondary }]}>{t('finishTimeOptional')}</Text>
             <TextInput
               style={[styles.input, { backgroundColor: colors.background, color: colors.text, borderColor: colors.border }]}
-              placeholder="e.g. 3:45:30 or 03:45:30"
+              placeholder={t('finishTimePlaceholder')}
               placeholderTextColor={colors.textSecondary}
               value={completionTime}
               onChangeText={setCompletionTime}
             />
 
-            <Text style={[styles.inputLabel, { color: colors.textSecondary }]}>Position (optional)</Text>
+            <Text style={[styles.inputLabel, { color: colors.textSecondary }]}>{t('positionOptional')}</Text>
             <TextInput
               style={[styles.input, { backgroundColor: colors.background, color: colors.text, borderColor: colors.border }]}
-              placeholder="e.g. 42"
+              placeholder={t('positionPlaceholder')}
               placeholderTextColor={colors.textSecondary}
               keyboardType="number-pad"
               value={position}
               onChangeText={setPosition}
             />
 
-            <Text style={[styles.inputLabel, { color: colors.textSecondary }]}>Notes (optional)</Text>
+            <Text style={[styles.inputLabel, { color: colors.textSecondary }]}>{t('notesOptional')}</Text>
             <TextInput
               style={[styles.textArea, { backgroundColor: colors.background, color: colors.text, borderColor: colors.border }]}
-              placeholder="How was the race? Any memorable moments?"
+              placeholder={t('notesPlaceholder')}
               placeholderTextColor={colors.textSecondary}
               multiline
               numberOfLines={3}
@@ -710,7 +711,7 @@ export const RaceDetailScreen = ({ route, navigation }) => {
                 onPress={handlePickCertificate}
               >
                 <Text style={[styles.pickCertificateText, { color: colors.primary }]}>
-                  {certificate ? '✓ Certificate Selected' : '📄 Upload Certificate'}
+                  {certificate ? t('certificateSelectedCheck') : t('uploadCertificateButton')}
                 </Text>
               </TouchableOpacity>
               <TouchableOpacity
@@ -727,7 +728,7 @@ export const RaceDetailScreen = ({ route, navigation }) => {
                 onPress={() => setShowCompletionModal(false)}
                 disabled={submitting}
               >
-                <Text style={styles.modalButtonText}>Cancel</Text>
+                <Text style={styles.modalButtonText}>{t('cancel')}</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 style={[styles.modalButton, { backgroundColor: colors.primary }]}
@@ -737,7 +738,7 @@ export const RaceDetailScreen = ({ route, navigation }) => {
                 {submitting ? (
                   <ActivityIndicator color="#FFFFFF" />
                 ) : (
-                  <Text style={styles.modalButtonText}>Save</Text>
+                  <Text style={styles.modalButtonText}>{t('save')}</Text>
                 )}
               </TouchableOpacity>
             </View>
@@ -749,31 +750,28 @@ export const RaceDetailScreen = ({ route, navigation }) => {
         <View style={styles.modalContainer}>
           <View style={[styles.certificateInfoModalContent, { backgroundColor: colors.card }]}>
             <Text style={[styles.certificateInfoTitle, { color: colors.text }]}>
-              🏆 About Certificates
+              🏆 {t('aboutCertificates')}
             </Text>
             
             <Text style={[styles.certificateInfoText, { color: colors.textSecondary }]}>
-              Upload your official race finisher certificate or results to keep a record of your achievement.
+              {t('certificateUploadDescription')}
             </Text>
 
             <View style={[styles.certificateInfoSection, { backgroundColor: colors.background }]}>
               <Text style={[styles.certificateInfoSectionTitle, { color: colors.primary }]}>
-                What to upload?
+                {t('whatToUpload')}
               </Text>
               <Text style={[styles.certificateInfoSectionText, { color: colors.textSecondary }]}>
-                • Official finisher certificate{'\n'}
-                • Race results screenshot{'\n'}
-                • Timing chip results{'\n'}
-                • Any proof of completion
+                {t('certificateUploadOptions')}
               </Text>
             </View>
 
             <View style={[styles.certificateInfoSection, { backgroundColor: colors.background }]}>
               <Text style={[styles.certificateInfoSectionTitle, { color: colors.primary }]}>
-                Supported formats
+                {t('supportedFormats')}
               </Text>
               <Text style={[styles.certificateInfoSectionText, { color: colors.textSecondary }]}>
-                PDF, JPG, PNG images. Your certificate is stored securely and visible only on your profile.
+                {t('supportedFormatsDescription')}
               </Text>
             </View>
 
@@ -781,7 +779,7 @@ export const RaceDetailScreen = ({ route, navigation }) => {
               style={[styles.certificateInfoCloseButton, { backgroundColor: colors.primary }]}
               onPress={() => setShowCertificateInfoModal(false)}
             >
-              <Text style={styles.certificateInfoCloseButtonText}>Got it!</Text>
+              <Text style={styles.certificateInfoCloseButtonText}>{t('gotIt')}</Text>
             </TouchableOpacity>
           </View>
         </View>

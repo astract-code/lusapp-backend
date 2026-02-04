@@ -14,6 +14,7 @@ import {
 } from 'react-native';
 import { useTheme } from '../context/ThemeContext';
 import { useAuth } from '../context/AuthContext';
+import { useLanguage } from '../context/LanguageContext';
 import { SPACING, FONT_SIZE, BORDER_RADIUS } from '../constants/theme';
 
 import API_URL from '../config/api';
@@ -22,6 +23,7 @@ export const GearListDetailScreen = ({ route, navigation }) => {
   const { groupId, listId, listTitle, listVisibility } = route.params;
   const { colors } = useTheme();
   const { user, token } = useAuth();
+  const { t } = useLanguage();
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showAddModal, setShowAddModal] = useState(false);
@@ -76,7 +78,7 @@ export const GearListDetailScreen = ({ route, navigation }) => {
 
   const addItem = async () => {
     if (!newItemName.trim()) {
-      Alert.alert('Error', 'Please enter an item name');
+      Alert.alert(t('oops'), t('pleaseEnterItemName'));
       return;
     }
 
@@ -100,10 +102,10 @@ export const GearListDetailScreen = ({ route, navigation }) => {
         fetchItems();
       } else {
         const error = await response.json();
-        Alert.alert('Error', error.error || 'Failed to add item');
+        Alert.alert(t('oops'), error.error || t('failedToAddItem'));
       }
     } catch (error) {
-      Alert.alert('Error', 'Failed to add item');
+      Alert.alert(t('oops'), t('failedToAddItem'));
     } finally {
       setAdding(false);
     }
@@ -133,11 +135,11 @@ export const GearListDetailScreen = ({ route, navigation }) => {
         fetchItems();
       } else {
         const error = await response.json();
-        Alert.alert('Error', error.error || 'Failed to update item');
+        Alert.alert(t('oops'), error.error || t('failedToUpdateItem'));
       }
     } catch (error) {
       console.error('Error updating item status:', error);
-      Alert.alert('Error', 'Failed to update item');
+      Alert.alert(t('oops'), t('failedToUpdateItem'));
     }
   };
 
@@ -146,14 +148,14 @@ export const GearListDetailScreen = ({ route, navigation }) => {
       user.id === addedById || userRole === 'owner' || userRole === 'moderator';
 
     if (!canDelete) {
-      Alert.alert('Error', 'You do not have permission to delete this item');
+      Alert.alert(t('oops'), t('noPermissionToDelete'));
       return;
     }
 
-    Alert.alert('Delete Item', 'Are you sure you want to delete this item?', [
-      { text: 'Cancel', style: 'cancel' },
+    Alert.alert(t('deleteItem'), t('deleteItemConfirmation'), [
+      { text: t('cancel'), style: 'cancel' },
       {
-        text: 'Delete',
+        text: t('delete'),
         style: 'destructive',
         onPress: async () => {
           try {
@@ -171,10 +173,10 @@ export const GearListDetailScreen = ({ route, navigation }) => {
               fetchItems();
             } else {
               const error = await response.json();
-              Alert.alert('Error', error.error || 'Failed to delete item');
+              Alert.alert(t('oops'), error.error || t('failedToDeleteItem'));
             }
           } catch (error) {
-            Alert.alert('Error', 'Failed to delete item');
+            Alert.alert(t('oops'), t('failedToDeleteItem'));
           }
         },
       },
@@ -198,7 +200,7 @@ export const GearListDetailScreen = ({ route, navigation }) => {
           message: data.shareText,
         });
       } else {
-        Alert.alert('Error', 'Failed to generate share text');
+        Alert.alert(t('oops'), t('failedToGenerateShareText'));
       }
     } catch (error) {
       if (error.message !== 'User did not share') {
@@ -301,14 +303,14 @@ export const GearListDetailScreen = ({ route, navigation }) => {
           style={[styles.addButton, { backgroundColor: colors.primary }]}
           onPress={() => setShowAddModal(true)}
         >
-          <Text style={styles.addButtonText}>+ Add Item</Text>
+          <Text style={styles.addButtonText}>+ {t('addItem')}</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={[styles.shareButton, { backgroundColor: colors.card, borderColor: colors.border }]}
           onPress={shareList}
         >
           <Text style={styles.shareIcon}>📤</Text>
-          <Text style={[styles.shareButtonText, { color: colors.primary }]}>Share</Text>
+          <Text style={[styles.shareButtonText, { color: colors.primary }]}>{t('share')}</Text>
         </TouchableOpacity>
       </View>
 
@@ -316,10 +318,10 @@ export const GearListDetailScreen = ({ route, navigation }) => {
         <View style={styles.emptyContainer}>
           <Text style={styles.emptyIcon}>📦</Text>
           <Text style={[styles.emptyText, { color: colors.textSecondary }]}>
-            No items yet
+            {t('noItemsYet')}
           </Text>
           <Text style={[styles.emptySubtext, { color: colors.textSecondary }]}>
-            Add items to this gear list
+            {t('addItemsToGearList')}
           </Text>
         </View>
       ) : (
@@ -335,7 +337,7 @@ export const GearListDetailScreen = ({ route, navigation }) => {
         <View style={styles.modalOverlay}>
           <View style={[styles.modalContent, { backgroundColor: colors.card }]}>
             <Text style={[styles.modalTitle, { color: colors.text }]}>
-              Add Gear Item
+              {t('addGearItem')}
             </Text>
 
             <TextInput
@@ -347,7 +349,7 @@ export const GearListDetailScreen = ({ route, navigation }) => {
                   borderColor: colors.border,
                 },
               ]}
-              placeholder="Item name *"
+              placeholder={t('itemNameRequired')}
               placeholderTextColor={colors.textSecondary}
               value={newItemName}
               onChangeText={setNewItemName}
@@ -362,7 +364,7 @@ export const GearListDetailScreen = ({ route, navigation }) => {
                 }}
               >
                 <Text style={[styles.modalButtonText, { color: colors.text }]}>
-                  Cancel
+                  {t('cancel')}
                 </Text>
               </TouchableOpacity>
 
@@ -376,7 +378,7 @@ export const GearListDetailScreen = ({ route, navigation }) => {
                 disabled={adding}
               >
                 <Text style={styles.modalButtonText}>
-                  {adding ? 'Adding...' : 'Add'}
+                  {adding ? t('adding') : t('add')}
                 </Text>
               </TouchableOpacity>
             </View>

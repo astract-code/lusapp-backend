@@ -16,6 +16,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { useFocusEffect } from '@react-navigation/native';
 import { useTheme } from '../context/ThemeContext';
 import { useAuth } from '../context/AuthContext';
+import { useLanguage } from '../context/LanguageContext';
 import { SPACING, FONT_SIZE, BORDER_RADIUS } from '../constants/theme';
 
 import API_URL from '../config/api';
@@ -23,6 +24,7 @@ import API_URL from '../config/api';
 export const GroupChatTab = ({ groupId }) => {
   const { colors } = useTheme();
   const { user: currentUser, token } = useAuth();
+  const { t } = useLanguage();
   const [messages, setMessages] = useState([]);
   const [inputText, setInputText] = useState('');
   const [sending, setSending] = useState(false);
@@ -141,7 +143,7 @@ export const GroupChatTab = ({ groupId }) => {
         
         setMessages(prev => [...prev, {
           ...messageData,
-          sender_name: messageData.sender_name || currentUser?.name || 'Unknown',
+          sender_name: messageData.sender_name || currentUser?.name || t('unknown'),
           sender_avatar: messageData.sender_avatar || currentUser?.avatar || null
         }]);
 
@@ -151,7 +153,7 @@ export const GroupChatTab = ({ groupId }) => {
       } else {
         const errorData = await response.json();
         if (errorData.error) {
-          Alert.alert('Cannot Send Message', errorData.error);
+          Alert.alert(t('cannotSendMessage'), errorData.error);
         }
         setInputText(messageText);
       }
@@ -165,12 +167,12 @@ export const GroupChatTab = ({ groupId }) => {
 
   const deleteMessage = async (messageId) => {
     Alert.alert(
-      'Delete Message',
-      'Are you sure you want to delete this message?',
+      t('deleteMessage'),
+      t('deleteMessageConfirmation'),
       [
-        { text: 'Cancel', style: 'cancel' },
+        { text: t('cancel'), style: 'cancel' },
         {
-          text: 'Delete',
+          text: t('delete'),
           style: 'destructive',
           onPress: async () => {
             try {
@@ -183,7 +185,7 @@ export const GroupChatTab = ({ groupId }) => {
                 setMessages(prev => prev.filter(m => m.id !== messageId));
               } else {
                 const error = await response.json();
-                Alert.alert('Error', error.error || 'Failed to delete message');
+                Alert.alert(t('oops'), error.error || t('failedToDeleteMessage'));
               }
             } catch (error) {
               console.error('Error deleting message:', error);
@@ -206,10 +208,10 @@ export const GroupChatTab = ({ groupId }) => {
     <View style={[styles.pinnedMessageContainer, { backgroundColor: colors.card, borderColor: colors.primary }]}>
       <View style={styles.pinnedHeader}>
         <Ionicons name="pin" size={14} color={colors.primary} />
-        <Text style={[styles.pinnedLabel, { color: colors.primary }]}>Pinned</Text>
+        <Text style={[styles.pinnedLabel, { color: colors.primary }]}>{t('pinned')}</Text>
         {item.pinned_by_name && (
           <Text style={[styles.pinnedBy, { color: colors.textSecondary }]}>
-            by {item.pinned_by_name}
+            {t('by')} {item.pinned_by_name}
           </Text>
         )}
       </View>
@@ -295,7 +297,7 @@ export const GroupChatTab = ({ groupId }) => {
         <View style={[styles.searchContainer, { backgroundColor: colors.card }]}>
           <TextInput
             style={[styles.searchInput, { backgroundColor: colors.background, color: colors.text }]}
-            placeholder="Search messages..."
+            placeholder={t('searchMessages')}
             placeholderTextColor={colors.textSecondary}
             value={searchQuery}
             onChangeText={setSearchQuery}
@@ -312,7 +314,7 @@ export const GroupChatTab = ({ groupId }) => {
         <View style={[styles.searchResultsContainer, { backgroundColor: colors.card }]}>
           <View style={styles.searchResultsHeader}>
             <Text style={[styles.searchResultsTitle, { color: colors.text }]}>
-              {searchResults.length} result{searchResults.length !== 1 ? 's' : ''} for "{searchQuery}"
+              {searchResults.length} {t('resultsFound')} "{searchQuery}"
             </Text>
             <TouchableOpacity onPress={() => setShowSearchResults(false)}>
               <Ionicons name="chevron-up" size={20} color={colors.textSecondary} />
@@ -343,10 +345,10 @@ export const GroupChatTab = ({ groupId }) => {
         <View style={[styles.noResultsContainer, { backgroundColor: colors.card }]}>
           <Ionicons name="search-outline" size={24} color={colors.textSecondary} />
           <Text style={[styles.noResultsText, { color: colors.textSecondary }]}>
-            No messages found for "{searchQuery}"
+            {t('noMessagesFoundFor')} "{searchQuery}"
           </Text>
           <TouchableOpacity onPress={() => setShowSearchResults(false)}>
-            <Text style={[styles.noResultsDismiss, { color: colors.primary }]}>Dismiss</Text>
+            <Text style={[styles.noResultsDismiss, { color: colors.primary }]}>{t('dismiss')}</Text>
           </TouchableOpacity>
         </View>
       )}
@@ -355,7 +357,7 @@ export const GroupChatTab = ({ groupId }) => {
         <View style={[styles.announcementBanner, { backgroundColor: colors.primary + '20' }]}>
           <Ionicons name="megaphone-outline" size={16} color={colors.primary} />
           <Text style={[styles.announcementText, { color: colors.primary }]}>
-            Announcement mode is on - Only admins can post
+            {t('announcementModeOn')}
           </Text>
         </View>
       )}
@@ -377,10 +379,10 @@ export const GroupChatTab = ({ groupId }) => {
         <View style={styles.emptyContainer}>
           <Ionicons name="chatbubbles-outline" size={64} color={colors.textSecondary} />
           <Text style={[styles.emptyText, { color: colors.textSecondary }]}>
-            No messages yet
+            {t('noMessagesYet')}
           </Text>
           <Text style={[styles.emptySubtext, { color: colors.textSecondary }]}>
-            Be the first to send a message
+            {t('beFirstToSendMessage')}
           </Text>
         </View>
       ) : (
@@ -398,7 +400,7 @@ export const GroupChatTab = ({ groupId }) => {
             >
               <Ionicons name="search-outline" size={16} color={colors.textSecondary} />
               <Text style={[styles.searchButtonText, { color: colors.textSecondary }]}>
-                Search messages
+                {t('searchMessages')}
               </Text>
             </TouchableOpacity>
           }
@@ -418,7 +420,7 @@ export const GroupChatTab = ({ groupId }) => {
           ]}
           value={inputText}
           onChangeText={setInputText}
-          placeholder={announcementMode ? "Only admins can post..." : "Type a message..."}
+          placeholder={announcementMode ? t('onlyAdminsCanPost') : t('typeMessage')}
           placeholderTextColor={colors.textSecondary}
           multiline
           maxLength={1000}
@@ -444,7 +446,7 @@ export const GroupChatTab = ({ groupId }) => {
       </View>
 
       <Text style={[styles.hint, { color: colors.textSecondary }]}>
-        Long press your message to delete
+        {t('longPressToDelete')}
       </Text>
     </KeyboardAvoidingView>
   );

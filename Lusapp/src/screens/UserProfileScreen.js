@@ -15,12 +15,14 @@ import { RaceCard } from '../components/RaceCard';
 import { useAppStore } from '../context/AppContext';
 import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
+import { useLanguage } from '../context/LanguageContext';
 import { SPACING, FONT_SIZE, BORDER_RADIUS } from '../constants/theme';
 import API_URL from '../config/api';
 
 export const UserProfileScreen = ({ route, navigation }) => {
   const { userId } = route.params;
   const { colors } = useTheme();
+  const { t } = useLanguage();
   const { user: currentUser, token } = useAuth();
   const { races, toggleFollow } = useAppStore();
   
@@ -89,11 +91,11 @@ export const UserProfileScreen = ({ route, navigation }) => {
         }));
       } else {
         const error = await response.json();
-        Alert.alert('Error', error.error || 'Failed to update follow status');
+        Alert.alert(t('oops'), error.error || t('failedToUpdateFollowStatus'));
       }
     } catch (error) {
       console.error('Error toggling follow:', error);
-      Alert.alert('Error', 'Failed to update follow status');
+      Alert.alert(t('oops'), t('failedToUpdateFollowStatus'));
     }
   };
 
@@ -108,7 +110,7 @@ export const UserProfileScreen = ({ route, navigation }) => {
   if (!user) {
     return (
       <View style={[styles.container, styles.centerContent, { backgroundColor: colors.background }]}>
-        <Text style={[styles.errorText, { color: colors.text }]}>User not found</Text>
+        <Text style={[styles.errorText, { color: colors.text }]}>{t('userNotFound')}</Text>
       </View>
     );
   }
@@ -139,11 +141,11 @@ export const UserProfileScreen = ({ route, navigation }) => {
         <View style={styles.followInfo}>
           <View style={styles.followStat}>
             <Text style={styles.followNumber}>{user.followers?.length || 0}</Text>
-            <Text style={styles.followLabel}>Followers</Text>
+            <Text style={styles.followLabel}>{t('followers')}</Text>
           </View>
           <View style={styles.followStat}>
             <Text style={styles.followNumber}>{user.following?.length || 0}</Text>
-            <Text style={styles.followLabel}>Following</Text>
+            <Text style={styles.followLabel}>{t('following')}</Text>
           </View>
         </View>
 
@@ -160,7 +162,7 @@ export const UserProfileScreen = ({ route, navigation }) => {
                 styles.followButtonText,
                 { color: isFollowing ? colors.text : '#FFFFFF' }
               ]}>
-                {isFollowing ? 'Following' : 'Follow'}
+                {isFollowing ? t('following') : t('follow')}
               </Text>
             </TouchableOpacity>
             
@@ -172,7 +174,7 @@ export const UserProfileScreen = ({ route, navigation }) => {
                 userAvatar: user.avatar
               })}
             >
-              <Text style={styles.messageButtonText}>Message</Text>
+              <Text style={styles.messageButtonText}>{t('message')}</Text>
             </TouchableOpacity>
           </View>
         )}
@@ -181,19 +183,19 @@ export const UserProfileScreen = ({ route, navigation }) => {
       <View style={styles.stats}>
         <StatCard
           icon="🏆"
-          label="Total Races"
+          label={t('totalRaces')}
           value={user.totalRaces}
         />
         <StatCard
           icon="❤️"
-          label="Favorite Sport"
+          label={t('favoriteSport')}
           value={user.favoriteSport}
         />
       </View>
 
       <View style={styles.section}>
         <Text style={[styles.sectionTitle, { color: colors.text }]}>
-          Joined Races ({joinedRaces.length})
+          {t('joinedRaces')} ({joinedRaces.length})
         </Text>
         {joinedRaces.map((race) => (
           <RaceCard
@@ -204,14 +206,14 @@ export const UserProfileScreen = ({ route, navigation }) => {
         ))}
         {joinedRaces.length === 0 && (
           <Text style={[styles.emptyText, { color: colors.textSecondary }]}>
-            No joined races
+            {t('noJoinedRaces')}
           </Text>
         )}
       </View>
 
       <View style={styles.section}>
         <Text style={[styles.sectionTitle, { color: colors.text }]}>
-          Completed Races ({completedRaces.length})
+          {t('completedRaces')} ({completedRaces.length})
         </Text>
         {completedRaces.map((race) => (
           <RaceCard
@@ -222,7 +224,7 @@ export const UserProfileScreen = ({ route, navigation }) => {
         ))}
         {completedRaces.length === 0 && (
           <Text style={[styles.emptyText, { color: colors.textSecondary }]}>
-            No completed races
+            {t('noCompletedRaces')}
           </Text>
         )}
       </View>

@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import { useTheme } from '../context/ThemeContext';
 import { useAuth } from '../context/AuthContext';
+import { useLanguage } from '../context/LanguageContext';
 import { SPACING, FONT_SIZE, BORDER_RADIUS } from '../constants/theme';
 
 import API_URL from '../config/api';
@@ -19,6 +20,7 @@ import API_URL from '../config/api';
 export const GroupGearListsTab = ({ groupId, navigation, userRole }) => {
   const { colors } = useTheme();
   const { token } = useAuth();
+  const { t } = useLanguage();
   const [gearLists, setGearLists] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showCreateModal, setShowCreateModal] = useState(false);
@@ -52,7 +54,7 @@ export const GroupGearListsTab = ({ groupId, navigation, userRole }) => {
 
   const createGearList = async () => {
     if (!newListTitle.trim()) {
-      Alert.alert('Error', 'Please enter a title for the gear list');
+      Alert.alert(t('oops'), t('pleaseEnterGearListTitle'));
       return;
     }
 
@@ -84,10 +86,10 @@ export const GroupGearListsTab = ({ groupId, navigation, userRole }) => {
         });
       } else {
         const error = await response.json();
-        Alert.alert('Error', error.error || 'Failed to create gear list');
+        Alert.alert(t('oops'), error.error || t('failedToCreateGearList'));
       }
     } catch (error) {
-      Alert.alert('Error', 'Failed to create gear list');
+      Alert.alert(t('oops'), t('failedToCreateGearList'));
     } finally {
       setCreating(false);
     }
@@ -115,7 +117,7 @@ export const GroupGearListsTab = ({ groupId, navigation, userRole }) => {
       </View>
       <View style={styles.gearListFooter}>
         <Text style={[styles.itemCount, { color: colors.textSecondary }]}>
-          📦 {item.item_count || 0} {item.item_count === 1 ? 'item' : 'items'}
+          📦 {item.item_count || 0} {item.item_count === 1 ? t('item') : t('items')}
         </Text>
         <Text style={[styles.createdBy, { color: colors.textSecondary }]}>
           by {item.created_by_name}
@@ -140,7 +142,7 @@ export const GroupGearListsTab = ({ groupId, navigation, userRole }) => {
             style={[styles.createButton, { backgroundColor: colors.primary, flex: 1 }]}
             onPress={() => setShowCreateModal(true)}
           >
-            <Text style={styles.createButtonText}>+ New Gear List</Text>
+            <Text style={styles.createButtonText}>+ {t('newGearList')}</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={[styles.infoButton, { backgroundColor: colors.card, borderColor: colors.border }]}
@@ -155,10 +157,10 @@ export const GroupGearListsTab = ({ groupId, navigation, userRole }) => {
         <View style={styles.emptyContainer}>
           <Text style={styles.emptyIcon}>🎒</Text>
           <Text style={[styles.emptyText, { color: colors.textSecondary }]}>
-            No gear lists yet
+            {t('noGearListsYet')}
           </Text>
           <Text style={[styles.emptySubtext, { color: colors.textSecondary }]}>
-            Create a gear list to organize equipment for your races
+            {t('createGearListToOrganize')}
           </Text>
         </View>
       ) : (
@@ -174,7 +176,7 @@ export const GroupGearListsTab = ({ groupId, navigation, userRole }) => {
         <View style={styles.modalOverlay}>
           <View style={[styles.modalContent, { backgroundColor: colors.card }]}>
             <Text style={[styles.modalTitle, { color: colors.text }]}>
-              Create Gear List
+              {t('createGearList')}
             </Text>
 
             <TextInput
@@ -186,7 +188,7 @@ export const GroupGearListsTab = ({ groupId, navigation, userRole }) => {
                   borderColor: colors.border,
                 },
               ]}
-              placeholder="Gear list title *"
+              placeholder={t('gearListTitleRequired')}
               placeholderTextColor={colors.textSecondary}
               value={newListTitle}
               onChangeText={setNewListTitle}
@@ -194,7 +196,7 @@ export const GroupGearListsTab = ({ groupId, navigation, userRole }) => {
 
             <View style={styles.visibilityToggle}>
               <Text style={[styles.toggleLabel, { color: colors.text }]}>
-                List Type:
+                {t('listType')}:
               </Text>
               <View style={styles.toggleButtons}>
                 <TouchableOpacity
@@ -211,7 +213,7 @@ export const GroupGearListsTab = ({ groupId, navigation, userRole }) => {
                       { color: listVisibility === 'collaborative' ? '#FFFFFF' : colors.text },
                     ]}
                   >
-                    👥 Collaborative
+                    👥 {t('collaborative')}
                   </Text>
                 </TouchableOpacity>
                 <TouchableOpacity
@@ -228,7 +230,7 @@ export const GroupGearListsTab = ({ groupId, navigation, userRole }) => {
                       { color: listVisibility === 'personal' ? '#FFFFFF' : colors.text },
                     ]}
                   >
-                    👤 Personal
+                    👤 {t('personal')}
                   </Text>
                 </TouchableOpacity>
               </View>
@@ -243,7 +245,7 @@ export const GroupGearListsTab = ({ groupId, navigation, userRole }) => {
                 }}
               >
                 <Text style={[styles.modalButtonText, { color: colors.text }]}>
-                  Cancel
+                  {t('cancel')}
                 </Text>
               </TouchableOpacity>
 
@@ -257,7 +259,7 @@ export const GroupGearListsTab = ({ groupId, navigation, userRole }) => {
                 disabled={creating}
               >
                 <Text style={styles.modalButtonText}>
-                  {creating ? 'Creating...' : 'Create'}
+                  {creating ? t('creating') : t('create')}
                 </Text>
               </TouchableOpacity>
             </View>
@@ -269,28 +271,28 @@ export const GroupGearListsTab = ({ groupId, navigation, userRole }) => {
         <View style={styles.modalOverlay}>
           <View style={[styles.infoModalContent, { backgroundColor: colors.card }]}>
             <Text style={[styles.infoModalTitle, { color: colors.text }]}>
-              📋 About Gear Lists
+              📋 {t('aboutGearLists')}
             </Text>
             
             <Text style={[styles.infoModalText, { color: colors.textSecondary }]}>
-              Gear lists help you and your group organize equipment for races. Create lists to track what gear is needed and who's bringing what.
+              {t('gearListsDescription')}
             </Text>
 
             <View style={[styles.infoSection, { backgroundColor: colors.background }]}>
               <Text style={[styles.infoSectionTitle, { color: colors.primary }]}>
-                👥 Collaborative Lists
+                👥 {t('collaborativeListsTitle')}
               </Text>
               <Text style={[styles.infoSectionText, { color: colors.textSecondary }]}>
-                Shared lists where all group members can add items, claim them, and mark them complete. Perfect for coordinating team logistics - who's bringing the tent, first aid kit, etc.
+                {t('collaborativeListsDescription')}
               </Text>
             </View>
 
             <View style={[styles.infoSection, { backgroundColor: colors.background }]}>
               <Text style={[styles.infoSectionTitle, { color: colors.primary }]}>
-                👤 Personal Lists
+                👤 {t('personalListsTitle')}
               </Text>
               <Text style={[styles.infoSectionText, { color: colors.textSecondary }]}>
-                Your private checklist. Friends can add items to remind you, but only you can mark items complete. Great for tracking your own race gear.
+                {t('personalListsDescription')}
               </Text>
             </View>
 
@@ -298,7 +300,7 @@ export const GroupGearListsTab = ({ groupId, navigation, userRole }) => {
               style={[styles.infoCloseButton, { backgroundColor: colors.primary }]}
               onPress={() => setShowInfoModal(false)}
             >
-              <Text style={styles.infoCloseButtonText}>Got it!</Text>
+              <Text style={styles.infoCloseButtonText}>{t('gotIt')}</Text>
             </TouchableOpacity>
           </View>
         </View>
