@@ -4,6 +4,7 @@ import { SPACING, BORDER_RADIUS, FONT_SIZE, SPORTS } from '../constants/theme';
 import { useTheme } from '../context/ThemeContext';
 import { useSettings } from '../context/SettingsContext';
 import { getDisplayDistance } from '../utils/distanceHelper';
+import { Icon } from './Icon';
 
 export const RaceCard = ({ race, onPress }) => {
   const { colors } = useTheme();
@@ -40,7 +41,9 @@ export const RaceCard = ({ race, onPress }) => {
     <TouchableOpacity onPress={onPress} style={styles.container} activeOpacity={0.7}>
       <View style={styles.header}>
         <View style={styles.titleContainer}>
-          <Text style={styles.sportIcon}>{sport.icon}</Text>
+          <View style={styles.sportIconContainer}>
+            <Icon name={sport.icon} size={24} color="#10B981" />
+          </View>
           <View style={styles.titleTextContainer}>
             <Text style={styles.title} numberOfLines={2}>{race.name}</Text>
             <Text style={styles.subtitle}>{getRaceSubtitle()}</Text>
@@ -94,8 +97,13 @@ const styles = StyleSheet.create({
     flex: 1,
     marginRight: 12,
   },
-  sportIcon: {
-    fontSize: 28,
+  sportIconContainer: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: 'rgba(16, 185, 129, 0.1)',
+    justifyContent: 'center',
+    alignItems: 'center',
     marginRight: 10,
   },
   titleTextContainer: {

@@ -87,11 +87,15 @@ router.get('/feed', combinedAuthMiddleware, async (req, res) => {
     }));
     
     // Also get recently added races (approved ones from the last 30 days)
+    // EXCLUDE races that already have a race_created post (to avoid duplicates)
     const racesResult = await pool.query(
       `SELECT r.id, r.name, r.sport_category, r.sport_subtype, r.city, r.country, r.date, r.distance, r.created_at
        FROM races r
        WHERE r.approval_status = 'approved' 
        AND r.created_at > NOW() - INTERVAL '30 days'
+       AND NOT EXISTS (
+         SELECT 1 FROM posts p WHERE p.race_id = r.id AND p.type = 'race_created'
+       )
        ORDER BY r.created_at DESC
        LIMIT 20`
     );
