@@ -9,11 +9,14 @@ import {
   Alert,
   ActivityIndicator,
   Linking,
+  Modal,
+  FlatList,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useSettings } from '../context/SettingsContext';
 import { useTheme } from '../context/ThemeContext';
 import { useAuth } from '../context/AuthContext';
+import { useLanguage } from '../context/LanguageContext';
 import { SPACING, TYPOGRAPHY, BORDER_RADIUS, SHADOWS } from '../constants/theme';
 import { Card } from '../components/Card';
 import { API_ENDPOINTS } from '../config/api';
@@ -22,13 +25,20 @@ export const SettingsScreen = ({ navigation }) => {
   const { colors, themeMode, setTheme } = useTheme();
   const { use24HourFormat, useMetric, toggle24HourFormat, toggleDistanceUnit } = useSettings();
   const { token, logout } = useAuth();
+  const { t, language, setLanguage, languages, getCurrentLanguage } = useLanguage();
   const [isDeleting, setIsDeleting] = useState(false);
+  const [showLanguageModal, setShowLanguageModal] = useState(false);
 
   const themeOptions = [
-    { label: 'Light', value: 'light', icon: '☀️' },
-    { label: 'Dark', value: 'dark', icon: '🌙' },
-    { label: 'Auto', value: 'auto', icon: '⚙️' },
+    { label: t('light'), value: 'light', icon: '☀️' },
+    { label: t('dark'), value: 'dark', icon: '🌙' },
+    { label: t('auto'), value: 'auto', icon: '⚙️' },
   ];
+
+  const handleLanguageSelect = (langCode) => {
+    setLanguage(langCode);
+    setShowLanguageModal(false);
+  };
 
   const handleDeleteAccount = () => {
     Alert.alert(
@@ -90,9 +100,24 @@ export const SettingsScreen = ({ navigation }) => {
       </View>
 
       <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
+        {/* Language Selection */}
+        <Card elevation="md" padding="md" style={styles.section}>
+          <Text style={[styles.sectionTitle, { color: colors.text }]}>🌐 {t('language')}</Text>
+          
+          <TouchableOpacity
+            style={[styles.languageSelector, { backgroundColor: colors.surface, borderColor: colors.border }]}
+            onPress={() => setShowLanguageModal(true)}
+          >
+            <Text style={[styles.languageText, { color: colors.text }]}>
+              {getCurrentLanguage().nativeName}
+            </Text>
+            <Text style={[styles.languageArrow, { color: colors.textSecondary }]}>→</Text>
+          </TouchableOpacity>
+        </Card>
+
         {/* Theme Selection */}
         <Card elevation="md" padding="md" style={styles.section}>
-          <Text style={[styles.sectionTitle, { color: colors.text }]}>🎨 Appearance</Text>
+          <Text style={[styles.sectionTitle, { color: colors.text }]}>🎨 {t('settings')}</Text>
           
           <View style={styles.themeOptions}>
             {themeOptions.map((option) => (
@@ -238,6 +263,50 @@ export const SettingsScreen = ({ navigation }) => {
           </Text>
         </Card>
       </ScrollView>
+
+      {/* Language Selection Modal */}
+      <Modal
+        visible={showLanguageModal}
+        animationType="slide"
+        transparent={true}
+        onRequestClose={() => setShowLanguageModal(false)}
+      >
+        <View style={styles.modalOverlay}>
+          <View style={[styles.modalContent, { backgroundColor: colors.card }]}>
+            <View style={styles.modalHeader}>
+              <Text style={[styles.modalTitle, { color: colors.text }]}>{t('language')}</Text>
+              <TouchableOpacity onPress={() => setShowLanguageModal(false)}>
+                <Text style={[styles.modalClose, { color: colors.primary }]}>{t('done')}</Text>
+              </TouchableOpacity>
+            </View>
+            <FlatList
+              data={languages}
+              keyExtractor={(item) => item.code}
+              renderItem={({ item }) => (
+                <TouchableOpacity
+                  style={[
+                    styles.languageItem,
+                    language === item.code && { backgroundColor: colors.primary + '20' },
+                  ]}
+                  onPress={() => handleLanguageSelect(item.code)}
+                >
+                  <View>
+                    <Text style={[styles.languageNative, { color: colors.text }]}>
+                      {item.nativeName}
+                    </Text>
+                    <Text style={[styles.languageEnglish, { color: colors.textSecondary }]}>
+                      {item.name}
+                    </Text>
+                  </View>
+                  {language === item.code && (
+                    <Text style={[styles.languageCheck, { color: colors.primary }]}>✓</Text>
+                  )}
+                </TouchableOpacity>
+              )}
+            />
+          </View>
+        </View>
+      </Modal>
     </SafeAreaView>
   );
 };
@@ -342,5 +411,69 @@ const styles = StyleSheet.create({
     fontSize: TYPOGRAPHY.fontSize.sm,
     textAlign: 'center',
     marginTop: SPACING.md,
+  },
+  languageSelector: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingVertical: SPACING.lg,
+    paddingHorizontal: SPACING.lg,
+    borderRadius: BORDER_RADIUS.md,
+    borderWidth: 1,
+  },
+  languageText: {
+    fontSize: TYPOGRAPHY.fontSize.md,
+    fontWeight: TYPOGRAPHY.fontWeight.semibold,
+  },
+  languageArrow: {
+    fontSize: TYPOGRAPHY.fontSize.lg,
+  },
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    justifyContent: 'flex-end',
+  },
+  modalContent: {
+    maxHeight: '70%',
+    borderTopLeftRadius: BORDER_RADIUS.xl,
+    borderTopRightRadius: BORDER_RADIUS.xl,
+    paddingBottom: SPACING.xl,
+  },
+  modalHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: SPACING.lg,
+    borderBottomWidth: 1,
+    borderBottomColor: 'rgba(0,0,0,0.1)',
+  },
+  modalTitle: {
+    fontSize: TYPOGRAPHY.fontSize.xl,
+    fontWeight: TYPOGRAPHY.fontWeight.bold,
+  },
+  modalClose: {
+    fontSize: TYPOGRAPHY.fontSize.md,
+    fontWeight: TYPOGRAPHY.fontWeight.semibold,
+  },
+  languageItem: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingVertical: SPACING.lg,
+    paddingHorizontal: SPACING.lg,
+    borderBottomWidth: 1,
+    borderBottomColor: 'rgba(0,0,0,0.05)',
+  },
+  languageNative: {
+    fontSize: TYPOGRAPHY.fontSize.md,
+    fontWeight: TYPOGRAPHY.fontWeight.semibold,
+    marginBottom: 2,
+  },
+  languageEnglish: {
+    fontSize: TYPOGRAPHY.fontSize.sm,
+  },
+  languageCheck: {
+    fontSize: TYPOGRAPHY.fontSize.xl,
+    fontWeight: TYPOGRAPHY.fontWeight.bold,
   },
 });

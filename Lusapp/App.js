@@ -6,6 +6,7 @@ import { AuthProvider, useAuth } from './src/context/AuthContext';
 import { SettingsProvider } from './src/context/SettingsContext';
 import { ThemeProvider, useTheme } from './src/context/ThemeContext';
 import { NotificationProvider } from './src/context/NotificationContext';
+import { LanguageProvider } from './src/context/LanguageContext';
 import { OnboardingScreen } from './src/screens/OnboardingScreen';
 import { ForgotPasswordScreen } from './src/screens/ForgotPasswordScreen';
 import { EmailVerificationScreen } from './src/screens/EmailVerificationScreen';
@@ -57,9 +58,11 @@ export default function App() {
     <AuthProvider>
       <ThemeProvider>
         <SettingsProvider>
-          <NotificationProvider>
-            <AppContent />
-          </NotificationProvider>
+          <LanguageProvider>
+            <NotificationProvider>
+              <AppContent />
+            </NotificationProvider>
+          </LanguageProvider>
         </SettingsProvider>
       </ThemeProvider>
     </AuthProvider>
