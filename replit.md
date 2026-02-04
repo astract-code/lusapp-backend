@@ -29,6 +29,18 @@ Preferred communication style: Simple, everyday language.
 
 The frontend is built with React Native (0.81.4) and Expo SDK (~54.0) for cross-platform development. Navigation is handled by React Navigation v7 (bottom tabs + native stack) with deep linking. State management utilizes Zustand v5.0.8 for global state and React Context for authentication, with AsyncStorage for persistent local data. A comprehensive design system supports theming (Light/Dark/Auto), semantic color tokens, and reusable components with spring-based animations.
 
+### Internationalization (i18n)
+
+The app supports 14 languages with a custom translation system:
+- **Supported languages:** English (en), Spanish (es), Basque/Euskera (eu), Chinese (zh), French (fr), Catalan (ca), German (de), Italian (it), Hindi (hi), Japanese (ja), Korean (ko), Turkish (tr), Dutch (nl), Danish (da)
+- **Implementation:** LanguageContext provides `t()` translation function and language state management
+- **Persistence:** User's language preference is stored in AsyncStorage
+- **Files:**
+  - `Lusapp/src/i18n/translations.js` - All translations and LANGUAGES array
+  - `Lusapp/src/context/LanguageContext.js` - Translation context provider
+- **Usage:** Components use `const { t } = useLanguage()` and call `t('keyName')` for translations
+- **Settings:** Language selector available in Settings screen showing languages in their native names
+
 ### Design System (2024/2025 Athletic Theme)
 
 **Color Palette:**
