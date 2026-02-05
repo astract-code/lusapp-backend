@@ -21,26 +21,48 @@ const storage = multer.memoryStorage();
 
 const upload = multer({ 
   storage: storage,
-  limits: { fileSize: 5 * 1024 * 1024 },
+  limits: { fileSize: 10 * 1024 * 1024 },
   fileFilter: (req, file, cb) => {
-    const allowedTypes = /jpeg|jpg|png|gif/;
+    console.log('[AVATAR UPLOAD] File filter - name:', file.originalname, 'type:', file.mimetype);
+    const allowedTypes = /jpeg|jpg|png|gif|heic|heif/;
     const extname = allowedTypes.test(file.originalname.toLowerCase());
-    const mimetype = allowedTypes.test(file.mimetype);
+    const mimetype = file.mimetype.startsWith('image/');
     
-    if (mimetype && extname) {
+    if (mimetype || extname) {
       return cb(null, true);
     } else {
-      cb(new Error('Only image files are allowed (jpeg, jpg, png, gif)'));
+      console.log('[AVATAR UPLOAD] File rejected - not an image');
+      cb(new Error('Only image files are allowed'));
     }
   }
 });
 
-router.post('/avatar', combinedAuthMiddleware, upload.single('avatar'), async (req, res) => {
+const handleMulterError = (err, req, res, next) => {
+  if (err instanceof multer.MulterError) {
+    console.log('[AVATAR UPLOAD] Multer error:', err.code, err.message);
+    if (err.code === 'LIMIT_FILE_SIZE') {
+      return res.status(400).json({ error: 'File too large. Maximum size is 10MB' });
+    }
+    return res.status(400).json({ error: err.message });
+  } else if (err) {
+    console.log('[AVATAR UPLOAD] Upload error:', err.message);
+    return res.status(400).json({ error: err.message });
+  }
+  next();
+};
+
+router.post('/avatar', combinedAuthMiddleware, upload.single('avatar'), handleMulterError, async (req, res) => {
+  console.log('[AVATAR UPLOAD] Request received for user:', req.user?.userId);
+  console.log('[AVATAR UPLOAD] File received:', req.file ? `${req.file.originalname} (${req.file.size} bytes)` : 'NO FILE');
+  
   try {
     if (!req.file) {
+      console.log('[AVATAR UPLOAD] No file in request');
       return res.status(400).json({ error: 'No file uploaded' });
     }
 
+    console.log('[AVATAR UPLOAD] Starting Cloudinary upload...');
+    
     const uploadStream = cloudinary.uploader.upload_stream(
       {
         folder: 'lusapp/avatars',
@@ -51,9 +73,11 @@ router.post('/avatar', combinedAuthMiddleware, upload.single('avatar'), async (r
       },
       async (error, result) => {
         if (error) {
-          console.error('Cloudinary upload error:', error);
+          console.error('[AVATAR UPLOAD] Cloudinary error:', error.message || error);
           return res.status(500).json({ error: 'Failed to upload avatar to cloud storage' });
         }
+
+        console.log('[AVATAR UPLOAD] Cloudinary success:', result.secure_url);
 
         try {
           const avatarUrl = result.secure_url;
@@ -64,15 +88,17 @@ router.post('/avatar', combinedAuthMiddleware, upload.single('avatar'), async (r
           );
 
           if (dbResult.rows.length === 0) {
+            console.log('[AVATAR UPLOAD] User not found in database:', req.user.userId);
             return res.status(404).json({ error: 'User not found' });
           }
 
+          console.log('[AVATAR UPLOAD] Database updated successfully for user:', req.user.userId);
           res.json({ 
             avatar: avatarUrl,
             message: 'Avatar uploaded successfully' 
           });
         } catch (dbError) {
-          console.error('Database update error:', dbError);
+          console.error('[AVATAR UPLOAD] Database error:', dbError.message);
           res.status(500).json({ error: 'Failed to update user avatar' });
         }
       }
@@ -81,7 +107,7 @@ router.post('/avatar', combinedAuthMiddleware, upload.single('avatar'), async (r
     uploadStream.end(req.file.buffer);
 
   } catch (error) {
-    console.error('Avatar upload error:', error);
+    console.error('[AVATAR UPLOAD] Error:', error.message);
     res.status(500).json({ error: 'Failed to upload avatar' });
   }
 });
