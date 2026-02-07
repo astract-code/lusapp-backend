@@ -19,6 +19,32 @@ const notificationsRoutes = require('./routes/notifications');
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+const VALID_SPORT_TAXONOMY = {
+  Running: ['5K', '10K', 'Half Marathon', 'Marathon', 'Ultra Marathon', 'Trail Running', 'Cross Country', 'Custom Distance'],
+  Triathlon: ['Sprint', 'Olympic', 'Half Ironman', 'Ironman', 'Aquathlon', 'Duathlon', 'Custom Distance'],
+  Cycling: ['Criterium', 'Gran Fondo', 'Mountain Biking', 'Road Race', 'Custom Distance'],
+  Fitness: ['Spartan Race', 'HYROX', 'Obstacle Course', 'CrossFit', 'Bootcamp', 'Custom Distance'],
+  Swimming: ['Open Water Swim', 'Pool Competition', 'Custom Distance'],
+  Custom: ['Custom Event']
+};
+const VALID_SPORT_CATEGORIES = Object.keys(VALID_SPORT_TAXONOMY);
+
+function validateSportFields(sport_category, sport_subtype) {
+  if (!sport_category) {
+    return { valid: false, error: 'sport_category is required' };
+  }
+  if (!VALID_SPORT_CATEGORIES.includes(sport_category)) {
+    return { valid: false, error: `Invalid sport_category: "${sport_category}". Must be one of: ${VALID_SPORT_CATEGORIES.join(', ')}` };
+  }
+  if (!sport_subtype) {
+    return { valid: false, error: 'sport_subtype is required' };
+  }
+  if (!VALID_SPORT_TAXONOMY[sport_category].includes(sport_subtype)) {
+    return { valid: false, error: `Invalid sport_subtype: "${sport_subtype}" for category "${sport_category}". Must be one of: ${VALID_SPORT_TAXONOMY[sport_category].join(', ')}` };
+  }
+  return { valid: true };
+}
+
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
   ssl: { rejectUnauthorized: false },
@@ -283,6 +309,11 @@ app.post('/api/races', noCors, csrfProtection, adminAuth, async (req, res) => {
   try {
     const { name, sport, sport_category, sport_subtype, city, country, continent, date, start_time, distance, description, participants } = req.body;
     
+    const sportValidation = validateSportFields(sport_category, sport_subtype);
+    if (!sportValidation.valid) {
+      return res.status(400).json({ error: sportValidation.error });
+    }
+    
     // Check for duplicates: same name + date + sport/distance
     // Use IS NOT DISTINCT FROM for NULL-safe comparison
     const duplicateCheck = await pool.query(
@@ -332,6 +363,12 @@ app.post('/api/races/user-create', verifyToken, async (req, res) => {
     if (!name || !date) {
       console.log('❌ [USER RACE CREATE] Validation failed: Missing name or date');
       return res.status(400).json({ error: 'Name and date are required' });
+    }
+    
+    const sportValidation = validateSportFields(sport_category, sport_subtype);
+    if (!sportValidation.valid) {
+      console.log('❌ [USER RACE CREATE] Sport validation failed:', sportValidation.error);
+      return res.status(400).json({ error: sportValidation.error });
     }
     
     // Check for duplicates: same name + date + sport/distance
@@ -390,6 +427,11 @@ app.put('/api/races/:id', noCors, csrfProtection, adminAuth, async (req, res) =>
   try {
     const { id } = req.params;
     const { name, sport, sport_category, sport_subtype, city, country, continent, date, start_time, distance, description, participants } = req.body;
+    
+    const sportValidation = validateSportFields(sport_category, sport_subtype);
+    if (!sportValidation.valid) {
+      return res.status(400).json({ error: sportValidation.error });
+    }
     
     console.log(`📝 [ADMIN RACE UPDATE] Updating race ${id} by ${req.auth.user || 'admin'}`);
     
@@ -525,8 +567,19 @@ app.post('/api/races/csv-upload', noCors, csrfProtection, adminAuth, csvUpload.s
           try {
             const name = row.name || row.eventName || row['Event Name'];
             const sport = row.sport || row.sportType || row['Sport Type'] || 'Other';
-            const sport_category = row.sport_category || row.sportCategory || null;
-            const sport_subtype = row.sport_subtype || row.sportSubtype || null;
+            let sport_category = row.sport_category || row.sportCategory || null;
+            let sport_subtype = row.sport_subtype || row.sportSubtype || null;
+            
+            if (!sport_category || !VALID_SPORT_CATEGORIES.includes(sport_category)) {
+              console.warn(`Skipping row with invalid sport_category: "${name}" - category: "${sport_category}"`);
+              skipped++;
+              continue;
+            }
+            if (!sport_subtype || !VALID_SPORT_TAXONOMY[sport_category].includes(sport_subtype)) {
+              console.warn(`Skipping row with invalid sport_subtype: "${name}" - subtype: "${sport_subtype}" for category: "${sport_category}"`);
+              skipped++;
+              continue;
+            }
             const city = row.city || row.location;
             const country = row.country;
             const continent = row.continent;

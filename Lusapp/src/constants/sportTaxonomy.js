@@ -28,6 +28,7 @@ export const SPORT_TAXONOMY = {
 export const SPORT_CATEGORIES = Object.keys(SPORT_TAXONOMY);
 
 export const normalizeLegacySport = (sportString) => {
+  if (!sportString) return { category: null, subtype: null };
   const sportLower = sportString.toLowerCase().trim();
   
   const LEGACY_MAP = {
