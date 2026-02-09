@@ -346,8 +346,8 @@ app.post('/api/races', noCors, csrfProtection, adminAuth, async (req, res) => {
   }
 });
 
-// User-friendly race creation endpoint (Firebase auth)
-const { verifyFirebaseToken: verifyToken } = require('./middleware/firebaseAuth');
+// User-friendly race creation endpoint (Firebase auth + social auth)
+const { combinedAuthMiddleware: verifyToken } = require('./middleware/authMiddleware');
 
 app.post('/api/races/user-create', verifyToken, async (req, res) => {
   try {
