@@ -1,0 +1,11 @@
+name,sport,sport_category,sport_subtype,city,country,continent,date,start_time,distance,description,participants
+EVA Air Brisbane Marathon,Running,Road Running,Marathon,Brisbane,Australia,Oceania,2026-06-07,06:00,42.2km,Scenic two-lap marathon through Brisbane CBD, Story Bridge, Kangaroo Point Cliffs, New Farm, and City Botanic Gardens finish,8000
+EVA Air Brisbane Half Marathon,Running,Road Running,Half Marathon,Brisbane,Australia,Oceania,2026-06-07,06:00,21.1km,Half marathon on the same iconic city course as the full marathon with river views and urban landmarks,10000
+EVA Air Brisbane 10km,Running,Road Running,10km,Brisbane,Australia,Oceania,2026-06-07,07:00,10km,Fast 10km option in the Brisbane Marathon Festival weekend with closed roads and festive atmosphere,6000
+EVA Air Brisbane 5km,Running,Road Running,5km,Brisbane,Australia,Oceania,2026-06-07,07:30,5km,Family-friendly fun run/walk as part of the major marathon event,4000
+Run The River Brisbane Ultra - Midnight Marathon,Running,Road Running,Marathon,Brisbane,Australia,Oceania,2026-05-09,00:00,42.2km,Nighttime marathon on scenic 5km riverside loops starting from Queensland Maritime Museum toward Story Bridge,500
+Run The River Brisbane Ultra - 100km Solo,Running,Road Running,Ultra,Brisbane,Australia,Oceania,2026-05-08,18:00,100km,Multi-lap ultra along Brisbane River paths with solo and team options,300
+Run Army Brisbane,Running,Road Running,Fun Run,Brisbane,Australia,Oceania,2026-03-29,07:00,Variable,Charity run supporting service and rescue community with 2.4km, 5km, 10km, and Chiefs Challenge options,2000
+Pinnacles Classic,Running,Road Running,Short,Brisbane,Australia,Oceania,2026-03-08,07:00,Variable,Community road run in Brisbane City with multiple distances and scenic urban course,500
+International Women's Day Fun Run,Running,Road Running,Fun Run,Brisbane,Australia,Oceania,2026-03-08,08:00,Variable,Celebratory fun run for International Women's Day in Brisbane with large participation and empowering vibe,10000
+Triathlon Pink Brisbane,Triathlon,Standard Distance,Sprint,Brisbane,Australia,Oceania,2026-10-25,07:00,Sprint,Women-focused sprint tri at Sleeman Sports Complex with pool swim, closed roads bike/run; beginner-friendly,1500

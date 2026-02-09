@@ -1,0 +1,21 @@
+name,sport,sport_category,sport_subtype,city,country,continent,date,start_time,distance,description,participants
+NN Marathon Rotterdam,Running,Road Running,Marathon,Rotterdam,Netherlands,Europe,2026-04-12,09:00,42.2km,Fast flat urban marathon starting at Erasmus Bridge through historic Rotterdam and finishing in city center; includes Dutch Championships,25000
+NN Rotterdam 1/4 Marathon,Running,Road Running,Quarter Marathon,Rotterdam,Netherlands,Europe,2026-04-12,09:00,10.55km,Shorter quarter-distance run on the marathon course with scenic river and bridge views,5000
+NN Rotterdam City Run,Running,Road Running,Short,Rotterdam,Netherlands,Europe,2026-04-11,Variable,4.2km,Fun city-center loop run on Saturday as part of the marathon weekend,3000
+Enschede Marathon,Running,Road Running,Marathon,Enschede,Netherlands,Europe,2026-04-12,09:00,42.2km,Historic marathon in eastern Netherlands with flat course through Twente region parks and streets,4000
+Leiden Marathon,Running,Road Running,Marathon,Leiden,Netherlands,Europe,2026-05-09,08:00,42.2km,Scenic marathon in historic Leiden with canal views, half and shorter options available,3000
+dsm-firmenich LCW Maastricht Marathon,Running,Road Running,Marathon,Maastricht,Netherlands,Europe,2026-05-24,08:00,42.2km,Part of Long Course Weekend with marathon through southern hills and city; includes half and shorter,2000
+Long Course Weekend Maastricht - Half Ironman,Triathlon,Half Ironman,70.3,Maastricht,Netherlands,Europe,2026-05-22,Variable,70.3,Three-day tri event: swim 2km, bike 100km, run half marathon over weekend format,1500
+IRONMAN 70.3 Westfriesland,Triathlon,Half Ironman,70.3,Hoorn,Netherlands,Europe,2026-06-21,07:00,70.3,Flat fast half Ironman with swim in historic Hoorn harbor, bike through Dutch countryside, run along dikes,2500
+ASML Marathon Eindhoven,Running,Road Running,Marathon,Eindhoven,Netherlands,Europe,2026-10-11,09:00,42.2km,Flat tech-city marathon through Eindhoven parks and urban areas with strong crowd support,10000
+TCS Amsterdam Marathon,Running,Road Running,Marathon,Amsterdam,Netherlands,Europe,2026-10-18,09:30,42.2km,World Athletics Platinum Label fast marathon starting/finishing at Olympic Stadium through city canals and Vondelpark,35000
+TCS Amsterdam Half Marathon,Running,Road Running,Half Marathon,Amsterdam,Netherlands,Europe,2026-10-18,09:30,21.1km,Accompanying half on the marathon weekend with iconic Amsterdam route,20000
+TCS Amsterdam 7.5km,Running,Road Running,Short,Amsterdam,Netherlands,Europe,2026-10-17,Variable,7.5km,Shorter fun run on Saturday before the main marathon day,5000
+KPMG Lentemarathon Amstelveen,Running,Road Running,Marathon,Amstelveen,Netherlands,Europe,2026-03-15,09:00,42.2km,Spring marathon near Amsterdam with flat course and green suburban paths,3000
+20 van Alphen,Running,Road Running,Half Marathon,Alphen aan den Rijn,Netherlands,Europe,2026-03-01,10:00,21.1km,Classic fast half marathon with 10km and shorter distances in central Netherlands,8000
+Berenloop Terschelling Marathon,Running,Road Running,Marathon,Terschelling,Netherlands,Europe,2026-11-??,09:00,42.2km,Island marathon on Wadden Sea island with sandy paths and coastal scenery,1000
+Haarlem Urban Trail,Running,Trail Running,Urban Trail,Haarlem,Netherlands,Europe,2026-??-??,09:00,10km,Urban trail run exploring Haarlem streets, parks, and historic sites,2000
+Egmond Halve Marathon (recurring post-winter),Running,Road Running,Half Marathon,Egmond aan Zee,Netherlands,Europe,2026-??-??,11:00,21.1km,Coastal half with beach and dune sections north of Amsterdam,10000
+Ultra Blue Island Trail (Azores influence but NL calendars),Running,Trail Running,Ultra,Variable,Netherlands,Europe,2026-??-??,06:00,Variable,Trail ultra with elevation in Dutch landscapes or similar series,500
+4Daagse Nijmegen Marches (running/walking hybrid),Running,Road Running,Long Distance,Nijmegen,Netherlands,Europe,2026-07-21,Variable,Variable,World's largest multi-day walking/running event over 4 days (30-50km/day),45000
+Oh Meu Deus by UTMB (central NL trails),Running,Trail Running,Ultra Trail,Central Netherlands,Netherlands,Europe,2026-??-??,06:00,Variable,UTMB-indexed trail ultra series in hilly areas,1500

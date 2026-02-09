@@ -1,0 +1,21 @@
+name,sport,sport_category,sport_subtype,city,country,continent,date,start_time,distance,description,participants
+Copenhagen Marathon,Running,Road Running,Marathon,Copenhagen,Denmark,Europe,2026-05-10,09:30,42.2km,Classic flat urban marathon through Copenhagen landmarks like Nyhavn, Little Mermaid, and Fælledparken; hosts Danish Marathon Championships,10000
+World Athletics Road Running Championships Copenhagen 26 - Half Marathon,Running,Road Running,Half Marathon,Copenhagen,Denmark,Europe,2026-09-20,Variable,21.1km,Elite World Championships half marathon on fast city course; public entry races may be available,Elite + spectators
+World Athletics Road Running Championships Copenhagen 26 - 5km,Running,Road Running,5km,Copenhagen,Denmark,Europe,2026-09-19,Variable,5km,World Championships 5km event in central Copenhagen streets,Elite + public options
+World Athletics Road Running Championships Copenhagen 26 - One Mile,Running,Road Running,Short,Copenhagen,Denmark,Europe,2026-09-19,Variable,1 mile,World Championships one-mile race with public sign-up opportunities,Elite + participants
+BESTSELLER Aarhus City Half Marathon,Running,Road Running,Half Marathon,Aarhus,Denmark,Europe,2026-06-14,09:00,21.1km,Entertaining half marathon with 50+ hotspots, music, and cheering crowds through Aarhus city center,12000
+IRONMAN Copenhagen,Triathlon,Long Distance,Full Ironman,Copenhagen,Denmark,Europe,2026-08-16,07:00,Full Ironman,Full-distance tri with 3.8km bay swim, 180km rolling bike in North Zealand, flat 42.2km run past landmarks,2500
+Odense City Half Marathon,Running,Road Running,Half Marathon,Odense,Denmark,Europe,2026-05-31,09:00,21.1km,Scenic half in Hans Christian Andersen's hometown with 5km/10km options and family vibe,5000
+Fynske Bank De 3 Broer,Running,Road Running,Half Marathon,Odense,Denmark,Europe,2026-??-??,09:00,21.1km,Popular bridge-crossing half marathon in Funen region with flat fast course,4000
+Aalborg Brutal Marathon,Running,Road Running,Marathon,Aalborg,Denmark,Europe,2026-??-??,08:00,42.2km,Challenging "brutal" marathon in northern Denmark with urban and park sections,2000
+The Royal Copenhagen City Half,Running,Road Running,Half Marathon,Copenhagen,Denmark,Europe,2026-??-??,09:00,21.1km,Royal-themed half through Copenhagen's historic and royal areas,8000
+Fyn Ultra,Running,Trail Running,Ultra,Fyn,Denmark,Europe,2026-??-??,06:00,Variable,Ultra trail event on Funen island with forested and coastal paths, multiple distances,600
+Loberen Skovmarathon,Running,Road Running,Marathon,Hillerød,Denmark,Europe,2026-10-03,08:00,42.2km,Forest-focused marathon in northern Zealand with scenic wooded routes,1500
+H.C. Andersen Marathon,Running,Road Running,Marathon,Odense,Denmark,Europe,2026-11-01,08:00,42.2km,Themed marathon in Odense celebrating fairy-tale author with cultural elements,3000
+CPH Half (related public races),Running,Road Running,Half Marathon,Copenhagen,Denmark,Europe,2026-09-??,Variable,21.1km,Public access or associated runs around World Championships half weekend,10000
+4:18:4 Copenhagen (sprint/olympic tri),Triathlon,Standard Distance,Olympic,Copenhagen,Denmark,Europe,2026-06-19,07:00,Olympic,Olympic-distance tri in Copenhagen area with swim-bike-run format,1000
+Aabenraa Mountain Marathon,Running,Road Running,Marathon,Aabenraa,Denmark,Europe,2026-??-??,08:00,42.2km,Hilly "mountain" marathon in southern Denmark despite flat country reputation,1000
+Hans Christian Andersen Half Marathon,Running,Road Running,Half Marathon,Odense,Denmark,Europe,2026-??-??,09:00,21.1km,Half marathon version in Odense with fairy-tale theme and city sights,4000
+Elsinore Triathlon (4:18:4 series),Triathlon,Standard Distance,Olympic,Helsingør,Denmark,Europe,2026-??-??,07:00,Olympic,Recurring Olympic tri near Kronborg Castle with coastal elements,800
+Copenhagen 5km Fun Run (associated),Running,Road Running,5km,Copenhagen,Denmark,Europe,2026-09-19,Variable,5km,Fun/short run tied to World Championships weekend in city center,5000
+Aarhus Motion 11.5km,Running,Road Running,Short,Aarhus,Denmark,Europe,2026-06-14,09:00,11.5km,Shorter distance option in Aarhus City Half event with entertainment hotspots,3000

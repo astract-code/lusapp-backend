@@ -1,0 +1,21 @@
+name,sport,sport_category,sport_subtype,city,country,continent,date,start_time,distance,description,participants
+EDP Lisbon Marathon,Running,Road Running,Marathon,Lisbon,Portugal,Europe,2026-10-10,08:00,42.2km,Scenic point-to-point marathon from Carcavelos along the Tagus River and Atlantic coast to iconic Praça do Comércio finish,20000
+Hyundai Half Marathon (Lisbon),Running,Road Running,Half Marathon,Lisbon,Portugal,Europe,2026-10-11,09:20,21.1km,Fast half marathon starting near Vasco da Gama Bridge with urban and river views,30000
+EDP 8K (Lisbon),Running,Road Running,Short,Lisbon,Portugal,Europe,2026-10-11,09:20,8km,Shorter fun run option in the Lisbon marathon weekend ending in historic city center,10000
+EDP Porto Marathon,Running,Road Running,Marathon,Porto,Portugal,Europe,2026-11-08,08:00,42.2km,Iconic northern Portugal marathon through Porto's historic streets, bridges, and Douro River scenery,15000
+Maratona da Europa - Aveiro,Running,Road Running,Marathon,Aveiro,Portugal,Europe,2026-04-26,08:00,42.2km,Scenic "Europe Marathon" in coastal Aveiro with flat course and canal views,5000
+Lisbon Eco Marathon,Running,Road Running,Marathon,Lisbon,Portugal,Europe,2026-04-12,08:00,42.2km,Eco-friendly marathon in Lisbon with sustainable focus and urban landmarks,4000
+IRONMAN Portugal-Cascais,Triathlon,Long Distance,Full Ironman,Cascais,Portugal,Europe,2026-10-17,07:00,Full Ironman,Full-distance tri with Atlantic swim, rolling coastal bike, and run through Cascais and Sintra hills,2500
+IRONMAN 70.3 Cascais Portugal,Triathlon,Half Ironman,70.3,Cascais,Portugal,Europe,2026-10-17,06:30,70.3,Half Ironman on the same weekend with ocean swim and scenic Portuguese Riviera course,3000
+EDP Lisbon Half Marathon (recurring spring edition),Running,Road Running,Half Marathon,Lisbon,Portugal,Europe,2026-03-08,09:30,21.1km,One of the world's fastest half marathons along the Tagus River with massive field,30000
+Óbidos Half Marathon,Running,Road Running,Half Marathon,Óbidos,Portugal,Europe,2026-??-??,08:00,21.1km,Medieval walled town half marathon with scenic castle views and rolling hills,5000
+Corrida de Santo António,Running,Road Running,Fun Run,Lisbon,Portugal,Europe,2026-06-??,08:00,Variable,Popular Lisbon charity/fun run in June with 10km and shorter options,10000
+Cascais Half Marathon (recurring),Running,Road Running,Half Marathon,Cascais,Portugal,Europe,2026-??-??,08:00,21.1km,Coastal half marathon along the Portuguese Riviera with ocean breezes,8000
+Oh Meu Deus by UTMB (main event),Running,Trail Running,Ultra Trail,Central Portugal,Portugal,Europe,2026-??-??,06:00,Variable,UTMB-indexed trail ultra series in central Portugal mountains with multiple distances,2000
+Ultra Blue Island by Azores Trail Run (115km),Running,Trail Running,Ultra Trail,Faial Island (Azores),Portugal,Europe,2026-05-??,Variable,115km ultra trail across volcanic landscapes in the Azores archipelago,500
+Povoação Trail (50km),Running,Trail Running,Ultra Trail,São Miguel (Azores),Portugal,Europe,2026-03-15,06:00,50km,Trail ultra on São Miguel Island with forest paths, rivers, and volcanic terrain,600
+Madeira Island Ultra Trail (recurring),Running,Trail Running,Ultra Trail,Madeira,Portugal,Europe,2026-??-??,06:00,Variable,Challenging ultra trail series on Madeira with steep climbs and ocean views,1000
+Corrida dos Namorados,Running,Road Running,Fun Run,Multiple cities,Portugal,Europe,2026-02-??,09:00,Variable,Valentine's-themed fun run/walk across Portugal with romantic vibes,5000
+Carnaval Run,Running,Road Running,Fun Run,Multiple,Portugal,Europe,2026-02-??,09:00,Variable,Festive Carnival-themed run with costumes and shorter distances,3000
+Terra de Gigantes,Running,Trail Running,Ultra,Serra da Estrela,Portugal,Europe,2026-01-??,Variable,303km ultra in Portugal's highest mountains (multi-day),200
+Douro Vinhateiro Half Marathon,Running,Road Running,Half Marathon,Douro Valley,Portugal,Europe,2026-??-??,08:00,21.1km,Scenic half through UNESCO Douro wine region vineyards and river views,4000

@@ -1,0 +1,11 @@
+name,sport,sport_category,sport_subtype,city,country,continent,date,start_time,distance,description,participants
+TCS Sydney Marathon,Running,Road Running,Marathon,Sydney,Australia,Oceania,2026-08-30,06:00,42.2km,Abbott World Marathon Major with iconic course crossing Sydney Harbour Bridge, through Royal Botanic Garden, finishing at Sydney Opera House,33000
+TCS Sydney Marathon 10km,Running,Road Running,10km,Sydney,Australia,Oceania,2026-08-30,07:00,10km,Shorter fast 10km option in the Sydney Marathon festival weekend with city landmarks and crowd energy,10000
+TCS Sydney Marathon 5km/3.1mi,Running,Road Running,5km,Sydney,Australia,Oceania,2026-08-30,08:00,5km,Family-friendly fun run/walk as part of the major marathon event,5000
+Raging Waters Running Festival,Running,Road Running,Fun Run,Sydney (Prospect),Australia,Oceania,2026-03-15,07:00,Variable,Multi-distance running festival at Raging Waters waterpark with family activities and scenic park paths,1000
+Run2Cure Sydney,Running,Road Running,Charity Run,Sydney,Australia,Oceania,2026-03-29,08:00,Variable,Charity-focused run/walk event supporting medical research with 5km/10km options and community vibe,800
+MS Walk Run + Roll Sydney,Running,Road Running,Charity Run,Sydney,Australia,Oceania,2026-04-19,08:00,Variable,Multiple sclerosis awareness event with walk/run distances along Sydney paths,3000
+Memory Walk & Jog Sydney,Running,Road Running,Charity Run,Sydney,Australia,Oceania,2026-05-24,08:00,Variable,Dementia Australia fundraiser with fun run/walk options in scenic Sydney locations,4000
+Sri Chinmoy Centennial Park Half Marathon,Running,Road Running,Half Marathon,Sydney,Australia,Oceania,2026-04-06,07:00,21.1km,Part of Sri Chinmoy Sydney Series: scenic half marathon in Centennial Park with 7km/4km options,1500
+IRONMAN 70.3 Western Sydney,Triathlon,Half Ironman,70.3,Sydney (Penrith),Australia,Oceania,2026-05-03,07:00,70.3,Lake swim, flat fast bike, and run course in Western Sydney with high-energy atmosphere,2000
+Panthers Tri Club Triathlon & Duathlon March,Triathlon,Standard Distance,Sprint,Sydney (Penrith),Australia,Oceania,2026-03-08,07:00,Sprint,Local sprint tri/duathlon at Panthers venue with enticer/junior options and club community focus,800

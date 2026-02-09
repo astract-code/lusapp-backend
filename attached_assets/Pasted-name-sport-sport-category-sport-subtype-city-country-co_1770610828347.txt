@@ -1,0 +1,11 @@
+name,sport,sport_category,sport_subtype,city,country,continent,date,start_time,distance,description,participants
+Cairns Airport IRONMAN Cairns,Triathlon,Long Distance,Full Ironman,Cairns,Australia,Oceania,2026-06-14,07:00,Full Ironman,Iconic full-distance triathlon with swim in Trinity Inlet, challenging bike through tropical roads, and run along the Esplanade boardwalk,2500
+Cairns Airport IRONMAN 70.3 Cairns,Triathlon,Half Ironman,70.3,Cairns,Australia,Oceania,2026-06-14,06:35,70.3,Half Ironman distance with warm-water swim at Palm Cove, scenic coastal bike to Port Douglas direction, and flat run in Cairns CBD,3000
+IRONMAN Cairns Fun Run,Running,Road Running,Fun Run,Cairns,Australia,Oceania,2026-06-12,07:35,5km,Charity fun run/walk on the Cairns Esplanade as part of IRONMAN festival week, filled with community energy and laughs,1000
+IRONKIDS Cairns,Running,Road Running,Children,Cairns,Australia,Oceania,2026-06-13,08:00,Variable,Kids tri/run event for juniors during IRONMAN week with short swim-bike-run or run-only options,800
+7Cairns Marathon,Running,Road Running,Marathon,Cairns,Australia,Oceania,2026-07-12,05:45,42.2km,Tropical marathon starting/ending at Fogarty Park with scenic Esplanade, waterfront, and urban paths in humid North Queensland conditions,4000
+McDonald's Half Marathon Cairns,Running,Road Running,Half Marathon,Cairns,Australia,Oceania,2026-07-12,05:45,21.1km,Fast half marathon on the same tropical course as the full, with early start to beat the heat and crowd support,6000
+7Cairns Marathon 10km,Running,Road Running,10km,Cairns,Australia,Oceania,2026-07-12,07:00,10km,Popular 10km option in the Cairns Marathon Festival weekend along the iconic Esplanade and city foreshore,3000
+7Cairns Marathon 5km,Running,Road Running,5km,Cairns,Australia,Oceania,2026-07-12,07:30,5km,Family-friendly fun run/walk as part of the marathon festival, relaxed tropical vibe,2000
+Cairns 50 Ultramarathon,Running,Road Running,Ultra,Cairns,Australia,Oceania,2026-03-29,05:30,50km,Flat fast lapped road ultra (3 x ~16.7km) in Redlynch Valley from Glenoma Park, great for PB attempts or ultra debut,400
+Cairns 30km,Running,Road Running,Long Distance,Cairns,Australia,Oceania,2026-03-29,06:00,30km,Shorter ultra option in the Cairns 50 Community Running Festival weekend with same flat lapped course,600

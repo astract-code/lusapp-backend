@@ -1,0 +1,11 @@
+name,sport,sport_category,sport_subtype,city,country,continent,date,start_time,distance,description,participants
+Perth Running Festival - Marathon,Running,Road Running,Marathon,Perth,Australia,Oceania,2026-10-11,06:00,42.2km,Fast flat AIMS-accredited marathon starting near Optus Stadium, through Burswood and city areas, finishing with big-screen stadium entry; official WA State Championship,5000
+Perth Running Festival - Half Marathon,Running,Road Running,Half Marathon,Perth,Australia,Oceania,2026-10-11,07:00,21.1km,Scenic half marathon on closed roads around Burswood and Swan River views, part of the festival weekend,8000
+Perth Running Festival - 10km,Running,Road Running,10km,Perth,Australia,Oceania,2026-10-11,07:30,10km,Popular 10km walk/run option with family-friendly vibe and iconic Perth landmarks,6000
+Perth Running Festival - 4km Fun Run,Running,Road Running,Fun Run,Perth,Australia,Oceania,2026-10-11,08:00,4km,Scenic family walk/run in Burswood Park finishing at Optus Stadium, supporting Telethon charity,4000
+Chevron City to Surf for genU,Running,Road Running,Fun Run,Perth,Australia,Oceania,2026-08-30,08:00,Variable,WA's most iconic community fun run with 12km from CBD and 4km from Floreat options, finishing at City Beach Oval with family precinct,30000
+Ultra Perth Half Marathon & 50K,Running,Road Running,Ultra,Perth,Australia,Oceania,2026-06-20,07:00,50km,Challenging ultra with half marathon option on Perth paths, trail-ish elements and endurance focus,500
+MAWA Kings Park Cross Country 10km & 5km,Running,Road Running,Cross Country,Perth,Australia,Oceania,2026-08-??,08:00,10km,Scenic cross country event in iconic Kings Park with rolling hills and city views,800
+Bravehearts 777 Marathon - Perth,Running,Road Running,Marathon,Perth,Australia,Oceania,2026-06-29,07:00,42.2km,Charity-focused marathon in Victoria Park area supporting Bravehearts, with smaller field and community support,300
+Triathlon Pink Perth,Triathlon,Standard Distance,Sprint,Perth,Australia,Oceania,2026-11-08,07:00,Sprint,Women-focused sprint tri at WA Athletics Stadium with pool swim, bike on closed roads, and run; beginner-friendly with fun run pink options,1500
+Every Woman Triathlon,Triathlon,Standard Distance,Sprint,Perth,Australia,Oceania,2026-03-02,07:00,Sprint,Female-only sprint tri event with enticer distances, supportive community and club vibe,1000

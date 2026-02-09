@@ -1,0 +1,21 @@
+name,sport,sport_category,sport_subtype,city,country,continent,date,start_time,distance,description,participants
+Maritim HOKIbank Run 2026,Running,Road Running,Fun Run,Denpasar (Pelabuhan Benoa),Indonesia,Asia,2026-02-15,07:00,Variable,Fun run at Bali Maritime Tourism Hub with 5km and 10km options along coastal area,2000
+Running with Ayenda,Running,Road Running,Short Run,Gianyar,Indonesia,Asia,2026-02-15,07:00,5km,Community 5km run at Ayenda Fitness in Gianyar with relaxed tropical vibe,500
+Bali Mountain Marathon Festival (Bedugul/Kintamani),Running,Trail Running,Mountain Marathon,Kintamani,Indonesia,Asia,2026-01-11,06:00,Variable (30-45km+),Challenging highland trail marathon trilogy through lakes, forests, and waterfalls (evolved from Bali Ultra Trail),800
+Bali Backyard Ultra (Pantai Munggu),Running,Road Running,Backyard Ultra,Pantai Munggu,Indonesia,Asia,2026-03-28,Variable,6.7km looped backyard ultra format on road paths with endurance challenge,300
+PET Fun Run 2026,Running,Road Running,Fun Run,Denpasar (Bali Maritime Tourism Hub),Indonesia,Asia,2026-04-12,07:00,Variable,Pet-friendly fun run/walk with 1.5km relaxing walk and 3km run categories for owners and pets,1500
+Bali Hope Ultra (Coast-to-Coast Double Marathon),Running,Road Running,Ultra Trail,Seminyak to Lovina,Indonesia,Asia,2026-11-11,Variable,Double marathon (84km+) overnight coast-to-coast ultra with team/impact focus, small exclusive field,100
+Maybank Marathon Bali - Marathon,Running,Road Running,Marathon,Gianyar (Bali United Training Center),Indonesia,Asia,2026-08-23,04:00,42.2km,Indonesia's premier World Athletics Elite Label road marathon with cultural elements, Boston qualifier, scenic villages,13000
+Maybank Marathon Bali - Half Marathon,Running,Road Running,Half Marathon,Gianyar,Indonesia,Asia,2026-08-23,04:30,21.1km,Half marathon on fast tropical course with traditional Balinese performances and marshals,8000
+Maybank Marathon Bali - 10km,Running,Road Running,10km,Gianyar,Indonesia,Asia,2026-08-23,05:00,10km,Shorter 10km option in the Maybank Marathon weekend with festive atmosphere,5000
+BTR Ultra Bali (Bali Trail Running Ultra) - 106km,Running,Trail Running,Ultra Trail,Kintamani,Bali,Indonesia,Asia,2026-05-15,Variable,106km ultra trail across volcanic trails, forests, and villages in highlands,400
+BTR Ultra Bali - 61km,Running,Trail Running,Ultra Trail,Kintamani,Indonesia,Asia,2026-05-15,Variable,61km trail ultra option in multi-distance BTR event,600
+BTR Ultra Bali - 29km,Running,Trail Running,Trail,Kintamani,Indonesia,Asia,2026-05-15,Variable,29km scenic trail run through Bangli highlands,800
+BTR Ultra Bali - 19km,Running,Trail Running,Trail,Kintamani,Indonesia,Asia,2026-05-15,Variable,19km shorter trail distance in the festival,1000
+BTR Ultra Bali - 7km,Running,Trail Running,Short Trail,Kintamani,Indonesia,Asia,2026-05-15,Variable,7km beginner-friendly trail intro in volcanic area,1200
+Bali Coast to Coast Trail Run,Running,Trail Running,Trail,Variable (Bali exploration),Indonesia,Asia,2026-04-27,Variable,100km-ish low-elevation trail adventure exploring second-highest mountain and crater rim,500
+Sembalun Mountain Run (recurring Bali-area ultra),Running,Trail Running,Ultra,Sembalun (near Bali influence),Indonesia,Asia,2026-??-??,06:00,Variable,Mountain ultra/trail event with high elevation and scenic views (often listed in Bali calendars),600
+Bali Hope Ultra Impact Day Run,Running,Road Running,Short, Seminyak/Lovina,Indonesia,Asia,2026-11-12,Variable,Variable,Charity/impact short run tied to Bali Hope Ultra multi-day event,300
+Bali Trail Fun Run (local series),Running,Trail Running,Fun Run,Various (e.g. Ubud/Gianyar),Indonesia,Asia,2026-??-??,08:00,5km,Community trail fun run in rice terraces or hills, often seasonal,1000
+Ubud Eco Run (recurring),Running,Road Running,Fun Run,Ubud,Indonesia,Asia,2026-??-??,07:00,10km,Eco-focused 10km run through Ubud's cultural paths and rice fields,2000
+Canggu Beach Run,Running,Road Running,Short Run,Canggu,Indonesia,Asia,2026-??-??,07:00,5km,Popular beachside 5km fun run in trendy Canggu area with ocean views,1500

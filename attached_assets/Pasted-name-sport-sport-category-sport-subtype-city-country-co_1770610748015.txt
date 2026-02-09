@@ -1,0 +1,11 @@
+name,sport,sport_category,sport_subtype,city,country,continent,date,start_time,distance,description,participants
+ASICS Run Melbourne,Running,Road Running,Half Marathon,Melbourne,Australia,Oceania,2026-07-19,06:30,21.1km,Iconic city half marathon on closed roads through CBD landmarks like Flinders Street, Yarra River, and Olympic Boulevard with 10km and 5.5km options,27000
+ASICS Run Melbourne 10km,Running,Road Running,10km,Melbourne,Australia,Oceania,2026-07-19,07:00,10km,Fast urban 10km run in the Run Melbourne festival weekend with scenic city course and crowd support,10000
+Nike Melbourne Marathon Festival - Marathon,Running,Road Running,Marathon,Melbourne,Australia,Oceania,2026-10-11,06:30,42.2km,Australia's premier marathon starting near Rod Laver Arena, passing Albert Park Lake, St Kilda foreshore, finishing with MCG lap,35000
+Nike Melbourne Marathon Festival - Half Marathon,Running,Road Running,Half Marathon,Melbourne,Australia,Oceania,2026-10-11,07:30,21.1km,Scenic half marathon through Melbourne's iconic sites ending at the MCG,15000
+Nike Melbourne Marathon Festival - 10km,Running,Road Running,10km,Melbourne,Australia,Oceania,2026-10-11,07:00,10km,Popular 10km event in the festival weekend with flat fast route and festive vibe,8000
+Nike Melbourne Marathon Festival - 5km,Running,Road Running,5km,Melbourne,Australia,Oceania,2026-10-11,08:00,5km,Family-friendly fun run/walk as part of the major marathon festival,5000
+IRONMAN 70.3 Melbourne,Triathlon,Half Ironman,70.3,Melbourne,Australia,Oceania,2026-11-08,07:00,70.3,Fast half Ironman with swim off St Kilda Beach, flat bike along coast, and scenic run,2500
+Melbourne Teams Corporate Triathlon,Triathlon,Standard Distance,Sprint,Melbourne,Australia,Oceania,2026-03-15,08:00,Sprint,Corporate team tri at St Kilda with 300m swim, 10km bike on Beach Rd, 4km run; full or split relay options,2000
+2XU Triathlon Series Race 6 - Olympic,Triathlon,Standard Distance,Olympic,Melbourne,Australia,Oceania,2026-03-22,07:00,Olympic,Olympic-distance tri at St Kilda with 1500m swim, 40km bike, 10km run; includes sprint and enticer options,1500
+Brighton Beach Marathon,Running,Road Running,Marathon,Melbourne,Australia,Oceania,2026-??-??,07:00,42.2km,Bayside marathon along Melbourne's beautiful beaches with half, 10km, and 5km distances,3000
