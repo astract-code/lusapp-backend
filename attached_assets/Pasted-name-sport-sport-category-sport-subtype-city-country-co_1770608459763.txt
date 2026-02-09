@@ -1,0 +1,11 @@
+name,sport,sport_category,sport_subtype,city,country,continent,date,start_time,distance,description,participants
+ASICS Los Angeles Marathon,Running,Road Running,Marathon,Los Angeles,USA,North America,2026-03-08,07:00,42.2km,Iconic point-to-point marathon through LA landmarks with world-class field and spectator support,25000
+Big Sur International Marathon,Running,Road Running,Marathon,Big Sur to Carmel,USA,North America,2026-04-26,06:45,42.2km,Scenic Highway 1 coastal run with stunning Pacific views and Boston qualifier status,4500
+Oakland Marathon,Running,Road Running,Marathon,Oakland,USA,North America,2026-03-22,07:00,42.2km,Urban marathon with Bay Area views rolling hills and community vibe,3000
+OC Marathon Running Festival,Running,Road Running,Marathon,Newport Beach/Costa Mesa,USA,North America,2026-05-03,06:30,42.2km,Coastal Orange County marathon with fast course scenic views and festival weekend,10000
+Monterey Bay Half Marathon,Running,Road Running,Half Marathon,Monterey,USA,North America,2026-11-08,07:00,21.1km,Scenic run along Cannery Row and Pacific Grove shoreline with ocean breezes,6000
+Moonlight Beach Half Marathon,Running,Road Running,Half Marathon,Encinitas,USA,North America,2026-03-15,07:00,21.1km,Coastal San Diego County half with beach views and relaxed SoCal atmosphere,3000
+2026 Cal Tri Ventura,Sprint Triathlon,Standard Distance,Sprint,Ventura,USA,North America,2026-05-03,07:30,Sprint,Popular sprint tri in California Tri series with ocean swim and coastal bike/run,800
+2026 Cal Tri Lake Perris,Triathlon,Standard Distance,Olympic,Perris,USA,North America,2026-04-12,07:00,Olympic,Olympic distance tri at Lake Perris State Recreation Area with lake swim hilly bike,1000
+IRONMAN 70.3 Northern California,Triathlon,Half Ironman,70.3,Redding,USA,North America,2026-08-16,07:00,70.3,Inaugural half Ironman with Whiskeytown Lake swim rolling bike and Sacramento River finish,2000
+Spring Sprint Triathlon,Triathlon,Standard Distance,Sprint,San Diego,USA,North America,2026-05-03,07:00,Sprint,Season-starting sprint tri in Mission Bay as part of San Diego Tri Series,1000
