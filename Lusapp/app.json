@@ -30,6 +30,7 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#0B0F1A"
       },
+      "googleServicesFile": "./google-services.json",
       "package": "com.lusapp.mobile",
       "versionCode": 19,
       "edgeToEdgeEnabled": true,

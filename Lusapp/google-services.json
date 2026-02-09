@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "899499968631",
+    "project_id": "lusapp-1aea1",
+    "storage_bucket": "lusapp-1aea1.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:899499968631:android:728e10a0b76fcf58d49e72",
+        "android_client_info": {
+          "package_name": "com.lusapp.mobile"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "899499968631-7b9mavttokuj4kcur9lppi1tvavsi84l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCF9E8T8mAcP1bNMHDS0pI-6sAH7tJZpwM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "899499968631-1mtt63n4qm6k5uo0rvkls133v6mkbf1e.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "899499968631-ij9igb0746b6484f3i6t51ab4410cqh7.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.lusapp.mobile"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
