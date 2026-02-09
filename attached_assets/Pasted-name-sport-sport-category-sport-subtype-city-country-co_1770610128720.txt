@@ -1,0 +1,11 @@
+name,sport,sport_category,sport_subtype,city,country,continent,date,start_time,distance,description,participants
+Osaka Marathon,Running,Road Running,Marathon,Osaka,Japan,Asia,2026-02-22,09:15,42.2km,Prestigious AIMS-certified marathon starting near Osaka Prefectural Government Building, passing landmarks like Osaka Castle Park, flat urban course with elite and mass fields,34000
+Osaka Marathon 720 Naniwa Marathon,Running,Road Running,Short,Osaka,Japan,Asia,2026-02-22,09:15,7.2km,Shorter challenge run option alongside the full marathon, scenic city route for beginners and families,5000
+Yodogawa Ecomarathon of March,Running,Road Running,Half Marathon,Osaka,Japan,Asia,2026-03-20,08:00,21.1km,Eco-friendly half marathon along the Yodogawa River with 10km and 5km options, community and environment-focused,3000
+Osaka Castle Triathlon (Asia Triathlon Cup Osaka Castle),Triathlon,Standard Distance,Olympic,Osaka,Japan,Asia,2026-05-31,08:00,Olympic,Iconic sprint/Olympic-distance tri with unique swim in Osaka Castle moat, bike/run through historic area, elite and age-group fields,1500
+Yodogawa May Eco-Marathon,Running,Road Running,Half Marathon,Osaka,Japan,Asia,2026-05-??,08:00,21.1km,Recurring spring eco half marathon series on flat river paths with shorter distances available,2000
+Hirakata Ecomarathon,Running,Road Running,Half Marathon,Hirakata (Osaka area),Japan,Asia,2026-??-??,08:00,21.1km,Eco-themed run in Hirakata (Osaka Prefecture) along Yodogawa cycling paths with 10km/5km and parent-child options,1000
+February Tondabayashi Ecomarathon,Running,Road Running,Half Marathon,Tondabayashi (Osaka area),Japan,Asia,2026-02-??,08:00,21.1km,Early-year eco marathon in southern Osaka Prefecture with 10km and 5km fun runs,1500
+Kamogawa Ecomarathon (Osaka series),Running,Road Running,Half Marathon,Osaka,Japan,Asia,2026-??-??,08:00,21.1km,Riverbank half marathon in Osaka area with eco focus, multiple distances, charity elements,2500
+Senshu International City Marathon,Running,Road Running,Marathon,Izumisano (Osaka area),Japan,Asia,2026-??-??,08:00,42.2km,International marathon near Kansai Airport in Osaka Prefecture with half options,5000
+Osaka Urban Fun Run 10K,Running,Road Running,10km,Osaka,Japan,Asia,2026-??-??,09:00,10km,Local city-center 10km fun run often tied to seasonal events or expo weekends,4000

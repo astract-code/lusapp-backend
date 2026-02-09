@@ -1,0 +1,11 @@
+name,sport,sport_category,sport_subtype,city,country,continent,date,start_time,distance,description,participants
+Kyoto Marathon,Running,Road Running,Marathon,Kyoto,Japan,Asia,2026-02-15,09:00,42.2km,Prestigious road marathon passing 7 UNESCO World Heritage sites, historic temples, Kamo River, and finishing near Heian Jingu Shrine,16000
+Kyoto Marathon Pair-Ekiden,Running,Road Running,Relay Marathon,Kyoto,Japan,Asia,2026-02-15,09:00,42.2km,Team relay format (two runners: ~27.6km + ~14.6km) alongside the full marathon,500
+Kyoto Marathon Wheelchair Race,Running,Road Running,Wheelchair,Kyoto,Japan,Asia,2026-02-15,08:55,6.1km,Dedicated wheelchair division on a shortened course through Kyoto's iconic streets,20
+Kyoto Yawata Ecomarathon in February,Running,Road Running,Half Marathon,Kyoto (Yawata),Japan,Asia,2026-02-21,08:00,21.1km,Eco-themed half marathon in Yawata area (Kyoto Prefecture) with 10km option and family-friendly vibe,3000
+Kyoto Yawata Eco-marathon in May,Running,Road Running,Half Marathon,Kyoto (Yawata),Japan,Asia,2026-05-??,08:00,21.1km,Recurring spring eco-marathon with half, 10km, and 5km distances along scenic routes,2000
+Kamogawa Ecomarathon,Running,Road Running,Half Marathon,Kyoto,Japan,Asia,2026-11-??,08:00,21.1km,Popular riverbank half marathon along the Kamo River with 10km and 5km options,4000
+Kyoto Arashiyama Heat Resistant Relay Marathon,Running,Road Running,Relay Marathon,Kyoto,Japan,Asia,2026-08-??,08:00,42.2km,Relay-style marathon in scenic Arashiyama area known for bamboo groves and summer heat challenges,1500
+Ayabe Trail Run (near Kyoto),Running,Trail Running,Trail,Ayabe (Kyoto area),Japan,Asia,2026-04-??,08:00,Variable,Trail event in northern Kyoto Prefecture with 50km ultra and shorter 15km options in mountainous terrain,800
+Kyoto Botanical Gardens Fun Run,Running,Road Running,Short,Kyoto,Japan,Asia,2026-??-??,09:00,5km,Family-oriented short run often tied to seasonal events in the beautiful Kyoto Botanical Gardens,1000
+Japan Triathlon Series Kyoto (regional),Triathlon,Standard Distance,Olympic,Kyoto area,Japan,Asia,2026-??-??,07:00,Olympic,Local or regional Olympic-distance triathlon event in Kyoto Prefecture waters/parks (part of JTU calendar),600

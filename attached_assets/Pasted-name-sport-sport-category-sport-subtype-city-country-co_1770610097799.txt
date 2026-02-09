@@ -1,0 +1,11 @@
+name,sport,sport_category,sport_subtype,city,country,continent,date,start_time,distance,description,participants
+Tokyo Marathon,Running,Road Running,Marathon,Tokyo,Japan,Asia,2026-03-01,09:10,42.2km,World Athletics Platinum Label marathon, one of the Abbott World Marathon Majors, iconic flat course through Tokyo landmarks like Tokyo Station, Nihombashi, Asakusa, and Ginza,39000
+Tokyo Marathon 10.7km,Running,Road Running,Short,Tokyo,Japan,Asia,2026-03-01,09:10,10.7km,Shorter companion race in the Tokyo Marathon event with similar iconic city route for beginners and families,5000
+Tokyo Marathon Family Run,Running,Road Running,Fun Run,Tokyo,Japan,Asia,2026-03-01,Variable,Variable,Family-friendly short fun run tied to the main marathon weekend, often around 5km or less with festive vibe,3000
+Ohme Marathon,Running,Road Running,Marathon,Tokyo (Ome),Japan,Asia,2026-02-15,08:00,42.2km,Classic early-year marathon in western Tokyo suburbs with hilly sections and scenic views, often with shorter distances,8000
+Tokyo Shinagawa Marathon Festa Half Marathon,Running,Road Running,Half Marathon,Tokyo,Japan,Asia,2026-03-14,08:00,21.1km,Charity-focused half marathon in Shinagawa area with recovery theme post-earthquake support,5000
+Tokyo Legacy Half Marathon,Running,Road Running,Half Marathon,Tokyo,Japan,Asia,2026-10-19,08:00,21.1km,Legacy event from 2020 Olympics at Japan National Stadium area with fast urban course,10000
+Ome Takamizu Palatinose Int'l Trail Run,Running,Trail Running,Trail,Tokyo (Ome),Japan,Asia,2026-04-05,08:00,Variable,Popular international trail run in Ome with challenging mountain paths and multiple distances,2000
+Tokyo Urban Trail Run,Running,Trail Running,Trail,Tokyo,Japan,Asia,2026-??-??,08:00,10km,Urban trail event exploring Tokyo parks, hills, and outskirts like near Mount Takao,1500
+Yokohama Triathlon (Tokyo-accessible),Triathlon,Standard Distance,Olympic,Yokohama (near Tokyo),Japan,Asia,2026-05-17,07:00,Olympic,World Triathlon Series-style event with swim in Yokohama Bay, bike/run through city; easy train from Tokyo,2000
+Tokyo New Year Half Marathon (post-Feb recurring),Running,Road Running,Half Marathon,Tokyo,Japan,Asia,2026-??-??,08:00,21.1km,Annual New Year-themed half marathon in Tokyo area with festive start, often in January/February transition,6000

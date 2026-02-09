@@ -1,0 +1,11 @@
+name,sport,sport_category,sport_subtype,city,country,continent,date,start_time,distance,description,participants
+AirFly Trail Race,Running,Trail Running,Trail,Hong Kong,China,Asia,2026-03-15,07:00,20km,Challenging mountain and island trail race with forest and seaside sections in Hong Kong's natural areas,800
+Kerry Hong Kong Streetathon,Running,Road Running,Marathon,Hong Kong,China,Asia,2026-11-??,07:00,42.2km,Festive urban marathon with bridge crossings, seaside views, costumes, and charity elements,15000
+Hong Kong-Zhuhai-Macao Bridge Half Marathon,Running,Road Running,Half Marathon,Hong Kong,China,Asia,2026-??-??,07:00,21.1km,Iconic point-to-point half over the massive bridge linking Hong Kong, Zhuhai, and Macao,10000
+Mizuno HK Run Fest,Running,Road Running,Fun Run,Hong Kong,China,Asia,2026-??-??,08:00,10km,Popular branded fun run festival in Hong Kong with multiple distances and community vibe,5000
+SUUNTO Spark Run,Running,Trail Running,Trail,Hong Kong,China,Asia,2026-02-01,08:00,Variable,Trail running event series with challenging terrain in Hong Kong's country parks,1000
+AVOHK Gammon China Coast Marathon,Running,Road Running,Marathon,Hong Kong,China,Asia,2026-??-??,06:30,42.2km,Scenic coastal marathon along Hong Kong's southern shores with half and shorter options,3000
+TransLantau by UTMB,Running,Trail Running,Ultra Trail,Lantau Island,Hong Kong,China,Asia,2026-10-??,06:00,100km,UTMB-indexed ultra trail race across Lantau Island's peaks and trails,2000
+Action Sprint Trail Series Repulse Bay,Running,Trail Running,Short Trail,Hong Kong,China,Asia,2026-??-??,08:00,14km,Sprint-style trail series event in scenic Repulse Bay area with shorter distances,600
+World Triathlon Cup Hong Kong,Triathlon,Standard Distance,Olympic,Hong Kong,China,Asia,2026-11-07,08:00,Olympic,Elite-level Olympic distance triathlon event in central Hong Kong waters and roads,1000
+Asia Triathlon Junior & U23 Championships Hong Kong,Triathlon,Standard Distance,Juvenile,Hong Kong,China,Asia,2026-03-14,07:00,Olympic,Continental championships for junior and U23 athletes with swim in Victoria Harbour area,800

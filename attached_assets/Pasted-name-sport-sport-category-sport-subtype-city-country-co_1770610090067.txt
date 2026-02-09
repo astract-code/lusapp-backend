@@ -1,0 +1,11 @@
+name,sport,sport_category,sport_subtype,city,country,continent,date,start_time,distance,description,participants
+Seoul Marathon (Dong-A Ilbo Seoul International Marathon),Running,Road Running,Marathon,Seoul,South Korea,Asia,2026-03-15,08:00,42.2km,World Athletics Platinum Label marathon, one of Asia's oldest and most prestigious, flat fast course through historic Seoul landmarks like Gwanghwamun and Jamsil,30000
+Seoul Marathon 10km,Running,Road Running,10km,Seoul,South Korea,Asia,2026-03-15,08:00,10km,Accompanying shorter distance in the Seoul Marathon weekend with city-center route and festive atmosphere,10000
+JTBC Seoul Marathon,Running,Road Running,Marathon,Seoul,South Korea,Asia,2026-11-01,07:00,42.2km,Annual fall marathon in Seoul with full, half, and shorter options through urban streets and parks,15000
+Seoul Half Marathon,Running,Road Running,Half Marathon,Seoul,South Korea,Asia,2026-11-??,07:30,21.1km,Recurring half marathon event often tied to fall racing calendar in central Seoul,8000
+Recycle Eco Marathon,Running,Road Running,Marathon,Seoul,South Korea,Asia,2026-??-??,07:00,42.2km,Environment-focused marathon with eco themes and multiple distances in Seoul area,5000
+Hope Dream International Winter Marathon,Running,Road Running,Marathon,Seoul,South Korea,Asia,2026-02-21,07:00,42.2km,Charity-oriented winter marathon (post-Feb 9 timing for later editions) with half and shorter runs,4000
+MY PACE Hangang Triathlon Festival,Triathlon,Standard Distance,Mixed,Seoul,South Korea,Asia,2026-??-??,07:00,Variable,Seoul Metropolitan Government event at Hangang Park with swim-bike-run at own pace, tri options, and festival vibe,3000
+Seoul Urban Trail Run,Running,Trail Running,Trail,Seoul,South Korea,Asia,2026-??-??,08:00,10km,Urban trail exploring Seoul's parks and hills like Bukhansan edges,2000
+Gyeonggi International Half Marathon (Seoul-accessible),Running,Road Running,Half Marathon,Gyeonggi (near Seoul),South Korea,Asia,2026-02-22,08:00,21.1km,Fast half marathon in nearby Gyeonggi province, easy access from Seoul,6000
+High1 Skyrace Seoul,Running,Trail Running,Sky Race,Seoul,South Korea,Asia,2026-08-??,07:00,Variable,Challenging skyrace/trail event in Seoul region mountains,1000
