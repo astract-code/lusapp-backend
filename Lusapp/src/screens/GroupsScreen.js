@@ -13,6 +13,9 @@ export const GroupsScreen = ({ navigation }) => {
   const { t } = useLanguage();
   const [activeTab, setActiveTab] = useState('my');
   const [myGroups, setMyGroups] = useState([]);
+  const [archivedGroups, setArchivedGroups] = useState([]);
+  const [archivedCount, setArchivedCount] = useState(0);
+  const [showArchived, setShowArchived] = useState(false);
   const [searchResults, setSearchResults] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [loading, setLoading] = useState(false);
@@ -46,10 +49,34 @@ export const GroupsScreen = ({ navigation }) => {
       });
       if (response.ok) {
         const data = await response.json();
-        setMyGroups(data);
+        if (data.groups) {
+          setMyGroups(data.groups);
+          setArchivedCount(data.archivedCount || 0);
+        } else {
+          setMyGroups(Array.isArray(data) ? data : []);
+          setArchivedCount(0);
+        }
       }
     } catch (error) {
       console.error('Error fetching groups:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const fetchArchivedGroups = async () => {
+    try {
+      setLoading(true);
+      const response = await fetch(`${API_URL}/api/groups/my-groups?archived=true`, {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      if (response.ok) {
+        const data = await response.json();
+        const allGroups = Array.isArray(data) ? data : [];
+        setArchivedGroups(allGroups.filter(g => g.is_race_archived));
+      }
+    } catch (error) {
+      console.error('Error fetching archived groups:', error);
     } finally {
       setLoading(false);
     }
@@ -286,15 +313,34 @@ export const GroupsScreen = ({ navigation }) => {
       )}
 
       <FlatList
-        data={activeTab === 'my' ? myGroups : searchResults}
+        data={activeTab === 'my' ? (showArchived ? archivedGroups : myGroups) : searchResults}
         renderItem={renderGroupCard}
         keyExtractor={(item) => item.id.toString()}
         contentContainerStyle={styles.list}
         refreshing={loading}
-        onRefresh={activeTab === 'my' ? fetchMyGroups : searchGroups}
+        onRefresh={activeTab === 'my' ? (showArchived ? fetchArchivedGroups : fetchMyGroups) : searchGroups}
+        ListHeaderComponent={
+          activeTab === 'my' && archivedCount > 0 ? (
+            <TouchableOpacity
+              style={[styles.archivedBanner, { backgroundColor: colors.card, borderColor: colors.border }]}
+              onPress={() => {
+                if (!showArchived) {
+                  fetchArchivedGroups();
+                }
+                setShowArchived(!showArchived);
+              }}
+            >
+              <Text style={{ color: colors.textSecondary, fontSize: FONT_SIZE.sm }}>
+                {showArchived ? `← ${t('backToActiveGroups')}` : `📦 ${archivedCount} ${t('archivedRaceGroups')}`}
+              </Text>
+            </TouchableOpacity>
+          ) : null
+        }
         ListEmptyComponent={
           <Text style={[styles.emptyText, { color: colors.textSecondary }]}>
-            {activeTab === 'my' ? t('noGroupsYet') : t('noGroupsFound')}
+            {activeTab === 'my' 
+              ? (showArchived ? t('noArchivedGroups') : t('noGroupsYet')) 
+              : t('noGroupsFound')}
           </Text>
         }
       />
@@ -560,6 +606,13 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginTop: SPACING.xxl,
     fontSize: FONT_SIZE.md,
+  },
+  archivedBanner: {
+    padding: SPACING.md,
+    borderRadius: BORDER_RADIUS.md,
+    borderWidth: 1,
+    marginBottom: SPACING.sm,
+    alignItems: 'center',
   },
   modalOverlay: {
     flex: 1,

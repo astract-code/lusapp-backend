@@ -110,7 +110,9 @@ module.exports = (pool) => {
         FROM groups g
         LEFT JOIN users u ON g.created_by = u.id
         LEFT JOIN group_members gm ON g.id = gm.group_id AND gm.user_id = $1
+        LEFT JOIN races r ON g.race_id = r.id
         WHERE 1=1
+        AND NOT (g.race_id IS NOT NULL AND r.date IS NOT NULL AND r.date::timestamp + interval '48 hours' < NOW())
       `;
       
       const params = [req.user.userId];
@@ -147,12 +149,20 @@ module.exports = (pool) => {
   router.get('/my-groups', combinedAuthMiddleware, async (req, res) => {
     try {
       const userId = req.user.userId;
+      const includeArchived = req.query.archived === 'true';
 
       const result = await pool.query(`
         SELECT 
           g.id, g.name, g.sport_type, g.city, g.country, g.description,
-          g.member_count, g.created_at, g.banner_url,
+          g.member_count, g.created_at, g.banner_url, g.race_id,
           gm.role,
+          r.date as race_date,
+          CASE 
+            WHEN g.race_id IS NOT NULL AND r.date IS NOT NULL 
+              AND r.date::timestamp + interval '48 hours' < NOW()
+            THEN true
+            ELSE false
+          END as is_race_archived,
           (
             SELECT COUNT(*)::int 
             FROM group_messages 
@@ -168,11 +178,18 @@ module.exports = (pool) => {
           ) as last_message
         FROM groups g
         INNER JOIN group_members gm ON g.id = gm.group_id
+        LEFT JOIN races r ON g.race_id = r.id
         WHERE gm.user_id = $1
         ORDER BY g.updated_at DESC
       `, [userId]);
 
-      res.json(result.rows);
+      if (includeArchived) {
+        res.json(result.rows);
+      } else {
+        const activeGroups = result.rows.filter(g => !g.is_race_archived);
+        const archivedCount = result.rows.length - activeGroups.length;
+        res.json({ groups: activeGroups, archivedCount });
+      }
     } catch (error) {
       console.error('Error fetching user groups:', error);
       res.status(500).json({ error: 'Failed to fetch groups' });
