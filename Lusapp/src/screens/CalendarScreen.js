@@ -7,6 +7,7 @@ import {
   TouchableOpacity, 
   RefreshControl,
   Animated,
+  Platform,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Calendar } from 'react-native-calendars';
@@ -370,15 +371,15 @@ export const CalendarScreen = ({ navigation }) => {
           <View style={[
             styles.calendarContainer, 
             { backgroundColor: isDark ? '#1E293B' : '#FFFFFF' },
-            SHADOWS.lg,
+            Platform.OS === 'ios' ? SHADOWS.lg : styles.androidCalendarShadow,
           ]}>
             <Calendar
               firstDay={1}
               markedDates={markedDates}
               onDayPress={handleDayPress}
               theme={{
-                backgroundColor: 'transparent',
-                calendarBackground: 'transparent',
+                backgroundColor: isDark ? '#1E293B' : '#FFFFFF',
+                calendarBackground: isDark ? '#1E293B' : '#FFFFFF',
                 textSectionTitleColor: colors.textSecondary,
                 selectedDayBackgroundColor: '#4ADE80',
                 selectedDayTextColor: '#FFFFFF',
@@ -545,6 +546,12 @@ const styles = StyleSheet.create({
     borderRadius: BORDER_RADIUS.xxl,
     padding: SPACING.md,
     marginBottom: SPACING.md,
+    overflow: 'visible',
+  },
+  androidCalendarShadow: {
+    elevation: 3,
+    borderWidth: StyleSheet.hairlineWidth,
+    borderColor: 'rgba(0, 0, 0, 0.08)',
   },
   calendar: {
     borderRadius: BORDER_RADIUS.xl,
