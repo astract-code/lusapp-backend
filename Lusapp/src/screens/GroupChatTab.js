@@ -6,7 +6,6 @@ import {
   FlatList,
   TextInput,
   TouchableOpacity,
-  KeyboardAvoidingView,
   Platform,
   Image,
   Alert,
@@ -288,11 +287,7 @@ export const GroupChatTab = ({ groupId }) => {
   };
 
   return (
-    <KeyboardAvoidingView
-      style={styles.container}
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 0}
-    >
+    <View style={styles.container}>
       {showSearch && (
         <View style={[styles.searchContainer, { backgroundColor: colors.card }]}>
           <TextInput
@@ -448,7 +443,7 @@ export const GroupChatTab = ({ groupId }) => {
       <Text style={[styles.hint, { color: colors.textSecondary }]}>
         {t('longPressToDelete')}
       </Text>
-    </KeyboardAvoidingView>
+    </View>
   );
 };
 

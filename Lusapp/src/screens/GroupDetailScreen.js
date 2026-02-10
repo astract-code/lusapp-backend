@@ -8,6 +8,9 @@ import {
   SafeAreaView,
   ScrollView,
   Alert,
+  KeyboardAvoidingView,
+  Platform,
+  Keyboard,
 } from 'react-native';
 import { useTheme } from '../context/ThemeContext';
 import { useAuth } from '../context/AuthContext';
@@ -27,6 +30,22 @@ export const GroupDetailScreen = ({ route, navigation }) => {
   const [activeTab, setActiveTab] = useState('chat');
   const [group, setGroup] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [keyboardVisible, setKeyboardVisible] = useState(false);
+
+  useEffect(() => {
+    const showSub = Keyboard.addListener(
+      Platform.OS === 'ios' ? 'keyboardWillShow' : 'keyboardDidShow',
+      () => setKeyboardVisible(true)
+    );
+    const hideSub = Keyboard.addListener(
+      Platform.OS === 'ios' ? 'keyboardWillHide' : 'keyboardDidHide',
+      () => setKeyboardVisible(false)
+    );
+    return () => {
+      showSub.remove();
+      hideSub.remove();
+    };
+  }, []);
 
   useEffect(() => {
     fetchGroupDetails();
@@ -144,105 +163,115 @@ export const GroupDetailScreen = ({ route, navigation }) => {
 
   const isOwner = group.user_role === 'owner';
 
+  const hideHeader = keyboardVisible && activeTab === 'chat';
+
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
-      <ScrollView style={styles.header}>
-        <Text style={[styles.groupName, { color: colors.text }]}>{group.name}</Text>
-        {group.sport_type && (
-          <Text style={[styles.sportType, { color: colors.textSecondary }]}>
-            {group.sport_type}
-          </Text>
+      <KeyboardAvoidingView
+        style={styles.container}
+        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+        keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : 0}
+      >
+        {!hideHeader && (
+          <ScrollView style={styles.header}>
+            <Text style={[styles.groupName, { color: colors.text }]}>{group.name}</Text>
+            {group.sport_type && (
+              <Text style={[styles.sportType, { color: colors.textSecondary }]}>
+                {group.sport_type}
+              </Text>
+            )}
+            {group.description && (
+              <Text style={[styles.description, { color: colors.textSecondary }]}>
+                {group.description}
+              </Text>
+            )}
+            <Text style={[styles.memberCount, { color: colors.textSecondary }]}>
+              👥 {group.member_count} {group.member_count === 1 ? t('member') : t('members')}
+            </Text>
+            
+            {isOwner ? (
+              <TouchableOpacity
+                style={[styles.deleteButton, { backgroundColor: '#d32f2f' }]}
+                onPress={handleDeleteGroup}
+              >
+                <Text style={styles.deleteButtonText}>{t('deleteGroup')}</Text>
+              </TouchableOpacity>
+            ) : (
+              <TouchableOpacity
+                style={[styles.leaveButton, { backgroundColor: colors.error }]}
+                onPress={handleLeaveGroup}
+              >
+                <Text style={styles.leaveButtonText}>{t('leaveGroup')}</Text>
+              </TouchableOpacity>
+            )}
+          </ScrollView>
         )}
-        {group.description && (
-          <Text style={[styles.description, { color: colors.textSecondary }]}>
-            {group.description}
-          </Text>
-        )}
-        <Text style={[styles.memberCount, { color: colors.textSecondary }]}>
-          👥 {group.member_count} {group.member_count === 1 ? t('member') : t('members')}
-        </Text>
-        
-        {isOwner ? (
+
+        <View style={[styles.tabContainer, { borderBottomColor: colors.border }]}>
           <TouchableOpacity
-            style={[styles.deleteButton, { backgroundColor: '#d32f2f' }]}
-            onPress={handleDeleteGroup}
+            style={[
+              styles.tab,
+              activeTab === 'chat' && { borderBottomColor: colors.primary },
+            ]}
+            onPress={() => setActiveTab('chat')}
           >
-            <Text style={styles.deleteButtonText}>{t('deleteGroup')}</Text>
+            <Text
+              style={[
+                styles.tabText,
+                { color: activeTab === 'chat' ? colors.primary : colors.textSecondary },
+              ]}
+            >
+              {t('chat')}
+            </Text>
           </TouchableOpacity>
-        ) : (
+
           <TouchableOpacity
-            style={[styles.leaveButton, { backgroundColor: colors.error }]}
-            onPress={handleLeaveGroup}
+            style={[
+              styles.tab,
+              activeTab === 'members' && { borderBottomColor: colors.primary },
+            ]}
+            onPress={() => setActiveTab('members')}
           >
-            <Text style={styles.leaveButtonText}>{t('leaveGroup')}</Text>
+            <Text
+              style={[
+                styles.tabText,
+                { color: activeTab === 'members' ? colors.primary : colors.textSecondary },
+              ]}
+            >
+              {t('members')}
+            </Text>
           </TouchableOpacity>
-        )}
-      </ScrollView>
 
-      <View style={[styles.tabContainer, { borderBottomColor: colors.border }]}>
-        <TouchableOpacity
-          style={[
-            styles.tab,
-            activeTab === 'chat' && { borderBottomColor: colors.primary },
-          ]}
-          onPress={() => setActiveTab('chat')}
-        >
-          <Text
+          <TouchableOpacity
             style={[
-              styles.tabText,
-              { color: activeTab === 'chat' ? colors.primary : colors.textSecondary },
+              styles.tab,
+              activeTab === 'gear' && { borderBottomColor: colors.primary },
             ]}
+            onPress={() => setActiveTab('gear')}
           >
-            {t('chat')}
-          </Text>
-        </TouchableOpacity>
+            <Text
+              style={[
+                styles.tabText,
+                { color: activeTab === 'gear' ? colors.primary : colors.textSecondary },
+              ]}
+            >
+              {t('gearLists')}
+            </Text>
+          </TouchableOpacity>
+        </View>
 
-        <TouchableOpacity
-          style={[
-            styles.tab,
-            activeTab === 'members' && { borderBottomColor: colors.primary },
-          ]}
-          onPress={() => setActiveTab('members')}
-        >
-          <Text
-            style={[
-              styles.tabText,
-              { color: activeTab === 'members' ? colors.primary : colors.textSecondary },
-            ]}
-          >
-            {t('members')}
-          </Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          style={[
-            styles.tab,
-            activeTab === 'gear' && { borderBottomColor: colors.primary },
-          ]}
-          onPress={() => setActiveTab('gear')}
-        >
-          <Text
-            style={[
-              styles.tabText,
-              { color: activeTab === 'gear' ? colors.primary : colors.textSecondary },
-            ]}
-          >
-            {t('gearLists')}
-          </Text>
-        </TouchableOpacity>
-      </View>
-
-      <View style={styles.tabContent}>
-        {activeTab === 'chat' && <GroupChatTab groupId={groupId} />}
-        {activeTab === 'members' && <GroupMembersTab groupId={groupId} />}
-        {activeTab === 'gear' && (
-          <GroupGearListsTab
-            groupId={groupId}
-            navigation={navigation}
-            userRole={group.user_role}
-          />
-        )}
-      </View>
+        <View style={styles.tabContent}>
+          {activeTab === 'chat' && <GroupChatTab groupId={groupId} />}
+          {activeTab === 'members' && <GroupMembersTab groupId={groupId} />}
+          {activeTab === 'gear' && (
+            <GroupGearListsTab
+              groupId={groupId}
+              navigation={navigation}
+              userRole={group.user_role}
+            />
+          )}
+        </View>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   );
 };
