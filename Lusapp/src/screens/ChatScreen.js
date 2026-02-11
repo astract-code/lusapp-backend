@@ -273,7 +273,11 @@ export const ChatScreen = ({ route, navigation }) => {
   }
 
   return (
-    <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
+    <KeyboardAvoidingView
+      style={[styles.container, { backgroundColor: colors.background }]}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : 0}
+    >
       <View style={[styles.statusBar, { backgroundColor: colors.card, borderBottomColor: colors.border }]}>
         <View style={styles.statusContent}>
           <View style={[styles.onlineIndicator, { backgroundColor: otherUserOnline ? '#4ADE80' : colors.textSecondary }]} />
@@ -304,59 +308,53 @@ export const ChatScreen = ({ route, navigation }) => {
         </View>
       )}
 
-      <KeyboardAvoidingView
-        style={styles.keyboardView}
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : 0}
-      >
-        {messages.length === 0 ? (
-          <View style={styles.emptyContainer}>
-            <Ionicons name="chatbubbles-outline" size={64} color={colors.textSecondary} />
-            <Text style={[styles.emptyText, { color: colors.textSecondary }]}>
-              {t('noMessagesYet')}
-            </Text>
-            <Text style={[styles.emptySubtext, { color: colors.textSecondary }]}>
-              {t('sendMessageToStart')}
-            </Text>
-          </View>
-        ) : (
-          <FlatList
-            ref={flatListRef}
-            data={messages}
-            renderItem={renderMessage}
-            keyExtractor={(item) => item.id.toString()}
-            contentContainerStyle={styles.messagesList}
-            onContentSizeChange={() => flatListRef.current?.scrollToEnd({ animated: true })}
-          />
-        )}
-
-        <View style={[styles.inputContainer, { backgroundColor: colors.card, borderTopColor: colors.border }]}>
-          <TextInput
-            style={[styles.input, { backgroundColor: colors.background, color: colors.text }]}
-            value={inputText}
-            onChangeText={setInputText}
-            placeholder={t('typeMessage')}
-            placeholderTextColor={colors.textSecondary}
-            multiline
-            maxLength={1000}
-          />
-          <TouchableOpacity
-            style={[
-              styles.sendButton,
-              { backgroundColor: inputText.trim() && !sending ? colors.primary : colors.border }
-            ]}
-            onPress={sendMessage}
-            disabled={!inputText.trim() || sending}
-          >
-            {sending ? (
-              <ActivityIndicator size="small" color="#FFFFFF" />
-            ) : (
-              <Ionicons name="send" size={18} color="#FFFFFF" />
-            )}
-          </TouchableOpacity>
+      {messages.length === 0 ? (
+        <View style={styles.emptyContainer}>
+          <Ionicons name="chatbubbles-outline" size={64} color={colors.textSecondary} />
+          <Text style={[styles.emptyText, { color: colors.textSecondary }]}>
+            {t('noMessagesYet')}
+          </Text>
+          <Text style={[styles.emptySubtext, { color: colors.textSecondary }]}>
+            {t('sendMessageToStart')}
+          </Text>
         </View>
-      </KeyboardAvoidingView>
-    </SafeAreaView>
+      ) : (
+        <FlatList
+          ref={flatListRef}
+          data={messages}
+          renderItem={renderMessage}
+          keyExtractor={(item) => item.id.toString()}
+          contentContainerStyle={styles.messagesList}
+          onContentSizeChange={() => flatListRef.current?.scrollToEnd({ animated: true })}
+        />
+      )}
+
+      <View style={[styles.inputContainer, { backgroundColor: colors.card, borderTopColor: colors.border }]}>
+        <TextInput
+          style={[styles.input, { backgroundColor: colors.background, color: colors.text }]}
+          value={inputText}
+          onChangeText={setInputText}
+          placeholder={t('typeMessage')}
+          placeholderTextColor={colors.textSecondary}
+          multiline
+          maxLength={1000}
+        />
+        <TouchableOpacity
+          style={[
+            styles.sendButton,
+            { backgroundColor: inputText.trim() && !sending ? colors.primary : colors.border }
+          ]}
+          onPress={sendMessage}
+          disabled={!inputText.trim() || sending}
+        >
+          {sending ? (
+            <ActivityIndicator size="small" color="#FFFFFF" />
+          ) : (
+            <Ionicons name="send" size={18} color="#FFFFFF" />
+          )}
+        </TouchableOpacity>
+      </View>
+    </KeyboardAvoidingView>
   );
 };
 
