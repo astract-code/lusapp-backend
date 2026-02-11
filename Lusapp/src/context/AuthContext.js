@@ -17,8 +17,36 @@ export const AuthProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [emailVerified, setEmailVerified] = useState(false);
 
+  const refreshSocialToken = async (currentToken) => {
+    try {
+      const response = await fetch(API_ENDPOINTS.auth.refreshToken, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${currentToken}`,
+          'Content-Type': 'application/json',
+        },
+      });
+      
+      if (response.ok) {
+        const data = await response.json();
+        console.log('[AUTH] Social token refreshed successfully');
+        setToken(data.token);
+        setUser(data.user);
+        await AsyncStorage.setItem('token', data.token);
+        await AsyncStorage.setItem('user', JSON.stringify(data.user));
+        return data.token;
+      }
+      return null;
+    } catch (error) {
+      console.log('[AUTH] Social token refresh failed:', error.message);
+      return null;
+    }
+  };
+
   // Load social auth users from AsyncStorage on app startup
   useEffect(() => {
+    let socialTokenRefreshInterval = null;
+
     const loadStoredAuth = async () => {
       try {
         const storedToken = await AsyncStorage.getItem('token');
@@ -33,7 +61,7 @@ export const AuthProvider = ({ children }) => {
             setUser(parsedUser);
             setEmailVerified(true);
             
-            // Refresh user data from backend to get latest joinedRaces
+            // Refresh user data and token from backend
             try {
               const response = await fetch(API_ENDPOINTS.auth.me, {
                 headers: {
@@ -46,17 +74,32 @@ export const AuthProvider = ({ children }) => {
                 console.log('[AUTH] Refreshed social user data, joinedRaces:', freshUser.joinedRaces);
                 setUser(freshUser);
                 await AsyncStorage.setItem('user', JSON.stringify(freshUser));
+                
+                // Proactively refresh token to extend expiry
+                await refreshSocialToken(storedToken);
               } else if (response.status === 401) {
-                // Token expired, clear auth
-                console.log('[AUTH] Social auth token expired, clearing');
-                setToken(null);
-                setUser(null);
-                await AsyncStorage.removeItem('token');
-                await AsyncStorage.removeItem('user');
+                // Token expired - try to refresh it before giving up
+                console.log('[AUTH] Social auth token expired, attempting refresh...');
+                const newToken = await refreshSocialToken(storedToken);
+                if (!newToken) {
+                  console.log('[AUTH] Token refresh failed, clearing auth');
+                  setToken(null);
+                  setUser(null);
+                  await AsyncStorage.removeItem('token');
+                  await AsyncStorage.removeItem('user');
+                }
               }
             } catch (refreshError) {
               console.log('[AUTH] Failed to refresh social user, using cached:', refreshError.message);
             }
+
+            // Auto-refresh social token every 7 days to keep session alive
+            socialTokenRefreshInterval = setInterval(async () => {
+              const currentToken = await AsyncStorage.getItem('token');
+              if (currentToken) {
+                await refreshSocialToken(currentToken);
+              }
+            }, 7 * 24 * 60 * 60 * 1000); // 7 days
           }
         }
       } catch (error) {
@@ -65,6 +108,12 @@ export const AuthProvider = ({ children }) => {
     };
     
     loadStoredAuth();
+
+    return () => {
+      if (socialTokenRefreshInterval) {
+        clearInterval(socialTokenRefreshInterval);
+      }
+    };
   }, []);
 
   useEffect(() => {
@@ -374,17 +423,16 @@ export const AuthProvider = ({ children }) => {
         return idToken;
       }
       
-      // For social auth users (Apple/Google), return existing token
-      // Their backend JWT tokens are long-lived
+      // For social auth users (Apple/Google), refresh via backend
       const existingToken = token || await AsyncStorage.getItem('token');
       if (existingToken) {
-        return existingToken;
+        const newToken = await refreshSocialToken(existingToken);
+        return newToken || existingToken;
       }
       
       return null;
     } catch (error) {
       console.error('Error refreshing token:', error);
-      // Try to return existing token as fallback
       const fallbackToken = token || await AsyncStorage.getItem('token');
       return fallbackToken || null;
     }
