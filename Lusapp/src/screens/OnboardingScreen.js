@@ -72,14 +72,19 @@ const InputField = ({
 const GOOGLE_WEB_CLIENT_ID = process.env.EXPO_PUBLIC_GOOGLE_WEB_CLIENT_ID || '';
 const GOOGLE_IOS_CLIENT_ID = process.env.EXPO_PUBLIC_GOOGLE_IOS_CLIENT_ID || '';
 
-// Configure Google Sign-In with the native SDK
-GoogleSignin.configure({
-  webClientId: GOOGLE_WEB_CLIENT_ID,
-  iosClientId: GOOGLE_IOS_CLIENT_ID,
-  offlineAccess: true,
-});
+let googleConfigured = false;
+try {
+  GoogleSignin.configure({
+    webClientId: GOOGLE_WEB_CLIENT_ID,
+    iosClientId: GOOGLE_IOS_CLIENT_ID,
+    offlineAccess: true,
+  });
+  googleConfigured = true;
+} catch (error) {
+  console.error('[GOOGLE] Configure failed:', error.message);
+}
 
-const hasGoogleConfig = Boolean(GOOGLE_WEB_CLIENT_ID);
+const hasGoogleConfig = Boolean(GOOGLE_WEB_CLIENT_ID) && googleConfigured;
 
 export const OnboardingScreen = ({ navigation }) => {
   const { login, signupWithEmail, signupWithGoogle, signupWithApple } = useAuth();
