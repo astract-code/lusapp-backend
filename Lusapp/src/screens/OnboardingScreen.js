@@ -430,7 +430,7 @@ export const OnboardingScreen = ({ navigation }) => {
                     ) : (
                       <>
                         <Text style={styles.appleIcon}></Text>
-                        <Text style={styles.appleButtonText}>Apple</Text>
+                        <Text style={styles.appleButtonText}>{t('apple')}</Text>
                       </>
                     )}
                   </TouchableOpacity>
@@ -447,7 +447,7 @@ export const OnboardingScreen = ({ navigation }) => {
                     ) : (
                       <>
                         <Text style={styles.googleIcon}>G</Text>
-                        <Text style={styles.googleButtonText}>Google</Text>
+                        <Text style={styles.googleButtonText}>{t('google')}</Text>
                       </>
                     )}
                   </TouchableOpacity>

@@ -5,11 +5,13 @@ import { SPACING, BORDER_RADIUS, FONT_SIZE } from '../constants/theme';
 import { useTheme } from '../context/ThemeContext';
 import { useAppStore } from '../context/AppContext';
 import { useAuth } from '../context/AuthContext';
+import { useLanguage } from '../context/LanguageContext';
 import { fetchWithAuth } from '../utils/apiClient';
 import API_URL from '../config/api';
 
 export const PostCard = ({ post, onUserPress, onRacePress, onPostUpdate }) => {
   const { colors } = useTheme();
+  const { t } = useLanguage();
   const [showComments, setShowComments] = useState(false);
   const [commentText, setCommentText] = useState('');
   
@@ -127,9 +129,9 @@ export const PostCard = ({ post, onUserPress, onRacePress, onPostUpdate }) => {
     const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
     const diffDays = Math.floor(diffHours / 24);
     
-    if (diffDays > 0) return `${diffDays}d ago`;
-    if (diffHours > 0) return `${diffHours}h ago`;
-    return 'Just now';
+    if (diffDays > 0) return `${diffDays}${t('daysAgoShort')}`;
+    if (diffHours > 0) return `${diffHours}${t('hoursAgoShort')}`;
+    return t('justNow');
   };
 
   const isLikedByCurrentUser = post.likedBy?.includes(currentUser.id) || false;
@@ -146,9 +148,9 @@ export const PostCard = ({ post, onUserPress, onRacePress, onPostUpdate }) => {
         )}
         <View style={styles.headerText}>
           {post.type === 'new_race' ? (
-            <Text style={[styles.userName, { color: colors.text }]}>New Race Added</Text>
+            <Text style={[styles.userName, { color: colors.text }]}>{t('newRaceAdded')}</Text>
           ) : post.type === 'upcoming_race' ? (
-            <Text style={[styles.userName, { color: colors.text }]}>Upcoming Race</Text>
+            <Text style={[styles.userName, { color: colors.text }]}>{t('upcomingRaceLabel')}</Text>
           ) : (
             <TouchableOpacity onPress={() => postAuthor?.id && onUserPress(postAuthor.id)}>
               <Text style={[styles.userName, { color: colors.text }]}>{postAuthor?.name}</Text>
@@ -164,7 +166,7 @@ export const PostCard = ({ post, onUserPress, onRacePress, onPostUpdate }) => {
         {(post.type === 'new_race' || post.type === 'upcoming_race') ? (
           <View>
             <Text style={[styles.activityText, { color: colors.text }]}>
-              🏁 {post.type === 'upcoming_race' ? 'Check out this race:' : 'New race available:'}{' '}
+              🏁 {post.type === 'upcoming_race' ? t('checkOutThisRace') : t('newRaceAvailable')}{' '}
               <Text style={[styles.raceLink, { color: colors.primary }]} onPress={() => race && onRacePress(race.id)}>
                 {race?.name || post.raceName || 'a race'}
               </Text>
@@ -177,14 +179,14 @@ export const PostCard = ({ post, onUserPress, onRacePress, onPostUpdate }) => {
           </View>
         ) : post.type === 'signup' ? (
           <Text style={[styles.activityText, { color: colors.text }]}>
-            🎯 Signed up for{' '}
+            🎯 {t('signedUpFor')}{' '}
             <Text style={[styles.raceLink, { color: colors.primary }]} onPress={() => race && onRacePress(race.id)}>
               {race?.name || 'a race'}
             </Text>
           </Text>
         ) : post.type === 'race_created' ? (
           <Text style={[styles.activityText, { color: colors.text }]}>
-            🆕 Added a new race:{' '}
+            🆕 {t('addedNewRace')}{' '}
             <Text style={[styles.raceLink, { color: colors.primary }]} onPress={() => race && onRacePress(race.id)}>
               {race?.name || post.raceName || 'a race'}
             </Text>
@@ -197,14 +199,14 @@ export const PostCard = ({ post, onUserPress, onRacePress, onPostUpdate }) => {
         ) : (
           <View>
             <Text style={[styles.activityText, { color: colors.text }]}>
-              🏆 Completed{' '}
+              🏆 {t('completedAction')}{' '}
               <Text style={[styles.raceLink, { color: colors.primary }]}>
                 {post.raceName || race?.name || 'a race'}
               </Text>
             </Text>
             {post.time && (
               <Text style={[styles.timeText, { color: colors.textSecondary }]}>
-                ⏱️ Time: {post.time}
+                ⏱️ {t('timeColon')} {post.time}
               </Text>
             )}
           </View>
@@ -215,7 +217,7 @@ export const PostCard = ({ post, onUserPress, onRacePress, onPostUpdate }) => {
         <TouchableOpacity style={styles.actionButton} onPress={handleLike}>
           <Text style={styles.actionIcon}>{isLikedByCurrentUser ? '❤️' : '🤍'}</Text>
           <Text style={[styles.actionText, { color: colors.textSecondary }]}>
-            {post.likedBy?.length || 0} {post.likedBy?.length === 1 ? 'like' : 'likes'}
+            {post.likedBy?.length || 0} {post.likedBy?.length === 1 ? t('like') : t('likes')}
           </Text>
         </TouchableOpacity>
         <TouchableOpacity 
@@ -224,7 +226,7 @@ export const PostCard = ({ post, onUserPress, onRacePress, onPostUpdate }) => {
         >
           <Text style={styles.actionIcon}>💬</Text>
           <Text style={[styles.actionText, { color: colors.textSecondary }]}>
-            {post.comments?.length || 0} {post.comments?.length === 1 ? 'comment' : 'comments'}
+            {post.comments?.length || 0} {post.comments?.length === 1 ? t('comment') : t('comments')}
           </Text>
         </TouchableOpacity>
       </View>
@@ -255,7 +257,7 @@ export const PostCard = ({ post, onUserPress, onRacePress, onPostUpdate }) => {
                 color: colors.text,
                 borderColor: colors.border
               }]}
-              placeholder="Add a comment..."
+              placeholder={t('addCommentPlaceholder')}
               placeholderTextColor={colors.textSecondary}
               value={commentText}
               onChangeText={setCommentText}
@@ -264,7 +266,7 @@ export const PostCard = ({ post, onUserPress, onRacePress, onPostUpdate }) => {
               style={[styles.sendButton, { backgroundColor: colors.primary }]}
               onPress={handleAddComment}
             >
-              <Text style={styles.sendButtonText}>Send</Text>
+              <Text style={styles.sendButtonText}>{t('send')}</Text>
             </TouchableOpacity>
           </View>
         </View>

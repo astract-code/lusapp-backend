@@ -44,6 +44,7 @@ const ModernRaceCard = ({ race, onPress, isPastUncompleted, isCompleted, complet
   const scaleAnim = useRef(new Animated.Value(1)).current;
   const { colors, isDark } = useTheme();
   const { useMetric } = useSettings();
+  const { t } = useLanguage();
   const raceColors = getRaceColors(race);
 
   const handlePressIn = () => {
@@ -134,13 +135,13 @@ const ModernRaceCard = ({ race, onPress, isPastUncompleted, isCompleted, complet
                     end={{ x: 1, y: 0 }}
                     style={styles.actionButtonGradient}
                   >
-                    <Text style={styles.actionButtonText}>Complete</Text>
+                    <Text style={styles.actionButtonText}>{t('completeButton')}</Text>
                   </LinearGradient>
                 </TouchableOpacity>
               ) : isCompleted ? (
                 <View style={styles.completedChip}>
                   <Text style={styles.completedIcon}>✓</Text>
-                  <Text style={styles.completedText}>Done</Text>
+                  <Text style={styles.completedText}>{t('done')}</Text>
                 </View>
               ) : null}
             </View>
@@ -149,7 +150,7 @@ const ModernRaceCard = ({ race, onPress, isPastUncompleted, isCompleted, complet
               <View style={[styles.completionInfo, { borderTopColor: colors.border }]}>
                 {completionData.completion_time && (
                   <View style={styles.completionStat}>
-                    <Text style={[styles.completionLabel, { color: colors.textTertiary }]}>Time</Text>
+                    <Text style={[styles.completionLabel, { color: colors.textTertiary }]}>{t('time')}</Text>
                     <Text style={[styles.completionValue, { color: colors.text }]}>
                       {completionData.completion_time}
                     </Text>
@@ -157,7 +158,7 @@ const ModernRaceCard = ({ race, onPress, isPastUncompleted, isCompleted, complet
                 )}
                 {completionData.position && (
                   <View style={styles.completionStat}>
-                    <Text style={[styles.completionLabel, { color: colors.textTertiary }]}>Pos</Text>
+                    <Text style={[styles.completionLabel, { color: colors.textTertiary }]}>{t('pos')}</Text>
                     <Text style={[styles.completionValue, { color: colors.text }]}>
                       #{completionData.position}
                     </Text>
@@ -285,13 +286,13 @@ export const CalendarScreen = ({ navigation }) => {
     
     if (!selectedDate) {
       if (upcomingRaces.length > 0) {
-        result.push({ title: 'Upcoming', data: upcomingRaces, type: 'upcoming' });
+        result.push({ title: t('upcoming'), data: upcomingRaces, type: 'upcoming' });
       }
       if (pastUncompletedRaces.length > 0) {
-        result.push({ title: 'Mark Complete', data: pastUncompletedRaces, type: 'pending' });
+        result.push({ title: t('markComplete'), data: pastUncompletedRaces, type: 'pending' });
       }
       if (completedRaces.length > 0) {
-        result.push({ title: 'Completed', data: completedRaces, type: 'completed' });
+        result.push({ title: t('completed'), data: completedRaces, type: 'completed' });
       }
     } else {
       const filteredRaces = [...upcomingRaces, ...pastUncompletedRaces, ...completedRaces]
@@ -307,7 +308,7 @@ export const CalendarScreen = ({ navigation }) => {
     }
     
     return result;
-  }, [selectedDate, upcomingRaces, pastUncompletedRaces, completedRaces]);
+  }, [selectedDate, upcomingRaces, pastUncompletedRaces, completedRaces, t]);
 
   const onRefresh = async () => {
     setRefreshing(true);
@@ -332,7 +333,7 @@ export const CalendarScreen = ({ navigation }) => {
       
       <SafeAreaView style={styles.safeArea} edges={['top']}>
         <View style={styles.header}>
-          <Text style={[styles.headerTitle, { color: colors.text }]}>Calendar</Text>
+          <Text style={[styles.headerTitle, { color: colors.text }]}>{t('calendar')}</Text>
           <View style={styles.viewToggle}>
             <TouchableOpacity
               style={[styles.toggleButton, viewMode === 'calendar' && styles.toggleButtonActive]}
@@ -469,12 +470,12 @@ export const CalendarScreen = ({ navigation }) => {
                 <Text style={styles.emptyIconText}>▣</Text>
               </View>
               <Text style={[styles.emptyTitle, { color: colors.text }]}>
-                {selectedDate ? 'No races on this date' : 'No races yet'}
+                {selectedDate ? t('noRacesOnDate') : t('noRacesYet')}
               </Text>
               <Text style={[styles.emptyText, { color: colors.textSecondary }]}>
                 {selectedDate
-                  ? 'Try selecting a different date'
-                  : 'Discover and join races to see them here'}
+                  ? t('tryDifferentDate')
+                  : t('discoverAndJoinRaces')}
               </Text>
             </View>
           }

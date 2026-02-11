@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { useTheme } from '../context/ThemeContext';
 import { useSettings } from '../context/SettingsContext';
+import { useLanguage } from '../context/LanguageContext';
 import { SPACING, FONT_SIZE, BORDER_RADIUS } from '../constants/theme';
 import { getDisplayDistance } from '../utils/distanceHelper';
 
@@ -21,6 +22,7 @@ const sportIcons = {
 export const CompactRaceCard = ({ race, onPress, isPastUncompleted, isCompleted, completionData, onMarkComplete }) => {
   const { colors } = useTheme();
   const { useMetric } = useSettings();
+  const { t } = useLanguage();
 
   const sportIcon = sportIcons[race.sport_category] || sportIcons[race.sport] || '🏅';
   
@@ -67,11 +69,11 @@ export const CompactRaceCard = ({ race, onPress, isPastUncompleted, isCompleted,
               onPress={onMarkComplete}
               activeOpacity={0.8}
             >
-              <Text style={styles.buttonText}>Mark Complete</Text>
+              <Text style={styles.buttonText}>{t('markComplete')}</Text>
             </TouchableOpacity>
           ) : isCompleted ? (
             <View style={styles.completedBadge}>
-              <Text style={styles.completedBadgeText}>✓ Done</Text>
+              <Text style={styles.completedBadgeText}>✓ {t('done')}</Text>
             </View>
           ) : null}
         </View>
@@ -81,19 +83,19 @@ export const CompactRaceCard = ({ race, onPress, isPastUncompleted, isCompleted,
         <View style={styles.completionDetails}>
           {completionData.completion_time && (
             <View style={styles.completionStat}>
-              <Text style={styles.completionLabel}>Time</Text>
+              <Text style={styles.completionLabel}>{t('time')}</Text>
               <Text style={styles.completionValue}>{completionData.completion_time}</Text>
             </View>
           )}
           {completionData.position && (
             <View style={styles.completionStat}>
-              <Text style={styles.completionLabel}>Position</Text>
+              <Text style={styles.completionLabel}>{t('position')}</Text>
               <Text style={styles.completionValue}>#{completionData.position}</Text>
             </View>
           )}
           {completionData.certificate_url && (
             <View style={styles.completionStat}>
-              <Text style={styles.certificateBadge}>📄 Certificate</Text>
+              <Text style={styles.certificateBadge}>📄 {t('certificate')}</Text>
             </View>
           )}
         </View>

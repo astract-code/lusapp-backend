@@ -174,12 +174,12 @@ export const ChatScreen = ({ route, navigation }) => {
 
   const deleteMessage = async (messageId) => {
     Alert.alert(
-      'Delete Message',
-      'Are you sure you want to delete this message?',
+      t('deleteMessage'),
+      t('deleteMessageConfirmation'),
       [
-        { text: 'Cancel', style: 'cancel' },
+        { text: t('cancel'), style: 'cancel' },
         {
-          text: 'Delete',
+          text: t('deleteButton'),
           style: 'destructive',
           onPress: async () => {
             try {
