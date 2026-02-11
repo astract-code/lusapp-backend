@@ -278,6 +278,7 @@ export const ChatScreen = ({ route, navigation }) => {
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : 0}
     >
+      <SafeAreaView style={styles.container}>
       <View style={[styles.statusBar, { backgroundColor: colors.card, borderBottomColor: colors.border }]}>
         <View style={styles.statusContent}>
           <View style={[styles.onlineIndicator, { backgroundColor: otherUserOnline ? '#4ADE80' : colors.textSecondary }]} />
@@ -354,6 +355,7 @@ export const ChatScreen = ({ route, navigation }) => {
           )}
         </TouchableOpacity>
       </View>
+      </SafeAreaView>
     </KeyboardAvoidingView>
   );
 };

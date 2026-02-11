@@ -171,6 +171,7 @@ export const GroupDetailScreen = ({ route, navigation }) => {
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : 0}
     >
+      <SafeAreaView style={styles.container}>
         {!hideHeader && (
           <ScrollView style={styles.header}>
             <Text style={[styles.groupName, { color: colors.text }]}>{group.name}</Text>
@@ -270,6 +271,7 @@ export const GroupDetailScreen = ({ route, navigation }) => {
             />
           )}
         </View>
+      </SafeAreaView>
     </KeyboardAvoidingView>
   );
 };
