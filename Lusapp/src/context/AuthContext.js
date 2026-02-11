@@ -119,9 +119,7 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     let tokenRefreshInterval = null;
 
-    let unsubscribe = () => {};
-    try {
-    unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
+    const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
       console.log('[AUTH] Firebase auth state changed:', firebaseUser ? firebaseUser.uid : 'null');
       
       if (firebaseUser) {
@@ -208,10 +206,6 @@ export const AuthProvider = ({ children }) => {
       
       setIsLoading(false);
     });
-    } catch (error) {
-      console.error('[AUTH] Firebase onAuthStateChanged failed:', error.message);
-      setIsLoading(false);
-    }
 
     return () => {
       unsubscribe();

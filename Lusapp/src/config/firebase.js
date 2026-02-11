@@ -24,27 +24,18 @@ console.log('[FIREBASE CONFIG]', {
   hasAppId: !!firebaseConfig.appId,
 });
 
-let app;
+const app = initializeApp(firebaseConfig);
+
 let auth;
-
-try {
-  app = initializeApp(firebaseConfig);
-
-  if (Platform.OS === 'web') {
-    auth = initializeAuth(app, {
-      persistence: browserLocalPersistence
-    });
-  } else {
-    const { getReactNativePersistence } = require('firebase/auth');
-    auth = initializeAuth(app, {
-      persistence: getReactNativePersistence(AsyncStorage)
-    });
-  }
-} catch (error) {
-  console.error('[FIREBASE] Initialization failed:', error.message);
-  console.error('[FIREBASE] This usually means Firebase config values are missing. Check your .env file and EAS secrets.');
-  app = initializeApp(firebaseConfig, 'fallback-' + Date.now());
-  auth = getAuth(app);
+if (Platform.OS === 'web') {
+  auth = initializeAuth(app, {
+    persistence: browserLocalPersistence
+  });
+} else {
+  const { getReactNativePersistence } = require('firebase/auth');
+  auth = initializeAuth(app, {
+    persistence: getReactNativePersistence(AsyncStorage)
+  });
 }
 
 export { auth };
