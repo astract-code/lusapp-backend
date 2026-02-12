@@ -166,12 +166,12 @@ export const GroupDetailScreen = ({ route, navigation }) => {
   const hideHeader = keyboardVisible && activeTab === 'chat';
 
   return (
-    <KeyboardAvoidingView
-      style={[styles.container, { backgroundColor: colors.background }]}
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : 0}
-    >
-      <SafeAreaView style={styles.container}>
+    <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
+      <KeyboardAvoidingView
+        style={styles.container}
+        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+        keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : 0}
+      >
         {!hideHeader && (
           <ScrollView style={styles.header}>
             <Text style={[styles.groupName, { color: colors.text }]}>{group.name}</Text>
@@ -271,8 +271,8 @@ export const GroupDetailScreen = ({ route, navigation }) => {
             />
           )}
         </View>
-      </SafeAreaView>
-    </KeyboardAvoidingView>
+      </KeyboardAvoidingView>
+    </SafeAreaView>
   );
 };
 

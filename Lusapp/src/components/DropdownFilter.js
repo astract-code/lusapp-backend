@@ -11,7 +11,6 @@ import {
   ScrollView,
 } from 'react-native';
 import { useTheme } from '../context/ThemeContext';
-import { useLanguage } from '../context/LanguageContext';
 import { SPACING, FONT_SIZE, BORDER_RADIUS } from '../constants/theme';
 
 if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental) {
@@ -27,7 +26,6 @@ export const DropdownFilter = ({
   renderOption,
 }) => {
   const { colors } = useTheme();
-  const { t } = useLanguage();
   const [isExpanded, setIsExpanded] = useState(false);
 
   const toggleDropdown = () => {
@@ -41,7 +39,7 @@ export const DropdownFilter = ({
     setIsExpanded(false);
   };
 
-  const displayValue = selectedValue || t('all');
+  const displayValue = selectedValue || 'All';
 
   return (
     <View style={styles.container}>
@@ -94,7 +92,7 @@ export const DropdownFilter = ({
                 styles.optionText,
                 { color: selectedValue === null ? colors.primary : colors.text }
               ]}>
-                {t('all')}
+                All
               </Text>
               {selectedValue === null && (
                 <Text style={[styles.checkmark, { color: colors.primary }]}>✓</Text>

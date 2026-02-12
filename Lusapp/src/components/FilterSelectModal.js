@@ -11,7 +11,6 @@ import {
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useTheme } from '../context/ThemeContext';
-import { useLanguage } from '../context/LanguageContext';
 import { SPACING, FONT_SIZE, BORDER_RADIUS } from '../constants/theme';
 
 export const FilterSelectModal = ({ 
@@ -25,7 +24,6 @@ export const FilterSelectModal = ({
   searchable = false,
 }) => {
   const { colors } = useTheme();
-  const { t } = useLanguage();
   const [searchQuery, setSearchQuery] = React.useState('');
 
   const filteredOptions = React.useMemo(() => {
@@ -60,7 +58,7 @@ export const FilterSelectModal = ({
             <Ionicons name="search" size={18} color={colors.textSecondary} />
             <TextInput
               style={[styles.searchInput, { color: colors.text }]}
-              placeholder={t('searchPlaceholder')}
+              placeholder="Search..."
               placeholderTextColor={colors.textSecondary}
               value={searchQuery}
               onChangeText={setSearchQuery}
@@ -115,7 +113,7 @@ export const FilterSelectModal = ({
             }}
           >
             <Text style={[styles.clearButtonText, { color: colors.textSecondary }]}>
-              {t('clearSelection')}
+              Clear Selection
             </Text>
           </TouchableOpacity>
         )}

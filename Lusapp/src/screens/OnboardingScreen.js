@@ -72,6 +72,7 @@ const InputField = ({
 const GOOGLE_WEB_CLIENT_ID = process.env.EXPO_PUBLIC_GOOGLE_WEB_CLIENT_ID || '';
 const GOOGLE_IOS_CLIENT_ID = process.env.EXPO_PUBLIC_GOOGLE_IOS_CLIENT_ID || '';
 
+// Configure Google Sign-In with the native SDK
 GoogleSignin.configure({
   webClientId: GOOGLE_WEB_CLIENT_ID,
   iosClientId: GOOGLE_IOS_CLIENT_ID,
@@ -429,7 +430,7 @@ export const OnboardingScreen = ({ navigation }) => {
                     ) : (
                       <>
                         <Text style={styles.appleIcon}></Text>
-                        <Text style={styles.appleButtonText}>{t('apple')}</Text>
+                        <Text style={styles.appleButtonText}>Apple</Text>
                       </>
                     )}
                   </TouchableOpacity>
@@ -446,7 +447,7 @@ export const OnboardingScreen = ({ navigation }) => {
                     ) : (
                       <>
                         <Text style={styles.googleIcon}>G</Text>
-                        <Text style={styles.googleButtonText}>{t('google')}</Text>
+                        <Text style={styles.googleButtonText}>Google</Text>
                       </>
                     )}
                   </TouchableOpacity>

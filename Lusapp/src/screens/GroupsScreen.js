@@ -249,7 +249,7 @@ export const GroupsScreen = ({ navigation }) => {
               style={[styles.joinButton, { backgroundColor: colors.primary }]}
               onPress={() => joinGroup(item.id, item.has_password)}
             >
-              <Text style={styles.joinButtonText}>{t('join')}</Text>
+              <Text style={styles.joinButtonText}>Join</Text>
             </TouchableOpacity>
           ) : (
             <Text style={[styles.roleText, { color: colors.primary }]}>
@@ -376,7 +376,7 @@ export const GroupsScreen = ({ navigation }) => {
             
             <TextInput
               style={[styles.input, { backgroundColor: colors.background, color: colors.text, borderColor: colors.border }]}
-              placeholder={t('city')}
+              placeholder="City"
               placeholderTextColor={colors.textSecondary}
               value={newGroup.city}
               onChangeText={(text) => setNewGroup({ ...newGroup, city: text })}
@@ -384,7 +384,7 @@ export const GroupsScreen = ({ navigation }) => {
             
             <TextInput
               style={[styles.input, { backgroundColor: colors.background, color: colors.text, borderColor: colors.border }]}
-              placeholder={t('country')}
+              placeholder="Country"
               placeholderTextColor={colors.textSecondary}
               value={newGroup.country}
               onChangeText={(text) => setNewGroup({ ...newGroup, country: text })}

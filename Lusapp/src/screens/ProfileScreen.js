@@ -95,7 +95,7 @@ export const ProfileScreen = ({ navigation }) => {
       const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
       
       if (permissionResult.granted === false) {
-        Alert.alert(t('permissionRequired'), t('pleaseAllowPhotoAccess'));
+        Alert.alert('Permission Required', 'Please allow access to your photos.');
         return;
       }
 
@@ -111,7 +111,7 @@ export const ProfileScreen = ({ navigation }) => {
       }
     } catch (error) {
       console.error('Error picking image:', error);
-      Alert.alert(t('error'), t('failedToPickImage'));
+      Alert.alert('Error', 'Failed to pick image');
     }
   };
 
@@ -122,7 +122,7 @@ export const ProfileScreen = ({ navigation }) => {
       // Get a fresh token to avoid expired token errors
       const freshToken = await refreshToken();
       if (!freshToken) {
-        throw new Error(t('pleaseLoginAgain'));
+        throw new Error('Please log in again to update your photo');
       }
 
       const filename = uri.split('/').pop();
@@ -158,11 +158,11 @@ export const ProfileScreen = ({ navigation }) => {
       const avatarUrl = data.avatar.startsWith('http') ? data.avatar : `${API_URL}${data.avatar}`;
       updateUser({ ...authUser, avatar: avatarUrl });
       haptic.success();
-      Alert.alert(t('success'), t('profilePhotoUpdated'));
+      Alert.alert('Success', 'Profile photo updated!');
 
     } catch (error) {
       console.error('Error uploading photo:', error);
-      Alert.alert(t('error'), error.message || t('failedToUploadPhoto'));
+      Alert.alert('Error', error.message || 'Failed to upload photo');
     } finally {
       setUploading(false);
     }
@@ -170,7 +170,7 @@ export const ProfileScreen = ({ navigation }) => {
 
   const handleSaveProfile = async () => {
     if (!editedProfile.name.trim()) {
-      Alert.alert(t('error'), t('nameCannotBeEmpty'));
+      Alert.alert('Error', 'Name cannot be empty');
       return;
     }
 
@@ -207,10 +207,10 @@ export const ProfileScreen = ({ navigation }) => {
       updateUser(updatedUser);
       setIsEditing(false);
       haptic.success();
-      Alert.alert(t('success'), t('profileUpdated'));
+      Alert.alert('Success', 'Profile updated!');
     } catch (error) {
       console.error('Error updating profile:', error);
-      Alert.alert(t('error'), error.message || t('failedToUpdateProfile'));
+      Alert.alert('Error', error.message || 'Failed to update profile');
     }
   };
 
@@ -291,7 +291,7 @@ export const ProfileScreen = ({ navigation }) => {
       
       <SafeAreaView style={styles.safeArea} edges={['top']}>
         <View style={styles.topBar}>
-          <Text style={[styles.topBarTitle, { color: colors.text }]}>{t('profile')}</Text>
+          <Text style={[styles.topBarTitle, { color: colors.text }]}>Profile</Text>
           <View style={styles.topBarButtons}>
             {!isEditing && (
               <TouchableOpacity
@@ -344,7 +344,7 @@ export const ProfileScreen = ({ navigation }) => {
             {isEditing ? (
               <View style={styles.editContainer}>
                 <View style={styles.inputGroup}>
-                  <Text style={[styles.inputLabel, { color: colors.textSecondary }]}>{t('nameLabel')}</Text>
+                  <Text style={[styles.inputLabel, { color: colors.textSecondary }]}>Name</Text>
                   <TextInput
                     style={[styles.input, { 
                       color: colors.text,
@@ -353,14 +353,14 @@ export const ProfileScreen = ({ navigation }) => {
                     }]}
                     value={editedProfile.name}
                     onChangeText={(text) => setEditedProfile({ ...editedProfile, name: text })}
-                    placeholder={t('enterYourName')}
+                    placeholder="Enter your name"
                     placeholderTextColor={colors.textTertiary}
                     maxLength={50}
                   />
                 </View>
 
                 <View style={styles.inputGroup}>
-                  <Text style={[styles.inputLabel, { color: colors.textSecondary }]}>{t('location')}</Text>
+                  <Text style={[styles.inputLabel, { color: colors.textSecondary }]}>Location</Text>
                   <TextInput
                     style={[styles.input, { 
                       color: colors.text,
@@ -369,14 +369,14 @@ export const ProfileScreen = ({ navigation }) => {
                     }]}
                     value={editedProfile.location}
                     onChangeText={(text) => setEditedProfile({ ...editedProfile, location: text })}
-                    placeholder={t('locationPlaceholder')}
+                    placeholder="e.g., San Francisco, CA"
                     placeholderTextColor={colors.textTertiary}
                     maxLength={100}
                   />
                 </View>
 
                 <View style={styles.inputGroup}>
-                  <Text style={[styles.inputLabel, { color: colors.textSecondary }]}>{t('bio')}</Text>
+                  <Text style={[styles.inputLabel, { color: colors.textSecondary }]}>Bio</Text>
                   <TextInput
                     style={[styles.textArea, { 
                       color: colors.text,
@@ -385,7 +385,7 @@ export const ProfileScreen = ({ navigation }) => {
                     }]}
                     value={editedProfile.bio}
                     onChangeText={(text) => setEditedProfile({ ...editedProfile, bio: text })}
-                    placeholder={t('tellAboutYourself')}
+                    placeholder="Tell us about yourself..."
                     placeholderTextColor={colors.textTertiary}
                     multiline
                     numberOfLines={3}
@@ -394,7 +394,7 @@ export const ProfileScreen = ({ navigation }) => {
                 </View>
 
                 <View style={styles.inputGroup}>
-                  <Text style={[styles.inputLabel, { color: colors.textSecondary }]}>{t('favoriteSport')}</Text>
+                  <Text style={[styles.inputLabel, { color: colors.textSecondary }]}>Favorite Sport</Text>
                   <TextInput
                     style={[styles.input, { 
                       color: colors.text,
@@ -403,7 +403,7 @@ export const ProfileScreen = ({ navigation }) => {
                     }]}
                     value={editedProfile.favoriteSport}
                     onChangeText={(text) => setEditedProfile({ ...editedProfile, favoriteSport: text })}
-                    placeholder={t('favoriteSportPlaceholder')}
+                    placeholder="e.g., Marathon, Triathlon"
                     placeholderTextColor={colors.textTertiary}
                     maxLength={50}
                   />
@@ -414,7 +414,7 @@ export const ProfileScreen = ({ navigation }) => {
                     style={[styles.cancelButton, { backgroundColor: isDark ? colors.surface : '#F1F5F9' }]}
                     onPress={handleCancelEdit}
                   >
-                    <Text style={[styles.cancelButtonText, { color: colors.text }]}>{t('cancel')}</Text>
+                    <Text style={[styles.cancelButtonText, { color: colors.text }]}>Cancel</Text>
                   </TouchableOpacity>
                   <TouchableOpacity onPress={handleSaveProfile}>
                     <LinearGradient
@@ -423,7 +423,7 @@ export const ProfileScreen = ({ navigation }) => {
                       end={{ x: 1, y: 0 }}
                       style={styles.saveButton}
                     >
-                      <Text style={styles.saveButtonText}>{t('save')}</Text>
+                      <Text style={styles.saveButtonText}>Save</Text>
                     </LinearGradient>
                   </TouchableOpacity>
                 </View>
@@ -452,14 +452,14 @@ export const ProfileScreen = ({ navigation }) => {
                     <Text style={[styles.followNumber, { color: colors.text }]}>
                       {authUser.followers?.length || 0}
                     </Text>
-                    <Text style={[styles.followLabel, { color: colors.textTertiary }]}>{t('followers')}</Text>
+                    <Text style={[styles.followLabel, { color: colors.textTertiary }]}>Followers</Text>
                   </TouchableOpacity>
                   <View style={[styles.followDivider, { backgroundColor: colors.border }]} />
                   <TouchableOpacity style={styles.followStat}>
                     <Text style={[styles.followNumber, { color: colors.text }]}>
                       {authUser.following?.length || 0}
                     </Text>
-                    <Text style={[styles.followLabel, { color: colors.textTertiary }]}>{t('following')}</Text>
+                    <Text style={[styles.followLabel, { color: colors.textTertiary }]}>Following</Text>
                   </TouchableOpacity>
                 </View>
               </View>
@@ -469,19 +469,19 @@ export const ProfileScreen = ({ navigation }) => {
           <View style={styles.statsContainer}>
             <StatCard
               icon="trophy"
-              label={t('joined')}
+              label="Joined"
               value={joinedRaceIds.length || 0}
               color="#4ADE80"
             />
             <StatCard
               icon="check"
-              label={t('completed')}
+              label="Completed"
               value={completedRaces.length || 0}
               color="#38BDF8"
             />
             <StatCard
               icon="target"
-              label={t('bestKm')}
+              label="Best (km)"
               value={getBestDistance()}
               color="#FBBF24"
             />
@@ -490,7 +490,7 @@ export const ProfileScreen = ({ navigation }) => {
           {upcomingRaces.length > 0 && (
             <View style={styles.section}>
               <View style={styles.sectionHeader}>
-                <Text style={[styles.sectionTitle, { color: colors.text }]}>{t('upcoming')}</Text>
+                <Text style={[styles.sectionTitle, { color: colors.text }]}>Upcoming</Text>
                 <View style={[styles.sectionBadge, { backgroundColor: '#4ADE80' }]}>
                   <Text style={styles.sectionBadgeText}>{upcomingRaces.length}</Text>
                 </View>
@@ -508,7 +508,7 @@ export const ProfileScreen = ({ navigation }) => {
           {pastUncompletedRaces.length > 0 && (
             <View style={styles.section}>
               <View style={styles.sectionHeader}>
-                <Text style={[styles.sectionTitle, { color: colors.text }]}>{t('markComplete')}</Text>
+                <Text style={[styles.sectionTitle, { color: colors.text }]}>Mark Complete</Text>
                 <View style={[styles.sectionBadge, { backgroundColor: '#FBBF24' }]}>
                   <Text style={styles.sectionBadgeText}>{pastUncompletedRaces.length}</Text>
                 </View>
@@ -528,7 +528,7 @@ export const ProfileScreen = ({ navigation }) => {
           {completedRaces.length > 0 && (
             <View style={styles.section}>
               <View style={styles.sectionHeader}>
-                <Text style={[styles.sectionTitle, { color: colors.text }]}>{t('completed')}</Text>
+                <Text style={[styles.sectionTitle, { color: colors.text }]}>Completed</Text>
                 <View style={[styles.sectionBadge, { backgroundColor: '#38BDF8' }]}>
                   <Text style={styles.sectionBadgeText}>{completedRaces.length}</Text>
                 </View>
@@ -552,7 +552,7 @@ export const ProfileScreen = ({ navigation }) => {
               logout();
             }}
           >
-            <Text style={styles.logoutText}>{t('logOut')}</Text>
+            <Text style={styles.logoutText}>Log Out</Text>
           </TouchableOpacity>
 
           <View style={styles.versionContainer}>
