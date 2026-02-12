@@ -563,6 +563,51 @@ router.post('/social', async (req, res) => {
   }
 });
 
+router.post('/refresh-token', authMiddleware, async (req, res) => {
+  try {
+    const userId = req.user.userId;
+    
+    const userResult = await pool.query('SELECT * FROM users WHERE id = $1', [userId]);
+    
+    if (userResult.rows.length === 0) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+    
+    const dbUser = userResult.rows[0];
+    
+    const newToken = jwt.sign(
+      { 
+        userId: dbUser.id, 
+        email: dbUser.email,
+        socialProvider: dbUser.social_provider 
+      },
+      JWT_SECRET,
+      { expiresIn: '30d' }
+    );
+    
+    const userData = {
+      id: dbUser.id.toString(),
+      email: dbUser.email,
+      name: dbUser.name,
+      location: dbUser.location,
+      bio: dbUser.bio,
+      favoriteSport: dbUser.favorite_sport,
+      avatar: getFullAvatarUrl(req, dbUser.avatar),
+      totalRaces: dbUser.total_races,
+      joinedRaces: normalizeArray(dbUser.joined_races),
+      completedRaces: normalizeArray(dbUser.completed_races),
+      following: normalizeArray(dbUser.following),
+      followers: normalizeArray(dbUser.followers),
+    };
+    
+    console.log('[AUTH] Token refreshed for user:', dbUser.id);
+    res.json({ token: newToken, user: userData });
+  } catch (error) {
+    console.error('[AUTH] Token refresh error:', error);
+    res.status(500).json({ error: 'Failed to refresh token' });
+  }
+});
+
 router.post('/sync', verifyFirebaseTokenOnly, async (req, res) => {
   console.log('🔍 [AUTH SYNC] Starting user sync...');
   console.log('🔍 [AUTH SYNC] Request body:', JSON.stringify(req.body));

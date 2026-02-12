@@ -10,6 +10,7 @@ export const API_ENDPOINTS = {
     me: `${API_URL}/api/auth/me`,
     sync: `${API_URL}/api/auth/sync`,
     social: `${API_URL}/api/auth/social`,
+    refreshToken: `${API_URL}/api/auth/refresh-token`,
     deleteAccount: `${API_URL}/api/auth/account`,
   },
   races: {
