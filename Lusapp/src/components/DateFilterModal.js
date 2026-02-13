@@ -9,32 +9,8 @@ import {
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useTheme } from '../context/ThemeContext';
+import { useLanguage } from '../context/LanguageContext';
 import { SPACING, FONT_SIZE, BORDER_RADIUS } from '../constants/theme';
-
-const DATE_OPTIONS = [
-  { id: 'all', label: 'All Upcoming', days: null, icon: 'infinite' },
-  { id: '7days', label: 'Next 7 Days', days: 7, icon: 'calendar-outline' },
-  { id: '30days', label: 'Next 30 Days', days: 30, icon: 'calendar-outline' },
-  { id: '60days', label: 'Next 60 Days', days: 60, icon: 'calendar-outline' },
-  { id: '90days', label: 'Next 90 Days', days: 90, icon: 'calendar-outline' },
-  { id: '6months', label: 'Next 6 Months', days: 180, icon: 'calendar' },
-  { id: '1year', label: 'Next Year', days: 365, icon: 'calendar' },
-];
-
-const MONTH_OPTIONS = [
-  { id: 'jan', label: 'January', month: 0 },
-  { id: 'feb', label: 'February', month: 1 },
-  { id: 'mar', label: 'March', month: 2 },
-  { id: 'apr', label: 'April', month: 3 },
-  { id: 'may', label: 'May', month: 4 },
-  { id: 'jun', label: 'June', month: 5 },
-  { id: 'jul', label: 'July', month: 6 },
-  { id: 'aug', label: 'August', month: 7 },
-  { id: 'sep', label: 'September', month: 8 },
-  { id: 'oct', label: 'October', month: 9 },
-  { id: 'nov', label: 'November', month: 10 },
-  { id: 'dec', label: 'December', month: 11 },
-];
 
 export const DateFilterModal = ({ 
   visible, 
@@ -45,6 +21,32 @@ export const DateFilterModal = ({
   onSelectMonth,
 }) => {
   const { colors } = useTheme();
+  const { t } = useLanguage();
+
+  const DATE_OPTIONS = [
+    { id: 'all', label: t('allUpcoming'), days: null, icon: 'infinite' },
+    { id: '7days', label: t('next7Days'), days: 7, icon: 'calendar-outline' },
+    { id: '30days', label: t('next30Days'), days: 30, icon: 'calendar-outline' },
+    { id: '60days', label: t('next60Days'), days: 60, icon: 'calendar-outline' },
+    { id: '90days', label: t('next90Days'), days: 90, icon: 'calendar-outline' },
+    { id: '6months', label: t('next6Months'), days: 180, icon: 'calendar' },
+    { id: '1year', label: t('nextYear'), days: 365, icon: 'calendar' },
+  ];
+
+  const MONTH_OPTIONS = [
+    { id: 'jan', label: t('january'), month: 0 },
+    { id: 'feb', label: t('february'), month: 1 },
+    { id: 'mar', label: t('march'), month: 2 },
+    { id: 'apr', label: t('april'), month: 3 },
+    { id: 'may', label: t('may'), month: 4 },
+    { id: 'jun', label: t('june'), month: 5 },
+    { id: 'jul', label: t('july'), month: 6 },
+    { id: 'aug', label: t('august'), month: 7 },
+    { id: 'sep', label: t('september'), month: 8 },
+    { id: 'oct', label: t('october'), month: 9 },
+    { id: 'nov', label: t('november'), month: 10 },
+    { id: 'dec', label: t('december'), month: 11 },
+  ];
 
   const handleSelectOption = (option) => {
     onSelectOption(option);
@@ -67,7 +69,7 @@ export const DateFilterModal = ({
     >
       <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
         <View style={styles.header}>
-          <Text style={[styles.title, { color: colors.text }]}>Filter by Date</Text>
+          <Text style={[styles.title, { color: colors.text }]}>{t('filterByDate')}</Text>
           <TouchableOpacity onPress={onClose}>
             <Ionicons name="close" size={24} color={colors.text} />
           </TouchableOpacity>
@@ -75,7 +77,7 @@ export const DateFilterModal = ({
 
         <View style={styles.section}>
           <Text style={[styles.sectionTitle, { color: colors.textSecondary }]}>
-            Quick Filters
+            {t('quickFilters')}
           </Text>
           {DATE_OPTIONS.map((option) => (
             <TouchableOpacity
@@ -111,7 +113,7 @@ export const DateFilterModal = ({
 
         <View style={styles.section}>
           <Text style={[styles.sectionTitle, { color: colors.textSecondary }]}>
-            By Month
+            {t('byMonth')}
           </Text>
           <View style={styles.monthGrid}>
             {MONTH_OPTIONS.map((month) => (
@@ -148,7 +150,7 @@ export const DateFilterModal = ({
           }}
         >
           <Text style={[styles.clearButtonText, { color: colors.textSecondary }]}>
-            Clear Date Filter
+            {t('clearDateFilter')}
           </Text>
         </TouchableOpacity>
       </SafeAreaView>

@@ -130,7 +130,7 @@ export const DiscoverScreen = ({ navigation }) => {
       filters.push({ type: 'country', label: selectedCountry });
     }
     if (searchQuery) {
-      filters.push({ type: 'search', label: `City: ${searchQuery}` });
+      filters.push({ type: 'search', label: `${t('city')}: ${searchQuery}` });
     }
     return filters;
   }, [dateFilterOption, dateFilterMonth, selectedCategory, selectedSubtype, selectedContinent, selectedCountry, searchQuery]);
@@ -165,7 +165,7 @@ export const DiscoverScreen = ({ navigation }) => {
 
   const handleAddRace = async () => {
     if (!newRace.name.trim() || !newRace.sport_category || !newRace.sport_subtype || !newRace.date) {
-      Alert.alert('Error', 'Please fill in at least Name, Sport Category, Distance/Type, and Date');
+      Alert.alert(t('error'), t('fillRequiredFields'));
       return;
     }
 
@@ -206,7 +206,7 @@ export const DiscoverScreen = ({ navigation }) => {
       const createdRace = await response.json();
       console.log('[RACE CREATE] Success:', createdRace);
 
-      Alert.alert('Race Submitted!', createdRace.message || 'Race submitted successfully! Waiting for admin approval to avoid duplicates.');
+      Alert.alert(t('raceSubmittedTitle'), createdRace.message || 'Race submitted successfully! Waiting for admin approval to avoid duplicates.');
       
       setNewRace({
         name: '',
@@ -226,7 +226,7 @@ export const DiscoverScreen = ({ navigation }) => {
       fetchRaces();
     } catch (error) {
       console.error('[RACE CREATE] Error:', error);
-      Alert.alert('Error', error.message || 'Failed to create race. Please try again.');
+      Alert.alert(t('error'), error.message || t('failedToCreateRace'));
     }
   };
 
@@ -307,21 +307,21 @@ export const DiscoverScreen = ({ navigation }) => {
         contentContainerStyle={styles.chipsContent}
       >
         <FilterChipButton
-          label="Date"
+          label={t('dateFilter')}
           icon="📅"
           value={getDateChipValue()}
           onPress={() => setShowDateModal(true)}
           isActive={!!dateFilterOption || !!dateFilterMonth}
         />
         <FilterChipButton
-          label="Sport"
+          label={t('sport')}
           icon="🏃"
           value={getSportChipValue()}
           onPress={() => setShowSportModal(true)}
           isActive={!!selectedCategory}
         />
         <FilterChipButton
-          label="Location"
+          label={t('location')}
           icon="🌍"
           value={getLocationChipValue()}
           onPress={() => setShowContinentModal(true)}
@@ -347,7 +347,7 @@ export const DiscoverScreen = ({ navigation }) => {
       <FilterSelectModal
         visible={showSportModal}
         onClose={() => setShowSportModal(false)}
-        title="Sport Category"
+        title={t('sportCategoryLabel')}
         options={SPORT_CATEGORIES}
         selectedValue={selectedCategory}
         onSelect={(value) => {
@@ -362,7 +362,7 @@ export const DiscoverScreen = ({ navigation }) => {
       <FilterSelectModal
         visible={showSubtypeModal}
         onClose={() => setShowSubtypeModal(false)}
-        title="Distance / Type"
+        title={t('distanceType')}
         options={selectedCategory ? SPORT_TAXONOMY[selectedCategory].subtypes : []}
         selectedValue={selectedSubtype}
         onSelect={setSelectedSubtype}
@@ -371,7 +371,7 @@ export const DiscoverScreen = ({ navigation }) => {
       <FilterSelectModal
         visible={showContinentModal}
         onClose={() => setShowContinentModal(false)}
-        title="Continent"
+        title={t('continent')}
         options={CONTINENTS}
         selectedValue={selectedContinent}
         onSelect={(value) => {
@@ -385,7 +385,7 @@ export const DiscoverScreen = ({ navigation }) => {
       <FilterSelectModal
         visible={showCountryModal}
         onClose={() => setShowCountryModal(false)}
-        title="Country"
+        title={t('country')}
         options={filteredCountries}
         selectedValue={selectedCountry}
         onSelect={setSelectedCountry}
@@ -405,9 +405,9 @@ export const DiscoverScreen = ({ navigation }) => {
             keyboardVerticalOffset={0}
           >
             <View style={styles.modalHeader}>
-              <Text style={[styles.modalTitle, { color: colors.text }]}>Add New Race</Text>
+              <Text style={[styles.modalTitle, { color: colors.text }]}>{t('addNewRace')}</Text>
               <TouchableOpacity onPress={() => setShowAddForm(false)}>
-                <Text style={[styles.modalClose, { color: colors.primary }]}>Cancel</Text>
+                <Text style={[styles.modalClose, { color: colors.primary }]}>{t('cancel')}</Text>
               </TouchableOpacity>
             </View>
 
@@ -416,16 +416,16 @@ export const DiscoverScreen = ({ navigation }) => {
               keyboardShouldPersistTaps="handled"
               showsVerticalScrollIndicator={true}
             >
-            <Text style={[styles.label, { color: colors.text }]}>Race Name *</Text>
+            <Text style={[styles.label, { color: colors.text }]}>{t('raceName')} *</Text>
             <TextInput
               style={[styles.input, { backgroundColor: colors.card, color: colors.text, borderColor: colors.border }]}
-              placeholder="e.g., Boston Marathon"
+              placeholder={t('raceNamePlaceholder')}
               placeholderTextColor={colors.textSecondary}
               value={newRace.name}
               onChangeText={(text) => setNewRace({ ...newRace, name: text })}
             />
 
-            <Text style={[styles.label, { color: colors.text }]}>Sport Category *</Text>
+            <Text style={[styles.label, { color: colors.text }]}>{t('sportCategoryLabel')} *</Text>
             <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.sportPicker}>
               {SPORT_CATEGORIES.map((category) => (
                 <TouchableOpacity
@@ -445,7 +445,7 @@ export const DiscoverScreen = ({ navigation }) => {
 
             {newRace.sport_category && (
               <>
-                <Text style={[styles.label, { color: colors.text }]}>Distance / Type *</Text>
+                <Text style={[styles.label, { color: colors.text }]}>{t('distanceType')} *</Text>
                 <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.sportPicker}>
                   {SPORT_TAXONOMY[newRace.sport_category].subtypes.map((subtype) => (
                     <TouchableOpacity
@@ -465,7 +465,7 @@ export const DiscoverScreen = ({ navigation }) => {
               </>
             )}
 
-            <Text style={[styles.label, { color: colors.text }]}>Date * (YYYY-MM-DD)</Text>
+            <Text style={[styles.label, { color: colors.text }]}>{t('dateFormatLabel')} *</Text>
             <TextInput
               style={[styles.input, { backgroundColor: colors.card, color: colors.text, borderColor: colors.border }]}
               placeholder="2025-12-31"
@@ -474,42 +474,42 @@ export const DiscoverScreen = ({ navigation }) => {
               onChangeText={(text) => setNewRace({ ...newRace, date: text })}
             />
 
-            <Text style={[styles.label, { color: colors.text }]}>City</Text>
+            <Text style={[styles.label, { color: colors.text }]}>{t('city')}</Text>
             <TextInput
               style={[styles.input, { backgroundColor: colors.card, color: colors.text, borderColor: colors.border }]}
-              placeholder="e.g., Boston"
+              placeholder={t('cityPlaceholder')}
               placeholderTextColor={colors.textSecondary}
               value={newRace.city}
               onChangeText={(text) => setNewRace({ ...newRace, city: text })}
             />
 
             <DropdownFilter
-              title="Continent (optional - helps filter countries)"
+              title={t('continentOptional')}
               options={CONTINENTS}
               selectedValue={newRace.continent}
               onSelect={(value) => setNewRace({ ...newRace, continent: value })}
             />
 
             <DropdownFilter
-              title="Country"
+              title={t('country')}
               options={formFilteredCountries}
               selectedValue={newRace.country}
               onSelect={(value) => setNewRace({ ...newRace, country: value })}
             />
 
-            <Text style={[styles.label, { color: colors.text }]}>Distance (optional)</Text>
+            <Text style={[styles.label, { color: colors.text }]}>{t('distanceOptional')}</Text>
             <TextInput
               style={[styles.input, { backgroundColor: colors.card, color: colors.text, borderColor: colors.border }]}
-              placeholder="e.g., 42.2 km"
+              placeholder={t('distancePlaceholder')}
               placeholderTextColor={colors.textSecondary}
               value={newRace.distance}
               onChangeText={(text) => setNewRace({ ...newRace, distance: text })}
             />
 
-            <Text style={[styles.label, { color: colors.text }]}>Description (optional)</Text>
+            <Text style={[styles.label, { color: colors.text }]}>{t('descriptionOptional')}</Text>
             <TextInput
               style={[styles.textArea, { backgroundColor: colors.card, color: colors.text, borderColor: colors.border }]}
-              placeholder="Tell us about this race..."
+              placeholder={t('tellUsAboutRace')}
               placeholderTextColor={colors.textSecondary}
               value={newRace.description}
               onChangeText={(text) => setNewRace({ ...newRace, description: text })}
@@ -521,7 +521,7 @@ export const DiscoverScreen = ({ navigation }) => {
               style={[styles.submitButton, { backgroundColor: colors.primary }]}
               onPress={handleAddRace}
             >
-              <Text style={styles.submitButtonText}>Submit Race</Text>
+              <Text style={styles.submitButtonText}>{t('submitRace')}</Text>
             </TouchableOpacity>
             
             <View style={{ height: 50 }} />
@@ -532,7 +532,7 @@ export const DiscoverScreen = ({ navigation }) => {
 
       <View style={styles.resultsSection}>
         <Text style={[styles.resultCount, { color: colors.textSecondary }]}>
-          {filteredRaces.length} {filteredRaces.length === 1 ? 'race' : 'races'} found
+          {filteredRaces.length} {filteredRaces.length === 1 ? t('raceSingular') : t('racePlural')} {t('found')}
         </Text>
         <FlatList
           data={filteredRaces}

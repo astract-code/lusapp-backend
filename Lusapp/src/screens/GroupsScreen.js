@@ -241,7 +241,7 @@ export const GroupsScreen = ({ navigation }) => {
         
         <View style={styles.groupFooter}>
           <Text style={[styles.memberCount, { color: colors.textSecondary }]}>
-            👥 {item.member_count} {item.member_count === 1 ? 'member' : 'members'}
+            👥 {item.member_count} {item.member_count === 1 ? t('member') : t('memberPlural')}
           </Text>
           
           {!isMyGroup ? (
@@ -249,7 +249,7 @@ export const GroupsScreen = ({ navigation }) => {
               style={[styles.joinButton, { backgroundColor: colors.primary }]}
               onPress={() => joinGroup(item.id, item.has_password)}
             >
-              <Text style={styles.joinButtonText}>Join</Text>
+              <Text style={styles.joinButtonText}>{t('join')}</Text>
             </TouchableOpacity>
           ) : (
             <Text style={[styles.roleText, { color: colors.primary }]}>
@@ -376,7 +376,7 @@ export const GroupsScreen = ({ navigation }) => {
             
             <TextInput
               style={[styles.input, { backgroundColor: colors.background, color: colors.text, borderColor: colors.border }]}
-              placeholder="City"
+              placeholder={t('city')}
               placeholderTextColor={colors.textSecondary}
               value={newGroup.city}
               onChangeText={(text) => setNewGroup({ ...newGroup, city: text })}
@@ -384,7 +384,7 @@ export const GroupsScreen = ({ navigation }) => {
             
             <TextInput
               style={[styles.input, { backgroundColor: colors.background, color: colors.text, borderColor: colors.border }]}
-              placeholder="Country"
+              placeholder={t('country')}
               placeholderTextColor={colors.textSecondary}
               value={newGroup.country}
               onChangeText={(text) => setNewGroup({ ...newGroup, country: text })}

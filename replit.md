@@ -40,6 +40,7 @@ The app supports 14 languages with a custom translation system:
   - `Lusapp/src/context/LanguageContext.js` - Translation context provider
 - **Usage:** Components use `const { t } = useLanguage()` and call `t('keyName')` for translations
 - **Settings:** Language selector available in Settings screen showing languages in their native names
+- **Coverage:** All user-facing strings across ProfileScreen, CalendarScreen, DiscoverScreen, GroupsScreen, CompactRaceCard, DateFilterModal, PostCard, and other screens/components use t() for translations. Date formatting uses device locale (undefined) instead of hardcoded 'en-US'.
 
 ### Design System (2024/2025 Athletic Theme)
 
