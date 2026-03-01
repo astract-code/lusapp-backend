@@ -23,6 +23,7 @@ export const GroupsScreen = ({ navigation }) => {
   const [showJoinModal, setShowJoinModal] = useState(false);
   const [selectedGroup, setSelectedGroup] = useState(null);
   const [joinPassword, setJoinPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   
   const [newGroup, setNewGroup] = useState({
     name: '',
@@ -105,6 +106,10 @@ export const GroupsScreen = ({ navigation }) => {
       Alert.alert(t('oops'), t('groupNameRequired'));
       return;
     }
+    if (newGroup.password && newGroup.password !== confirmPassword) {
+      Alert.alert(t('oops'), t('passwordsDoNotMatch'));
+      return;
+    }
 
     try {
       console.log('=== CREATING GROUP ===');
@@ -129,6 +134,7 @@ export const GroupsScreen = ({ navigation }) => {
         console.log('Success response:', data);
         setShowCreateModal(false);
         setNewGroup({ name: '', sport_type: '', city: '', country: '', description: '', password: '' });
+        setConfirmPassword('');
         fetchMyGroups();
         setActiveTab('my');
         navigation.navigate('GroupDetail', { groupId: data.group.id });
@@ -408,6 +414,16 @@ export const GroupsScreen = ({ navigation }) => {
               onChangeText={(text) => setNewGroup({ ...newGroup, password: text })}
               secureTextEntry
             />
+            {newGroup.password.length > 0 && (
+              <TextInput
+                style={[styles.input, { backgroundColor: colors.background, color: colors.text, borderColor: confirmPassword && confirmPassword !== newGroup.password ? '#EF4444' : colors.border }]}
+                placeholder={t('confirmPassword')}
+                placeholderTextColor={colors.textSecondary}
+                value={confirmPassword}
+                onChangeText={setConfirmPassword}
+                secureTextEntry
+              />
+            )}
             </ScrollView>
 
             <View style={styles.modalButtons}>
@@ -416,6 +432,7 @@ export const GroupsScreen = ({ navigation }) => {
                 onPress={() => {
                   setShowCreateModal(false);
                   setNewGroup({ name: '', sport_type: '', city: '', country: '', description: '', password: '' });
+                  setConfirmPassword('');
                 }}
               >
                 <Text style={[styles.modalButtonText, { color: colors.text }]}>{t('cancel')}</Text>
