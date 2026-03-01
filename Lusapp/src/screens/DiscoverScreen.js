@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect, useCallback } from 'react';
 import {
   View,
   Text,
@@ -12,6 +12,7 @@ import {
   RefreshControl,
   KeyboardAvoidingView,
   Platform,
+  ActivityIndicator,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
@@ -35,6 +36,8 @@ export const DiscoverScreen = ({ navigation }) => {
   const { token } = useAuth();
   const { t } = useLanguage();
   
+  const PAGE_SIZE = 20;
+
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedSubtype, setSelectedSubtype] = useState(null);
   const [selectedContinent, setSelectedContinent] = useState(null);
@@ -42,6 +45,7 @@ export const DiscoverScreen = ({ navigation }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [showAddForm, setShowAddForm] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
+  const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
   
   const [dateFilterOption, setDateFilterOption] = useState(null);
   const [dateFilterMonth, setDateFilterMonth] = useState(null);
@@ -115,6 +119,14 @@ export const DiscoverScreen = ({ navigation }) => {
       return true;
     });
   }, [races, selectedCategory, selectedSubtype, selectedContinent, selectedCountry, searchQuery, dateFilterOption, dateFilterMonth]);
+
+  useEffect(() => {
+    setVisibleCount(PAGE_SIZE);
+  }, [selectedCategory, selectedSubtype, selectedContinent, selectedCountry, searchQuery, dateFilterOption, dateFilterMonth]);
+
+  const loadMoreRaces = useCallback(() => {
+    setVisibleCount(prev => Math.min(prev + PAGE_SIZE, filteredRaces.length));
+  }, [filteredRaces.length]);
 
   const activeFilters = useMemo(() => {
     const filters = [];
@@ -539,11 +551,14 @@ export const DiscoverScreen = ({ navigation }) => {
 
       <View style={styles.resultsSection}>
         <Text style={[styles.resultCount, { color: colors.textSecondary }]}>
-          {filteredRaces.length} {filteredRaces.length === 1 ? t('raceSingular') : t('racePlural')} {t('found')}
+          {visibleCount < filteredRaces.length
+            ? `${visibleCount} / ${filteredRaces.length} ${t('racePlural')} ${t('found')}`
+            : `${filteredRaces.length} ${filteredRaces.length === 1 ? t('raceSingular') : t('racePlural')} ${t('found')}`
+          }
         </Text>
         <FlatList
-          data={filteredRaces}
-          keyExtractor={(item) => item.id}
+          data={filteredRaces.slice(0, visibleCount)}
+          keyExtractor={(item) => String(item.id)}
           renderItem={({ item }) => (
             <CompactRaceCard
               race={item}
@@ -551,6 +566,13 @@ export const DiscoverScreen = ({ navigation }) => {
             />
           )}
           contentContainerStyle={styles.list}
+          onEndReached={loadMoreRaces}
+          onEndReachedThreshold={0.4}
+          ListFooterComponent={
+            visibleCount < filteredRaces.length
+              ? <ActivityIndicator size="small" color={colors.primary} style={{ marginVertical: 16 }} />
+              : null
+          }
           refreshControl={
             <RefreshControl
               refreshing={refreshing}

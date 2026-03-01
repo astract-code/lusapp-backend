@@ -17,10 +17,16 @@ export const FeedScreen = ({ navigation }) => {
   const { token } = useAuth();
   const { unreadCount, fetchUnreadCount } = useNotifications();
   const { t } = useLanguage();
+  const PAGE_SIZE = 20;
   const [posts, setPosts] = useState([]);
   const [suggestedUsers, setSuggestedUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
+  const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
+
+  const loadMorePosts = useCallback(() => {
+    setVisibleCount(prev => Math.min(prev + PAGE_SIZE, posts.length));
+  }, [posts.length]);
 
   const fetchFeed = async () => {
     try {
@@ -56,6 +62,7 @@ export const FeedScreen = ({ navigation }) => {
 
   const onRefresh = useCallback(() => {
     setRefreshing(true);
+    setVisibleCount(PAGE_SIZE);
     fetchFeed();
     fetchSuggestedUsers();
   }, []);
@@ -89,8 +96,8 @@ export const FeedScreen = ({ navigation }) => {
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
       <FlatList
-        data={posts}
-        keyExtractor={(item) => item.id}
+        data={posts.slice(0, visibleCount)}
+        keyExtractor={(item) => String(item.id)}
         renderItem={({ item }) => (
           <PostCard
             post={item}
@@ -100,6 +107,13 @@ export const FeedScreen = ({ navigation }) => {
           />
         )}
         contentContainerStyle={styles.list}
+        onEndReached={loadMorePosts}
+        onEndReachedThreshold={0.4}
+        ListFooterComponent={
+          visibleCount < posts.length
+            ? <ActivityIndicator size="small" color={colors.primary} style={{ marginVertical: 16 }} />
+            : null
+        }
         ListHeaderComponent={
           <View style={styles.headerRow}>
             <Text style={[styles.header, { color: colors.text }]}>
