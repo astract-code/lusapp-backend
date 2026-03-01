@@ -59,12 +59,88 @@ async function initializeDatabase() {
     console.log('✓ Database schema initialized successfully');
   } catch (error) {
     console.error('Error initializing database:', error);
-    // Don't exit - tables might already exist
   }
 }
 
-// Run database initialization
-initializeDatabase();
+async function normalizeRaceData() {
+  try {
+    console.log('Normalizing race sport data...');
+    await pool.query(`
+      -- Fix HYROX: sport field wrong
+      UPDATE races SET sport = 'Fitness' WHERE sport_subtype = 'HYROX' AND sport != 'Fitness';
+
+      -- Fix HYROX: sport_category wrong or missing
+      UPDATE races SET sport_category = 'Fitness' WHERE sport_subtype = 'HYROX' AND (sport_category IS NULL OR sport_category = '' OR sport_category != 'Fitness');
+
+      -- Fix Spartan Race: sport_category wrong or missing
+      UPDATE races SET sport = 'Fitness', sport_category = 'Fitness' WHERE sport_subtype = 'Spartan Race' AND (sport_category IS NULL OR sport_category = '' OR sport_category NOT IN ('Fitness'));
+
+      -- Fix Road Running: sport_category should be Running, not Road Running
+      UPDATE races SET sport_category = 'Running' WHERE sport = 'Running' AND sport_category = 'Road Running';
+
+      -- Fix Trail Running as sport_category: move to subtype of Running
+      UPDATE races SET sport_category = 'Running', sport_subtype = 'Trail Running'
+        WHERE sport = 'Running' AND sport_category = 'Trail Running' AND (sport_subtype IS NULL OR sport_subtype NOT IN ('5K','10K','Half Marathon','Marathon','Ultra Marathon','Trail Running','Cross Country','Custom Distance'));
+
+      -- Fix Trail Running as sport_category where subtype is already valid (keep subtype, just fix category)
+      UPDATE races SET sport_category = 'Running'
+        WHERE sport = 'Running' AND sport_category = 'Trail Running' AND sport_subtype IN ('5K','10K','Half Marathon','Marathon','Ultra Marathon','Trail Running','Cross Country','Custom Distance');
+
+      -- Fix when sport field has a subtype value instead of category name (Running)
+      UPDATE races SET sport = 'Running'
+        WHERE sport IN ('10K','5K','Half Marathon','Marathon','Ultra Marathon','Trail Running','Cross Country') AND sport_category = 'Running';
+
+      -- Fix when sport field has a subtype value instead of category name (Triathlon)
+      UPDATE races SET sport = 'Triathlon'
+        WHERE sport IN ('Aquathlon','Half Ironman','Ironman','Olympic Triathlon','Sprint Triathlon','Olympic','Sprint') AND sport_category = 'Triathlon';
+
+      -- Fix Triathlon: bad sport_category values -> Triathlon
+      UPDATE races SET sport_category = 'Triathlon'
+        WHERE sport = 'Triathlon' AND sport_category IN ('Long Distance','Middle Distance','Multi','Multisport','Off-Road Triathlon','Sprint Distance','Standard Distance');
+
+      -- Fix Triathlon subtypes that are not in the taxonomy -> Custom Distance
+      UPDATE races SET sport_subtype = 'Custom Distance'
+        WHERE sport = 'Triathlon' AND sport_category = 'Triathlon'
+        AND sport_subtype NOT IN ('Sprint','Olympic','Half Ironman','Ironman','Aquathlon','Duathlon','Custom Distance')
+        AND sport_subtype IS NOT NULL AND sport_subtype != '';
+
+      -- Fix Road Cycling: sport_category should be Cycling
+      UPDATE races SET sport_category = 'Cycling' WHERE sport = 'Cycling' AND sport_category = 'Road Cycling';
+
+      -- Fix Cycling subtypes not in taxonomy -> Custom Distance
+      UPDATE races SET sport_subtype = 'Custom Distance'
+        WHERE sport = 'Cycling' AND sport_category = 'Cycling'
+        AND sport_subtype NOT IN ('Criterium','Gran Fondo','Mountain Biking','Road Race','Custom Distance')
+        AND sport_subtype IS NOT NULL AND sport_subtype != '';
+
+      -- Fix Running races with null/empty sport_category
+      UPDATE races SET sport_category = 'Running'
+        WHERE sport = 'Running' AND (sport_category IS NULL OR sport_category = '');
+
+      -- Fix Triathlon races with null/empty sport_category
+      UPDATE races SET sport_category = 'Triathlon'
+        WHERE sport = 'Triathlon' AND (sport_category IS NULL OR sport_category = '');
+
+      -- Fix Fitness races with null/empty sport_category
+      UPDATE races SET sport_category = 'Fitness'
+        WHERE sport = 'Fitness' AND (sport_category IS NULL OR sport_category = '');
+
+      -- Fix empty sport field where sport_category is valid
+      UPDATE races SET sport = sport_category
+        WHERE (sport IS NULL OR sport = '') AND sport_category IN ('Running','Triathlon','Cycling','Fitness','Swimming','Custom');
+
+      -- Fix Triathlon races with empty sport_subtype
+      UPDATE races SET sport_subtype = 'Custom Distance'
+        WHERE sport = 'Triathlon' AND sport_category = 'Triathlon' AND (sport_subtype IS NULL OR sport_subtype = '');
+    `);
+    console.log('✓ Race sport data normalized successfully');
+  } catch (error) {
+    console.error('Error normalizing race data:', error);
+  }
+}
+
+// Run database initialization then normalize data
+initializeDatabase().then(() => normalizeRaceData());
 
 if (!process.env.ADMIN_PASSWORD) {
   console.error('FATAL: ADMIN_PASSWORD environment variable is not set. Server cannot start.');
