@@ -104,7 +104,14 @@ export const DiscoverScreen = ({ navigation }) => {
       }
       if (selectedContinent && race.continent !== selectedContinent) return false;
       if (selectedCountry && race.country !== selectedCountry) return false;
-      if (searchQuery && !race.city?.toLowerCase().includes(searchQuery.toLowerCase())) return false;
+      if (searchQuery) {
+        const q = searchQuery.toLowerCase();
+        const matchesName = race.name?.toLowerCase().includes(q);
+        const matchesCity = race.city?.toLowerCase().includes(q);
+        const matchesCountry = race.country?.toLowerCase().includes(q);
+        const matchesSport = race.sport_category?.toLowerCase().includes(q) || race.sport_subtype?.toLowerCase().includes(q);
+        if (!matchesName && !matchesCity && !matchesCountry && !matchesSport) return false;
+      }
       return true;
     });
   }, [races, selectedCategory, selectedSubtype, selectedContinent, selectedCountry, searchQuery, dateFilterOption, dateFilterMonth]);
@@ -130,7 +137,7 @@ export const DiscoverScreen = ({ navigation }) => {
       filters.push({ type: 'country', label: selectedCountry });
     }
     if (searchQuery) {
-      filters.push({ type: 'search', label: `${t('city')}: ${searchQuery}` });
+      filters.push({ type: 'search', label: `"${searchQuery}"` });
     }
     return filters;
   }, [dateFilterOption, dateFilterMonth, selectedCategory, selectedSubtype, selectedContinent, selectedCountry, searchQuery]);
