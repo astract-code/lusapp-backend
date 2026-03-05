@@ -14,6 +14,8 @@ import {
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useFocusEffect } from '@react-navigation/native';
+import { useHeaderHeight } from '@react-navigation/elements';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTheme } from '../context/ThemeContext';
 import { useAuth } from '../context/AuthContext';
 import { useLanguage } from '../context/LanguageContext';
@@ -26,6 +28,8 @@ export const ChatScreen = ({ route, navigation }) => {
   const { colors } = useTheme();
   const { user: currentUser, token } = useAuth();
   const { t } = useLanguage();
+  const headerHeight = useHeaderHeight();
+  const insets = useSafeAreaInsets();
   const [messages, setMessages] = useState([]);
   const [inputText, setInputText] = useState('');
   const [loading, setLoading] = useState(true);
@@ -274,41 +278,40 @@ export const ChatScreen = ({ route, navigation }) => {
 
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
-      <View style={[styles.statusBar, { backgroundColor: colors.card, borderBottomColor: colors.border }]}>
-        <View style={styles.statusContent}>
-          <View style={[styles.onlineIndicator, { backgroundColor: otherUserOnline ? '#4ADE80' : colors.textSecondary }]} />
-          <Text style={[styles.statusText, { color: colors.textSecondary }]}>
-            {otherUserOnline ? t('online') : `${t('lastSeen')} ${formatLastActive(otherUserLastActive)}`}
-          </Text>
-        </View>
-      </View>
-
-      {showSearch && (
-        <View style={[styles.searchContainer, { backgroundColor: colors.card }]}>
-          <TextInput
-            style={[styles.searchInput, { backgroundColor: colors.background, color: colors.text }]}
-            placeholder={t('searchMessages')}
-            placeholderTextColor={colors.textSecondary}
-            value={searchQuery}
-            onChangeText={setSearchQuery}
-            onSubmitEditing={handleSearch}
-            returnKeyType="search"
-          />
-          {searchResults.length > 0 && (
-            <View style={styles.searchResults}>
-              <Text style={[styles.searchResultsCount, { color: colors.textSecondary }]}>
-                {searchResults.length} {t('resultsFound')}
-              </Text>
-            </View>
-          )}
-        </View>
-      )}
-
       <KeyboardAvoidingView
         style={styles.keyboardView}
-        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-        keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : 0}
+        behavior="padding"
+        keyboardVerticalOffset={Platform.OS === 'ios' ? headerHeight : insets.bottom}
       >
+        <View style={[styles.statusBar, { backgroundColor: colors.card, borderBottomColor: colors.border }]}>
+          <View style={styles.statusContent}>
+            <View style={[styles.onlineIndicator, { backgroundColor: otherUserOnline ? '#4ADE80' : colors.textSecondary }]} />
+            <Text style={[styles.statusText, { color: colors.textSecondary }]}>
+              {otherUserOnline ? t('online') : `${t('lastSeen')} ${formatLastActive(otherUserLastActive)}`}
+            </Text>
+          </View>
+        </View>
+
+        {showSearch && (
+          <View style={[styles.searchContainer, { backgroundColor: colors.card }]}>
+            <TextInput
+              style={[styles.searchInput, { backgroundColor: colors.background, color: colors.text }]}
+              placeholder={t('searchMessages')}
+              placeholderTextColor={colors.textSecondary}
+              value={searchQuery}
+              onChangeText={setSearchQuery}
+              onSubmitEditing={handleSearch}
+              returnKeyType="search"
+            />
+            {searchResults.length > 0 && (
+              <View style={styles.searchResults}>
+                <Text style={[styles.searchResultsCount, { color: colors.textSecondary }]}>
+                  {searchResults.length} {t('resultsFound')}
+                </Text>
+              </View>
+            )}
+          </View>
+        )}
         {messages.length === 0 ? (
           <View style={styles.emptyContainer}>
             <Ionicons name="chatbubbles-outline" size={64} color={colors.textSecondary} />
