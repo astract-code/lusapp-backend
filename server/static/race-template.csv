@@ -1,3 +1,5 @@
 name,sport,sport_category,sport_subtype,city,country,continent,date,start_time,distance,description,participants
-Sample Marathon,Running,Road Running,Marathon,New York,USA,North America,2025-12-15,08:00,42.2km,Annual city marathon,5000
-Sample Triathlon,Triathlon,Standard Distance,,Miami,USA,North America,2025-11-20,07:00,Standard,Olympic distance triathlon,1200
+Barcelona Marathon 2026,Running,Running,Marathon,Barcelona,Spain,Europe,2026-03-15,09:00,42.2km,Annual street marathon through the city,20000
+HYROX Madrid 2026,Fitness,Fitness,HYROX,Madrid,Spain,Europe,2026-04-20,08:00,,Official HYROX competition,3000
+Ironman Vitoria-Gasteiz,Triathlon,Triathlon,Ironman,Vitoria-Gasteiz,Spain,Europe,2026-07-12,07:00,,Full distance triathlon,2500
+Donostia 10K,Running,Running,10K,San Sebastian,Spain,Europe,2026-06-07,10:00,10km,City centre road race,8000

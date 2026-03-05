@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lusapp – CSV Import Guide</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f4f6f9; color: #1a1a2e; font-size: 15px; line-height: 1.7; }
+    .page { max-width: 900px; margin: 0 auto; padding: 40px 30px; }
+
+    h1 { font-size: 28px; color: #0f172a; margin-bottom: 6px; }
+    .subtitle { color: #64748b; font-size: 15px; margin-bottom: 36px; }
+
+    h2 { font-size: 18px; color: #0f172a; margin: 36px 0 12px; padding-bottom: 6px; border-bottom: 2px solid #e2e8f0; }
+    h3 { font-size: 15px; color: #1e40af; margin: 20px 0 8px; }
+
+    p { margin-bottom: 12px; }
+
+    .alert { border-radius: 8px; padding: 14px 18px; margin: 16px 0; font-size: 14px; }
+    .alert-red   { background: #fef2f2; border-left: 4px solid #ef4444; color: #7f1d1d; }
+    .alert-amber { background: #fffbeb; border-left: 4px solid #f59e0b; color: #78350f; }
+    .alert-green { background: #f0fdf4; border-left: 4px solid #22c55e; color: #14532d; }
+    .alert-blue  { background: #eff6ff; border-left: 4px solid #3b82f6; color: #1e3a8a; }
+    .alert strong { display: block; margin-bottom: 4px; font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px; }
+
+    table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 14px; }
+    thead tr { background: #0f172a; color: #fff; }
+    th { padding: 10px 14px; text-align: left; font-weight: 600; }
+    td { padding: 9px 14px; border-bottom: 1px solid #e2e8f0; vertical-align: top; }
+    tr:nth-child(even) { background: #f8fafc; }
+    .req { color: #ef4444; font-weight: 700; font-size: 12px; }
+    .opt { color: #94a3b8; font-size: 12px; }
+    .mono { font-family: 'Courier New', monospace; font-size: 13px; background: #f1f5f9; padding: 1px 5px; border-radius: 3px; }
+
+    .taxonomy-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 16px 0; }
+    .taxonomy-card { background: #fff; border: 1px solid #e2e8f0; border-radius: 10px; padding: 16px; }
+    .taxonomy-card .cat { font-weight: 700; font-size: 15px; margin-bottom: 8px; padding: 4px 10px; border-radius: 20px; display: inline-block; }
+    .cat-running  { background: #dcfce7; color: #166534; }
+    .cat-tri      { background: #dbeafe; color: #1e40af; }
+    .cat-cycling  { background: #ede9fe; color: #5b21b6; }
+    .cat-fitness  { background: #ffedd5; color: #9a3412; }
+    .cat-swim     { background: #cffafe; color: #155e75; }
+    .cat-custom   { background: #f1f5f9; color: #475569; }
+    .taxonomy-card ul { list-style: none; margin-top: 8px; }
+    .taxonomy-card ul li { font-size: 14px; padding: 2px 0; color: #334155; }
+    .taxonomy-card ul li::before { content: "→ "; color: #94a3b8; }
+
+    .example-csv { background: #0f172a; color: #e2e8f0; border-radius: 10px; padding: 20px; overflow-x: auto; margin: 16px 0; font-family: 'Courier New', monospace; font-size: 12px; line-height: 1.9; white-space: pre; }
+    .csv-header { color: #7dd3fc; }
+    .csv-ok     { color: #86efac; }
+    .csv-bad    { color: #fca5a5; text-decoration: line-through; }
+
+    .continent-grid { display: flex; flex-wrap: wrap; gap: 10px; margin: 12px 0; }
+    .continent-pill { background: #fff; border: 1px solid #cbd5e1; border-radius: 20px; padding: 5px 14px; font-size: 14px; font-weight: 500; }
+
+    .date-examples { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 12px 0; }
+    .ex-good { background: #f0fdf4; border: 1px solid #86efac; border-radius: 8px; padding: 12px; font-size: 14px; }
+    .ex-bad  { background: #fef2f2; border: 1px solid #fca5a5; border-radius: 8px; padding: 12px; font-size: 14px; text-decoration: line-through; color: #ef4444; }
+    .ex-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
+    .ex-good .ex-label { color: #16a34a; }
+    .ex-bad  .ex-label { color: #dc2626; }
+
+    .skip-reasons { background: #fff; border: 1px solid #fbbf24; border-radius: 10px; padding: 16px 20px; margin: 16px 0; }
+    .skip-reasons li { font-size: 14px; padding: 5px 0; border-bottom: 1px solid #fef3c7; }
+    .skip-reasons li:last-child { border-bottom: none; }
+
+    .checklist { background: #fff; border: 1px solid #e2e8f0; border-radius: 10px; padding: 16px 20px; margin: 16px 0; }
+    .checklist li { font-size: 14px; padding: 6px 0; border-bottom: 1px solid #f1f5f9; list-style: none; }
+    .checklist li:last-child { border-bottom: none; }
+    .checklist li::before { content: "☐ "; font-size: 16px; }
+
+    .footer { text-align: center; color: #94a3b8; font-size: 12px; margin-top: 60px; padding-top: 20px; border-top: 1px solid #e2e8f0; }
+
+    @media print {
+      body { background: #fff; }
+      .page { padding: 20px; }
+      .taxonomy-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 600px) {
+      .taxonomy-grid { grid-template-columns: 1fr; }
+      .date-examples { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <h1>Lusapp – CSV Race Import Guide</h1>
+  <p class="subtitle">Step-by-step rules for preparing your CSV file so every race imports correctly into the app.</p>
+
+  <div class="alert alert-red">
+    <strong>Critical – Read First</strong>
+    If <code>sport_category</code>, <code>sport_subtype</code>, or <code>date</code> contain any error, that entire row is silently skipped and never appears in the app. There is no error shown in the app — the race simply does not get imported. Follow the rules below exactly.
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════ -->
+  <h2>1. Column Names</h2>
+
+  <p>Your CSV file must have these exact column names in the first row (header row). Capitalisation matters.</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Column Name</th>
+        <th>Required?</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="mono">name</span></td>
+        <td><span class="req">REQUIRED</span></td>
+        <td>Full name of the race or event</td>
+      </tr>
+      <tr>
+        <td><span class="mono">sport</span></td>
+        <td><span class="req">REQUIRED</span></td>
+        <td>Same value as <span class="mono">sport_category</span> — write the same word in both columns</td>
+      </tr>
+      <tr>
+        <td><span class="mono">sport_category</span></td>
+        <td><span class="req">REQUIRED</span></td>
+        <td>The sport group. Must be one of exactly 6 values — see Section 2</td>
+      </tr>
+      <tr>
+        <td><span class="mono">sport_subtype</span></td>
+        <td><span class="req">REQUIRED</span></td>
+        <td>The specific type within the sport. Must match exactly — see Section 2</td>
+      </tr>
+      <tr>
+        <td><span class="mono">city</span></td>
+        <td><span class="req">REQUIRED</span></td>
+        <td>City where the race takes place (used for search and filtering)</td>
+      </tr>
+      <tr>
+        <td><span class="mono">country</span></td>
+        <td><span class="req">REQUIRED</span></td>
+        <td>Country where the race takes place (used for filtering)</td>
+      </tr>
+      <tr>
+        <td><span class="mono">continent</span></td>
+        <td><span class="req">REQUIRED</span></td>
+        <td>Continent — must be one of 6 exact values — see Section 3</td>
+      </tr>
+      <tr>
+        <td><span class="mono">date</span></td>
+        <td><span class="req">REQUIRED</span></td>
+        <td>Race date in YYYY-MM-DD format — see Section 4</td>
+      </tr>
+      <tr>
+        <td><span class="mono">start_time</span></td>
+        <td><span class="opt">optional</span></td>
+        <td>Start time in HH:MM format, e.g. <span class="mono">08:00</span>. Leave blank if unknown.</td>
+      </tr>
+      <tr>
+        <td><span class="mono">distance</span></td>
+        <td><span class="opt">optional</span></td>
+        <td>Free text distance, e.g. <span class="mono">42.2km</span> or <span class="mono">10 miles</span>. The app automatically shows standard distances for known race types, so you can leave this blank.</td>
+      </tr>
+      <tr>
+        <td><span class="mono">description</span></td>
+        <td><span class="opt">optional</span></td>
+        <td>Short description of the race. Keep it under a few sentences.</td>
+      </tr>
+      <tr>
+        <td><span class="mono">participants</span></td>
+        <td><span class="opt">optional</span></td>
+        <td>Expected number of participants. Must be a whole number with no commas or symbols, e.g. <span class="mono">5000</span>.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="alert alert-amber">
+    <strong>Note on column order</strong>
+    The order of columns does not matter — the system reads by column name. But all column names must be spelled exactly as shown above, with underscores where shown.
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════ -->
+  <h2>2. Sport Category & Subtype — Exact Values Only</h2>
+
+  <p>These two columns are the most critical. The system checks both values against a fixed list. <strong>One wrong character, one wrong capitalisation, one extra space — and the row is skipped.</strong></p>
+
+  <div class="taxonomy-grid">
+
+    <div class="taxonomy-card">
+      <span class="cat cat-running">Running</span>
+      <ul>
+        <li>5K</li>
+        <li>10K</li>
+        <li>Half Marathon</li>
+        <li>Marathon</li>
+        <li>Ultra Marathon</li>
+        <li>Trail Running</li>
+        <li>Cross Country</li>
+        <li>Custom Distance</li>
+      </ul>
+    </div>
+
+    <div class="taxonomy-card">
+      <span class="cat cat-tri">Triathlon</span>
+      <ul>
+        <li>Sprint</li>
+        <li>Olympic</li>
+        <li>Half Ironman</li>
+        <li>Ironman</li>
+        <li>Aquathlon</li>
+        <li>Duathlon</li>
+        <li>Custom Distance</li>
+      </ul>
+    </div>
+
+    <div class="taxonomy-card">
+      <span class="cat cat-cycling">Cycling</span>
+      <ul>
+        <li>Criterium</li>
+        <li>Gran Fondo</li>
+        <li>Mountain Biking</li>
+        <li>Road Race</li>
+        <li>Custom Distance</li>
+      </ul>
+    </div>
+
+    <div class="taxonomy-card">
+      <span class="cat cat-fitness">Fitness</span>
+      <ul>
+        <li>Spartan Race</li>
+        <li>HYROX</li>
+        <li>Obstacle Course</li>
+        <li>CrossFit</li>
+        <li>Bootcamp</li>
+        <li>Custom Distance</li>
+      </ul>
+    </div>
+
+    <div class="taxonomy-card">
+      <span class="cat cat-swim">Swimming</span>
+      <ul>
+        <li>Open Water Swim</li>
+        <li>Pool Competition</li>
+        <li>Custom Distance</li>
+      </ul>
+    </div>
+
+    <div class="taxonomy-card">
+      <span class="cat cat-custom">Custom</span>
+      <ul>
+        <li>Custom Event</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <h3>Common mistakes that will skip the row</h3>
+  <table>
+    <thead>
+      <tr><th>What you wrote</th><th>What it must be</th><th>Why it fails</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><span class="mono">Road Running</span></td><td><span class="mono">Running</span></td><td>Not a valid category name</td></tr>
+      <tr><td><span class="mono">running</span></td><td><span class="mono">Running</span></td><td>Wrong capitalisation</td></tr>
+      <tr><td><span class="mono">Fitness Race</span></td><td><span class="mono">Fitness</span></td><td>Extra word</td></tr>
+      <tr><td><span class="mono">fitness</span></td><td><span class="mono">Fitness</span></td><td>Wrong capitalisation</td></tr>
+      <tr><td><span class="mono">Hyrox</span></td><td><span class="mono">HYROX</span></td><td>Wrong capitalisation — all caps</td></tr>
+      <tr><td><span class="mono">half marathon</span></td><td><span class="mono">Half Marathon</span></td><td>Wrong capitalisation</td></tr>
+      <tr><td><span class="mono">Half-Marathon</span></td><td><span class="mono">Half Marathon</span></td><td>Hyphen instead of space</td></tr>
+      <tr><td><span class="mono">Standard Distance</span></td><td><span class="mono">Olympic</span> or <span class="mono">Custom Distance</span></td><td>Not a valid subtype for Triathlon</td></tr>
+      <tr><td><span class="mono">Trail run</span></td><td><span class="mono">Trail Running</span></td><td>Wrong word, wrong capitalisation</td></tr>
+      <tr><td><span class="mono">Spartan</span></td><td><span class="mono">Spartan Race</span></td><td>Missing the word Race</td></tr>
+      <tr><td><span class="mono">Open Water</span></td><td><span class="mono">Open Water Swim</span></td><td>Missing the word Swim</td></tr>
+      <tr><td><span class="mono">Swim</span></td><td><span class="mono">Swimming</span></td><td>Wrong category name</td></tr>
+    </tbody>
+  </table>
+
+  <div class="alert alert-blue">
+    <strong>Tip — when in doubt, use Custom Distance</strong>
+    If the race type exists in the app but the exact subtype doesn't fit, use <span class="mono">Custom Distance</span> as the <span class="mono">sport_subtype</span>. It is available for Running, Triathlon, Cycling, Fitness, and Swimming. For any completely different event, use <span class="mono">Custom</span> as the category and <span class="mono">Custom Event</span> as the subtype.
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════ -->
+  <h2>3. Continent — Exact Values Only</h2>
+
+  <p>The continent column must contain exactly one of these six values, spelled and capitalised as shown:</p>
+
+  <div class="continent-grid">
+    <span class="continent-pill">Africa</span>
+    <span class="continent-pill">Asia</span>
+    <span class="continent-pill">Europe</span>
+    <span class="continent-pill">North America</span>
+    <span class="continent-pill">South America</span>
+    <span class="continent-pill">Oceania</span>
+  </div>
+
+  <table>
+    <thead>
+      <tr><th>Wrong</th><th>Correct</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><span class="mono">europe</span></td><td><span class="mono">Europe</span></td></tr>
+      <tr><td><span class="mono">North america</span></td><td><span class="mono">North America</span></td></tr>
+      <tr><td><span class="mono">S. America</span></td><td><span class="mono">South America</span></td></tr>
+      <tr><td><span class="mono">Australia</span></td><td><span class="mono">Oceania</span></td></tr>
+      <tr><td><span class="mono">Americas</span></td><td>Use <span class="mono">North America</span> or <span class="mono">South America</span></td></tr>
+    </tbody>
+  </table>
+
+  <div class="alert alert-amber">
+    <strong>Australia, New Zealand, and Pacific islands</strong>
+    All races in Australia, New Zealand, Papua New Guinea, Fiji, and all Pacific island nations must use <span class="mono">Oceania</span>, not the country name.
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════ -->
+  <h2>4. Date Format</h2>
+
+  <p>The date column must follow the <strong>YYYY-MM-DD</strong> format exactly. Any other format causes the row to be skipped.</p>
+
+  <div class="date-examples">
+    <div class="ex-good">
+      <div class="ex-label">✓ Correct</div>
+      <div class="mono">2025-12-25</div>
+      <div class="mono">2026-04-05</div>
+      <div class="mono">2026-01-01</div>
+    </div>
+    <div class="ex-bad">
+      <div class="ex-label">✗ Wrong — row will be skipped</div>
+      <div class="mono">25/12/2025</div>
+      <div class="mono">December 25, 2025</div>
+      <div class="mono">25-12-2025</div>
+    </div>
+  </div>
+
+  <p>Always use four digits for the year, two digits for the month, and two digits for the day. January = 01, not 1.</p>
+
+
+  <!-- ═══════════════════════════════════════════ -->
+  <h2>5. Duplicate Detection</h2>
+
+  <p>The system automatically skips any row where a race with the same <strong>name</strong> (case-insensitive) and the same <strong>date</strong> already exists in the database. This prevents accidental double imports.</p>
+
+  <p>If a race was previously imported and you need to update it (change city, description, etc.), you must edit it directly in the admin panel — you cannot update existing races by re-uploading the CSV.</p>
+
+
+  <!-- ═══════════════════════════════════════════ -->
+  <h2>6. After Import</h2>
+
+  <div class="alert alert-green">
+    <strong>Races imported via CSV are automatically approved</strong>
+    They appear immediately in the app for all users. No admin approval step is needed after a CSV upload.
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════ -->
+  <h2>7. Complete Example</h2>
+
+  <p>Below is a correctly formatted CSV with four different race types. Copy this as a starting point.</p>
+
+  <div class="example-csv"><span class="csv-header">name,sport,sport_category,sport_subtype,city,country,continent,date,start_time,distance,description,participants</span>
+<span class="csv-ok">Barcelona Marathon 2026,Running,Running,Marathon,Barcelona,Spain,Europe,2026-03-15,09:00,42.2km,Annual street marathon through the city,20000</span>
+<span class="csv-ok">HYROX Madrid 2026,Fitness,Fitness,HYROX,Madrid,Spain,Europe,2026-04-20,08:00,,Official HYROX competition,3000</span>
+<span class="csv-ok">Ironman Vitoria-Gasteiz,Triathlon,Triathlon,Ironman,Vitoria-Gasteiz,Spain,Europe,2026-07-12,07:00,,Full distance triathlon,2500</span>
+<span class="csv-ok">Donostia 10K,Running,Running,10K,San Sebastian,Spain,Europe,2026-06-07,10:00,10km,City centre road race,8000</span>
+<span class="csv-ok">Open Water Zarautz,Swimming,Swimming,Open Water Swim,Zarautz,Spain,Europe,2026-08-22,09:30,3km,Atlantic ocean swim,400</span>
+<span class="csv-ok">Pyrenees Gran Fondo,Cycling,Cycling,Gran Fondo,Jaca,Spain,Europe,2026-09-05,07:30,180km,Mountain cycling challenge,1200</span></div>
+
+  <h3>Common errors shown in context</h3>
+
+  <div class="example-csv"><span class="csv-header">name,sport,sport_category,sport_subtype,city,country,continent,date,start_time,distance,description,participants</span>
+<span class="csv-bad">Bad Marathon,Running,Road Running,Marathon,London,UK,Europe,2026-05-10,09:00,42.2km,Example,5000</span>   ← SKIPPED: sport_category "Road Running" is invalid
+<span class="csv-bad">Bad HYROX,Fitness,Fitness,Hyrox,Berlin,Germany,Europe,2026-05-11,08:00,,Example,1000</span>             ← SKIPPED: sport_subtype "Hyrox" must be "HYROX" (all caps)
+<span class="csv-bad">Bad Tri,Triathlon,Triathlon,Standard Distance,Nice,France,Europe,2026-06-01,07:00,,Example,800</span>     ← SKIPPED: "Standard Distance" is not valid; use "Olympic" or "Custom Distance"
+<span class="csv-bad">Bad Date Race,Running,Running,5K,Paris,France,Europe,15/06/2026,08:00,5km,Example,2000</span>            ← SKIPPED: date format wrong; must be 2026-06-15</div>
+
+
+  <!-- ═══════════════════════════════════════════ -->
+  <h2>8. Pre-Upload Checklist</h2>
+
+  <p>Before uploading your CSV, go through this list:</p>
+
+  <ul class="checklist">
+    <li>Column header names are spelled exactly as listed in Section 1 (no spaces, underscores where shown)</li>
+    <li>Every row has a value in <span class="mono">name</span>, <span class="mono">sport_category</span>, <span class="mono">sport_subtype</span>, and <span class="mono">date</span></li>
+    <li><span class="mono">sport_category</span> is one of: Running, Triathlon, Cycling, Fitness, Swimming, Custom</li>
+    <li><span class="mono">sport_subtype</span> matches exactly one of the subtypes for that category (copy-paste from Section 2)</li>
+    <li><span class="mono">sport</span> contains the same value as <span class="mono">sport_category</span></li>
+    <li><span class="mono">continent</span> is one of the six values from Section 3</li>
+    <li>All dates are in YYYY-MM-DD format</li>
+    <li>No race name + date combination already exists in the database</li>
+    <li>The file is saved as plain CSV (not Excel .xlsx) with UTF-8 encoding</li>
+    <li>Numbers in <span class="mono">participants</span> have no commas (e.g. <span class="mono">5000</span>, not <span class="mono">5,000</span>)</li>
+    <li>Text fields containing commas are wrapped in double quotes (most spreadsheet apps do this automatically)</li>
+  </ul>
+
+  <div class="alert alert-blue">
+    <strong>Saving from Excel or Google Sheets</strong>
+    In Excel: File → Save As → CSV UTF-8 (Comma delimited) (.csv)<br>
+    In Google Sheets: File → Download → Comma-separated values (.csv)
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════ -->
+  <h2>9. Why Was My Row Skipped?</h2>
+
+  <p>After uploading, the admin panel shows how many rows were imported and how many were skipped. If rows were skipped, the most likely reasons are:</p>
+
+  <ul class="skip-reasons">
+    <li><strong>Wrong sport_category</strong> — Does not exactly match one of: Running, Triathlon, Cycling, Fitness, Swimming, Custom</li>
+    <li><strong>Wrong sport_subtype</strong> — Does not exactly match a valid subtype for that category (see Section 2)</li>
+    <li><strong>Wrong date format</strong> — Date is not in YYYY-MM-DD format</li>
+    <li><strong>Missing name or date</strong> — One of those required fields is empty</li>
+    <li><strong>Duplicate</strong> — A race with the same name and date already exists in the database</li>
+    <li><strong>Extra spaces</strong> — A value like <span class="mono">" Running"</span> (with a leading space) will fail. Make sure there are no accidental spaces before or after values.</li>
+  </ul>
+
+  <div class="footer">
+    Lusapp CSV Import Guide · Generated for admin use · Last updated March 2026
+  </div>
+
+</div>
+</body>
+</html>
