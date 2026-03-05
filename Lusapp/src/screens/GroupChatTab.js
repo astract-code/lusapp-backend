@@ -6,11 +6,13 @@ import {
   FlatList,
   TextInput,
   TouchableOpacity,
+  KeyboardAvoidingView,
   Platform,
   Image,
   Alert,
   ActivityIndicator,
 } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { useFocusEffect } from '@react-navigation/native';
 import { useTheme } from '../context/ThemeContext';
@@ -24,6 +26,7 @@ export const GroupChatTab = ({ groupId }) => {
   const { colors } = useTheme();
   const { user: currentUser, token } = useAuth();
   const { t } = useLanguage();
+  const insets = useSafeAreaInsets();
   const [messages, setMessages] = useState([]);
   const [inputText, setInputText] = useState('');
   const [sending, setSending] = useState(false);
@@ -287,7 +290,11 @@ export const GroupChatTab = ({ groupId }) => {
   };
 
   return (
-    <View style={styles.container}>
+    <KeyboardAvoidingView
+      style={styles.container}
+      behavior={Platform.OS === 'android' ? 'padding' : undefined}
+      keyboardVerticalOffset={Platform.OS === 'android' ? insets.bottom : 0}
+    >
       {showSearch && (
         <View style={[styles.searchContainer, { backgroundColor: colors.card }]}>
           <TextInput
@@ -443,7 +450,7 @@ export const GroupChatTab = ({ groupId }) => {
       <Text style={[styles.hint, { color: colors.textSecondary }]}>
         {t('longPressToDelete')}
       </Text>
-    </View>
+    </KeyboardAvoidingView>
   );
 };
 
