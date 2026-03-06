@@ -1,0 +1,34 @@
+Gemini said
+This is a classic "Edge-to-Edge" headache in the Android ecosystem. When you tell an app to ignore the safety of the system bars, you’re essentially taking over the manual labor that the OS usually handles for you.
+
+Here is a breakdown of why these specific issues happen and how the fixes actually resolve the layout math.
+
+1. The Keyboard Collision
+In standard apps, Android performs a "resize" (adjustResize) where the entire app window shrinks to fit the space above the keyboard. In edge-to-edge mode, this is disabled because the app is "bleeding" into the system areas.
+
+The Conflict
+The KeyboardAvoidingView is trying to calculate how much to "push" the content. Since your app is drawing behind the navigation bar, the math gets fuzzy.
+
+The Error: If the app thinks the screen ends above the navigation bar, but the keyboard height is measured from the very bottom of the glass, you end up with a calculation gap.
+
+The Fix: By using behavior="height", you are telling the container to physically change its own height rather than just shifting the view up (padding). Setting the offset to zero ensures the calculation starts exactly where the keyboard begins, preventing that "jumping" effect.
+
+2. The Vanishing Tab Bar
+This is a "sharing" problem. Usually, a tab bar sits comfortably above the system navigation bar. In edge-to-edge mode, they occupy the same physical real estate.
+
+The Math Problem
+React Navigation thinks the height you provide (e.g., 75px) is the total available space at the bottom of the screen.
+
+Component	standard Mode	Edge-to-Edge (The Bug)
+System Nav Bar	Sits below the app	Occupies ~48px of the app's space
+App Tab Bar	Gets full 75px	Gets 75px minus the 48px system bar
+Visible Result	Perfect icons	27px of "squashed" icons
+The Fix: Dynamic Insets
+The solution is to use Insets. By detecting the safeAreaInsets.bottom (the height of that system bar), you add it to your desired tab bar height. If you want 75px of usable space and the system bar is 48px, you tell React Navigation the height is 123px.
+
+Summary of the Android "Tax"
+On iOS, the system handles these "safe areas" with a more unified logic. On Android, because of the variety of navigation styles (3-button, 2-button, or full gesture), the "safe area" changes size constantly.
+
+The Golden Rule for Edge-to-Edge: Always treat the "bottom" of your app as a variable, never a fixed number.
+
+Would you like me to draft a technical ticket for a developer detailing the specific React Native props and hooks (like useSafeAreaInsets) needed to implement these fixes?
