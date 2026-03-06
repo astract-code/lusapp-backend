@@ -405,7 +405,7 @@ export const AppNavigator = () => {
           backgroundColor: isDark ? '#0B0F1A' : '#FFFFFF',
           borderTopWidth: 1,
           borderTopColor: isDark ? 'rgba(255,255,255,0.08)' : '#F1F5F9',
-          paddingBottom: 10,
+          paddingBottom: Platform.OS === 'android' ? insets.bottom : 10,
           paddingTop: 10,
           height: Platform.OS === 'android' ? 75 + insets.bottom : 75,
           elevation: 20,
