@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { useColorScheme, Text, TouchableOpacity } from 'react-native';
+import { useColorScheme, Text, TouchableOpacity, Platform } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useFocusEffect } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 import { COLORS } from '../constants/theme';
@@ -352,6 +353,7 @@ export const AppNavigator = () => {
   const colorScheme = useColorScheme();
   const theme = COLORS[colorScheme] || COLORS.light;
   const { token } = useAuth();
+  const insets = useSafeAreaInsets();
   const [unreadMessages, setUnreadMessages] = useState(0);
   const [unreadGroups, setUnreadGroups] = useState(0);
 
@@ -405,7 +407,7 @@ export const AppNavigator = () => {
           borderTopColor: isDark ? 'rgba(255,255,255,0.08)' : '#F1F5F9',
           paddingBottom: 10,
           paddingTop: 10,
-          height: 75,
+          height: Platform.OS === 'android' ? 75 + insets.bottom : 75,
           elevation: 20,
           shadowColor: '#000',
           shadowOffset: { width: 0, height: -4 },
