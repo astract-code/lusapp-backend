@@ -621,9 +621,12 @@ app.post('/api/races/csv-upload', noCors, csrfProtection, adminAuth, csvUpload.s
       .on('data', (data) => results.push(data))
       .on('end', async () => {
         let imported = 0;
-        let skipped = 0;
+        let invalidRows = 0;
+        let pastDates = 0;
         const duplicates = [];
-        
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+
         for (const row of results) {
           try {
             const name = row.name || row.eventName || row['Event Name'];
@@ -633,12 +636,12 @@ app.post('/api/races/csv-upload', noCors, csrfProtection, adminAuth, csvUpload.s
             
             if (!sport_category || !VALID_SPORT_CATEGORIES.includes(sport_category)) {
               console.warn(`Skipping row with invalid sport_category: "${name}" - category: "${sport_category}"`);
-              skipped++;
+              invalidRows++;
               continue;
             }
             if (!sport_subtype || !VALID_SPORT_TAXONOMY[sport_category].includes(sport_subtype)) {
               console.warn(`Skipping row with invalid sport_subtype: "${name}" - subtype: "${sport_subtype}" for category: "${sport_category}"`);
-              skipped++;
+              invalidRows++;
               continue;
             }
             const city = row.city || row.location;
@@ -654,45 +657,58 @@ app.post('/api/races/csv-upload', noCors, csrfProtection, adminAuth, csvUpload.s
             const datePattern = /^\d{4}-\d{2}-\d{2}$/;
             if (!date || !datePattern.test(date)) {
               console.warn(`Skipping row with invalid date format: "${name}" - date: "${date}"`);
-              skipped++;
+              invalidRows++;
               continue;
             }
 
-            if (name && date) {
-              // Check for duplicates - simplified: just check name + date
-              const duplicateCheck = await pool.query(
-                `SELECT id FROM races WHERE LOWER(name) = LOWER($1) AND date = $2`,
-                [name, date]
-              );
-              
-              if (duplicateCheck.rows.length > 0) {
-                duplicates.push(`${name} on ${date}`);
-                skipped++;
-                continue;
-              }
-              
-              await pool.query(
-                'INSERT INTO races (name, sport, sport_category, sport_subtype, city, country, continent, date, start_time, distance, description, participants, approval_status) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)',
-                [name, sport, sport_category, sport_subtype, city, country, continent, date, start_time, distance, description, participants, 'approved']
-              );
-              imported++;
-            } else {
-              console.warn(`Skipping row with missing name or date: "${name}" - date: "${date}"`);
-              skipped++;
+            if (!name) {
+              console.warn(`Skipping row with missing name`);
+              invalidRows++;
+              continue;
             }
+
+            // Check if date has already passed
+            const raceDate = new Date(date);
+            if (raceDate < today) {
+              pastDates++;
+              continue;
+            }
+
+            // Check for duplicates
+            const duplicateCheck = await pool.query(
+              `SELECT id FROM races WHERE LOWER(name) = LOWER($1) AND date = $2`,
+              [name, date]
+            );
+            
+            if (duplicateCheck.rows.length > 0) {
+              duplicates.push(`${name} on ${date}`);
+              continue;
+            }
+            
+            await pool.query(
+              'INSERT INTO races (name, sport, sport_category, sport_subtype, city, country, continent, date, start_time, distance, description, participants, approval_status) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)',
+              [name, sport, sport_category, sport_subtype, city, country, continent, date, start_time, distance, description, participants, 'approved']
+            );
+            imported++;
           } catch (error) {
             console.error('Error importing row:', error);
-            skipped++;
+            invalidRows++;
           }
         }
 
+        // Get total races in DB after import
+        const countResult = await pool.query(`SELECT COUNT(*) as total FROM races WHERE approval_status = 'approved'`);
+        const totalInDb = parseInt(countResult.rows[0].total);
+
         res.json({ 
           success: true, 
-          imported, 
-          skipped,
-          total: results.length,
-          duplicates: duplicates.length > 0 ? duplicates.slice(0, 50) : undefined,
-          totalDuplicates: duplicates.length
+          imported,
+          duplicates: duplicates.slice(0, 50),
+          totalDuplicates: duplicates.length,
+          pastDates,
+          invalidRows,
+          totalInCsv: results.length,
+          totalInDb
         });
       });
   } catch (error) {

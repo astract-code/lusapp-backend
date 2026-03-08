@@ -323,16 +323,36 @@
     </div>
 
     <div id="upload-tab" class="tab-content">
-      <div id="upload-message"></div>
       <form id="csv-form" enctype="multipart/form-data">
         <div class="file-upload" onclick="document.getElementById('csv-file').click()">
           <input type="file" id="csv-file" accept=".csv" required>
           <p style="color: #667eea; font-size: 48px; margin-bottom: 10px;">📁</p>
-          <p style="color: #333; font-size: 18px; margin-bottom: 5px;">Click to select CSV file</p>
+          <p id="file-label" style="color: #333; font-size: 18px; margin-bottom: 5px;">Click to select CSV file</p>
           <p style="color: #666; font-size: 14px;">CSV should include: name, sport, city, country, continent, date, distance, description, participants</p>
         </div>
-        <button type="submit" class="btn btn-primary" style="margin-top: 20px;">Upload & Import</button>
+        <button type="submit" id="upload-btn" class="btn btn-primary" style="margin-top: 20px;">Upload & Import</button>
       </form>
+
+      <div id="upload-loading" style="display:none; text-align:center; padding: 30px;">
+        <div style="font-size: 36px; animation: spin 1s linear infinite; display:inline-block;">⏳</div>
+        <p style="color: #667eea; font-size: 16px; margin-top: 12px;">Uploading and importing races…</p>
+        <p style="color: #999; font-size: 13px;">This may take a moment for large files</p>
+      </div>
+
+      <div id="upload-result" style="display:none; margin-top: 24px;">
+        <div id="result-header" style="padding: 16px 20px; border-radius: 10px 10px 0 0; font-size: 18px; font-weight: bold;"></div>
+        <div style="background: #f9f9f9; border: 1px solid #e0e0e0; border-top: none; border-radius: 0 0 10px 10px; padding: 20px;">
+          <div id="result-stats" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-bottom: 16px;"></div>
+          <div id="result-duplicates"></div>
+        </div>
+      </div>
+
+      <style>
+        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        .stat-card { background: white; border: 1px solid #e0e0e0; border-radius: 8px; padding: 14px; text-align: center; }
+        .stat-card .stat-number { font-size: 28px; font-weight: bold; line-height: 1; }
+        .stat-card .stat-label { font-size: 12px; color: #666; margin-top: 4px; }
+      </style>
     </div>
 
     <div id="list-tab" class="tab-content">
@@ -483,14 +503,29 @@
       }
     });
 
+    document.getElementById('csv-file').addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      document.getElementById('file-label').textContent = file ? `Selected: ${file.name}` : 'Click to select CSV file';
+      document.getElementById('upload-result').style.display = 'none';
+    });
+
     document.getElementById('csv-form').addEventListener('submit', async (e) => {
       e.preventDefault();
-      
+
       const fileInput = document.getElementById('csv-file');
       if (!fileInput.files[0]) {
-        showMessage('Please select a CSV file', 'error', 'upload-message');
+        alert('Please select a CSV file first.');
         return;
       }
+
+      const btn = document.getElementById('upload-btn');
+      const loading = document.getElementById('upload-loading');
+      const resultBox = document.getElementById('upload-result');
+
+      btn.disabled = true;
+      btn.textContent = 'Uploading…';
+      loading.style.display = 'block';
+      resultBox.style.display = 'none';
 
       const formData = new FormData();
       formData.append('csvFile', fileInput.files[0]);
@@ -503,40 +538,87 @@
         });
 
         const result = await response.json();
+        loading.style.display = 'none';
+        resultBox.style.display = 'block';
+
+        const header = document.getElementById('result-header');
+        const statsDiv = document.getElementById('result-stats');
+        const dupDiv = document.getElementById('result-duplicates');
+
         if (response.ok) {
-          // Build detailed message
-          let message = `<strong>Import Complete!</strong><br>`;
-          message += `✅ <strong>${result.imported}</strong> races added<br>`;
-          message += `⏭️ <strong>${result.skipped}</strong> skipped`;
-          
-          if (result.totalDuplicates && result.totalDuplicates > 0) {
-            message += ` (${result.totalDuplicates} duplicates)`;
-          }
-          
-          // Show duplicates list if any
+          header.style.background = '#d4edda';
+          header.style.color = '#155724';
+          header.style.borderBottom = '1px solid #c3e6cb';
+          header.innerHTML = `✅ Import Complete — ${result.imported} race${result.imported !== 1 ? 's' : ''} added to the database`;
+
+          const skipped = (result.totalDuplicates || 0) + (result.pastDates || 0) + (result.invalidRows || 0);
+
+          statsDiv.innerHTML = `
+            <div class="stat-card">
+              <div class="stat-number" style="color:#28a745">${result.imported}</div>
+              <div class="stat-label">✅ Added</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-number" style="color:#dc3545">${result.totalDuplicates || 0}</div>
+              <div class="stat-label">🔁 Duplicates</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-number" style="color:#fd7e14">${result.pastDates || 0}</div>
+              <div class="stat-label">📅 Past Date</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-number" style="color:#6c757d">${result.invalidRows || 0}</div>
+              <div class="stat-label">⚠️ Invalid Rows</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-number" style="color:#333">${result.totalInCsv || 0}</div>
+              <div class="stat-label">📄 Total in File</div>
+            </div>
+            <div class="stat-card" style="border-color:#667eea; background:#f0f0ff;">
+              <div class="stat-number" style="color:#667eea">${result.totalInDb != null ? result.totalInDb.toLocaleString() : '—'}</div>
+              <div class="stat-label">🗄️ Total in Database</div>
+            </div>
+          `;
+
           if (result.duplicates && result.duplicates.length > 0) {
-            message += `<br><br><strong>Duplicate races (already in database):</strong><br>`;
-            message += `<div style="max-height: 200px; overflow-y: auto; background: #f5f5f5; padding: 10px; border-radius: 8px; margin-top: 10px; text-align: left;">`;
-            result.duplicates.forEach(dup => {
-              message += `• ${dup}<br>`;
-            });
+            let dupHtml = `<details style="margin-top:4px;">
+              <summary style="cursor:pointer; font-weight:600; color:#555; font-size:14px;">
+                Show duplicate races (${result.totalDuplicates})
+              </summary>
+              <div style="max-height:200px; overflow-y:auto; background:white; border:1px solid #ddd; border-radius:6px; padding:10px; margin-top:8px; font-size:13px; text-align:left;">`;
+            result.duplicates.forEach(d => { dupHtml += `• ${d}<br>`; });
             if (result.totalDuplicates > result.duplicates.length) {
-              message += `<br><em>...and ${result.totalDuplicates - result.duplicates.length} more duplicates</em>`;
+              dupHtml += `<br><em>…and ${result.totalDuplicates - result.duplicates.length} more</em>`;
             }
-            const otherSkipped = result.skipped - result.totalDuplicates;
-            if (otherSkipped > 0) {
-              message += `<br><em>${otherSkipped} rows skipped (invalid dates, empty rows, etc.)</em>`;
-            }
-            message += `</div>`;
+            dupHtml += `</div></details>`;
+            dupDiv.innerHTML = dupHtml;
+          } else {
+            dupDiv.innerHTML = '';
           }
-          
-          showMessage(message, 'success', 'upload-message');
+
           fileInput.value = '';
+          document.getElementById('file-label').textContent = 'Click to select CSV file';
         } else {
-          showMessage('Error uploading CSV: ' + result.error, 'error', 'upload-message');
+          header.style.background = '#f8d7da';
+          header.style.color = '#721c24';
+          header.style.borderBottom = '1px solid #f5c6cb';
+          header.innerHTML = `❌ Upload Failed`;
+          statsDiv.innerHTML = `<p style="color:#721c24; margin:0;">${result.error || 'An unknown error occurred. Please try again.'}</p>`;
+          dupDiv.innerHTML = '';
         }
       } catch (error) {
-        showMessage('Error: ' + error.message, 'error', 'upload-message');
+        loading.style.display = 'none';
+        resultBox.style.display = 'block';
+        const header = document.getElementById('result-header');
+        header.style.background = '#f8d7da';
+        header.style.color = '#721c24';
+        header.style.borderBottom = '1px solid #f5c6cb';
+        header.innerHTML = `❌ Upload Failed`;
+        document.getElementById('result-stats').innerHTML = `<p style="color:#721c24; margin:0;">Network error: ${error.message}</p>`;
+        document.getElementById('result-duplicates').innerHTML = '';
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Upload & Import';
       }
     });
 
