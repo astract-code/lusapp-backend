@@ -142,7 +142,7 @@
       <tr>
         <td><span class="mono">continent</span></td>
         <td><span class="req">REQUIRED</span></td>
-        <td>Continent — must be one of 6 exact values — see Section 3</td>
+        <td>Continent — must be one of 6 exact values — see Section 4</td>
       </tr>
       <tr>
         <td><span class="mono">date</span></td>
@@ -253,17 +253,33 @@
 
   </div>
 
+  <div class="alert alert-red">
+    <strong>⚠️ Most common mistake — HYROX, CrossFit, and Spartan Race are NOT Running</strong>
+    These events belong to the <strong>Fitness</strong> category. Putting them under <span class="mono">Running</span> is the single most frequent error and causes every one of those rows to be silently skipped. The correct values are:<br><br>
+    <span class="mono">sport</span> = <strong>Fitness</strong> &nbsp;|&nbsp; <span class="mono">sport_category</span> = <strong>Fitness</strong> &nbsp;|&nbsp; <span class="mono">sport_subtype</span> = <strong>HYROX</strong> (or <strong>CrossFit</strong>, or <strong>Spartan Race</strong>)
+  </div>
+
   <h3>Common mistakes that will skip the row</h3>
   <table>
     <thead>
       <tr><th>What you wrote</th><th>What it must be</th><th>Why it fails</th></tr>
     </thead>
     <tbody>
+      <tr><td><span class="mono">Running / Running / HYROX</span></td><td><span class="mono">Fitness / Fitness / HYROX</span></td><td>HYROX is a Fitness event, not Running</td></tr>
+      <tr><td><span class="mono">Running / Running / CrossFit</span></td><td><span class="mono">Fitness / Fitness / CrossFit</span></td><td>CrossFit is a Fitness event, not Running</td></tr>
+      <tr><td><span class="mono">Running / Running / Spartan Race</span></td><td><span class="mono">Fitness / Fitness / Spartan Race</span></td><td>Spartan Race is a Fitness event, not Running</td></tr>
+      <tr><td><span class="mono">Ironman 70.3</span></td><td><span class="mono">Half Ironman</span></td><td>The app uses the distance name, not the brand name</td></tr>
+      <tr><td><span class="mono">Olympic Distance</span></td><td><span class="mono">Olympic</span></td><td>Drop the word "Distance"</td></tr>
+      <tr><td><span class="mono">Sprint Distance</span></td><td><span class="mono">Sprint</span></td><td>Drop the word "Distance"</td></tr>
+      <tr><td><span class="mono">Long Distance Triathlon</span></td><td><span class="mono">Ironman</span> or <span class="mono">Custom Distance</span></td><td>Not a valid subtype — use the closest match</td></tr>
+      <tr><td><span class="mono">Ultra Trail</span></td><td><span class="mono">Ultra Marathon</span> or <span class="mono">Trail Running</span></td><td>Not a valid subtype — use the closest English equivalent</td></tr>
+      <tr><td><span class="mono">Gravel Fondo</span> / <span class="mono">Gravel Race</span> / <span class="mono">Road Fondo</span></td><td><span class="mono">Custom Distance</span> (under Cycling)</td><td>Not a valid subtype — gravel events have no dedicated slot</td></tr>
+      <tr><td><span class="mono">Stage Race</span></td><td><span class="mono">Custom Distance</span> (under Cycling or Running)</td><td>Not a valid subtype</td></tr>
+      <tr><td><span class="mono">Adventure Race</span></td><td><span class="mono">Custom / Custom / Custom Event</span></td><td>Multi-sport adventure events use the Custom category</td></tr>
       <tr><td><span class="mono">Road Running</span></td><td><span class="mono">Running</span></td><td>Not a valid category name</td></tr>
       <tr><td><span class="mono">running</span></td><td><span class="mono">Running</span></td><td>Wrong capitalisation</td></tr>
-      <tr><td><span class="mono">Fitness Race</span></td><td><span class="mono">Fitness</span></td><td>Extra word</td></tr>
-      <tr><td><span class="mono">fitness</span></td><td><span class="mono">Fitness</span></td><td>Wrong capitalisation</td></tr>
-      <tr><td><span class="mono">Hyrox</span></td><td><span class="mono">HYROX</span></td><td>Wrong capitalisation — all caps</td></tr>
+      <tr><td><span class="mono">Fitness Race</span></td><td><span class="mono">Fitness</span></td><td>Extra word in category</td></tr>
+      <tr><td><span class="mono">Hyrox</span></td><td><span class="mono">HYROX</span></td><td>Wrong capitalisation — must be all caps</td></tr>
       <tr><td><span class="mono">half marathon</span></td><td><span class="mono">Half Marathon</span></td><td>Wrong capitalisation</td></tr>
       <tr><td><span class="mono">Half-Marathon</span></td><td><span class="mono">Half Marathon</span></td><td>Hyphen instead of space</td></tr>
       <tr><td><span class="mono">Standard Distance</span></td><td><span class="mono">Olympic</span> or <span class="mono">Custom Distance</span></td><td>Not a valid subtype for Triathlon</td></tr>
@@ -271,10 +287,9 @@
       <tr><td><span class="mono">Spartan</span></td><td><span class="mono">Spartan Race</span></td><td>Missing the word Race</td></tr>
       <tr><td><span class="mono">Open Water</span></td><td><span class="mono">Open Water Swim</span></td><td>Missing the word Swim</td></tr>
       <tr><td><span class="mono">Swim</span></td><td><span class="mono">Swimming</span></td><td>Wrong category name</td></tr>
-      <tr><td><span class="mono">Carrera Popular</span></td><td><span class="mono">Custom Distance</span> (or <span class="mono">5K</span> / <span class="mono">10K</span> if the distance is known)</td><td>Spanish term — the system only accepts English subtypes</td></tr>
+      <tr><td><span class="mono">Carrera Popular</span></td><td><span class="mono">Custom Distance</span> (or <span class="mono">5K</span> / <span class="mono">10K</span> if distance is known)</td><td>Spanish term — system only accepts English subtypes</td></tr>
       <tr><td><span class="mono">Cross</span></td><td><span class="mono">Cross Country</span></td><td>Abbreviated — must use the full English subtype name</td></tr>
-      <tr><td><span class="mono">Ultra Trail</span></td><td><span class="mono">Ultra Marathon</span> or <span class="mono">Trail Running</span></td><td>Not a valid subtype — use the closest English equivalent</td></tr>
-      <tr><td><span class="mono">Mendi Lasterketa</span></td><td><span class="mono">Trail Running</span></td><td>Basque/local term — the system only accepts English subtypes</td></tr>
+      <tr><td><span class="mono">Mendi Lasterketa</span></td><td><span class="mono">Trail Running</span></td><td>Basque/local term — system only accepts English subtypes</td></tr>
     </tbody>
   </table>
 
@@ -290,7 +305,90 @@
 
 
   <!-- ═══════════════════════════════════════════ -->
-  <h2>3. Continent — Exact Values Only</h2>
+  <h2>3. Event Type Quick Reference</h2>
+
+  <p>Use this table to look up any real-world event name and find the exact <span class="mono">sport</span>, <span class="mono">sport_category</span>, and <span class="mono">sport_subtype</span> values to use. Remember: <span class="mono">sport</span> and <span class="mono">sport_category</span> are always the same word.</p>
+
+  <h3>🏃 Running events</h3>
+  <table>
+    <thead><tr><th>Event type / real-world name</th><th>sport &amp; sport_category</th><th>sport_subtype</th></tr></thead>
+    <tbody>
+      <tr><td>5K road race, Parkrun, fun run 5km</td><td><span class="mono">Running</span></td><td><span class="mono">5K</span></td></tr>
+      <tr><td>10K road race, 10 km popular</td><td><span class="mono">Running</span></td><td><span class="mono">10K</span></td></tr>
+      <tr><td>Half marathon, 21.1 km, 21K</td><td><span class="mono">Running</span></td><td><span class="mono">Half Marathon</span></td></tr>
+      <tr><td>Marathon, 42.2 km, 42K</td><td><span class="mono">Running</span></td><td><span class="mono">Marathon</span></td></tr>
+      <tr><td>Ultra marathon, 50K, 100K, 100 miles, Backyard Ultra, 24h run, timed race</td><td><span class="mono">Running</span></td><td><span class="mono">Ultra Marathon</span></td></tr>
+      <tr><td>Trail run, mountain run, sky race, vertical km, Ultra Trail</td><td><span class="mono">Running</span></td><td><span class="mono">Trail Running</span></td></tr>
+      <tr><td>Cross country, XC race, campo a través</td><td><span class="mono">Running</span></td><td><span class="mono">Cross Country</span></td></tr>
+      <tr><td>Any other running distance (3K, 8K, 15K, 20K, night run, kids race, etc.)</td><td><span class="mono">Running</span></td><td><span class="mono">Custom Distance</span></td></tr>
+    </tbody>
+  </table>
+
+  <h3>🏊 Triathlon events</h3>
+  <table>
+    <thead><tr><th>Event type / real-world name</th><th>sport &amp; sport_category</th><th>sport_subtype</th></tr></thead>
+    <tbody>
+      <tr><td>Sprint triathlon (750m-20km-5km)</td><td><span class="mono">Triathlon</span></td><td><span class="mono">Sprint</span></td></tr>
+      <tr><td>Olympic triathlon, Standard Distance (1.5km-40km-10km)</td><td><span class="mono">Triathlon</span></td><td><span class="mono">Olympic</span></td></tr>
+      <tr><td>70.3, Ironman 70.3, Half Ironman, Middle distance (1.9km-90km-21km)</td><td><span class="mono">Triathlon</span></td><td><span class="mono">Half Ironman</span></td></tr>
+      <tr><td>Full Ironman, 140.6, Long distance (3.8km-180km-42km)</td><td><span class="mono">Triathlon</span></td><td><span class="mono">Ironman</span></td></tr>
+      <tr><td>Aquathlon (swim + run, no bike)</td><td><span class="mono">Triathlon</span></td><td><span class="mono">Aquathlon</span></td></tr>
+      <tr><td>Duathlon (run + bike + run, no swim)</td><td><span class="mono">Triathlon</span></td><td><span class="mono">Duathlon</span></td></tr>
+      <tr><td>T100, Challenge Series, PTO, other non-standard tri distances</td><td><span class="mono">Triathlon</span></td><td><span class="mono">Custom Distance</span></td></tr>
+    </tbody>
+  </table>
+
+  <h3>🚴 Cycling events</h3>
+  <table>
+    <thead><tr><th>Event type / real-world name</th><th>sport &amp; sport_category</th><th>sport_subtype</th></tr></thead>
+    <tbody>
+      <tr><td>Gran Fondo, sportive, road fondo, cyclosportive</td><td><span class="mono">Cycling</span></td><td><span class="mono">Gran Fondo</span></td></tr>
+      <tr><td>Criterium, crit race, circuit race</td><td><span class="mono">Cycling</span></td><td><span class="mono">Criterium</span></td></tr>
+      <tr><td>Road race (point-to-point or loop)</td><td><span class="mono">Cycling</span></td><td><span class="mono">Road Race</span></td></tr>
+      <tr><td>Mountain biking, MTB, XCO, XCM, enduro (MTB)</td><td><span class="mono">Cycling</span></td><td><span class="mono">Mountain Biking</span></td></tr>
+      <tr><td>Gravel race, gravel fondo, gravel sportive, bikepacking race, stage race</td><td><span class="mono">Cycling</span></td><td><span class="mono">Custom Distance</span></td></tr>
+    </tbody>
+  </table>
+
+  <h3>💪 Fitness events</h3>
+  <table>
+    <thead><tr><th>Event type / real-world name</th><th>sport &amp; sport_category</th><th>sport_subtype</th></tr></thead>
+    <tbody>
+      <tr><td>HYROX, HYROX World Championships, HYROX Series event</td><td><span class="mono">Fitness</span></td><td><span class="mono">HYROX</span></td></tr>
+      <tr><td>CrossFit competition, CrossFit Games, Throwdown, Throwdown Series</td><td><span class="mono">Fitness</span></td><td><span class="mono">CrossFit</span></td></tr>
+      <tr><td>Spartan Race, Spartan Sprint/Super/Beast/Ultra</td><td><span class="mono">Fitness</span></td><td><span class="mono">Spartan Race</span></td></tr>
+      <tr><td>Tough Mudder, Warrior Dash, Rugged Maniac, any OCR</td><td><span class="mono">Fitness</span></td><td><span class="mono">Obstacle Course</span></td></tr>
+      <tr><td>Bootcamp race, fitness challenge event</td><td><span class="mono">Fitness</span></td><td><span class="mono">Bootcamp</span></td></tr>
+      <tr><td>Other fitness competitions not listed above</td><td><span class="mono">Fitness</span></td><td><span class="mono">Custom Distance</span></td></tr>
+    </tbody>
+  </table>
+
+  <h3>🏊 Swimming events</h3>
+  <table>
+    <thead><tr><th>Event type / real-world name</th><th>sport &amp; sport_category</th><th>sport_subtype</th></tr></thead>
+    <tbody>
+      <tr><td>Open water swim, lake swim, sea swim, ocean swim</td><td><span class="mono">Swimming</span></td><td><span class="mono">Open Water Swim</span></td></tr>
+      <tr><td>Pool competition, swim meet</td><td><span class="mono">Swimming</span></td><td><span class="mono">Pool Competition</span></td></tr>
+      <tr><td>Other swimming events</td><td><span class="mono">Swimming</span></td><td><span class="mono">Custom Distance</span></td></tr>
+    </tbody>
+  </table>
+
+  <h3>⭐ Custom / multi-sport events</h3>
+  <table>
+    <thead><tr><th>Event type / real-world name</th><th>sport &amp; sport_category</th><th>sport_subtype</th></tr></thead>
+    <tbody>
+      <tr><td>Adventure race, expedition race, multi-sport event, swimrun, SwimRun</td><td><span class="mono">Custom</span></td><td><span class="mono">Custom Event</span></td></tr>
+    </tbody>
+  </table>
+
+  <div class="alert alert-amber">
+    <strong>Note on aquathlon</strong>
+    Aquathlon (swim + run) belongs to the <span class="mono">Triathlon</span> category, not Swimming. Use <span class="mono">Triathlon / Triathlon / Aquathlon</span>.
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════ -->
+  <h2>4. Continent — Exact Values Only</h2>
 
   <p>The continent column must contain exactly one of these six values, spelled and capitalised as shown:</p>
 
@@ -323,7 +421,7 @@
 
 
   <!-- ═══════════════════════════════════════════ -->
-  <h2>4. Date Format</h2>
+  <h2>5. Date Format</h2>
 
   <p>The date column must follow the <strong>YYYY-MM-DD</strong> format exactly. Any other format causes the row to be skipped.</p>
 
@@ -346,7 +444,7 @@
 
 
   <!-- ═══════════════════════════════════════════ -->
-  <h2>5. Duplicate Detection</h2>
+  <h2>6. Duplicate Detection</h2>
 
   <p>The system automatically skips any row where a race with the same <strong>name</strong> (case-insensitive) and the same <strong>date</strong> already exists in the database. This prevents accidental double imports.</p>
 
@@ -359,7 +457,7 @@
 
 
   <!-- ═══════════════════════════════════════════ -->
-  <h2>6. Clean Race Names — Avoid Copy-Paste Artefacts</h2>
+  <h2>7. Clean Race Names — Avoid Copy-Paste Artefacts</h2>
 
   <p>When building a CSV from multiple sources (websites, PDFs, other spreadsheets), it is easy to accidentally include extra characters at the start or end of a race name. These do not cause the row to be skipped, but they produce incorrect race names in the app that are difficult to fix afterwards.</p>
 
@@ -394,7 +492,7 @@
 
 
   <!-- ═══════════════════════════════════════════ -->
-  <h2>7. After Import</h2>
+  <h2>8. After Import</h2>
 
   <div class="alert alert-green">
     <strong>Races imported via CSV are automatically approved</strong>
@@ -403,7 +501,7 @@
 
 
   <!-- ═══════════════════════════════════════════ -->
-  <h2>8. Complete Example</h2>
+  <h2>9. Complete Example</h2>
 
   <p>Below is a correctly formatted CSV with four different race types. Copy this as a starting point.</p>
 
@@ -425,7 +523,7 @@
 
 
   <!-- ═══════════════════════════════════════════ -->
-  <h2>9. Pre-Upload Checklist</h2>
+  <h2>10. Pre-Upload Checklist</h2>
 
   <p>Before uploading your CSV, go through this list:</p>
 
@@ -451,21 +549,21 @@
 
 
   <!-- ═══════════════════════════════════════════ -->
-  <h2>10. Why Was My Row Skipped?</h2>
+  <h2>11. Why Was My Row Skipped?</h2>
 
   <p>After uploading, the admin panel shows how many rows were imported and how many were skipped. If rows were skipped, the most likely reasons are:</p>
 
   <ul class="skip-reasons">
-    <li><strong>Wrong sport_category</strong> — Does not exactly match one of: Running, Triathlon, Cycling, Fitness, Swimming, Custom</li>
-    <li><strong>Wrong sport_subtype</strong> — Does not exactly match a valid subtype for that category (see Section 2)</li>
+    <li><strong>Wrong sport_category or sport_subtype</strong> — Does not exactly match the valid values (see Sections 2 and 3). This includes Fitness events (HYROX, CrossFit, Spartan Race) placed under Running.</li>
     <li><strong>Wrong date format</strong> — Date is not in YYYY-MM-DD format</li>
+    <li><strong>Past date</strong> — The race date has already passed. Races with a date before today are automatically skipped — they would not be useful in the app's upcoming race discovery.</li>
     <li><strong>Missing name or date</strong> — One of those required fields is empty</li>
     <li><strong>Duplicate</strong> — A race with the same name and date already exists in the database</li>
     <li><strong>Extra spaces</strong> — A value like <span class="mono">" Running"</span> (with a leading space) will fail. Make sure there are no accidental spaces before or after values.</li>
   </ul>
 
   <div class="footer">
-    Lusapp CSV Import Guide · Generated for admin use · Last updated March 2026 · v2 — added Spanish/Basque subtype rules, duplicate detection, copy-paste artefact guidance
+    Lusapp CSV Import Guide · Generated for admin use · Last updated March 2026 · v3 — added Event Type Quick Reference, Fitness category warnings (HYROX/CrossFit/Spartan), past-date skip rule, expanded mistake table
   </div>
 
 </div>
