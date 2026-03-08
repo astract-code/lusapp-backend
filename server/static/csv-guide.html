@@ -271,8 +271,17 @@
       <tr><td><span class="mono">Spartan</span></td><td><span class="mono">Spartan Race</span></td><td>Missing the word Race</td></tr>
       <tr><td><span class="mono">Open Water</span></td><td><span class="mono">Open Water Swim</span></td><td>Missing the word Swim</td></tr>
       <tr><td><span class="mono">Swim</span></td><td><span class="mono">Swimming</span></td><td>Wrong category name</td></tr>
+      <tr><td><span class="mono">Carrera Popular</span></td><td><span class="mono">Custom Distance</span> (or <span class="mono">5K</span> / <span class="mono">10K</span> if the distance is known)</td><td>Spanish term — the system only accepts English subtypes</td></tr>
+      <tr><td><span class="mono">Cross</span></td><td><span class="mono">Cross Country</span></td><td>Abbreviated — must use the full English subtype name</td></tr>
+      <tr><td><span class="mono">Ultra Trail</span></td><td><span class="mono">Ultra Marathon</span> or <span class="mono">Trail Running</span></td><td>Not a valid subtype — use the closest English equivalent</td></tr>
+      <tr><td><span class="mono">Mendi Lasterketa</span></td><td><span class="mono">Trail Running</span></td><td>Basque/local term — the system only accepts English subtypes</td></tr>
     </tbody>
   </table>
+
+  <div class="alert alert-red">
+    <strong>All subtypes must be in English</strong>
+    The system only recognises the English subtype names listed above. Local-language equivalents — such as <span class="mono">Carrera Popular</span> (Spanish), <span class="mono">Mendi Lasterketa</span> (Basque), <span class="mono">Course Populaire</span> (French), <span class="mono">Lauf</span> (German), or <span class="mono">Ultra Trail</span> — are not valid and will cause the row to be skipped. Always translate the subtype to its closest English equivalent before entering it in the CSV.
+  </div>
 
   <div class="alert alert-blue">
     <strong>Tip — when in doubt, use Custom Distance</strong>
