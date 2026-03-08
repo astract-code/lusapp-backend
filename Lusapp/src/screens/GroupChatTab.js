@@ -292,8 +292,8 @@ export const GroupChatTab = ({ groupId }) => {
   return (
     <KeyboardAvoidingView
       style={styles.container}
-      behavior={Platform.OS === 'android' ? 'padding' : undefined}
-      keyboardVerticalOffset={Platform.OS === 'android' ? insets.bottom : 0}
+      behavior={Platform.OS === 'android' ? 'height' : undefined}
+      keyboardVerticalOffset={0}
     >
       {showSearch && (
         <View style={[styles.searchContainer, { backgroundColor: colors.card }]}>
