@@ -230,20 +230,8 @@ const upload = multer({
   }
 });
 
-const csvStorage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    const uploadDir = path.join(__dirname, 'uploads');
-    if (!fs.existsSync(uploadDir)) {
-      fs.mkdirSync(uploadDir, { recursive: true });
-    }
-    cb(null, uploadDir);
-  },
-  filename: (req, file, cb) => {
-    cb(null, `csv-${Date.now()}-${file.originalname}`);
-  }
-});
 const csvUpload = multer({
-  storage: csvStorage,
+  storage: multer.memoryStorage(),
   limits: { fileSize: 10 * 1024 * 1024 },
   fileFilter: (req, file, cb) => {
     const isCsv = file.mimetype === 'text/csv' || 
@@ -618,20 +606,19 @@ app.post('/api/races/:id/reject', noCors, csrfProtection, adminAuth, async (req,
 app.post('/api/races/csv-upload', noCors, csrfProtection, adminAuth, csvUpload.single('csvFile'), async (req, res) => {
   try {
     const results = [];
-    const filePath = req.file.path;
-    
-    // Read and clean file content (remove BOM and markdown code blocks)
-    let fileContent = fs.readFileSync(filePath, 'utf8');
+
+    // Read from memory buffer (no disk writes needed)
+    let fileContent = req.file.buffer.toString('utf8');
     // Remove BOM if present
     fileContent = fileContent.replace(/^\uFEFF/, '');
     // Remove markdown code block markers
     fileContent = fileContent.replace(/^```[^\n]*\n?/gm, '');
     fileContent = fileContent.replace(/```$/gm, '');
-    // Write cleaned content back
-    const cleanedPath = filePath + '.cleaned';
-    fs.writeFileSync(cleanedPath, fileContent.trim());
 
-    fs.createReadStream(cleanedPath)
+    const { Readable } = require('stream');
+    const stream = Readable.from([fileContent.trim()]);
+
+    stream
       .pipe(csv())
       .on('data', (data) => results.push(data))
       .on('end', async () => {
@@ -701,10 +688,6 @@ app.post('/api/races/csv-upload', noCors, csrfProtection, adminAuth, csvUpload.s
           }
         }
 
-        // Clean up temp files
-        fs.unlinkSync(filePath);
-        if (fs.existsSync(cleanedPath)) fs.unlinkSync(cleanedPath);
-        
         res.json({ 
           success: true, 
           imported, 
