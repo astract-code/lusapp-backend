@@ -352,9 +352,49 @@
 
   <p>If a race was previously imported and you need to update it (change city, description, etc.), you must edit it directly in the admin panel — you cannot update existing races by re-uploading the CSV.</p>
 
+  <div class="alert alert-amber">
+    <strong>Duplicates within the same CSV file</strong>
+    The system also skips duplicate rows within the same file. If your CSV contains the same race name and date twice — even with slightly different names like <span class="mono">XIV Kilimon Trail</span> and <span class="mono">KILIMON TRAIL</span> — only the first occurrence is imported. The second is silently skipped. Always check your file for repeated entries before uploading.
+  </div>
+
 
   <!-- ═══════════════════════════════════════════ -->
-  <h2>6. After Import</h2>
+  <h2>6. Clean Race Names — Avoid Copy-Paste Artefacts</h2>
+
+  <p>When building a CSV from multiple sources (websites, PDFs, other spreadsheets), it is easy to accidentally include extra characters at the start or end of a race name. These do not cause the row to be skipped, but they produce incorrect race names in the app that are difficult to fix afterwards.</p>
+
+  <h3>Common copy-paste artefacts</h3>
+  <table>
+    <thead>
+      <tr><th>What ended up in the CSV</th><th>What it should be</th><th>Likely cause</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="mono">DCrossCampeonato de España de Campo a Través</span></td>
+        <td><span class="mono">Campeonato de España de Campo a Través</span></td>
+        <td>A category label ("DCross") was accidentally merged into the race name when copying from a website or spreadsheet</td>
+      </tr>
+      <tr>
+        <td><span class="mono">DCrossCross escolar Zumarraga</span></td>
+        <td><span class="mono">Cross escolar Zumarraga</span></td>
+        <td>Same cause — filter/category text merged with name</td>
+      </tr>
+      <tr>
+        <td><span class="mono">SPCCampeonato de Euskadi Sub-16</span></td>
+        <td><span class="mono">Campeonato de Euskadi Sub-16</span></td>
+        <td>A section prefix ("SPC") merged with the race name</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="alert alert-amber">
+    <strong>How to spot these before uploading</strong>
+    Open the CSV in a spreadsheet app and scan the <span class="mono">name</span> column. Look for names that start with short uppercase codes (e.g. <span class="mono">SPC</span>, <span class="mono">DCross</span>, <span class="mono">XC</span>) directly attached to a word without a space. These are almost always copy-paste artefacts.
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════ -->
+  <h2>7. After Import</h2>
 
   <div class="alert alert-green">
     <strong>Races imported via CSV are automatically approved</strong>
@@ -363,7 +403,7 @@
 
 
   <!-- ═══════════════════════════════════════════ -->
-  <h2>7. Complete Example</h2>
+  <h2>8. Complete Example</h2>
 
   <p>Below is a correctly formatted CSV with four different race types. Copy this as a starting point.</p>
 
@@ -385,7 +425,7 @@
 
 
   <!-- ═══════════════════════════════════════════ -->
-  <h2>8. Pre-Upload Checklist</h2>
+  <h2>9. Pre-Upload Checklist</h2>
 
   <p>Before uploading your CSV, go through this list:</p>
 
@@ -411,7 +451,7 @@
 
 
   <!-- ═══════════════════════════════════════════ -->
-  <h2>9. Why Was My Row Skipped?</h2>
+  <h2>10. Why Was My Row Skipped?</h2>
 
   <p>After uploading, the admin panel shows how many rows were imported and how many were skipped. If rows were skipped, the most likely reasons are:</p>
 
@@ -425,7 +465,7 @@
   </ul>
 
   <div class="footer">
-    Lusapp CSV Import Guide · Generated for admin use · Last updated March 2026
+    Lusapp CSV Import Guide · Generated for admin use · Last updated March 2026 · v2 — added Spanish/Basque subtype rules, duplicate detection, copy-paste artefact guidance
   </div>
 
 </div>
