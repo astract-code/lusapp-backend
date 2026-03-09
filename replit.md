@@ -115,9 +115,16 @@ The admin web interface features:
 A new Groups system allows athletes to create and join sport-specific groups (public or password-protected). Functionality includes group management, a membership system with roles (Owner, Moderator, Member), real-time group chat, and gear lists for race preparation. 
 
 **Gear Lists System:**
-- **Personal Lists:** Private lists visible only to the owner (and group moderators for oversight). Any group member can add items (friends can help remind you), but only the owner can mark items as completed. Status flow: needed → completed (no claimed state). Perfect for tracking individual race gear needs where you want help from friends but control your own checklist.
-- **Collaborative Lists:** Shared lists where all group members can contribute. Any member can add items, claim them, and complete them. Status flow: needed → claimed → completed. Ideal for team logistics where members coordinate who brings what.
-- **Share Functionality:** Users can export and share gear lists via WhatsApp, WeChat, or other messaging apps. The share feature generates formatted text with checkboxes ([ ] needed, [~] claimed, [✓] completed) for easy sharing with non-app users.
+
+- **Public Lists** (DB value: `'collaborative'`): All group members can see the list and add items. Each item has two independent features:
+  1. **Claim** — one person can claim an item, meaning "I'm bringing this to the race." Any other member can replace the claim by tapping their own claim button. Claim is visible to everyone.
+  2. **Personal Tick** (☑) — each user has their own private checkbox per item. Ticking is independent of claiming and not visible to other users. Useful for items everyone needs individually (bike, helmet, etc.) where claiming makes no sense.
+
+- **Private Lists** (DB value: `'personal'`): Only the creator can see and modify the list. No claiming — only the personal tick checkbox. Other members cannot see private lists at all.
+
+- **DB table `group_gear_item_ticks`**: Stores per-user ticks as `(item_id, user_id)` pairs. Toggled via `POST /api/groups/:groupId/gear-lists/:listId/items/:itemId/tick`.
+
+- **Share Functionality:** Exports the list as formatted text. Claimed items shown as `[~] item (claimer name)`, unclaimed as `[ ] item`.
 
 All group data is stored in PostgreSQL with role-based access control ensuring privacy and security.
 

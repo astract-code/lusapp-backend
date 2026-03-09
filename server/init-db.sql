@@ -205,6 +205,16 @@ CREATE INDEX IF NOT EXISTS idx_group_gear_lists_race ON group_gear_lists(race_id
 CREATE INDEX IF NOT EXISTS idx_group_gear_items_list ON group_gear_items(list_id);
 CREATE INDEX IF NOT EXISTS idx_group_gear_items_status ON group_gear_items(status);
 
+-- Personal per-user tick checkboxes for gear items (independent of claiming)
+CREATE TABLE IF NOT EXISTS group_gear_item_ticks (
+  item_id INTEGER NOT NULL REFERENCES group_gear_items(id) ON DELETE CASCADE,
+  user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  PRIMARY KEY (item_id, user_id)
+);
+
+CREATE INDEX IF NOT EXISTS idx_gear_item_ticks_item ON group_gear_item_ticks(item_id);
+CREATE INDEX IF NOT EXISTS idx_gear_item_ticks_user ON group_gear_item_ticks(user_id);
+
 -- Create race_completions table for tracking completed races with results
 CREATE TABLE IF NOT EXISTS race_completions (
   id SERIAL PRIMARY KEY,

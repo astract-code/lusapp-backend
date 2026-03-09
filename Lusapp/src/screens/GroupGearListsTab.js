@@ -14,7 +14,6 @@ import { useTheme } from '../context/ThemeContext';
 import { useAuth } from '../context/AuthContext';
 import { useLanguage } from '../context/LanguageContext';
 import { SPACING, FONT_SIZE, BORDER_RADIUS } from '../constants/theme';
-
 import API_URL from '../config/api';
 
 export const GroupGearListsTab = ({ groupId, navigation, userRole }) => {
@@ -36,11 +35,8 @@ export const GroupGearListsTab = ({ groupId, navigation, userRole }) => {
   const fetchGearLists = async () => {
     try {
       const response = await fetch(`${API_URL}/api/groups/${groupId}/gear-lists`, {
-        headers: {
-          'Authorization': `Bearer ${token}`,
-        },
+        headers: { 'Authorization': `Bearer ${token}` },
       });
-
       if (response.ok) {
         const data = await response.json();
         setGearLists(Array.isArray(data) ? data : []);
@@ -57,7 +53,6 @@ export const GroupGearListsTab = ({ groupId, navigation, userRole }) => {
       Alert.alert(t('oops'), t('pleaseEnterGearListTitle'));
       return;
     }
-
     setCreating(true);
     try {
       const response = await fetch(`${API_URL}/api/groups/${groupId}/gear-lists`, {
@@ -66,12 +61,11 @@ export const GroupGearListsTab = ({ groupId, navigation, userRole }) => {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ 
+        body: JSON.stringify({
           title: newListTitle.trim(),
-          visibility: listVisibility
+          visibility: listVisibility,
         }),
       });
-
       if (response.ok) {
         const data = await response.json();
         setShowCreateModal(false);
@@ -95,41 +89,51 @@ export const GroupGearListsTab = ({ groupId, navigation, userRole }) => {
     }
   };
 
-  const renderGearList = ({ item }) => (
-    <TouchableOpacity
-      style={[styles.gearListItem, { backgroundColor: colors.card, borderColor: colors.border }]}
-      onPress={() =>
-        navigation.navigate('GearListDetail', {
-          groupId,
-          listId: item.id,
-          listTitle: item.title,
-          listVisibility: item.visibility,
-        })
-      }
-    >
-      <View style={styles.gearListHeader}>
-        <Text style={[styles.gearListTitle, { color: colors.text }]}>{item.title}</Text>
-        {item.race_name && (
-          <Text style={[styles.raceName, { color: colors.textSecondary }]}>
-            🏁 {item.race_name}
+  const renderGearList = ({ item }) => {
+    const isPrivate = item.visibility === 'personal';
+    return (
+      <TouchableOpacity
+        style={[styles.gearListItem, { backgroundColor: colors.card, borderColor: colors.border }]}
+        onPress={() =>
+          navigation.navigate('GearListDetail', {
+            groupId,
+            listId: item.id,
+            listTitle: item.title,
+            listVisibility: item.visibility,
+          })
+        }
+      >
+        <View style={styles.gearListHeader}>
+          <View style={styles.titleRow}>
+            <Text style={[styles.gearListTitle, { color: colors.text }]}>{item.title}</Text>
+            <View style={[styles.visibilityBadge, { backgroundColor: isPrivate ? colors.border : colors.primary + '22' }]}>
+              <Text style={[styles.visibilityBadgeText, { color: isPrivate ? colors.textSecondary : colors.primary }]}>
+                {isPrivate ? `🔒 ${t('privateList')}` : `🌐 ${t('publicList')}`}
+              </Text>
+            </View>
+          </View>
+          {item.race_name && (
+            <Text style={[styles.raceName, { color: colors.textSecondary }]}>
+              🏁 {item.race_name}
+            </Text>
+          )}
+        </View>
+        <View style={styles.gearListFooter}>
+          <Text style={[styles.itemCount, { color: colors.textSecondary }]}>
+            📦 {item.item_count || 0} {item.item_count === 1 ? t('item') : t('items')}
           </Text>
-        )}
-      </View>
-      <View style={styles.gearListFooter}>
-        <Text style={[styles.itemCount, { color: colors.textSecondary }]}>
-          📦 {item.item_count || 0} {item.item_count === 1 ? t('item') : t('items')}
-        </Text>
-        <Text style={[styles.createdBy, { color: colors.textSecondary }]}>
-          by {item.created_by_name}
-        </Text>
-      </View>
-    </TouchableOpacity>
-  );
+          <Text style={[styles.createdBy, { color: colors.textSecondary }]}>
+            by {item.creator_name}
+          </Text>
+        </View>
+      </TouchableOpacity>
+    );
+  };
 
   if (loading) {
     return (
       <View style={styles.loadingContainer}>
-        <ActivityIndicator size="large" color={colors.primary} />
+        <ActivityIndicator size="large" color="#4ADE80" />
       </View>
     );
   }
@@ -139,7 +143,7 @@ export const GroupGearListsTab = ({ groupId, navigation, userRole }) => {
       <View style={styles.header}>
         <View style={styles.headerRow}>
           <TouchableOpacity
-            style={[styles.createButton, { backgroundColor: colors.primary, flex: 1 }]}
+            style={[styles.createButton, { backgroundColor: '#4ADE80', flex: 1 }]}
             onPress={() => setShowCreateModal(true)}
           >
             <Text style={styles.createButtonText}>+ {t('newGearList')}</Text>
@@ -156,12 +160,8 @@ export const GroupGearListsTab = ({ groupId, navigation, userRole }) => {
       {gearLists.length === 0 ? (
         <View style={styles.emptyContainer}>
           <Text style={styles.emptyIcon}>🎒</Text>
-          <Text style={[styles.emptyText, { color: colors.textSecondary }]}>
-            {t('noGearListsYet')}
-          </Text>
-          <Text style={[styles.emptySubtext, { color: colors.textSecondary }]}>
-            {t('createGearListToOrganize')}
-          </Text>
+          <Text style={[styles.emptyText, { color: colors.textSecondary }]}>{t('noGearListsYet')}</Text>
+          <Text style={[styles.emptySubtext, { color: colors.textSecondary }]}>{t('createGearListToOrganize')}</Text>
         </View>
       ) : (
         <FlatList
@@ -175,86 +175,59 @@ export const GroupGearListsTab = ({ groupId, navigation, userRole }) => {
       <Modal visible={showCreateModal} animationType="slide" transparent={true}>
         <View style={styles.modalOverlay}>
           <View style={[styles.modalContent, { backgroundColor: colors.card }]}>
-            <Text style={[styles.modalTitle, { color: colors.text }]}>
-              {t('createGearList')}
-            </Text>
+            <Text style={[styles.modalTitle, { color: colors.text }]}>{t('createGearList')}</Text>
 
             <TextInput
-              style={[
-                styles.input,
-                {
-                  backgroundColor: colors.background,
-                  color: colors.text,
-                  borderColor: colors.border,
-                },
-              ]}
+              style={[styles.input, { backgroundColor: colors.background, color: colors.text, borderColor: colors.border }]}
               placeholder={t('gearListTitleRequired')}
               placeholderTextColor={colors.textSecondary}
               value={newListTitle}
               onChangeText={setNewListTitle}
+              autoFocus
             />
 
             <View style={styles.visibilityToggle}>
-              <Text style={[styles.toggleLabel, { color: colors.text }]}>
-                {t('listType')}:
-              </Text>
+              <Text style={[styles.toggleLabel, { color: colors.text }]}>{t('listType')}:</Text>
               <View style={styles.toggleButtons}>
                 <TouchableOpacity
                   style={[
                     styles.toggleButton,
                     { borderColor: colors.border },
-                    listVisibility === 'collaborative' && { backgroundColor: colors.primary },
+                    listVisibility === 'collaborative' && { backgroundColor: '#4ADE80' },
                   ]}
                   onPress={() => setListVisibility('collaborative')}
                 >
-                  <Text
-                    style={[
-                      styles.toggleButtonText,
-                      { color: listVisibility === 'collaborative' ? '#FFFFFF' : colors.text },
-                    ]}
-                  >
-                    👥 {t('collaborative')}
+                  <Text style={[styles.toggleButtonText, { color: listVisibility === 'collaborative' ? '#FFFFFF' : colors.text }]}>
+                    🌐 {t('publicList')}
                   </Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   style={[
                     styles.toggleButton,
                     { borderColor: colors.border },
-                    listVisibility === 'personal' && { backgroundColor: colors.primary },
+                    listVisibility === 'personal' && { backgroundColor: '#4ADE80' },
                   ]}
                   onPress={() => setListVisibility('personal')}
                 >
-                  <Text
-                    style={[
-                      styles.toggleButtonText,
-                      { color: listVisibility === 'personal' ? '#FFFFFF' : colors.text },
-                    ]}
-                  >
-                    👤 {t('personal')}
+                  <Text style={[styles.toggleButtonText, { color: listVisibility === 'personal' ? '#FFFFFF' : colors.text }]}>
+                    🔒 {t('privateList')}
                   </Text>
                 </TouchableOpacity>
               </View>
+              <Text style={[styles.visibilityHint, { color: colors.textSecondary }]}>
+                {listVisibility === 'collaborative' ? t('publicListHint') : t('privateListHint')}
+              </Text>
             </View>
 
             <View style={styles.modalButtons}>
               <TouchableOpacity
                 style={[styles.modalButton, { backgroundColor: colors.border }]}
-                onPress={() => {
-                  setShowCreateModal(false);
-                  setNewListTitle('');
-                }}
+                onPress={() => { setShowCreateModal(false); setNewListTitle(''); }}
               >
-                <Text style={[styles.modalButtonText, { color: colors.text }]}>
-                  {t('cancel')}
-                </Text>
+                <Text style={[styles.modalButtonText, { color: colors.text }]}>{t('cancel')}</Text>
               </TouchableOpacity>
-
               <TouchableOpacity
-                style={[
-                  styles.modalButton,
-                  { backgroundColor: colors.primary },
-                  creating && { opacity: 0.6 },
-                ]}
+                style={[styles.modalButton, { backgroundColor: '#4ADE80' }, creating && { opacity: 0.6 }]}
                 onPress={createGearList}
                 disabled={creating}
               >
@@ -273,31 +246,27 @@ export const GroupGearListsTab = ({ groupId, navigation, userRole }) => {
             <Text style={[styles.infoModalTitle, { color: colors.text }]}>
               📋 {t('aboutGearLists')}
             </Text>
-            
             <Text style={[styles.infoModalText, { color: colors.textSecondary }]}>
               {t('gearListsDescription')}
             </Text>
-
             <View style={[styles.infoSection, { backgroundColor: colors.background }]}>
-              <Text style={[styles.infoSectionTitle, { color: colors.primary }]}>
-                👥 {t('collaborativeListsTitle')}
+              <Text style={[styles.infoSectionTitle, { color: '#4ADE80' }]}>
+                🌐 {t('publicListsTitle')}
               </Text>
               <Text style={[styles.infoSectionText, { color: colors.textSecondary }]}>
-                {t('collaborativeListsDescription')}
+                {t('publicListsDescription')}
               </Text>
             </View>
-
             <View style={[styles.infoSection, { backgroundColor: colors.background }]}>
-              <Text style={[styles.infoSectionTitle, { color: colors.primary }]}>
-                👤 {t('personalListsTitle')}
+              <Text style={[styles.infoSectionTitle, { color: '#4ADE80' }]}>
+                🔒 {t('privateListsTitle')}
               </Text>
               <Text style={[styles.infoSectionText, { color: colors.textSecondary }]}>
-                {t('personalListsDescription')}
+                {t('privateListsDescription')}
               </Text>
             </View>
-
             <TouchableOpacity
-              style={[styles.infoCloseButton, { backgroundColor: colors.primary }]}
+              style={[styles.infoCloseButton, { backgroundColor: '#4ADE80' }]}
               onPress={() => setShowInfoModal(false)}
             >
               <Text style={styles.infoCloseButtonText}>{t('gotIt')}</Text>
@@ -310,27 +279,11 @@ export const GroupGearListsTab = ({ groupId, navigation, userRole }) => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  loadingContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  header: {
-    padding: SPACING.md,
-  },
-  headerRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: SPACING.sm,
-  },
-  createButton: {
-    padding: SPACING.md,
-    borderRadius: BORDER_RADIUS.md,
-    alignItems: 'center',
-  },
+  container: { flex: 1 },
+  loadingContainer: { flex: 1, justifyContent: 'center', alignItems: 'center' },
+  header: { padding: SPACING.md },
+  headerRow: { flexDirection: 'row', alignItems: 'center', gap: SPACING.sm },
+  createButton: { padding: SPACING.md, borderRadius: BORDER_RADIUS.md, alignItems: 'center' },
   infoButton: {
     width: 44,
     height: 44,
@@ -339,81 +292,46 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  infoButtonText: {
-    fontSize: 20,
-  },
-  createButtonText: {
-    color: '#FFFFFF',
-    fontSize: FONT_SIZE.md,
-    fontWeight: '600',
-  },
+  infoButtonText: { fontSize: 20 },
+  createButtonText: { color: '#FFFFFF', fontSize: FONT_SIZE.md, fontWeight: '600' },
   emptyContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: SPACING.xxl,
   },
-  emptyIcon: {
-    fontSize: 64,
-    marginBottom: SPACING.lg,
-  },
-  emptyText: {
-    fontSize: FONT_SIZE.lg,
-    fontWeight: '600',
-    marginBottom: SPACING.sm,
-    textAlign: 'center',
-  },
-  emptySubtext: {
-    fontSize: FONT_SIZE.md,
-    textAlign: 'center',
-  },
-  list: {
-    padding: SPACING.md,
-  },
+  emptyIcon: { fontSize: 64, marginBottom: SPACING.lg },
+  emptyText: { fontSize: FONT_SIZE.lg, fontWeight: '600', marginBottom: SPACING.sm, textAlign: 'center' },
+  emptySubtext: { fontSize: FONT_SIZE.md, textAlign: 'center' },
+  list: { padding: SPACING.md },
   gearListItem: {
     padding: SPACING.lg,
     borderRadius: BORDER_RADIUS.md,
     borderWidth: 1,
     marginBottom: SPACING.md,
   },
-  gearListHeader: {
-    marginBottom: SPACING.sm,
+  gearListHeader: { marginBottom: SPACING.sm },
+  titleRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: SPACING.xs },
+  gearListTitle: { fontSize: FONT_SIZE.lg, fontWeight: '600', flex: 1 },
+  visibilityBadge: {
+    paddingHorizontal: SPACING.sm,
+    paddingVertical: 2,
+    borderRadius: BORDER_RADIUS.sm,
+    marginLeft: SPACING.sm,
   },
-  gearListTitle: {
-    fontSize: FONT_SIZE.lg,
-    fontWeight: '600',
-    marginBottom: SPACING.xs,
-  },
-  raceName: {
-    fontSize: FONT_SIZE.sm,
-  },
-  gearListFooter: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  itemCount: {
-    fontSize: FONT_SIZE.sm,
-  },
-  createdBy: {
-    fontSize: FONT_SIZE.sm,
-  },
+  visibilityBadgeText: { fontSize: FONT_SIZE.xs, fontWeight: '600' },
+  raceName: { fontSize: FONT_SIZE.sm },
+  gearListFooter: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
+  itemCount: { fontSize: FONT_SIZE.sm },
+  createdBy: { fontSize: FONT_SIZE.sm },
   modalOverlay: {
     flex: 1,
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
     justifyContent: 'center',
     alignItems: 'center',
   },
-  modalContent: {
-    width: '85%',
-    borderRadius: BORDER_RADIUS.lg,
-    padding: SPACING.xl,
-  },
-  modalTitle: {
-    fontSize: FONT_SIZE.xl,
-    fontWeight: 'bold',
-    marginBottom: SPACING.lg,
-  },
+  modalContent: { width: '85%', borderRadius: BORDER_RADIUS.lg, padding: SPACING.xl },
+  modalTitle: { fontSize: FONT_SIZE.xl, fontWeight: 'bold', marginBottom: SPACING.lg },
   input: {
     borderWidth: 1,
     borderRadius: BORDER_RADIUS.md,
@@ -421,18 +339,9 @@ const styles = StyleSheet.create({
     fontSize: FONT_SIZE.md,
     marginBottom: SPACING.md,
   },
-  visibilityToggle: {
-    marginBottom: SPACING.lg,
-  },
-  toggleLabel: {
-    fontSize: FONT_SIZE.md,
-    fontWeight: '600',
-    marginBottom: SPACING.sm,
-  },
-  toggleButtons: {
-    flexDirection: 'row',
-    gap: SPACING.sm,
-  },
+  visibilityToggle: { marginBottom: SPACING.lg },
+  toggleLabel: { fontSize: FONT_SIZE.md, fontWeight: '600', marginBottom: SPACING.sm },
+  toggleButtons: { flexDirection: 'row', gap: SPACING.sm },
   toggleButton: {
     flex: 1,
     padding: SPACING.md,
@@ -440,14 +349,9 @@ const styles = StyleSheet.create({
     borderRadius: BORDER_RADIUS.md,
     alignItems: 'center',
   },
-  toggleButtonText: {
-    fontSize: FONT_SIZE.sm,
-    fontWeight: '500',
-  },
-  modalButtons: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
+  toggleButtonText: { fontSize: FONT_SIZE.sm, fontWeight: '500' },
+  visibilityHint: { fontSize: FONT_SIZE.sm, marginTop: SPACING.sm, textAlign: 'center', lineHeight: 18 },
+  modalButtons: { flexDirection: 'row', justifyContent: 'space-between' },
   modalButton: {
     flex: 1,
     padding: SPACING.md,
@@ -455,51 +359,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginHorizontal: SPACING.xs,
   },
-  modalButtonText: {
-    color: '#FFFFFF',
-    fontSize: FONT_SIZE.md,
-    fontWeight: '600',
-  },
-  infoModalContent: {
-    width: '90%',
-    borderRadius: BORDER_RADIUS.lg,
-    padding: SPACING.xl,
-  },
-  infoModalTitle: {
-    fontSize: FONT_SIZE.xl,
-    fontWeight: 'bold',
-    marginBottom: SPACING.md,
-    textAlign: 'center',
-  },
-  infoModalText: {
-    fontSize: FONT_SIZE.md,
-    lineHeight: 22,
-    marginBottom: SPACING.lg,
-    textAlign: 'center',
-  },
-  infoSection: {
-    padding: SPACING.md,
-    borderRadius: BORDER_RADIUS.md,
-    marginBottom: SPACING.md,
-  },
-  infoSectionTitle: {
-    fontSize: FONT_SIZE.md,
-    fontWeight: '600',
-    marginBottom: SPACING.xs,
-  },
-  infoSectionText: {
-    fontSize: FONT_SIZE.sm,
-    lineHeight: 20,
-  },
-  infoCloseButton: {
-    padding: SPACING.md,
-    borderRadius: BORDER_RADIUS.md,
-    alignItems: 'center',
-    marginTop: SPACING.sm,
-  },
-  infoCloseButtonText: {
-    color: '#FFFFFF',
-    fontSize: FONT_SIZE.md,
-    fontWeight: '600',
-  },
+  modalButtonText: { color: '#FFFFFF', fontSize: FONT_SIZE.md, fontWeight: '600' },
+  infoModalContent: { width: '90%', borderRadius: BORDER_RADIUS.lg, padding: SPACING.xl },
+  infoModalTitle: { fontSize: FONT_SIZE.xl, fontWeight: 'bold', marginBottom: SPACING.md, textAlign: 'center' },
+  infoModalText: { fontSize: FONT_SIZE.md, lineHeight: 22, marginBottom: SPACING.lg, textAlign: 'center' },
+  infoSection: { padding: SPACING.md, borderRadius: BORDER_RADIUS.md, marginBottom: SPACING.md },
+  infoSectionTitle: { fontSize: FONT_SIZE.md, fontWeight: '600', marginBottom: SPACING.xs },
+  infoSectionText: { fontSize: FONT_SIZE.sm, lineHeight: 20 },
+  infoCloseButton: { padding: SPACING.md, borderRadius: BORDER_RADIUS.md, alignItems: 'center', marginTop: SPACING.sm },
+  infoCloseButtonText: { color: '#FFFFFF', fontSize: FONT_SIZE.md, fontWeight: '600' },
 });

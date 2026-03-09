@@ -4,7 +4,7 @@ const { combinedAuthMiddleware } = require('../middleware/authMiddleware');
 const router = express.Router();
 
 module.exports = (pool) => {
-  
+
   router.get('/:groupId/gear-lists', combinedAuthMiddleware, async (req, res) => {
     try {
       const { groupId } = req.params;
@@ -18,9 +18,6 @@ module.exports = (pool) => {
       if (memberCheck.rows.length === 0) {
         return res.status(403).json({ error: 'Must be a member to view gear lists' });
       }
-
-      const role = memberCheck.rows[0].role;
-      const isModerator = role === 'owner' || role === 'moderator';
 
       const result = await pool.query(`
         SELECT 
@@ -38,12 +35,11 @@ module.exports = (pool) => {
         LEFT JOIN races r ON gl.race_id = r.id
         WHERE gl.group_id = $1
           AND (
-            gl.visibility = 'collaborative' 
+            gl.visibility = 'collaborative'
             OR gl.owner_id = $2
-            OR $3 = true
           )
         ORDER BY gl.created_at DESC
-      `, [groupId, userId, isModerator]);
+      `, [groupId, userId]);
 
       res.json(result.rows);
     } catch (error) {
@@ -53,51 +49,40 @@ module.exports = (pool) => {
   });
 
   router.post('/:groupId/gear-lists', combinedAuthMiddleware, async (req, res) => {
-    console.log('📝 [CREATE GEAR LIST] Request received for group:', req.params.groupId);
-    console.log('📝 [CREATE GEAR LIST] Body:', req.body);
-    console.log('📝 [CREATE GEAR LIST] User ID:', req.user.userId);
-    
     try {
       const { groupId } = req.params;
       const { title, raceId, visibility } = req.body;
       const userId = req.user.userId;
 
       if (!title || !title.trim()) {
-        console.error('❌ [CREATE GEAR LIST] Title missing');
         return res.status(400).json({ error: 'List title is required' });
       }
 
       const listVisibility = visibility || 'collaborative';
       if (!['collaborative', 'personal'].includes(listVisibility)) {
-        console.error('❌ [CREATE GEAR LIST] Invalid visibility:', visibility);
         return res.status(400).json({ error: 'Invalid visibility type' });
       }
 
-      console.log('🔍 [CREATE GEAR LIST] Checking membership for user:', userId, 'in group:', groupId);
       const memberCheck = await pool.query(
         'SELECT id FROM group_members WHERE group_id = $1 AND user_id = $2',
         [groupId, userId]
       );
 
       if (memberCheck.rows.length === 0) {
-        console.error('❌ [CREATE GEAR LIST] User not a member of group');
         return res.status(403).json({ error: 'Must be a member to create gear lists' });
       }
 
       const ownerId = listVisibility === 'personal' ? userId : null;
 
-      console.log('🔍 [CREATE GEAR LIST] Inserting into database...');
       const result = await pool.query(`
         INSERT INTO group_gear_lists (group_id, race_id, title, visibility, owner_id, created_by)
         VALUES ($1, $2, $3, $4, $5, $6)
         RETURNING id, group_id, race_id, title, visibility, owner_id, created_by, created_at
       `, [groupId, raceId || null, title.trim(), listVisibility, ownerId, userId]);
 
-      console.log('✅ [CREATE GEAR LIST] Successfully created list:', result.rows[0].id);
       res.json({ success: true, list: result.rows[0] });
     } catch (error) {
-      console.error('❌ [CREATE GEAR LIST] Error:', error.message);
-      console.error('❌ [CREATE GEAR LIST] Stack:', error.stack);
+      console.error('Error creating gear list:', error);
       res.status(500).json({ error: 'Failed to create gear list', details: error.message });
     }
   });
@@ -116,9 +101,6 @@ module.exports = (pool) => {
         return res.status(403).json({ error: 'Must be a member to view gear items' });
       }
 
-      const role = memberCheck.rows[0].role;
-      const isModerator = role === 'owner' || role === 'moderator';
-
       const listCheck = await pool.query(
         'SELECT visibility, owner_id FROM group_gear_lists WHERE id = $1',
         [listId]
@@ -129,9 +111,9 @@ module.exports = (pool) => {
       }
 
       const { visibility, owner_id } = listCheck.rows[0];
-      
-      if (visibility === 'personal' && owner_id !== userId && !isModerator) {
-        return res.status(403).json({ error: 'Cannot view personal list of another user' });
+
+      if (visibility === 'personal' && owner_id !== userId) {
+        return res.status(403).json({ error: 'This is a private list' });
       }
 
       const result = await pool.query(`
@@ -142,19 +124,15 @@ module.exports = (pool) => {
           u1.avatar as added_by_avatar,
           u2.id as claimed_by_id,
           u2.name as claimed_by_name,
-          u2.avatar as claimed_by_avatar
+          u2.avatar as claimed_by_avatar,
+          CASE WHEN gt.user_id IS NOT NULL THEN true ELSE false END as my_tick
         FROM group_gear_items gi
         LEFT JOIN users u1 ON gi.added_by = u1.id
         LEFT JOIN users u2 ON gi.claimed_by = u2.id
+        LEFT JOIN group_gear_item_ticks gt ON gt.item_id = gi.id AND gt.user_id = $2
         WHERE gi.list_id = $1
-        ORDER BY 
-          CASE gi.status
-            WHEN 'needed' THEN 1
-            WHEN 'claimed' THEN 2
-            WHEN 'completed' THEN 3
-          END,
-          gi.created_at ASC
-      `, [listId]);
+        ORDER BY gi.created_at ASC
+      `, [listId, userId]);
 
       res.json(result.rows);
     } catch (error) {
@@ -182,6 +160,20 @@ module.exports = (pool) => {
         return res.status(403).json({ error: 'Must be a member to add items' });
       }
 
+      const listCheck = await pool.query(
+        'SELECT visibility, owner_id FROM group_gear_lists WHERE id = $1',
+        [listId]
+      );
+
+      if (listCheck.rows.length === 0) {
+        return res.status(404).json({ error: 'List not found' });
+      }
+
+      const { visibility, owner_id } = listCheck.rows[0];
+      if (visibility === 'personal' && owner_id !== userId) {
+        return res.status(403).json({ error: 'Only the list owner can add items to a private list' });
+      }
+
       const result = await pool.query(`
         INSERT INTO group_gear_items (list_id, description, added_by, status)
         VALUES ($1, $2, $3, 'needed')
@@ -198,7 +190,8 @@ module.exports = (pool) => {
         item: {
           ...result.rows[0],
           added_by_name: userResult.rows[0].name,
-          added_by_avatar: userResult.rows[0].avatar
+          added_by_avatar: userResult.rows[0].avatar,
+          my_tick: false
         }
       });
     } catch (error) {
@@ -210,11 +203,11 @@ module.exports = (pool) => {
   router.patch('/:groupId/gear-lists/:listId/items/:itemId', combinedAuthMiddleware, async (req, res) => {
     try {
       const { groupId, listId, itemId } = req.params;
-      const { status } = req.body;
+      const { action } = req.body;
       const userId = req.user.userId;
 
-      if (!['needed', 'claimed', 'completed'].includes(status)) {
-        return res.status(400).json({ error: 'Invalid status' });
+      if (action !== 'claim') {
+        return res.status(400).json({ error: 'Invalid action. Use action: "claim"' });
       }
 
       const memberCheck = await pool.query(
@@ -223,11 +216,64 @@ module.exports = (pool) => {
       );
 
       if (memberCheck.rows.length === 0) {
-        return res.status(403).json({ error: 'Must be a member to update items' });
+        return res.status(403).json({ error: 'Must be a member to claim items' });
       }
 
-      const role = memberCheck.rows[0].role;
-      const isModerator = role === 'owner' || role === 'moderator';
+      const listCheck = await pool.query(
+        'SELECT visibility FROM group_gear_lists WHERE id = $1',
+        [listId]
+      );
+
+      if (listCheck.rows.length === 0) {
+        return res.status(404).json({ error: 'List not found' });
+      }
+
+      if (listCheck.rows[0].visibility === 'personal') {
+        return res.status(403).json({ error: 'Private lists do not support claiming' });
+      }
+
+      const itemCheck = await pool.query(
+        'SELECT claimed_by FROM group_gear_items WHERE id = $1',
+        [itemId]
+      );
+
+      if (itemCheck.rows.length === 0) {
+        return res.status(404).json({ error: 'Item not found' });
+      }
+
+      const currentClaimer = itemCheck.rows[0].claimed_by;
+      const isAlreadyClaimer = currentClaimer === userId;
+
+      const newClaimedBy = isAlreadyClaimer ? null : userId;
+      const newStatus = isAlreadyClaimer ? 'needed' : 'claimed';
+
+      const result = await pool.query(`
+        UPDATE group_gear_items
+        SET status = $1, claimed_by = $2, updated_at = NOW()
+        WHERE id = $3
+        RETURNING id, status, claimed_by
+      `, [newStatus, newClaimedBy, itemId]);
+
+      res.json({ success: true, item: result.rows[0], unclaimed: isAlreadyClaimer });
+    } catch (error) {
+      console.error('Error claiming gear item:', error);
+      res.status(500).json({ error: 'Failed to claim gear item' });
+    }
+  });
+
+  router.post('/:groupId/gear-lists/:listId/items/:itemId/tick', combinedAuthMiddleware, async (req, res) => {
+    try {
+      const { groupId, listId, itemId } = req.params;
+      const userId = req.user.userId;
+
+      const memberCheck = await pool.query(
+        'SELECT id FROM group_members WHERE group_id = $1 AND user_id = $2',
+        [groupId, userId]
+      );
+
+      if (memberCheck.rows.length === 0) {
+        return res.status(403).json({ error: 'Must be a member to tick items' });
+      }
 
       const listCheck = await pool.query(
         'SELECT visibility, owner_id FROM group_gear_lists WHERE id = $1',
@@ -239,37 +285,31 @@ module.exports = (pool) => {
       }
 
       const { visibility, owner_id } = listCheck.rows[0];
-      
       if (visibility === 'personal' && owner_id !== userId) {
-        return res.status(403).json({ error: 'Only the list owner can check off items on their personal list' });
+        return res.status(403).json({ error: 'Only the list owner can tick items on a private list' });
       }
 
-      let claimedBy = null;
-      if (visibility === 'collaborative') {
-        if (status === 'claimed' || status === 'completed') {
-          claimedBy = userId;
-        }
+      const existing = await pool.query(
+        'SELECT 1 FROM group_gear_item_ticks WHERE item_id = $1 AND user_id = $2',
+        [itemId, userId]
+      );
+
+      if (existing.rows.length > 0) {
+        await pool.query(
+          'DELETE FROM group_gear_item_ticks WHERE item_id = $1 AND user_id = $2',
+          [itemId, userId]
+        );
+        res.json({ success: true, ticked: false });
       } else {
-        if (status === 'completed') {
-          claimedBy = userId;
-        }
+        await pool.query(
+          'INSERT INTO group_gear_item_ticks (item_id, user_id) VALUES ($1, $2)',
+          [itemId, userId]
+        );
+        res.json({ success: true, ticked: true });
       }
-
-      const result = await pool.query(`
-        UPDATE group_gear_items
-        SET status = $1, claimed_by = $2, updated_at = NOW()
-        WHERE id = $3
-        RETURNING id, status, claimed_by
-      `, [status, claimedBy, itemId]);
-
-      if (result.rows.length === 0) {
-        return res.status(404).json({ error: 'Item not found' });
-      }
-
-      res.json({ success: true, item: result.rows[0] });
     } catch (error) {
-      console.error('Error updating gear item:', error);
-      res.status(500).json({ error: 'Failed to update gear item' });
+      console.error('Error toggling gear item tick:', error);
+      res.status(500).json({ error: 'Failed to toggle tick' });
     }
   });
 
@@ -297,9 +337,9 @@ module.exports = (pool) => {
       }
 
       const role = memberCheck.rows[0].role;
-      const isOwner = item.rows[0].added_by === userId;
+      const isCreator = item.rows[0].added_by === userId;
 
-      if (!isOwner && role !== 'owner' && role !== 'moderator') {
+      if (!isCreator && role !== 'owner' && role !== 'moderator') {
         return res.status(403).json({ error: 'Only item creator or group moderators can delete items' });
       }
 
@@ -326,9 +366,6 @@ module.exports = (pool) => {
         return res.status(403).json({ error: 'Must be a member to share gear lists' });
       }
 
-      const role = memberCheck.rows[0].role;
-      const isModerator = role === 'owner' || role === 'moderator';
-
       const listResult = await pool.query(`
         SELECT 
           gl.title, gl.visibility, gl.owner_id, gl.race_id,
@@ -345,8 +382,8 @@ module.exports = (pool) => {
 
       const list = listResult.rows[0];
 
-      if (list.visibility === 'personal' && list.owner_id !== userId && !isModerator) {
-        return res.status(403).json({ error: 'Cannot share personal list of another user' });
+      if (list.visibility === 'personal' && list.owner_id !== userId) {
+        return res.status(403).json({ error: 'Cannot share private list of another user' });
       }
 
       const itemsResult = await pool.query(`
@@ -356,50 +393,28 @@ module.exports = (pool) => {
         FROM group_gear_items gi
         LEFT JOIN users u ON gi.claimed_by = u.id
         WHERE gi.list_id = $1
-        ORDER BY 
-          CASE gi.status
-            WHEN 'needed' THEN 1
-            WHEN 'claimed' THEN 2
-            WHEN 'completed' THEN 3
-          END,
-          gi.created_at ASC
+        ORDER BY gi.created_at ASC
       `, [listId]);
 
       let shareText = `📋 ${list.title}\n`;
-      
+
       if (list.race_name) {
-        shareText += `🏃 ${list.race_name}`;
-        if (list.race_date) {
-          const raceDate = new Date(list.race_date);
-          shareText += ` - ${raceDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}`;
-        }
-        shareText += '\n';
+        const raceDate = new Date(list.race_date);
+        shareText += `🏃 ${list.race_name} - ${raceDate.toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}\n`;
       }
 
-      if (list.visibility === 'personal') {
-        shareText += '👤 Personal List\n';
-      } else {
-        shareText += '👥 Collaborative List\n';
-      }
-
+      shareText += list.visibility === 'personal' ? '🔒 Private List\n' : '🌐 Public List\n';
       shareText += '\n';
 
       if (itemsResult.rows.length === 0) {
         shareText += 'No items yet';
       } else {
         itemsResult.rows.forEach(item => {
-          let icon = '[ ]';
-          let statusText = '';
-          
           if (item.status === 'claimed') {
-            icon = '[~]';
-            statusText = item.claimed_by_name ? ` (${item.claimed_by_name})` : '';
-          } else if (item.status === 'completed') {
-            icon = '[✓]';
-            statusText = item.claimed_by_name ? ` (${item.claimed_by_name})` : '';
+            shareText += `[~] ${item.description}${item.claimed_by_name ? ` (${item.claimed_by_name})` : ''}\n`;
+          } else {
+            shareText += `[ ] ${item.description}\n`;
           }
-          
-          shareText += `${icon} ${item.description}${statusText}\n`;
         });
       }
 
