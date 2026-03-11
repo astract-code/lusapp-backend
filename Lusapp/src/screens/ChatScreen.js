@@ -281,7 +281,7 @@ export const ChatScreen = ({ route, navigation }) => {
       <KeyboardAvoidingView
         style={styles.keyboardView}
         behavior="padding"
-        keyboardVerticalOffset={Platform.OS === 'ios' ? headerHeight : insets.bottom}
+        keyboardVerticalOffset={Platform.OS === 'ios' ? headerHeight : 0}
       >
         <View style={[styles.statusBar, { backgroundColor: colors.card, borderBottomColor: colors.border }]}>
           <View style={styles.statusContent}>

@@ -241,7 +241,7 @@ export const OnboardingScreen = ({ navigation }) => {
       <SafeAreaView style={styles.safeArea}>
         <KeyboardAvoidingView
           behavior="padding"
-          keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : insets.bottom}
+          keyboardVerticalOffset={0}
           style={styles.keyboardView}
         >
           <ScrollView

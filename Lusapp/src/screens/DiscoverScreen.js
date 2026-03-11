@@ -422,7 +422,7 @@ export const DiscoverScreen = ({ navigation }) => {
           <KeyboardAvoidingView 
             style={{ flex: 1 }} 
             behavior="padding"
-            keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : insets.bottom}
+            keyboardVerticalOffset={0}
           >
             <View style={styles.modalHeader}>
               <Text style={[styles.modalTitle, { color: colors.text }]}>{t('addNewRace')}</Text>

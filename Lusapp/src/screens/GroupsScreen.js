@@ -355,7 +355,7 @@ export const GroupsScreen = ({ navigation }) => {
       <Modal visible={showCreateModal} animationType="slide" transparent={true}>
         <KeyboardAvoidingView
           behavior="padding"
-          keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : insets.bottom}
+          keyboardVerticalOffset={0}
           style={styles.modalOverlay}
         >
           <View style={[styles.modalContent, { backgroundColor: colors.card }]}>

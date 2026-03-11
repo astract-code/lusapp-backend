@@ -45,7 +45,7 @@ export const ForgotPasswordScreen = ({ navigation }) => {
   return (
     <KeyboardAvoidingView
       behavior="padding"
-      keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : insets.bottom}
+      keyboardVerticalOffset={0}
       style={styles.container}
     >
       <LinearGradient
