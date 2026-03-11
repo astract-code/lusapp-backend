@@ -14,7 +14,7 @@ import {
   Platform,
   ActivityIndicator,
 } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { CompactRaceCard } from '../components/CompactRaceCard';
 import { FilterChipButton } from '../components/FilterChipButton';
@@ -31,6 +31,7 @@ import { SPACING, FONT_SIZE, BORDER_RADIUS, SPORTS, CONTINENTS, COUNTRIES, COUNT
 import { SPORT_TAXONOMY, SPORT_CATEGORIES, normalizeLegacySport, formatSportDisplay } from '../constants/sportTaxonomy';
 
 export const DiscoverScreen = ({ navigation }) => {
+  const insets = useSafeAreaInsets();
   const { colors } = useTheme();
   const { races, addRace, fetchRaces } = useAppStore();
   const { token } = useAuth();
@@ -420,8 +421,8 @@ export const DiscoverScreen = ({ navigation }) => {
         <SafeAreaView style={[styles.modalContainer, { backgroundColor: colors.background }]}>
           <KeyboardAvoidingView 
             style={{ flex: 1 }} 
-            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-            keyboardVerticalOffset={0}
+            behavior="padding"
+            keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : insets.bottom}
           >
             <View style={styles.modalHeader}>
               <Text style={[styles.modalTitle, { color: colors.text }]}>{t('addNewRace')}</Text>

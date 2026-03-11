@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, StyleSheet, TouchableOpacity, Alert, KeyboardAvoidingView, Platform, ActivityIndicator } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
 import { useLanguage } from '../context/LanguageContext';
@@ -7,6 +8,7 @@ import { FONT_SIZE, SPACING } from '../constants/theme';
 import { LinearGradient } from 'expo-linear-gradient';
 
 export const ForgotPasswordScreen = ({ navigation }) => {
+  const insets = useSafeAreaInsets();
   const { firebaseAuthService } = useAuth();
   const { colors } = useTheme();
   const { t } = useLanguage();
@@ -42,7 +44,8 @@ export const ForgotPasswordScreen = ({ navigation }) => {
 
   return (
     <KeyboardAvoidingView
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      behavior="padding"
+      keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : insets.bottom}
       style={styles.container}
     >
       <LinearGradient

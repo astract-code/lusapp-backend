@@ -14,7 +14,7 @@ import {
   Dimensions,
   ImageBackground,
 } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 import * as AppleAuthentication from 'expo-apple-authentication';
@@ -82,6 +82,7 @@ GoogleSignin.configure({
 const hasGoogleConfig = Boolean(GOOGLE_WEB_CLIENT_ID);
 
 export const OnboardingScreen = ({ navigation }) => {
+  const insets = useSafeAreaInsets();
   const { login, signupWithEmail, signupWithGoogle, signupWithApple } = useAuth();
   const { t } = useLanguage();
   
@@ -239,7 +240,8 @@ export const OnboardingScreen = ({ navigation }) => {
       
       <SafeAreaView style={styles.safeArea}>
         <KeyboardAvoidingView
-          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+          behavior="padding"
+          keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : insets.bottom}
           style={styles.keyboardView}
         >
           <ScrollView

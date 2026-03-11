@@ -280,8 +280,8 @@ export const ChatScreen = ({ route, navigation }) => {
     <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
       <KeyboardAvoidingView
         style={styles.keyboardView}
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        keyboardVerticalOffset={Platform.OS === 'ios' ? headerHeight : 0}
+        behavior="padding"
+        keyboardVerticalOffset={Platform.OS === 'ios' ? headerHeight : insets.bottom}
       >
         <View style={[styles.statusBar, { backgroundColor: colors.card, borderBottomColor: colors.border }]}>
           <View style={styles.statusContent}>
