@@ -5,7 +5,6 @@ import {
   StyleSheet,
   TextInput,
   TouchableOpacity,
-  KeyboardAvoidingView,
   ScrollView,
   Platform,
   Alert,
@@ -13,8 +12,12 @@ import {
   Animated,
   Dimensions,
   ImageBackground,
+  KeyboardAvoidingView,
 } from 'react-native';
-import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { AvoidSoftInputView } from '../components/KeyboardWrapper';
+
+const FormKeyboardWrapper = Platform.OS === 'android' ? AvoidSoftInputView : KeyboardAvoidingView;
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 import * as AppleAuthentication from 'expo-apple-authentication';
@@ -82,7 +85,6 @@ GoogleSignin.configure({
 const hasGoogleConfig = Boolean(GOOGLE_WEB_CLIENT_ID);
 
 export const OnboardingScreen = ({ navigation }) => {
-  const insets = useSafeAreaInsets();
   const { login, signupWithEmail, signupWithGoogle, signupWithApple } = useAuth();
   const { t } = useLanguage();
   
@@ -239,11 +241,7 @@ export const OnboardingScreen = ({ navigation }) => {
       <View style={styles.glowEffect2} />
       
       <SafeAreaView style={styles.safeArea}>
-        <KeyboardAvoidingView
-          behavior="padding"
-          keyboardVerticalOffset={0}
-          style={styles.keyboardView}
-        >
+        <FormKeyboardWrapper style={styles.keyboardView} {...(Platform.OS === 'ios' ? { behavior: 'padding' } : {})}>
           <ScrollView
             contentContainerStyle={styles.scrollContent}
             keyboardShouldPersistTaps="handled"
@@ -461,7 +459,7 @@ export const OnboardingScreen = ({ navigation }) => {
               {t('termsAgreement')}
             </Text>
           </ScrollView>
-        </KeyboardAvoidingView>
+        </FormKeyboardWrapper>
       </SafeAreaView>
     </View>
   );

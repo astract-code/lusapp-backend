@@ -10,11 +10,14 @@ import {
   TextInput,
   Modal,
   RefreshControl,
-  KeyboardAvoidingView,
   Platform,
   ActivityIndicator,
+  KeyboardAvoidingView,
 } from 'react-native';
-import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { AvoidSoftInputView } from '../components/KeyboardWrapper';
+
+const FormKeyboardWrapper = Platform.OS === 'android' ? AvoidSoftInputView : KeyboardAvoidingView;
 import { Ionicons } from '@expo/vector-icons';
 import { CompactRaceCard } from '../components/CompactRaceCard';
 import { FilterChipButton } from '../components/FilterChipButton';
@@ -31,7 +34,6 @@ import { SPACING, FONT_SIZE, BORDER_RADIUS, SPORTS, CONTINENTS, COUNTRIES, COUNT
 import { SPORT_TAXONOMY, SPORT_CATEGORIES, normalizeLegacySport, formatSportDisplay } from '../constants/sportTaxonomy';
 
 export const DiscoverScreen = ({ navigation }) => {
-  const insets = useSafeAreaInsets();
   const { colors } = useTheme();
   const { races, addRace, fetchRaces } = useAppStore();
   const { token } = useAuth();
@@ -419,10 +421,9 @@ export const DiscoverScreen = ({ navigation }) => {
         onRequestClose={() => setShowAddForm(false)}
       >
         <SafeAreaView style={[styles.modalContainer, { backgroundColor: colors.background }]}>
-          <KeyboardAvoidingView 
-            style={{ flex: 1 }} 
-            behavior="padding"
-            keyboardVerticalOffset={0}
+          <FormKeyboardWrapper 
+            style={{ flex: 1 }}
+            {...(Platform.OS === 'ios' ? { behavior: 'padding' } : {})}
           >
             <View style={styles.modalHeader}>
               <Text style={[styles.modalTitle, { color: colors.text }]}>{t('addNewRace')}</Text>
@@ -546,7 +547,7 @@ export const DiscoverScreen = ({ navigation }) => {
             
             <View style={{ height: 50 }} />
           </ScrollView>
-          </KeyboardAvoidingView>
+          </FormKeyboardWrapper>
         </SafeAreaView>
       </Modal>
 

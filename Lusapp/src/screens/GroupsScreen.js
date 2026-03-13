@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, FlatList, TouchableOpacity, TextInput, Modal, Alert, ScrollView, KeyboardAvoidingView, Platform } from 'react-native';
-import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
+import { View, Text, StyleSheet, FlatList, TouchableOpacity, TextInput, Modal, Alert, ScrollView, Platform, KeyboardAvoidingView } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { AvoidSoftInputView } from '../components/KeyboardWrapper';
+
+const FormKeyboardWrapper = Platform.OS === 'android' ? AvoidSoftInputView : KeyboardAvoidingView;
 import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
 import { useLanguage } from '../context/LanguageContext';
@@ -8,7 +11,6 @@ import { SPACING, FONT_SIZE, BORDER_RADIUS } from '../constants/theme';
 import API_URL from '../config/api';
 
 export const GroupsScreen = ({ navigation }) => {
-  const insets = useSafeAreaInsets();
   const { colors } = useTheme();
   const { token } = useAuth();
   const { t } = useLanguage();
@@ -353,10 +355,9 @@ export const GroupsScreen = ({ navigation }) => {
       />
 
       <Modal visible={showCreateModal} animationType="slide" transparent={true}>
-        <KeyboardAvoidingView
-          behavior="padding"
-          keyboardVerticalOffset={0}
+        <FormKeyboardWrapper
           style={styles.modalOverlay}
+          {...(Platform.OS === 'ios' ? { behavior: 'padding' } : {})}
         >
           <View style={[styles.modalContent, { backgroundColor: colors.card }]}>
             <Text style={[styles.modalTitle, { color: colors.text }]}>{t('createGroup')}</Text>
@@ -447,7 +448,7 @@ export const GroupsScreen = ({ navigation }) => {
               </TouchableOpacity>
             </View>
           </View>
-        </KeyboardAvoidingView>
+        </FormKeyboardWrapper>
       </Modal>
 
       <Modal visible={showJoinModal} animationType="fade" transparent={true}>

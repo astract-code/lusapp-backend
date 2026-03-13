@@ -15,7 +15,7 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 import { useFocusEffect } from '@react-navigation/native';
 import { useHeaderHeight } from '@react-navigation/elements';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { AvoidSoftInputView } from '../components/KeyboardWrapper';
 import { useTheme } from '../context/ThemeContext';
 import { useAuth } from '../context/AuthContext';
 import { useLanguage } from '../context/LanguageContext';
@@ -29,7 +29,8 @@ export const ChatScreen = ({ route, navigation }) => {
   const { user: currentUser, token } = useAuth();
   const { t } = useLanguage();
   const headerHeight = useHeaderHeight();
-  const insets = useSafeAreaInsets();
+  const ChatKeyboardWrapper = Platform.OS === 'android' ? AvoidSoftInputView : KeyboardAvoidingView;
+  const chatKeyboardProps = Platform.OS === 'ios' ? { behavior: 'padding', keyboardVerticalOffset: headerHeight } : {};
   const [messages, setMessages] = useState([]);
   const [inputText, setInputText] = useState('');
   const [loading, setLoading] = useState(true);
@@ -278,11 +279,7 @@ export const ChatScreen = ({ route, navigation }) => {
 
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
-      <KeyboardAvoidingView
-        style={styles.keyboardView}
-        behavior="padding"
-        keyboardVerticalOffset={Platform.OS === 'ios' ? headerHeight : 0}
-      >
+      <ChatKeyboardWrapper style={styles.keyboardView} {...chatKeyboardProps}>
         <View style={[styles.statusBar, { backgroundColor: colors.card, borderBottomColor: colors.border }]}>
           <View style={styles.statusContent}>
             <View style={[styles.onlineIndicator, { backgroundColor: otherUserOnline ? '#4ADE80' : colors.textSecondary }]} />
@@ -358,7 +355,7 @@ export const ChatScreen = ({ route, navigation }) => {
             )}
           </TouchableOpacity>
         </View>
-      </KeyboardAvoidingView>
+      </ChatKeyboardWrapper>
     </SafeAreaView>
   );
 };

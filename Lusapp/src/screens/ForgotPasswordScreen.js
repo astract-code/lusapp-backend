@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, StyleSheet, TouchableOpacity, Alert, KeyboardAvoidingView, Platform, ActivityIndicator } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { View, Text, TextInput, StyleSheet, TouchableOpacity, Alert, ActivityIndicator, Platform, KeyboardAvoidingView } from 'react-native';
+import { AvoidSoftInputView } from '../components/KeyboardWrapper';
+
+const FormKeyboardWrapper = Platform.OS === 'android' ? AvoidSoftInputView : KeyboardAvoidingView;
 import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
 import { useLanguage } from '../context/LanguageContext';
@@ -8,7 +10,6 @@ import { FONT_SIZE, SPACING } from '../constants/theme';
 import { LinearGradient } from 'expo-linear-gradient';
 
 export const ForgotPasswordScreen = ({ navigation }) => {
-  const insets = useSafeAreaInsets();
   const { firebaseAuthService } = useAuth();
   const { colors } = useTheme();
   const { t } = useLanguage();
@@ -43,10 +44,9 @@ export const ForgotPasswordScreen = ({ navigation }) => {
   };
 
   return (
-    <KeyboardAvoidingView
-      behavior="padding"
-      keyboardVerticalOffset={0}
+    <FormKeyboardWrapper
       style={styles.container}
+      {...(Platform.OS === 'ios' ? { behavior: 'padding' } : {})}
     >
       <LinearGradient
         colors={['#0B0F1A', '#1E3A5A']}
@@ -102,7 +102,7 @@ export const ForgotPasswordScreen = ({ navigation }) => {
           </View>
         </View>
       </LinearGradient>
-    </KeyboardAvoidingView>
+    </FormKeyboardWrapper>
   );
 };
 
