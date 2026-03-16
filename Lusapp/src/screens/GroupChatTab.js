@@ -390,6 +390,7 @@ export const GroupChatTab = ({ groupId }) => {
           keyExtractor={(item) => item?.id?.toString() || Math.random().toString()}
           contentContainerStyle={styles.messagesList}
           onContentSizeChange={() => flatListRef.current?.scrollToEnd({ animated: true })}
+          onLayout={() => Platform.OS === 'android' && flatListRef.current?.scrollToEnd({ animated: false })}
           ListHeaderComponent={
             <TouchableOpacity 
               onPress={() => setShowSearch(true)}

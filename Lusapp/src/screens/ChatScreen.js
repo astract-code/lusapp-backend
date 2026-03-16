@@ -327,6 +327,7 @@ export const ChatScreen = ({ route, navigation }) => {
             keyExtractor={(item) => item.id.toString()}
             contentContainerStyle={styles.messagesList}
             onContentSizeChange={() => flatListRef.current?.scrollToEnd({ animated: true })}
+            onLayout={() => Platform.OS === 'android' && flatListRef.current?.scrollToEnd({ animated: false })}
           />
         )}
 
