@@ -1,0 +1,62 @@
+uploads = []
+generated = []
+
+[[outputs]]
+id = "sYBe-WhcN_PXDQ8GHWN9p"
+uri = "file://attached_assets/generated_images/screenshot_01_onboarding.png"
+type = "image"
+title = "1 - Onboarding / Sign In"
+
+[[outputs]]
+id = "BAGwGNTiBNQA1s7sa8UKL"
+uri = "file://attached_assets/generated_images/screenshot_02_discover.png"
+type = "image"
+title = "2 - Race Discovery"
+
+[[outputs]]
+id = "voVGCO2qUI1CoXeKhgORD"
+uri = "file://attached_assets/generated_images/screenshot_03_feed.png"
+type = "image"
+title = "3 - Social Feed"
+
+[[outputs]]
+id = "PQ5z4id4Pd7G6S2gP_LOu"
+uri = "file://attached_assets/generated_images/screenshot_04_calendar.png"
+type = "image"
+title = "4 - Race Calendar"
+
+[[outputs]]
+id = "qinUg9kq2BzvcLIeYPyVf"
+uri = "file://attached_assets/generated_images/screenshot_05_groups.png"
+type = "image"
+title = "5 - Community Groups"
+
+[[outputs]]
+id = "1E0WvpRY71MrbI9ebmh4n"
+uri = "file://attached_assets/generated_images/screenshot_06_group_chat.png"
+type = "image"
+title = "6 - Group Chat"
+
+[[outputs]]
+id = "NbckLTb8c5GnUPkbiNCxN"
+uri = "file://attached_assets/generated_images/screenshot_07_messages.png"
+type = "image"
+title = "7 - Direct Messages"
+
+[[outputs]]
+id = "tlGnH8eY-RFPn_xEYRTct"
+uri = "file://attached_assets/generated_images/screenshot_08_profile.png"
+type = "image"
+title = "8 - Athlete Profile"
+
+[[outputs]]
+id = "p-w0zR3NvJdYDV1-VS8iJ"
+uri = "file://attached_assets/generated_images/screenshot_09_race_detail.png"
+type = "image"
+title = "9 - Race Detail"
+
+[[outputs]]
+id = "X6tAnoX7E2bi5KVXAcD_-"
+uri = "file://attached_assets/generated_images/screenshot_10_gear_list.png"
+type = "image"
+title = "10 - Gear List"
