@@ -60,3 +60,63 @@ id = "X6tAnoX7E2bi5KVXAcD_-"
 uri = "file://attached_assets/generated_images/screenshot_10_gear_list.png"
 type = "image"
 title = "10 - Gear List"
+
+[[outputs]]
+id = "6xSc9wfpvjJfLOBcNh7Qh"
+uri = "file://attached_assets/generated_images/screenshot_01_onboarding_1284x2778.png"
+type = "image"
+title = "1 - Onboarding (1284×2778)"
+
+[[outputs]]
+id = "FfZUbAvbvhDN6i8AaJnDO"
+uri = "file://attached_assets/generated_images/screenshot_02_discover_1284x2778.png"
+type = "image"
+title = "2 - Race Discovery (1284×2778)"
+
+[[outputs]]
+id = "P49xm680jSLF50-ivH12_"
+uri = "file://attached_assets/generated_images/screenshot_03_feed_1284x2778.png"
+type = "image"
+title = "3 - Social Feed (1284×2778)"
+
+[[outputs]]
+id = "Q0FNouOW5DODXVCOMk1aB"
+uri = "file://attached_assets/generated_images/screenshot_04_calendar_1284x2778.png"
+type = "image"
+title = "4 - Race Calendar (1284×2778)"
+
+[[outputs]]
+id = "FbpxmyIZHRyMSQhKYcP43"
+uri = "file://attached_assets/generated_images/screenshot_05_groups_1284x2778.png"
+type = "image"
+title = "5 - Community Groups (1284×2778)"
+
+[[outputs]]
+id = "V0y6IYKaEdlF-Mz32p5qQ"
+uri = "file://attached_assets/generated_images/screenshot_06_group_chat_1284x2778.png"
+type = "image"
+title = "6 - Group Chat (1284×2778)"
+
+[[outputs]]
+id = "EKAKox1hqpa3QynxbzQOt"
+uri = "file://attached_assets/generated_images/screenshot_07_messages_1284x2778.png"
+type = "image"
+title = "7 - Direct Messages (1284×2778)"
+
+[[outputs]]
+id = "gICaE5O8TkcTtkzvyaVKc"
+uri = "file://attached_assets/generated_images/screenshot_08_profile_1284x2778.png"
+type = "image"
+title = "8 - Athlete Profile (1284×2778)"
+
+[[outputs]]
+id = "esjb3EWWP7vw7CLHmLzhh"
+uri = "file://attached_assets/generated_images/screenshot_09_race_detail_1284x2778.png"
+type = "image"
+title = "9 - Race Detail (1284×2778)"
+
+[[outputs]]
+id = "5-27Yn7tIidlS3YjfmI8a"
+uri = "file://attached_assets/generated_images/screenshot_10_gear_list_1284x2778.png"
+type = "image"
+title = "10 - Gear List (1284×2778)"
