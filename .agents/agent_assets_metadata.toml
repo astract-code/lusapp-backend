@@ -120,3 +120,9 @@ id = "5-27Yn7tIidlS3YjfmI8a"
 uri = "file://attached_assets/generated_images/screenshot_10_gear_list_1284x2778.png"
 type = "image"
 title = "10 - Gear List (1284×2778)"
+
+[[outputs]]
+id = "slhBy-xw6iZ_YrVhxF6CL"
+uri = "file://lusapp_ios_screenshots.zip"
+type = "unspecified"
+title = "Lusapp iOS Screenshots (10 files, 1284×2778px)"
