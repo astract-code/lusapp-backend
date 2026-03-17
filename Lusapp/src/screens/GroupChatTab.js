@@ -383,26 +383,26 @@ export const GroupChatTab = ({ groupId }) => {
           </Text>
         </View>
       ) : (
-        <FlatList
-          ref={flatListRef}
-          data={regularMessages}
-          renderItem={renderMessage}
-          keyExtractor={(item) => item?.id?.toString() || Math.random().toString()}
-          contentContainerStyle={styles.messagesList}
-          onContentSizeChange={() => flatListRef.current?.scrollToEnd({ animated: true })}
-          onLayout={() => Platform.OS === 'android' && flatListRef.current?.scrollToEnd({ animated: false })}
-          ListHeaderComponent={
-            <TouchableOpacity 
-              onPress={() => setShowSearch(true)}
-              style={[styles.searchButton, { backgroundColor: colors.card }]}
-            >
-              <Ionicons name="search-outline" size={16} color={colors.textSecondary} />
-              <Text style={[styles.searchButtonText, { color: colors.textSecondary }]}>
-                {t('searchMessages')}
-              </Text>
-            </TouchableOpacity>
-          }
-        />
+        <>
+          <TouchableOpacity 
+            onPress={() => setShowSearch(true)}
+            style={[styles.searchButton, { backgroundColor: colors.card }]}
+          >
+            <Ionicons name="search-outline" size={16} color={colors.textSecondary} />
+            <Text style={[styles.searchButtonText, { color: colors.textSecondary }]}>
+              {t('searchMessages')}
+            </Text>
+          </TouchableOpacity>
+          <FlatList
+            ref={flatListRef}
+            data={regularMessages}
+            renderItem={renderMessage}
+            keyExtractor={(item) => item?.id?.toString() || Math.random().toString()}
+            contentContainerStyle={styles.messagesList}
+            onContentSizeChange={() => flatListRef.current?.scrollToEnd({ animated: true })}
+            onLayout={() => Platform.OS === 'android' && flatListRef.current?.scrollToEnd({ animated: false })}
+          />
+        </>
       )}
 
       <View
