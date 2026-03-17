@@ -425,6 +425,8 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   messagesList: {
+    flexGrow: 1,
+    justifyContent: 'flex-end',
     padding: SPACING.lg,
   },
   messageRow: {
