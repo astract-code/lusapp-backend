@@ -259,6 +259,10 @@ app.get('/privacy', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'privacy-policy.html'));
 });
 
+app.get('/support', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'support.html'));
+});
+
 app.get('/terms-of-service', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'terms-of-service.html'));
 });
