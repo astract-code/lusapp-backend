@@ -192,3 +192,69 @@ id = "j9GoiBlzdfnE21NBAY3ry"
 uri = "file://lusapp_ios_screenshots_real.zip"
 type = "unspecified"
 title = "All 10 screenshots (ZIP, 7.5 MB)"
+
+[[outputs]]
+id = "3jFcBQfd9URB99N3E_PRp"
+uri = "file://ios_screenshots/ipad13/screenshot_01_discover_races_2048x2732.png"
+type = "image"
+title = "1 - Discover Races (iPad 13\")"
+
+[[outputs]]
+id = "v8ODWkEER9HB7XNsik1QS"
+uri = "file://ios_screenshots/ipad13/screenshot_02_discover_filtered_2048x2732.png"
+type = "image"
+title = "2 - Discover Filtered (iPad 13\")"
+
+[[outputs]]
+id = "KM_E0NGvZWEeaB8_7AOyL"
+uri = "file://ios_screenshots/ipad13/screenshot_03_calendar_2048x2732.png"
+type = "image"
+title = "3 - Calendar (iPad 13\")"
+
+[[outputs]]
+id = "mR4bPqBf7yf5iRFsW3Z3M"
+uri = "file://ios_screenshots/ipad13/screenshot_04_social_feed_2048x2732.png"
+type = "image"
+title = "4 - Social Feed (iPad 13\")"
+
+[[outputs]]
+id = "NpwZoDMhPbzRX9ipGf1mN"
+uri = "file://ios_screenshots/ipad13/screenshot_05_race_detail_2048x2732.png"
+type = "image"
+title = "5 - Race Detail (iPad 13\")"
+
+[[outputs]]
+id = "Mo37SKwFWBWfxhPToLc4f"
+uri = "file://ios_screenshots/ipad13/screenshot_06_profile_2048x2732.png"
+type = "image"
+title = "6 - Profile (iPad 13\")"
+
+[[outputs]]
+id = "tvdw0--iThOmdx67-D1sh"
+uri = "file://ios_screenshots/ipad13/screenshot_07_group_chat_2048x2732.png"
+type = "image"
+title = "7 - Group Chat (iPad 13\")"
+
+[[outputs]]
+id = "Bs-i74PSDlIqZz10qiqhj"
+uri = "file://ios_screenshots/ipad13/screenshot_08_group_members_2048x2732.png"
+type = "image"
+title = "8 - Group Members (iPad 13\")"
+
+[[outputs]]
+id = "JL4FH2iuXbU8TjRFkUcQI"
+uri = "file://ios_screenshots/ipad13/screenshot_09_gear_lists_2048x2732.png"
+type = "image"
+title = "9 - Gear Lists (iPad 13\")"
+
+[[outputs]]
+id = "fRcxkTnXflXRVIK1Wx7-T"
+uri = "file://ios_screenshots/ipad13/screenshot_10_create_gear_list_2048x2732.png"
+type = "image"
+title = "10 - Create Gear List (iPad 13\")"
+
+[[outputs]]
+id = "SGzT_qWguWXXyEBSgJqE-"
+uri = "file://lusapp_ipad13_screenshots.zip"
+type = "unspecified"
+title = "All 10 iPad 13\" screenshots (ZIP, 7.4 MB)"
