@@ -144,6 +144,16 @@ All group data is stored in PostgreSQL with role-based access control ensuring p
 - Long-press to delete own messages
 - Online status indicators for group members
 
+### Content Moderation & Safety (Apple Guideline 1.2 Compliance)
+
+The app implements all required user-generated content safeguards:
+
+- **Terms & Privacy acceptance:** Shown on first app launch (`TermsAcceptanceScreen`). Acceptance stored in AsyncStorage (`@lusapp_terms_accepted_v1`). Links to live Terms and Privacy Policy pages.
+- **Report content:** Every post has a "⋯" menu → "Report Post". Users select a reason (spam, hateful, inappropriate, other). Reports stored in `reports` DB table and sent to `POST /api/auth/reports`.
+- **Block users:** Block button on every `UserProfileScreen` (other users only). Also accessible via "⋯" → "Block User" on any post. Block/unblock via `POST/DELETE /api/auth/users/block/:userId`. Blocked users' posts filtered from feed instantly and server-side.
+- **DB tables:** `blocked_users (blocker_id, blocked_id)`, `reports (reporter_id, content_type, content_id, reported_user_id, reason)`
+- **Feed filtering:** Posts feed query excludes blocked users' content server-side.
+
 **Admin Controls:**
 - `is_admin` flag in users table determines moderation rights
 - Admins can pin/unpin messages in group chats

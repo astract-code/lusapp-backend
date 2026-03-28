@@ -1,9 +1,10 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { StatusBar } from 'expo-status-bar';
 import { View, Text, ScrollView, StyleSheet } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { AuthProvider, useAuth } from './src/context/AuthContext';
 import { SettingsProvider } from './src/context/SettingsContext';
 import { ThemeProvider, useTheme } from './src/context/ThemeContext';
@@ -12,8 +13,11 @@ import { LanguageProvider } from './src/context/LanguageContext';
 import { OnboardingScreen } from './src/screens/OnboardingScreen';
 import { ForgotPasswordScreen } from './src/screens/ForgotPasswordScreen';
 import { EmailVerificationScreen } from './src/screens/EmailVerificationScreen';
+import { TermsAcceptanceScreen } from './src/screens/TermsAcceptanceScreen';
 import { AppNavigator } from './src/navigation/AppNavigator';
 import { useAppStore } from './src/context/AppContext';
+
+const TERMS_ACCEPTED_KEY = '@lusapp_terms_accepted_v1';
 
 const AuthStack = createNativeStackNavigator();
 
@@ -63,6 +67,13 @@ const AppContent = () => {
   const { user, token, firebaseUser, emailVerified, isLoading } = useAuth();
   const { isDarkMode } = useTheme();
   const fetchRaces = useAppStore((state) => state.fetchRaces);
+  const [termsAccepted, setTermsAccepted] = useState(null);
+
+  useEffect(() => {
+    AsyncStorage.getItem(TERMS_ACCEPTED_KEY).then(val => {
+      setTermsAccepted(val === 'true');
+    });
+  }, []);
 
   useEffect(() => {
     if (user) {
@@ -70,8 +81,17 @@ const AppContent = () => {
     }
   }, [user]);
 
-  if (isLoading) {
+  const handleAcceptTerms = async () => {
+    await AsyncStorage.setItem(TERMS_ACCEPTED_KEY, 'true');
+    setTermsAccepted(true);
+  };
+
+  if (isLoading || termsAccepted === null) {
     return null;
+  }
+
+  if (!termsAccepted) {
+    return <TermsAcceptanceScreen onAccept={handleAcceptTerms} />;
   }
 
   const isAuthenticated = !!user && !!token;

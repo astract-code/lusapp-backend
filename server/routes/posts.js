@@ -54,7 +54,7 @@ router.get('/feed', combinedAuthMiddleware, async (req, res) => {
     const limit = parseInt(req.query.limit) || 50;
     const offset = parseInt(req.query.offset) || 0;
     
-    // Get all posts from all users
+    // Get all posts from all users, excluding posts from blocked users
     const postsResult = await pool.query(
       `SELECT p.id, p.user_id, p.type, p.race_id, p.timestamp, p.liked_by, p.comments,
               u.name as user_name, u.avatar as user_avatar,
@@ -62,9 +62,12 @@ router.get('/feed', combinedAuthMiddleware, async (req, res) => {
        FROM posts p
        JOIN users u ON p.user_id = u.id
        LEFT JOIN races r ON p.race_id = r.id
+       WHERE p.user_id NOT IN (
+         SELECT blocked_id FROM blocked_users WHERE blocker_id = $3
+       )
        ORDER BY p.timestamp DESC
        LIMIT $1 OFFSET $2`,
-      [limit, offset]
+      [limit, offset, userId]
     );
     
     const posts = postsResult.rows.map(post => ({

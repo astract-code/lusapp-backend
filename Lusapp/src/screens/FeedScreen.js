@@ -75,6 +75,14 @@ export const FeedScreen = ({ navigation }) => {
     );
   }, []);
 
+  const handlePostHide = useCallback((postId, blockedUserId) => {
+    setPosts(currentPosts =>
+      currentPosts.filter(post =>
+        post.id !== postId && post.userId?.toString() !== blockedUserId?.toString()
+      )
+    );
+  }, []);
+
   const handleUserPress = (userId) => {
     navigation.navigate('UserProfile', { userId });
   };
@@ -104,6 +112,7 @@ export const FeedScreen = ({ navigation }) => {
             onUserPress={handleUserPress}
             onRacePress={handleRacePress}
             onPostUpdate={handlePostUpdate}
+            onPostHide={handlePostHide}
           />
         )}
         contentContainerStyle={styles.list}

@@ -18,6 +18,7 @@ import { useTheme } from '../context/ThemeContext';
 import { useLanguage } from '../context/LanguageContext';
 import { SPACING, FONT_SIZE, BORDER_RADIUS } from '../constants/theme';
 import API_URL from '../config/api';
+import { fetchWithAuth } from '../utils/apiClient';
 
 export const UserProfileScreen = ({ route, navigation }) => {
   const { userId } = route.params;
@@ -29,6 +30,7 @@ export const UserProfileScreen = ({ route, navigation }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [isFollowing, setIsFollowing] = useState(false);
+  const [isBlocked, setIsBlocked] = useState(false);
 
   useEffect(() => {
     fetchUserProfile();
@@ -36,26 +38,28 @@ export const UserProfileScreen = ({ route, navigation }) => {
 
   const fetchUserProfile = async () => {
     try {
-      console.log('Fetching user profile:', userId);
-      const response = await fetch(`${API_URL}/api/auth/users/batch?ids=${userId}`, {
-        headers: {
-          'Authorization': `Bearer ${token}`,
-        },
-      });
+      const [profileRes, blockedRes] = await Promise.all([
+        fetch(`${API_URL}/api/auth/users/batch?ids=${userId}`, {
+          headers: { 'Authorization': `Bearer ${token}` },
+        }),
+        fetchWithAuth(`${API_URL}/api/auth/users/blocked`),
+      ]);
 
-      if (response.ok) {
-        const data = await response.json();
-        console.log('User profile data:', data);
+      if (profileRes.ok) {
+        const data = await profileRes.json();
         if (data.users && data.users.length > 0) {
           const fetchedUser = data.users[0];
           setUser(fetchedUser);
-          
-          const isUserFollowed = fetchedUser.followers?.includes(currentUser.id.toString()) || 
+          const isUserFollowed = fetchedUser.followers?.includes(currentUser.id.toString()) ||
                                  fetchedUser.followers?.includes(currentUser.id);
           setIsFollowing(isUserFollowed);
         }
-      } else {
-        console.error('Failed to fetch user profile');
+      }
+
+      if (blockedRes.ok) {
+        const blockedData = await blockedRes.json();
+        const blockedIds = (blockedData.blocked || []).map(String);
+        setIsBlocked(blockedIds.includes(String(userId)));
       }
     } catch (error) {
       console.error('Error fetching user profile:', error);
@@ -96,6 +100,43 @@ export const UserProfileScreen = ({ route, navigation }) => {
     } catch (error) {
       console.error('Error toggling follow:', error);
       Alert.alert(t('oops'), t('failedToUpdateFollowStatus'));
+    }
+  };
+
+  const handleToggleBlock = () => {
+    if (isBlocked) {
+      Alert.alert(t('unblockUser'), `Unblock ${user?.name}?`, [
+        { text: t('cancel'), style: 'cancel' },
+        {
+          text: t('unblockUser'),
+          onPress: async () => {
+            try {
+              await fetchWithAuth(`${API_URL}/api/auth/users/block/${userId}`, { method: 'DELETE' });
+              setIsBlocked(false);
+              Alert.alert('', t('userUnblocked'));
+            } catch {
+              Alert.alert(t('oops'), t('error'));
+            }
+          },
+        },
+      ]);
+    } else {
+      Alert.alert(t('blockUserConfirmTitle'), t('blockUserConfirmMsg'), [
+        { text: t('cancel'), style: 'cancel' },
+        {
+          text: t('block'),
+          style: 'destructive',
+          onPress: async () => {
+            try {
+              await fetchWithAuth(`${API_URL}/api/auth/users/block/${userId}`, { method: 'POST' });
+              setIsBlocked(true);
+              Alert.alert('', t('userBlocked'));
+            } catch {
+              Alert.alert(t('oops'), t('error'));
+            }
+          },
+        },
+      ]);
     }
   };
 
@@ -177,6 +218,16 @@ export const UserProfileScreen = ({ route, navigation }) => {
               <Text style={styles.messageButtonText}>{t('message')}</Text>
             </TouchableOpacity>
           </View>
+        )}
+        {currentUser.id !== userId && (
+          <TouchableOpacity
+            style={[styles.blockButton, { borderColor: isBlocked ? '#EF4444' : 'rgba(255,255,255,0.3)' }]}
+            onPress={handleToggleBlock}
+          >
+            <Text style={[styles.blockButtonText, { color: isBlocked ? '#EF4444' : 'rgba(255,255,255,0.6)' }]}>
+              {isBlocked ? t('unblockUser') : t('blockUser')}
+            </Text>
+          </TouchableOpacity>
         )}
       </LinearGradient>
 
@@ -331,5 +382,17 @@ const styles = StyleSheet.create({
     fontSize: FONT_SIZE.md,
     textAlign: 'center',
     marginTop: SPACING.xxl,
+  },
+  blockButton: {
+    marginTop: SPACING.sm,
+    paddingVertical: SPACING.xs,
+    paddingHorizontal: SPACING.lg,
+    borderRadius: BORDER_RADIUS.md,
+    borderWidth: 1,
+    alignItems: 'center',
+  },
+  blockButtonText: {
+    fontSize: FONT_SIZE.sm,
+    fontWeight: '500',
   },
 });

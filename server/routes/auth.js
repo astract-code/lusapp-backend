@@ -709,4 +709,57 @@ router.post('/sync', verifyFirebaseTokenOnly, async (req, res) => {
   }
 });
 
+// ─── Block / Unblock a user ─────────────────────────────────────────────────
+router.post('/users/block/:targetId', combinedAuthMiddleware, async (req, res) => {
+  const blockerId = req.user.userId;
+  const blockedId = parseInt(req.params.targetId);
+  if (!blockedId || blockerId === blockedId) return res.status(400).json({ error: 'Invalid target' });
+  try {
+    await pool.query(
+      'INSERT INTO blocked_users (blocker_id, blocked_id) VALUES ($1, $2) ON CONFLICT DO NOTHING',
+      [blockerId, blockedId]
+    );
+    res.json({ success: true });
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to block user' });
+  }
+});
+
+router.delete('/users/block/:targetId', combinedAuthMiddleware, async (req, res) => {
+  const blockerId = req.user.userId;
+  const blockedId = parseInt(req.params.targetId);
+  try {
+    await pool.query('DELETE FROM blocked_users WHERE blocker_id=$1 AND blocked_id=$2', [blockerId, blockedId]);
+    res.json({ success: true });
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to unblock user' });
+  }
+});
+
+router.get('/users/blocked', combinedAuthMiddleware, async (req, res) => {
+  const userId = req.user.userId;
+  try {
+    const result = await pool.query('SELECT blocked_id FROM blocked_users WHERE blocker_id=$1', [userId]);
+    res.json({ blocked: result.rows.map(r => r.blocked_id) });
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to fetch blocked users' });
+  }
+});
+
+// ─── Report content ──────────────────────────────────────────────────────────
+router.post('/reports', combinedAuthMiddleware, async (req, res) => {
+  const reporterId = req.user.userId;
+  const { contentType, contentId, reportedUserId, reason } = req.body;
+  if (!reason) return res.status(400).json({ error: 'Reason required' });
+  try {
+    await pool.query(
+      'INSERT INTO reports (reporter_id, content_type, content_id, reported_user_id, reason) VALUES ($1,$2,$3,$4,$5)',
+      [reporterId, contentType || 'post', contentId || null, reportedUserId || null, reason]
+    );
+    res.json({ success: true });
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to submit report' });
+  }
+});
+
 module.exports = router;

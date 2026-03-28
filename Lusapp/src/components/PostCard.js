@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, TextInput } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, TextInput, ActionSheetIOS, Alert, Platform } from 'react-native';
 import { UserAvatar } from './UserAvatar';
 import { SPACING, BORDER_RADIUS, FONT_SIZE } from '../constants/theme';
 import { useTheme } from '../context/ThemeContext';
@@ -9,7 +9,7 @@ import { useLanguage } from '../context/LanguageContext';
 import { fetchWithAuth } from '../utils/apiClient';
 import API_URL from '../config/api';
 
-export const PostCard = ({ post, onUserPress, onRacePress, onPostUpdate }) => {
+export const PostCard = ({ post, onUserPress, onRacePress, onPostUpdate, onPostHide }) => {
   const { colors } = useTheme();
   const [showComments, setShowComments] = useState(false);
   const [commentText, setCommentText] = useState('');
@@ -18,7 +18,6 @@ export const PostCard = ({ post, onUserPress, onRacePress, onPostUpdate }) => {
   const { t } = useLanguage();
   const { getUserById, getRaceById, toggleLikePost, addComment } = useAppStore();
   
-  // Use data from post object (API) or fallback to store lookup
   const postAuthor = post.userName ? {
     id: post.userId,
     name: post.userName,
@@ -35,60 +34,43 @@ export const PostCard = ({ post, onUserPress, onRacePress, onPostUpdate }) => {
     sportSubtype: post.sportSubtype
   } : getRaceById(post.raceId);
   
-  // For new_race and upcoming_race types, we don't need an author
   if (post.type !== 'new_race' && post.type !== 'upcoming_race' && !postAuthor) return null;
   if (!currentUser) return null;
+
+  const isOwnPost = postAuthor?.id?.toString() === currentUser.id?.toString();
+  const isSystemPost = post.type === 'new_race' || post.type === 'upcoming_race';
 
   const handleLike = async () => {
     const isCurrentlyLiked = post.likedBy?.includes(currentUser.id?.toString()) || 
                               post.likedBy?.includes(currentUser.id);
-    
     const userId = currentUser.id?.toString();
-    
-    // Optimistic update - update local state immediately
     const updatedLikedBy = isCurrentlyLiked
       ? (post.likedBy || []).filter(id => id !== userId && id !== currentUser.id)
       : [...(post.likedBy || []), userId];
     
-    if (onPostUpdate) {
-      onPostUpdate(post.id, { likedBy: updatedLikedBy });
-    }
+    if (onPostUpdate) onPostUpdate(post.id, { likedBy: updatedLikedBy });
     toggleLikePost(post.id, currentUser.id);
     
     try {
-      // Only call API for real posts (not upcoming_race or new_race which have string IDs like "upcoming_123")
       const postIdStr = post.id?.toString() || '';
-      if (postIdStr.startsWith('upcoming_') || postIdStr.startsWith('race_')) {
-        return; // These are virtual feed items, not real posts
-      }
-      
+      if (postIdStr.startsWith('upcoming_') || postIdStr.startsWith('race_')) return;
       if (isCurrentlyLiked) {
         await fetchWithAuth(`${API_URL}/api/posts/${post.id}/unlike`, { method: 'DELETE' });
       } else {
         await fetchWithAuth(`${API_URL}/api/posts/${post.id}/like`, { method: 'POST' });
       }
     } catch (error) {
-      // Revert on error
-      if (onPostUpdate) {
-        onPostUpdate(post.id, { likedBy: post.likedBy });
-      }
+      if (onPostUpdate) onPostUpdate(post.id, { likedBy: post.likedBy });
       toggleLikePost(post.id, currentUser.id);
     }
   };
 
   const handleAddComment = async () => {
     if (!commentText.trim()) return;
-    
     const text = commentText.trim();
     setCommentText('');
-    
-    // Only call API for real posts
     const postIdStr = post.id?.toString() || '';
-    if (postIdStr.startsWith('upcoming_') || postIdStr.startsWith('race_')) {
-      return; // These are virtual feed items, not real posts
-    }
-    
-    // Create the new comment object
+    if (postIdStr.startsWith('upcoming_') || postIdStr.startsWith('race_')) return;
     const newComment = {
       userId: currentUser.id,
       userName: currentUser.name,
@@ -96,29 +78,115 @@ export const PostCard = ({ post, onUserPress, onRacePress, onPostUpdate }) => {
       text,
       timestamp: new Date().toISOString()
     };
-    
-    // Optimistic update - update local state immediately
     const updatedComments = [...(post.comments || []), newComment];
-    if (onPostUpdate) {
-      onPostUpdate(post.id, { comments: updatedComments });
-    }
-    
+    if (onPostUpdate) onPostUpdate(post.id, { comments: updatedComments });
     try {
       const response = await fetchWithAuth(`${API_URL}/api/posts/${post.id}/comment`, {
         method: 'POST',
         body: JSON.stringify({ text }),
       });
-      
-      if (response.ok) {
-        const data = await response.json();
-        // Update global store as well
-        addComment(post.id, currentUser.id, text);
-      }
+      if (response.ok) addComment(post.id, currentUser.id, text);
     } catch (error) {
-      // Revert on error
-      if (onPostUpdate) {
-        onPostUpdate(post.id, { comments: post.comments });
-      }
+      if (onPostUpdate) onPostUpdate(post.id, { comments: post.comments });
+    }
+  };
+
+  const submitReport = async (reason) => {
+    try {
+      await fetchWithAuth(`${API_URL}/api/auth/reports`, {
+        method: 'POST',
+        body: JSON.stringify({
+          contentType: 'post',
+          contentId: post.id?.toString(),
+          reportedUserId: postAuthor?.id,
+          reason,
+        }),
+      });
+      Alert.alert('', t('reportSubmitted'));
+    } catch {
+      Alert.alert(t('oops'), t('error'));
+    }
+  };
+
+  const handleReportPost = () => {
+    const reasons = [
+      t('reportSpam'),
+      t('reportHateful'),
+      t('reportInappropriate'),
+      t('reportOther'),
+    ];
+
+    if (Platform.OS === 'ios') {
+      ActionSheetIOS.showActionSheetWithOptions(
+        {
+          title: t('reportReasonLabel'),
+          options: [...reasons, t('cancel')],
+          cancelButtonIndex: reasons.length,
+          destructiveButtonIndex: 1,
+        },
+        (idx) => {
+          if (idx < reasons.length) submitReport(reasons[idx]);
+        }
+      );
+    } else {
+      Alert.alert(t('reportReasonLabel'), '', [
+        ...reasons.map((r) => ({ text: r, onPress: () => submitReport(r) })),
+        { text: t('cancel'), style: 'cancel' },
+      ]);
+    }
+  };
+
+  const handleBlockUser = () => {
+    Alert.alert(
+      t('blockUserConfirmTitle'),
+      t('blockUserConfirmMsg'),
+      [
+        { text: t('cancel'), style: 'cancel' },
+        {
+          text: t('block'),
+          style: 'destructive',
+          onPress: async () => {
+            try {
+              await fetchWithAuth(`${API_URL}/api/auth/users/block/${postAuthor.id}`, { method: 'POST' });
+              Alert.alert('', t('userBlocked'));
+              if (onPostHide) onPostHide(post.id, postAuthor.id);
+            } catch {
+              Alert.alert(t('oops'), t('error'));
+            }
+          },
+        },
+      ]
+    );
+  };
+
+  const handleMoreOptions = () => {
+    const options = [];
+    const actions = [];
+
+    options.push(t('reportPost'));
+    actions.push(handleReportPost);
+
+    if (!isOwnPost) {
+      options.push(t('blockUser'));
+      actions.push(handleBlockUser);
+    }
+
+    if (Platform.OS === 'ios') {
+      ActionSheetIOS.showActionSheetWithOptions(
+        {
+          options: [...options, t('cancel')],
+          cancelButtonIndex: options.length,
+          destructiveButtonIndex: isOwnPost ? undefined : options.length - 1,
+        },
+        (idx) => {
+          if (idx < actions.length) actions[idx]();
+        }
+      );
+    } else {
+      Alert.alert(t('moreOptions'), '', [
+        ...options.map((label, i) => ({ text: label, onPress: actions[i] })),
+        { text: t('cancel'), style: 'cancel' },
+      ]);
     }
   };
 
@@ -128,7 +196,6 @@ export const PostCard = ({ post, onUserPress, onRacePress, onPostUpdate }) => {
     const diffMs = now - date;
     const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
     const diffDays = Math.floor(diffHours / 24);
-    
     if (diffDays > 0) return `${diffDays}${t('daysAgo')}`;
     if (diffHours > 0) return `${diffHours}${t('hoursAgo')}`;
     return t('justNow');
@@ -139,7 +206,7 @@ export const PostCard = ({ post, onUserPress, onRacePress, onPostUpdate }) => {
   return (
     <View style={[styles.container, { backgroundColor: colors.card }]}>
       <View style={styles.header}>
-        {(post.type === 'new_race' || post.type === 'upcoming_race') ? (
+        {isSystemPost ? (
           <View style={[styles.lusappIcon, { backgroundColor: colors.primary }]}>
             <Text style={styles.lusappIconText}>L</Text>
           </View>
@@ -160,10 +227,16 @@ export const PostCard = ({ post, onUserPress, onRacePress, onPostUpdate }) => {
             {formatTime(post.timestamp)}
           </Text>
         </View>
+
+        {!isSystemPost && (
+          <TouchableOpacity style={styles.moreButton} onPress={handleMoreOptions} hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}>
+            <Text style={[styles.moreIcon, { color: colors.textSecondary }]}>⋯</Text>
+          </TouchableOpacity>
+        )}
       </View>
 
       <View style={styles.content}>
-        {(post.type === 'new_race' || post.type === 'upcoming_race') ? (
+        {isSystemPost ? (
           <View>
             <Text style={[styles.activityText, { color: colors.text }]}>
               🏁 {post.type === 'upcoming_race' ? t('checkOutThisRace') : t('newRaceAvailable')}{' '}
@@ -313,6 +386,15 @@ const styles = StyleSheet.create({
   timestamp: {
     fontSize: FONT_SIZE.xs,
     marginTop: SPACING.xs,
+  },
+  moreButton: {
+    paddingLeft: SPACING.sm,
+    paddingVertical: SPACING.xs,
+  },
+  moreIcon: {
+    fontSize: 22,
+    fontWeight: 'bold',
+    letterSpacing: 1,
   },
   content: {
     paddingHorizontal: SPACING.md,
